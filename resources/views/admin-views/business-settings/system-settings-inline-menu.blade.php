@@ -8,17 +8,17 @@
 @endphp
 <div class="inline-page-menu my-4">
     <ul class="list-unstyled">
-        <li class="{{ Request::is('admin/business-settings/web-config/'.EnvironmentSettings::VIEW[URI]) ?'active':'' }}">
+        {{-- <li class="{{ Request::is('admin/business-settings/web-config/'.EnvironmentSettings::VIEW[URI]) ?'active':'' }}">
             <a href="{{route('admin.business-settings.web-config.environment-setup')}}">{{translate('Environment_Settings')}}</a>
-        </li>
+        </li> --}}
 
         <li class="{{ Request::is('admin/business-settings/web-config/'.BusinessSettings::APP_SETTINGS[URI]) ?'active':'' }}">
             <a href="{{route('admin.business-settings.web-config.app-settings')}}">{{translate('app_Settings')}}</a>
         </li>
 
-        <li class="{{ Request::is('admin/system-settings/'.SoftwareUpdate::VIEW[URI]) ?'active':'' }}">
+        {{-- <li class="{{ Request::is('admin/system-settings/'.SoftwareUpdate::VIEW[URI]) ?'active':'' }}">
             <a href="{{route('admin.system-settings.software-update')}}">{{translate('software_Update')}}</a>
-        </li>
+        </li> --}}
         <li class="{{ Request::is('admin/business-settings/language') ?'active':'' }}">
             <a href="{{route('admin.business-settings.language.index')}}">{{translate('language')}}</a>
         </li>

@@ -1012,6 +1012,25 @@
                                         Request::is('admin/business-settings/web-config/'.BusinessSettings::APP_SETTINGS[URI]) ||
                                         Request::is('admin/addon'))?'block':'none'}}">
                                     <li class="nav-item {{(
+                                            // Request::is('admin/business-settings/web-config/'.EnvironmentSettings::VIEW[URI]) ||
+                                            Request::is('admin/business-settings/web-config/'.SiteMap::VIEW[URI]) ||
+                                            Request::is('admin/currency/'.Currency::LIST[URI]) ||
+                                            Request::is('admin/currency/'.Currency::UPDATE[URI].'*') ||
+                                            Request::is('admin/business-settings/web-config/'.DatabaseSetting::VIEW[URI]) ||
+                                            Request::is('admin/business-settings/language*') ||
+                                            // Request::is('admin/system-settings/'.SoftwareUpdate::VIEW[URI]) ||
+                                            Request::is('admin/business-settings/'.BusinessSettings::COOKIE_SETTINGS[URI]) ||
+                                            Request::is('admin/business-settings/web-config/'.BusinessSettings::APP_SETTINGS[URI]) ||
+                                            Request::is('admin/business-settings/delivery-restriction'))?'active':''}}">
+                                        <a class="nav-link" href="{{route('admin.business-settings.web-config.app-settings')}}"
+                                           title="{{translate('system_Settings')}}">
+                                            <span class="tio-circle nav-indicator-icon"></span>
+                                            <span class="text-truncate">
+                                              {{translate('system_Settings')}}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {{-- <li class="nav-item {{(
                                             Request::is('admin/business-settings/web-config/'.EnvironmentSettings::VIEW[URI]) ||
                                             Request::is('admin/business-settings/web-config/'.SiteMap::VIEW[URI]) ||
                                             Request::is('admin/currency/'.Currency::LIST[URI]) ||
@@ -1029,7 +1048,7 @@
                                               {{translate('system_Settings')}}
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="nav-item {{
                                             Request::is('admin/business-settings/web-config/'.BusinessSettings::LOGIN_URL_SETUP[URI])  ||
                                             Request::is('admin/business-settings/'.BusinessSettings::OTP_SETUP[URI]) ? 'active' : ''}}">
@@ -1041,10 +1060,9 @@
                                             </span>
                                         </a>
                                     </li>
-                                    <li class="nav-item {{
+                                    {{-- <li class="nav-item {{
                                         Request::is('admin/addon') ||
-                                        Request::is('admin/business-settings/web-config/theme/'.ThemeSetup::VIEW[URI]) ? 'active' : ''}}"
-                                    >
+                                        Request::is('admin/business-settings/web-config/theme/'.ThemeSetup::VIEW[URI]) ? 'active' : ''}}" >
                                         <a class="nav-link" href="{{ route('admin.business-settings.web-config.theme.setup') }}"
                                            title="{{translate('themes_&_Addons')}}">
                                             <span class="tio-circle nav-indicator-icon"></span>
@@ -1052,7 +1070,7 @@
                                               {{translate('themes_&_Addons')}}
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
 
@@ -1167,13 +1185,13 @@
                                 </ul>
                             </li>
 
-                            <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/react')?'active':'' }}">
+                            {{-- <li class="navbar-vertical-aside-has-menu {{ Request::is('admin/react')?'active':'' }}">
                                 <a class="nav-link text-capitalize" href="{{route('admin.react.index')}}"
                                    title="{{translate('React_website_configuration')}}">
                                     <span class="tio-rear-window-defrost nav-icon"></span>
                                     <span class="text-truncate text-capitalize">{{ Str::limit(translate('React_website_configuration'), 22, '...') }}</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             @if(count(config('addon_admin_routes'))>0)
                                 <li class="navbar-vertical-aside-has-menu
