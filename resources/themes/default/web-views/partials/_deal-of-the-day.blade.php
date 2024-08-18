@@ -1,7 +1,7 @@
 @if(isset($product))
     <div class="container rtl">
         <div class="row g-4 pt-2 mt-0 pb-2 __deal-of align-items-start">
-            <div class="col-xl-3 col-md-4">
+            {{-- <div class="col-xl-3 col-md-4">
                 <div class="deal_of_the_day h-100 bg--light">
                     @if(isset($deal_of_the_day->product))
                         <div class="d-flex justify-content-center align-items-center py-4">
@@ -141,9 +141,9 @@
                         @endif
                     @endif
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-xl-9 col-md-8">
+            <div class="col-xl-12 col-md-12">
                 <div class="latest-product-margin">
                     <div class="d-flex justify-content-between mb-14px">
                         <div class="text-center">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
 
-                    <div class="row mt-0 g-2">
+                    {{-- <div class="row mt-0 g-2">
                         @foreach($latest_products as $product)
                             <div class="col-xl-3 col-sm-4 col-md-6 col-lg-4 col-6">
                                 <div>
@@ -168,8 +168,16 @@
                                 </div>
                             </div>
                         @endforeach
-                    </div>
+                    </div> --}}
                 </div>
+            </div>
+
+            <div class="owl-theme owl-carousel latest-slider">
+                @foreach($latest_products as $product)
+                <div>
+                    @include('web-views.partials._inline-single-product',['product'=>$product,'decimal_point_settings'=>$decimal_point_settings])
+                </div>
+                @endforeach
             </div>
         </div>
     </div>

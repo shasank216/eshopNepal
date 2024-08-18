@@ -37,6 +37,11 @@
             @endif
         </div>
         <div class="single-product-details">
+            <div class="text-center brand-name">
+                {{-- <a href="{{route('product',$product->slug)}}"> --}}
+                    {{ $product->brand->name }}
+                {{-- </a> --}}
+            </div>
             @if($overallRating[0] != 0 )
                 <div class="rating-show justify-content-between text-center">
                     <span class="d-inline-block font-size-sm text-body">
@@ -54,7 +59,7 @@
                 </div>
             @endif
             <div class="text-center">
-                <a href="{{route('product',$product->slug)}}">
+                <a class="product-name" href="{{route('product',$product->slug)}}">
                     {{ Str::limit($product['name'], 23) }}
                 </a>
             </div>

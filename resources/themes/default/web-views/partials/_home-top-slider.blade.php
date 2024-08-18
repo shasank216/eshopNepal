@@ -1,5 +1,5 @@
 <div class="row no-gutters position-relative rtl">
-    @if ($categories->count() > 0 )
+    {{-- @if ($categories->count() > 0 )
         <div class="col-xl-3 position-static d-none d-xl-block __top-slider-cate">
             <div class="category-menu-wrap position-static">
                 <ul class="category-menu mt-0">
@@ -30,15 +30,16 @@
                 </ul>
             </div>
         </div>
-    @endif
+    @endif --}}
 
-    <div class="col-12 col-xl-9 __top-slider-images">
-        <div class="{{Session::get('direction') === "rtl" ? 'pr-xl-2' : 'pl-xl-2'}}">
+    {{-- <div class="col-12 __top-slider-images"> --}}
+    <div class="">
+        <div class="{{Session::get('direction') === "rtl" ? 'pr-xl-0' : 'pl-xl-0'}}">
             <div class="owl-theme owl-carousel hero-slider">
                 @foreach($main_banner as $key=>$banner)
                 <a href="{{$banner['url']}}" class="d-block" target="_blank">
                     <img class="w-100 __slide-img" alt=""
-                         src="{{ getValidImage(path: 'storage/app/public/banner/'.$banner['photo'], type: 'banner') }}">
+                        src="{{ getValidImage(path: 'storage/app/public/banner/'.$banner['photo'], type: 'banner') }}">
                 </a>
                 @endforeach
             </div>
