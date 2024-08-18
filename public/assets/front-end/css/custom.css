@@ -23,7 +23,8 @@
 }
 
 .navbar-stuck-menu {
-    background-color: var(--web-primary);
+    background-color: #1F3C74;
+    
 }
 
 .mega-nav .nav-item .nav-link {
@@ -194,7 +195,7 @@ span.badge-accent:hover {
 
 @media (min-width: 768px) {
     .navbar-stuck-menu {
-        background-color: var(--web-primary);
+        background-color:#1F3C74;
     }
 }
 
@@ -615,10 +616,12 @@ span.badge-accent:hover {
 }
 
 [dir="ltr"] .navbar form .search_button {
-    border-radius: 0 7px 7px 0;
+    /*border-radius: 0 7px 7px 0;*/
     left: unset;
     right: 0;
-    top: 0
+    top: 0;
+    border-radius: 8px;
+    background: #1F3C74;
 }
 
 [dir="rtl"] .navbar form .search_button {
