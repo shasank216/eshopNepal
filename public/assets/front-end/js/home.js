@@ -217,10 +217,47 @@ $(document).ready(function (){
         dots: true,
         autoplayHoverPause: true,
         autoplaySpeed: 1500,
-        slideTransition: 'linear',
+        // slideTransition: 'linear',
         items: 1,
-        rtl: directionFromSession === 'rtl',
-        ltr: directionFromSession === 'ltr',
+        // rtl: directionFromSession === 'rtl',
+        // ltr: directionFromSession === 'ltr',
+    });
+
+    $('.latest-slider').owlCarousel({
+        loop: true,
+        autoplay: true,
+        margin: 20,
+        nav: true,
+        navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
+        dots: false,
+        autoplayHoverPause: true,
+        autoplaySpeed: 1500,
+        // slideTransition: 'linear',
+        // rtl: directionFromSession === 'rtl',
+        // ltr: directionFromSession === 'ltr',
+        responsive: {
+            0: {
+                items: 1,
+            },
+            360: {
+                items: 1,
+            },
+            576: {
+                items: 2,
+            },
+            768: {
+                items: 3,
+            },
+            992: {
+                items: 3,
+            },
+            1200: {
+                items: 4,
+            },
+            1400: {
+                items: 4,
+            }
+        },
     });
 
     $('.brands-slider').owlCarousel({
@@ -266,7 +303,29 @@ $(document).ready(function (){
         rtl: directionFromSession === 'rtl',
         ltr: directionFromSession === 'ltr',
         autoplayHoverPause: true,
-        items: 1,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            360: {
+                items: 1,
+            },
+            576: {
+                items: 2,
+            },
+            768: {
+                items: 2,
+            },
+            992: {
+                items: 3,
+            },
+            1200: {
+                items: 3,
+            },
+            1400: {
+                items: 3,
+            }
+        },
     })
 
     $('#category-slider, #top-seller-slider').owlCarousel({
