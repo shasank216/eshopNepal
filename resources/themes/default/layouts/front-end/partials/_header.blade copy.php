@@ -20,9 +20,8 @@
                     </a>
                 </div>
                 <div class="d-none d-md-block mr-2 text-nowrap">
-                    <a class="topbar-link d-flex align-items-center  direction-ltr" href="https://flipkart.questal.in/account-oder">
-                        <i class="fa fa-truck fa-flip-horizontal m-0"></i> 
-                        <span class="ms-1 track-order">Track Your Order</span>
+                    <a class="topbar-link d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">
+                        <i class="fa fa-phone"></i> {{$web_config['phone']->value}}
                     </a>
                 </div>
             </div>  
@@ -78,7 +77,7 @@
 
 
     <div class="navbar-sticky bg-light mobile-head">
-        <div class="navbar navbar-expand-md navbar-light pt-4">
+        <div class="navbar navbar-expand-md navbar-light">
             <div class="container ">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -152,7 +151,7 @@
                             <i class="tio-search"></i>
                         </a>
                     </div>
-                    {{--<div class="navbar-tool dropdown d-none d-md-block {{Session::get('direction') === "rtl" ? 'mr-md-3' : 'ml-md-3'}}">
+                    <div class="navbar-tool dropdown d-none d-md-block {{Session::get('direction') === "rtl" ? 'mr-md-3' : 'ml-md-3'}}">
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="{{route('wishlists')}}">
                             <span class="navbar-tool-label">
                                 <span class="countWishlist">
@@ -161,10 +160,10 @@
                            </span>
                             <i class="navbar-tool-icon czi-heart"></i>
                         </a>
-                    </div>--}}
+                    </div>
                     @if(auth('customer')->check())
-                        <div class=" d-flex">
-                            <a class="navbar-tool" type="button" data-toggle="dropdown" aria-haspopup="true"
+                        <div class="dropdown">
+                            <a class="navbar-tool ml-3" type="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 <div class="navbar-tool-icon-box bg-secondary">
                                     <div class="navbar-tool-icon-box bg-secondary">
@@ -173,12 +172,11 @@
                                     </div>
                                 </div>
                                 <div class="navbar-tool-text">
-                                    <small class="fw-bold track-order">Contact Us</small>
-                                    <a class="topbar-link track-order d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">{{$web_config['phone']->value}}
-                                    </a>
+                                    <small>{{ translate('hello')}}, {{auth('customer')->user()->f_name}}</small>
+                                    {{ translate('dashboard')}}
                                 </div>
                             </a>
-                            {{--<div class="dropdown-menu dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
+                            <div class="dropdown-menu dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
                                  aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item"
                                    href="{{route('account-oder')}}"> {{ translate('my_Order')}} </a>
@@ -187,7 +185,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                    href="{{route('customer.auth.logout')}}">{{ translate('logout')}}</a>
-                            </div>--}}
+                            </div>
                         </div>
                     @else
                         <div class="dropdown">
@@ -223,93 +221,6 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex justify-content-between flex-wrap pt-2 bg-white">
-            <div class="nav_product ">
-              <img src="image/product.png" width="50px" />
-              <div class="product_text">
-                <p>Grocery</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/product.png" width="50px" />
-              <div class="product_text">
-                <p>Grocery</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/product.png" width="50px" />
-              <div class="product_text">
-                <p>Grocery</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/product1.png" width="50px" />
-              <div class="product_text">
-                <p>Mobiles</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/img1.png" width="50px" />
-              <div class="product_text">
-                <p>Fashion</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/img2.png" width="50px" />
-              <div class="product_text">
-                <p>Electronics</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/img3.png" width="50px" />
-              <div class="product_text">
-                <p>Home</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img4.png" width="50px" />
-              <div class="product_text">
-                <p>Appliances</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img5.png" width="50px" />
-              <div class="product_text">
-                <p>Travel</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img6.png" width="50px" />
-              <div class="product_text">
-                <p>Top Offers</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img7.png" width="50px" />
-              <div class="product_text">
-                <p>Beauty, Toys & More</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img8.png" width="50px" />
-              <div class="product_text">
-                <p>Two Wheelers</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img8.png" width="50px" />
-              <div class="product_text">
-                <p>Two Wheelers</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img8.png" width="50px" />
-              <div class="product_text">
-                <p>Two Wheelers</p>
-              </div>
-            </div>
-    
-        </div>
         <div class="navbar navbar-expand-md navbar-stuck-menu">
             <div class="container px-10px">
                 <div class="collapse navbar-collapse text-align-direction" id="navbarCollapse">
@@ -319,7 +230,7 @@
                             <i class="tio-clear __text-26px"></i>
                         </button>
                     </div>
-                    {{--@php($categories=\App\Models\Category::with(['childes.childes'])->where('position', 0)->priority()->paginate(11))
+                    @php($categories=\App\Models\Category::with(['childes.childes'])->where('position', 0)->priority()->paginate(11))
                     <ul class="navbar-nav mega-nav pr-lg-2 pl-lg-2 mr-2 d-none d-md-block __mega-nav">
                         <li class="nav-item {{!request()->is('/')?'dropdown':''}}">
 
@@ -336,7 +247,7 @@
                                 </span>
                             </a>
                         </li>
-                    </ul>--}}
+                    </ul>
 
                     <ul class="navbar-nav mega-nav1 pr-md-2 pl-md-2 d-block d-xl-none">
                         <li class="nav-item dropdown d-md-none">
@@ -503,73 +414,6 @@
                         </div>
                     @endif
                 </div>
-                <div>
-                    <a href="https://flipkart.questal.in/customer/auth/login" style="padding:0.2rem 2rem;" class="btn btn-light">Login</a>
-                </div>
-                    <a href="#">
-                        <span class="text-white mx-3">Become a Seller</span>
-                    </a>
-                    <div class="navbar-tool dropdown d-none d-md-block {{Session::get('direction') === "rtl" ? 'mr-md-3' : 'ml-md-3'}}">
-                        <a class="navbar-tool-icon-box dropdown-toggle" href="{{route('wishlists')}}" style="border-radius: 10px;background:#606BBF;">
-                            <span class="navbar-tool-label" style="right:-10px;top: 0.6875rem;background-color:#FBB835 !important; border:2px solid white;color:white;">
-                                <span class="countWishlist">
-                                    {{session()->has('wish_list')?count(session('wish_list')):0}}
-                                </span>
-                           </span>
-                            <i class="navbar-tool-icon czi-heart text-white"></i>
-                        </a>
-                    </div>
-
-                    @if(auth('customer')->check())
-                        <div class="dropdown">
-                            <a class="navbar-tool ml-3" type="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                <div class="navbar-tool-icon-box bg-secondary">
-                                    <div class="navbar-tool-icon-box bg-secondary" >
-                                        <img class="img-profile rounded-circle __inline-14" alt=""
-                                             src="{{ getValidImage(path: 'storage/app/public/profile/'.auth('customer')->user()->image, type: 'avatar') }}">
-                                    </div>
-                                </div>
-                                <div class="navbar-tool-text">
-                                    <small>{{ translate('hello')}}, {{auth('customer')->user()->f_name}}</small>
-                                    {{ translate('dashboard')}}
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
-                                 aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item"
-                                   href="{{route('account-oder')}}"> {{ translate('my_Order')}} </a>
-                                <a class="dropdown-item"
-                                   href="{{route('user-account')}}"> {{ translate('my_Profile')}}</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item"
-                                   href="{{route('customer.auth.logout')}}">{{ translate('logout')}}</a>
-                            </div>
-                        </div>
-                    @else
-                        <div class="dropdown">
-                            <a class="navbar-tool {{Session::get('direction') === "rtl" ? 'mr-md-3' : 'ml-md-3'}}"
-                               type="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                <div class="navbar-tool-icon-box bg-secondary">
-                                    <div class="navbar-tool-icon-box"  style="border-radius:10px;background-color: #606BBF;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"/></svg>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="text-align-direction dropdown-menu __auth-dropdown dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
-                                 aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{route('customer.auth.login')}}">
-                                    <i class="fa fa-sign-in mr-2"></i> {{ translate('sign_in')}}
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{route('customer.auth.sign-up')}}">
-                                    <i class="fa fa-user-circle mr-2"></i>{{ translate('sign_up')}}
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-
             </div>
         </div>
 
@@ -609,13 +453,7 @@
                 </div>
             </div>
         </div>
-
-        
     </div>
-
-     
-    
-
 </header>
 
 @push('script')
