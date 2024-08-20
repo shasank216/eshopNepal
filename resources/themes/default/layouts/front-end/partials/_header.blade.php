@@ -122,9 +122,15 @@
                                 All Categories
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                @foreach($categories as $category)
+                               {{-- <a class="dropdown-item" href="#"><span>{{$category['name']}}</span></a>--}}
+                               <a <?php if ($category->childes->count() > 0) echo "" ?> 
+                                href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="p-1 ps-3">
+                                 <span>{{$category['name']}}</span>
+
+                                </a><br>
+                               
+                                @endforeach
                                 </div>
                             </div>
                         </div>
@@ -162,7 +168,7 @@
                             <i class="navbar-tool-icon czi-heart"></i>
                         </a>
                     </div>--}}
-                    @if(auth('customer')->check())
+                    {{--@if(auth('customer')->check())
                         <div class=" d-flex">
                             <a class="navbar-tool" type="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
@@ -178,7 +184,7 @@
                                     </a>
                                 </div>
                             </a>
-                            {{--<div class="dropdown-menu dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
+                            <!--<div class="dropdown-menu dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
                                  aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item"
                                    href="{{route('account-oder')}}"> {{ translate('my_Order')}} </a>
@@ -187,7 +193,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                    href="{{route('customer.auth.logout')}}">{{ translate('logout')}}</a>
-                            </div>--}}
+                            </div>-->
                         </div>
                     @else
                         <div class="dropdown">
@@ -216,7 +222,43 @@
                                 </a>
                             </div>
                         </div>
-                    @endif
+                    @endif--}}
+                    <div>
+                <div class="topbar-text dropdown d-md-none ms-auto">
+                    <div class="d-flex align-items-center">
+                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-dark" href="tel:{{$web_config['phone']->value}}"
+                            style="border-radius:10px; background: #f0f0f0 !important;">
+                           
+                            <i class="fa fa-headphones navbar-tool-icon " style="    font-size: 1.7rem !important;line-height: 2.875rem !important;"></i>
+                        </a>
+                        <a class="topbar-link d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">
+                            <div class="d-flex align-items-center">
+                                <div class="d-flex flex-column ms-2">
+                                    <small class="fw-bold" style="color: #4b566b !important">Contact Us</small>
+                                   <span class="cart-total-price  fs-14">{{$web_config['phone']->value}}</span> 
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-none d-md-block mr-2 text-nowrap">
+                    <div class="d-flex align-items-center">
+                    <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-dark" href="tel:{{$web_config['phone']->value}}"
+                        style="border-radius:10px; background: #f0f0f0 !important;">
+                       
+                        <i class="fa fa-headphones navbar-tool-icon " style="    font-size: 1.7rem !important;line-height: 2.875rem !important;"></i>
+                    </a>
+                    <a class="topbar-link d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex flex-column ms-2">
+                                <small class="fw-bold" style="color: #4b566b !important">Contact Us</small>
+                               <span class="cart-total-price  fs-14">{{$web_config['phone']->value}}</span> 
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                </div>
+            </div>
                     <div id="cart_items">
                         @include('layouts.front-end.partials._cart')
                     </div>

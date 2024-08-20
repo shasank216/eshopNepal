@@ -1,33 +1,3 @@
-
-{{--<div class="top-footer-section">
-    <div class="d-flex justify-content-between" style="background:#1F3C74;">
-    <div class="d-flex align-items-center">
-        <span><i class="fa fa-envelope text-white" style="font-size: 1.4rem;color:white;"></i></span>
-        <h5 class="m-0 ms-2" style="
-font-size: 26px;
-font-weight: 600;
-line-height: 36px;
-text-align: left;
-">Sign Up For Newsletter</h5>
-    </div>
-    <div>
-        <p>Shopping First For Coupon $25 Receive And...</p>
-    </div>
-        <div class="text-nowrap mb-4 position-relative">
-            <form action="{{ route('subscription') }}" method="post" class="d-flex">
-                @csrf
-                <input type="email" name="subscription_email"
-                       class="form-control subscribe-border text-align-direction p-12px"
-                       placeholder="{{ translate('your_Email_Address')}}" required>
-                <button class="subscribe-button" type="submit">
-                    {{ translate('subscribe')}}
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>--}}
-
 <div class="__inline-9 rtl">
     <div
         class="d-flex justify-content-center text-center custom-light-primary-color text-md-start mt-3 p-4">
