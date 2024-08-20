@@ -788,7 +788,7 @@ a {
 }
 
 .widget-list-item a {
-    color: #ffffff;
+    color: #5C5C5C;
 }
 
 .__cate-item {
@@ -807,31 +807,31 @@ a {
 }
 
 .page-footer .form-control {
-    background: rgba(255, 255, 255, 0.0496078431) !important;
+    /* background: rgba(255, 255, 255, 0.0496078431) !important; */
     border-color: rgba(255, 255, 255, 0.072745098) !important;
-    color: #fff;
+    /* color: #fff; */
     height: 55px;
 }
 
 .page-footer .form-control::-moz-placeholder {
-    color: rgba(255, 255, 255, 0.5647058824);
+    color: rgba(44, 44, 44, 0.565);
 }
 
 .page-footer .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.5647058824);
+    color: rgb(54, 54, 54);
 }
 
 .page-footer .subscribe-button {
     top: 5px;
     inset-inline-end: 5px !important;
     height: 45px;
-    background: #fff;
+    background: #1F3C74;
     border-radius: 6px !important;
-    color: #111;
+    color: #ffffff;
     padding-top: 0;
     padding-bottom: 0;
     font-weight: 600;
-    font-size: 12px !important;
+    font-size: 20px !important;
     text-transform: uppercase;
 }
 
@@ -2371,17 +2371,17 @@ a {
 }
 
 .__inline-9 .widget-list-link:hover {
-    color: #999898 !important;
+    color: #5C5C5C !important;
 }
 
 .__inline-9 .subscribe-border {
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 .__inline-9 .subscribe-button {
     position: absolute;
     top: 5px;
-    padding: 11px;
+    padding: 7px;
     padding-left: 15px;
     padding-right: 15px;
     text-transform: capitalize;
@@ -8561,7 +8561,7 @@ input.form-control.fz-30 {
 .star {
     position: fixed;
     opacity: 0;
-    inset-inline-start : -90000px;
+    inset-inline-start: -90000px;
     visibility: hidden;
 }
 
@@ -8570,4 +8570,92 @@ input.form-control.fz-30 {
     color: var(--primary-clr);
     transition: all 300ms ease;
     inset-inline-start: 14px;
+}
+.paypal img {
+    width: 54px;
+    height: 33.99px;
+}
+.visa img {
+    width: 54px;
+    height: 33.99px;
+}
+.mastercard img {
+    width: 54px;
+    height: 33.99px;
+}
+.amax img {
+    width: 54px;
+    height: 33.99px;
+}
+
+.footer_text p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.0125em;
+    text-align: left;
+    font-family: "Montserrat";
+    color: #171717;
+}
+.helpus img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .helpus_title h5 {
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    text-align: center;
+    color: #1f3c74 !important;
+  }
+  
+  .helpus_text p {
+    font-family: "Montserrat";
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-align: center;
+    color: #727272;
+  }
+  
+  .signup h6 {
+    font-family: "Montserrat";
+    font-size: 20px;
+    color: white;
+  }
+  
+  .signup img {
+    width: 35px;
+    height: 27.5px;
+    left: 1.5px;
+    gap: 0px;
+    opacity: 0px;
+  }
+  
+  .shopping h6 {
+    /* font-family: "Montserrat"; */
+    font-size: 14px;
+    letter-spacing: 0.15%;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .foot_text p {
+    color: #5c5c5c;
+    font-weight: 500;
+  }
+.download-section p{
+    font-size: 16px;
+    font-weight: 500;
+}
+.social-btn.sb-light{
+    color: #4b566b !important;
+}
+
+.widget-list-link{
+    color: #5C5C5C !important;
 }
