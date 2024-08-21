@@ -8663,3 +8663,14 @@ input.form-control.fz-30 {
     font-size: 14px;
     font-weight: 500;
 }
+.home.text-center.__cate-side-title {
+    background: #1f3c74;
+    color: #fff;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.home-category{
+    font-size: 17px !important;
+    line-height: 16px !important;
+    font-weight: 600;
+}

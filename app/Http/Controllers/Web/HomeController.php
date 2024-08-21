@@ -127,6 +127,7 @@ class HomeController extends Controller
         if ($topRated->count() == 0) {
             $topRated = $bestSellProduct;
         }
+        $products = Product::paginate(10);
 
         $deal_of_the_day = DealOfTheDay::join('products', 'products.id', '=', 'deal_of_the_days.product_id')->select('deal_of_the_days.*', 'products.unit_price')->where('products.status', 1)->where('deal_of_the_days.status', 1)->first();
         $main_banner = $this->banner->where(['banner_type'=>'Main Banner', 'theme'=>$theme_name, 'published'=> 1])->latest()->get();
@@ -139,7 +140,7 @@ class HomeController extends Controller
             compact(
                 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands',
                 'deal_of_the_day', 'top_sellers', 'home_categories', 'brand_setting', 'main_banner', 'main_section_banner',
-                'current_date','product','footer_banner',
+                'current_date','product','footer_banner','products',
             )
         );
     }
