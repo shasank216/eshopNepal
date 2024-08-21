@@ -192,6 +192,72 @@
     cursor: pointer;
     font-size: 18px;
 }
+.custom-card {
+    width: 100%;
+    height: 300px;
+    border: none;
+    position: relative;
+    background-color: #D9D9D9;
+
+    margin-bottom: 0;
+}
+
+.custom-long-card {
+    width: 100%;
+    height: 300px;
+    border: none;
+    position: relative;
+    background-color: #D9D9D9;
+
+    margin-bottom: 0;
+}
+
+.category-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #000;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+/* .card-title {
+    margin-bottom: 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: #FFFFFF;
+} */
+
+/* ========== */
+.card-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #FFFFFF;
+    white-space: nowrap;
+    /* Prevents text from wrapping to the next line */
+    overflow: hidden;
+    /* Hides any overflow text */
+    text-overflow: ellipsis;
+    /* Adds ellipsis (...) if text overflows */
+    margin-bottom: 0;
+}
+
+/* ========== */
+
+
+.card-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
         </style>
     @endpush
 
@@ -632,6 +698,286 @@
             </div>
         </section>
         <!-- Deal of the Day Ends -->
+
+        {{-- Advertise section --}}
+
+        @if (count($footer_banner) > 0)
+            <div class="container rtl d-md-block d-none mt-3">
+                <div class="row g-3 mt-3">
+
+                    @if (count($footer_banner) <= 2)
+                        @foreach ($footer_banner as $bannerIndex => $banner)
+                            <div class="col-md-6">
+                                <a href="{{ $banner->url }}" class="d-block" target="_blank">
+                                    <img class="footer_banner_img __inline-63" alt=""
+                                        src="{{ getValidImage(path: 'storage/app/public/banner/' . $banner['photo'], type: 'banner') }}">
+                                </a>
+                            </div>
+                        @endforeach
+                    @else
+                        {{-- <?php
+                        $footerBannerGroup = $footer_banner->take(count($footer_banner) / 2);
+                        $footerBannerGroup2 = $footer_banner->splice(count($footer_banner) / 2);
+                        ?> --}}
+                        {{-- <div class="col-md-6">
+                            <div
+                                class="{{ count($footerBannerGroup) > 1 ? 'owl-carousel owl-theme footer-banner-slider' : '' }}">
+                                @foreach ($footerBannerGroup as $banner)
+                                    <a href="{{ $banner['url'] }}" class="d-block" target="_blank">
+                                        <img class="footer_banner_img __inline-63" alt=""
+                                            src="{{ getValidImage(path: 'storage/app/public/banner/' . $banner['photo'], type: 'banner') }}">
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div> --}}
+
+                        <div class="col-md-12">
+                            <div class="owl-carousel owl-theme footer-banner-slider">
+                                @foreach ($footer_banner as $banner)
+                                    <a href="{{ $banner['url'] }}" class="d-block" target="_blank">
+                                        <img class="footer_banner_img __inline-63" alt=""
+                                            src="{{ getValidImage(path: 'storage/app/public/banner/' . $banner['photo'], type: 'banner') }}">
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @endif
+
+        {{-- Advertise section end --}}
+
+
+        {{-- search by category --}}
+        <section class="container">
+            @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
+
+            <div class="container pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{Session::get('direction')}}">
+                <div class="row">
+                    <aside
+                        class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{Session::get('direction') === "rtl" ? 'pl-2' : 'pr-2'}}"
+                        id="SearchParameters">
+                        <div class="cz-sidebars __inline-35 bg-white" id="shop-sidebar">
+                            <div class="cz-sidebar-header bg-light">
+                                <button class="close ms-auto"
+                                        type="button" data-dismiss="sidebar" aria-label="Close">
+                                    <i class="tio-clear"></i>
+                                </button>
+                            </div>
+
+                            <div class="mt-3 __cate-side-arrordion">
+                                <div>
+                                    <div class="home text-center __cate-side-title">
+                                        <span class="widget-title font-semibold">{{translate('shops by categories')}}</span>
+                                    </div>
+                                    @php($categories=\App\Utils\CategoryManager::parents())
+                                    <div class="accordion mt-n1 __cate-side-price" id="shop-categories">
+                                        @foreach($categories as $category)
+                                            <div class="menu--caret-accordion">
+                                                <div class="card-header flex-between">
+                                                    <div>
+                                                        <img alt="{{ $category->name }}"
+                                                            src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}" width="64" height="64" style="height: 20px; width: 20px;">
+                                                        <label class="for-hover-label cursor-pointer get-view-by-onclick home-category"
+                                                            data-link="{{ route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1]) }}">
+                                                            {{$category['name']}}
+                                                        </label>
+                                                    </div>
+                                                    <div class="px-2 cursor-pointer menu--caret">
+                                                        <strong class="pull-right for-brand-hover">
+                                                            @if($category->childes->count()>0)
+                                                                <i class="tio-next-ui fs-13"></i>
+                                                            @endif
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="card-body p-0 ms-2 d--none"
+                                                    id="collapse-{{$category['id']}}">
+                                                    @foreach($category->childes as $child)
+                                                        <div class="menu--caret-accordion">
+                                                            <div class="for-hover-label card-header flex-between">
+                                                                <div>
+                                                                    <label class="cursor-pointer get-view-by-onclick"
+                                                                        data-link="{{ route('products',['id'=> $child['id'],'data_from'=>'category','page'=>1]) }}">
+                                                                        {{$child['name']}}
+                                                                    </label>
+                                                                </div>
+                                                                <div class="px-2 cursor-pointer menu--caret">
+                                                                    <strong class="pull-right">
+                                                                        @if($child->childes->count()>0)
+                                                                            <i class="tio-next-ui fs-13"></i>
+                                                                        @endif
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="card-body p-0 ms-2 d--none"
+                                                                id="collapse-{{$child['id']}}">
+                                                                @foreach($child->childes as $ch)
+                                                                    <div class="card-header">
+                                                                        <label
+                                                                            class="for-hover-label d-block cursor-pointer text-left get-view-by-onclick"
+                                                                            data-link="{{ route('products',['id'=> $ch['id'],'data_from'=>'category','page'=>1]) }}">
+                                                                            {{$ch['name']}}
+                                                                        </label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </aside>
+
+                    <section class="col-lg-9">
+                        <div class="row" id="ajax-products">
+                            @if(count($products) > 0)
+
+                            @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
+                            @foreach($products as $product)
+                                @if(!empty($product['product_id']))
+                                    @php($product=$product->product)
+                                @endif
+                                <div class=" {{Request::is('products*')?'col-lg-4 col-md-4 col-sm-4 col-6':'col-lg-4 col-md-4 col-sm-4 col-6'}} {{Request::is('shopView*')?'col-lg-3 col-md-4 col-sm-4 col-6':''}} p-2">
+                                    @if(!empty($product))
+                                        @include('web-views.partials._filter-single-product',['product'=>$product, 'decimal_point_settings'=>$decimal_point_settings])
+                                    @endif
+                                </div>
+                            @endforeach
+
+                            <div class="col-12">
+                                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation"
+                                    id="paginator-ajax">
+                                    {!! $products->links() !!}
+                                </nav>
+                            </div>
+                        @else
+                            <div class="d-flex justify-content-center align-items-center w-100 py-5">
+                                <div>
+                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/media/product.svg') }}" class="img-fluid" alt="">
+                                    <h6 class="text-muted">{{ translate('no_product_found') }}</h6>
+                                </div>
+                            </div>
+                        @endif
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            {{-- <span id="products-search-data-backup"
+            data-url="{{ url('/products') }}"
+            data-id="{{ $data['id'] }}"
+            data-name="{{ $data['name'] }}"
+            data-from="{{ $data['data_from'] }}"
+            data-sort="{{ $data['sort_by'] }}"
+            data-min-price="{{ $data['min_price'] }}"
+            data-max-price="{{ $data['max_price'] }}"
+            data-message="{{ translate('items_found') }}"
+            ></span> --}}
+        </section>
+
+        <section class="container">
+            <!-- Latest News start -->
+
+            <nav class="navbar">
+                <p style="font-size: 34px; font-weight: 600;">Latest News</p>
+                <span class="form-inline ml-auto">
+                    <p style="margin-bottom: 0;"><u><a href="#" style="color: #000; font-size: 16px; font-weight: 600;">See All
+                                <i class="fa fa-arrow-right"></i></a></u></p>
+                </span>
+            </nav>
+            <hr>
+
+            <div class="container" style="margin-top: 40px;">
+                <div class="row">
+                    <!-- First Row -->
+                    <div class="col-md-3 mb-4">
+                        <div class="card custom-card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <span class="badge badge-light category-badge">Fashion</span>
+                                <div class="card-text mt-auto">
+                                    <h5 class="card-title" style="line-height: 44px;">Discover new Trends</h5>
+                                    <p class="card-subtitle">by Alpha on August 8, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card custom-card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <span class="badge badge-light category-badge">Gadgets</span>
+                                <div class="card-text mt-auto">
+                                    <h5 class="card-title" style="line-height: 44px;">Apple Wireless Headphones</h5>
+                                    <p class="card-subtitle">by Alpha on August 8, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card custom-long-card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <span class="badge badge-light category-badge">Smart Watch</span>
+                                <div class="card-text mt-auto">
+                                    <h5 class="card-title" style="line-height: 44px;">Apple Watch Series 6</h5>
+                                    <p class="card-subtitle">by Alpha on August 8, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Second Row -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card custom-long-card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <span class="badge badge-light category-badge">Game</span>
+                                <div class="card-text mt-auto">
+                                    <h5 class="card-title" style="line-height: 44px;">What's interesting about VR games?</h5>
+                                    <p class="card-subtitle">by Alpha on August 8, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card custom-card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <span class="badge badge-light category-badge">Camera</span>
+                                <div class="card-text mt-auto">
+                                    <h5 class="card-title" style="line-height: 44px;">The peak quality of the viewfinder</h5>
+                                    <p class="card-subtitle">by Alpha on August 8, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-4">
+                        <div class="card custom-card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <span class="badge badge-light category-badge">Laptop</span>
+                                <div class="card-text mt-auto">
+                                    <h5 class="card-title" style="line-height: 44px;">What's good about new macbook?</h5>
+                                    <p class="card-subtitle">by Alpha on August 8, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latest News ends -->
+        </section>
 
 
         {{-- @if ($web_config['brand_setting'] && $brands->count() > 0)
