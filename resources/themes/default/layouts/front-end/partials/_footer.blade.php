@@ -1,29 +1,37 @@
-{{--<div class="top-footer-section">
-    <div class="d-flex justify-content-between" style="background:#1F3C74;">
-    <div class="d-flex align-items-center">
-        <span><i class="fa fa-envelope text-white" style="font-size: 1.4rem;color:white;"></i></span>
-        <h5 class="m-0 ms-2" style="
-font-size: 26px;
-font-weight: 600;
-line-height: 36px;
-text-align: left;
-">Sign Up For Newsletter</h5>
-    </div>
-    <div>
-        <p>Shopping First For Coupon $25 Receive And...</p>
-    </div>
-        <div class="text-nowrap mb-4 position-relative">
-            <form action="{{ route('subscription') }}" method="post" class="d-flex">
-@csrf
-<input type="email" name="subscription_email" class="form-control subscribe-border text-align-direction p-12px" placeholder="{{ translate('your_Email_Address')}}" required>
-<button class="subscribe-button" type="submit">
-    {{ translate('subscribe')}}
-</button>
-</form>
-</div>
-</div>
-</div>
-</div>--}}
+<style>
+    .foot_products h5{
+        font-weight: 600;
+    }
+
+    .widget-list-link {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        letter-spacing: 0.005em;
+    }
+
+    .location-store {
+        font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #5C5C5C;
+    }
+
+    .bottom-footer {
+        font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    }
+
+    .info .spans span {
+        font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    }
+</style>
 
 <div class="background_class page-footer font-small mdb-color rtl" style="background-color: #1f3c74;">
 
@@ -54,7 +62,7 @@ text-align: left;
     </div>
 </div>
 
-<footer>
+<footer class="pt-5" style="background: #e9ebf1;">
     <div class="container">
         <div class="row mt-5">
             <div class="col-lg-4">
@@ -211,8 +219,8 @@ text-align: left;
             <div class="col-lg-2">
                 @if($web_config['ios']['status'] || $web_config['android']['status'])
                 <div class="download-section">
-                    <h6 class="text-uppercase font-weight-bold align-items-center">
-                        {{ translate('download_our_app')}}
+                    <h6 style="    font-size: 20px;" class="text-uppercase font-weight-bold align-items-center">
+                        Download App
                     </h6>
                 </div>
                 @endif
@@ -225,7 +233,7 @@ text-align: left;
                     @if($web_config['ios']['status'])
                     <div class="me-2 mb-2">
                         <a class="" href="{{ $web_config['ios']['link'] }}" role="button">
-                            <img width="100" src="{{theme_asset(path: "public/assets/front-end/png/apple_app.png")}}" alt="">
+                            <img class="w-100" src="{{theme_asset(path: "public/assets/front-end/png/apple_app.png")}}" alt="">
                         </a>
                     </div>
                     @endif
@@ -233,7 +241,7 @@ text-align: left;
                     @if($web_config['android']['status'])
                     <div class="me-2 mb-2">
                         <a href="{{ $web_config['android']['link'] }}" role="button">
-                            <img width="100" src="{{theme_asset(path: "public/assets/front-end/png/google_app.png")}}" alt="">
+                            <img class="w-100" src="{{theme_asset(path: "public/assets/front-end/png/google_app.png")}}" alt="">
                         </a>
                     </div>
                     @endif
@@ -241,11 +249,11 @@ text-align: left;
             </div>
             <div class="col-lg-2">
                 <div class="foot_products">
-                    <h5>Download App</h5>
+                    <h5 style="font-size: 20px;">Store Infomation</h5>
                 </div>
-                <ul class="list p-0">
-                    <p><i class="fa fa-map-marker" aria-hidden="true"></i> {{ getWebConfig(name: 'shop_address')}}</p>
-                    <a class="widget-list-link" href="{{ 'tel:'.$web_config['phone']->value }}">
+                {{-- <ul class="list p-0"> --}}
+                    <p class="location-store"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ getWebConfig(name: 'shop_address')}}</p>
+                    <a class="widget-list-link location-store" href="{{ 'tel:'.$web_config['phone']->value }}">
                         <span class="">
                             <i class="fa fa-phone  me-2 mt-2 mb-2"></i>
                             <span class="direction-ltr">
@@ -253,30 +261,30 @@ text-align: left;
                             </span>
                         </span>
                     </a>
-                    <a class="widget-list-link"
+                    <a class="widget-list-link location-store"
                         href="{{ 'mailto:'.getWebConfig(name: 'company_email') }}">
                         <span><i class="fa fa-envelope  me-2 mt-2 mb-2"></i> {{getWebConfig(name: 'company_email')}} </span>
                     </a>
 
-                </ul>
+                {{-- </ul> --}}
             </div>
         </div>
         <hr>
         <div class="info d-flex mt-3" style="gap: 15px;">
-            <h5>Information:</h5>
-            <div class="spans mt-1">
+            <h5 class="m-0 bottom-footer">Information:</h5>
+            <div class="spans">
                 <span>4G Mobiles / Smartphones / Samsung Mobiles / Micromax Mobiles</span>
             </div>
         </div>
         <div class="info d-flex mt-2" style="gap: 15px;">
-            <h5>Categoies:</h5>
-            <div class="spans mt-1">
+            <h5 class="m-0 bottom-footer">Categoies:</h5>
+            <div class="spans">
                 <span>Soft Mobile Covers / Pinted Back Covers / Ambrane P</span>
             </div>
         </div>
         <div class="info d-flex mt-2 pb-3" style="gap: 15px;">
-            <h5>Products:</h5>
-            <div class="spans mt-1">
+            <h5 class="m-0 bottom-footer">Products:</h5>
+            <div class="spans">
                 <span>8 GB Memory Cards / 22 GB Memory Cards / 16 GB Memory Cards</span>
             </div>
         </div>
