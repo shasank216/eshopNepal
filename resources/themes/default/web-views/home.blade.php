@@ -59,40 +59,76 @@
                 letter-spacing: 0.0025em;
             }
 
-            .products {
+            .dealOfTheDayProducts {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.product {
+.dealOfTheDay{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-gap: 20px;
+    grid-gap: 20px; 
     width: 100%;
     max-width: 1200px;
-}
 
-.product-card {
-    border: none;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    /* transition: transform 0.2s ease-in-out; */
+}
+.product {
+    
+
+    /* ----------- Added  ---------- */
+    position: relative;
+
+    /* max-width: 290px; */
+    /* ----------- Added  ---------- */
 }
 
 .product-card {
     background-color: #f5f5f5;
     padding: 20px;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     text-align: center;
+
+    border: none;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    transition: transform 0.2s ease-in-out;
+}
+
+.product-card.large {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.discount-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: color-mix(in srgb, #FF3B3B, #fff 20%);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.discount-label.center {
+    top: 5%;
+    left: 31px;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    padding: 42px 82px;
+    font-size: 16px;
 }
 
 .product-category {
-    color: #888;
-    font-size: 14px;
+    color: #727272;
+    font-size: 16px;
+    font-weight: 400;
     margin-bottom: 5px;
 }
 
@@ -399,89 +435,202 @@
         </section>
 
         <!-- Deal of the Day -->
+        <!-- Deal of the day -->
+        
+    <!-- Deal of the day -->
         <!-- Top Left Product -->
-        {{-- <div class="products">
-            <div class="product">
-                <div class="product-card small">
-                    <!-- <div class="discount-label">On Sale -10%</div> -->
-                    <div class="product-category">CCTV</div>
-                    <h3>IP Hikvision DS-2CD123G0E</h3>
-                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
-                    <div class="price">
-                        <span class="new-price">$12.52</span>
-                        <span class="old-price">$13.89</span>
+        <section class="container rtl pt-4 bestSelling-section mb-5">
+            <nav class="navbar ">
+                <p style="font-size: 34px; font-weight: 600;">Deal Of The Day</p>
+                <span class="form-inline">
+                    <!-- <p style="float: right; letter-spacing: 5px;"><i class="fa-solid fa-less-than"></i></p>
+                    <p style="float: right;"><i class="fa-solid fa-greater-than"></i></p> -->
+                    <div class="arrow-container">
+                        <div class="arrow"><i class="fa-solid fa-chevron-left"></i></div>
+                        <div class="separator"></div>
+                        <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
                     </div>
-                    <button class="shop-now">Shop Now</button>
-                </div>
-
-                <!-- Main Center Product -->
-                <div class="product-card large">
-                    <!-- <div class="discount-label center">-20%</div> -->
-                    <div class="product-category">Laptop</div>
-                    <h3>MacBook Pro 13 inch M2 (2022) - 10GPU/8/512</h3>
-                    <p>16.2 inch, 3456 x 2234 Pixels, Apple M1 Pro, 32 GB SSD 512 GB, Apple M1, Multi-touch touchpad,
-                        English
-                        International Backlit Keyboard</p>
-                    <div class="rating">⭐⭐⭐⭐⭐ 120 reviews</div>
-                    <div class="price">
-                        <span class="new-price">$28.52</span>
-                        <span class="old-price">$45.89</span>
+                </span>
+            </nav>
+            <hr>
+            <div class="dealOfTheDayProducts mt-5">
+                <!-- <div class="product"> -->
+                <div class="dealOfTheDay">
+                    <div class="product-card">
+                        <div class="row">
+                            <div class="discount-label">On Sale -10%</div>
+        
+                            <div class="col-md-4">
+                                <!-- <img src="fjg.jpg" alt="testing"> -->
+                            </div>
+        
+                            <div class="col-md-8">
+                                <div class="small">
+                                    <div class="product-category">CCTV</div>
+                                    <h3 style="color: #1F3C74;">IP Hikvision DS-2CD123G0E</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
+                                    <div class="price">
+                                        <span class="new-price">$12.52</span>
+                                        <span class="old-price">$13.89</span>
+                                    </div>
+                                    <button class="shop-now">Shop Now</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="countdown">
-                        <div class="time">23 Days</div>
-                        <div class="time">12 Hours</div>
-                        <div class="time">23 Min</div>
-                        <div class="time">45 Sec</div>
+        
+                    <!-- Main Center Product -->
+                    <div class="product-card large">
+        
+                        <div class="row">
+                            <div class="discount-label center">-20%</div>
+        
+                            <div class="col-md-5">
+                                <!-- <img src="" alt="Hello"> -->
+                            </div>
+        
+                            <div class="col-md-7">
+                                <div class="product-category">Laptop</div>
+                                <h3 style="font-weight: 600; font-size: 20px; color: #1F3C74;">MacBook Pro 13 inch M2 (2022) -
+                                    10GPU/8/512</h3>
+                                <div class="rating">⭐⭐⭐⭐⭐ 120 reviews</div>
+                                <p style="font-weight: 400; font-size: 16px; color: #727272;">16.2 inch, 3456 x 2234 Pixels,
+                                    Apple M1 Pro, 32 GB SSD 512 GB, Apple M1, Multi-touch
+                                    touchpad,
+                                    English
+                                    International Backlit Keyboard
+                                </p>
+        
+                                <span class="color-box-small">
+                                    <div class="color-box first-box mx-1"></div>
+                                    <div class="color-box second-box mx-1"></div>
+                                    <div class="color-box third-box mx-1"></div>
+                                    <div class="color-box fourth-box mx-1"></div>
+                                </span>
+        
+                                <div class="price">
+                                    <span class="new-price">$28.52</span>
+                                    <span class="old-price">$45.89</span>
+                                </div>
+        
+                                <div class="countdown">
+                                    <div class="time">
+                                        <span class="number">23</span>
+                                        <span class="label">Days</span>
+                                    </div>
+                                    <div class="time">
+                                        <span class="number">12</span>
+                                        <span class="label">Hours</span>
+                                    </div>
+                                    <div class="time">
+                                        <span class="number">23</span>
+                                        <span class="label">Mins</span>
+                                    </div>
+                                    <div class="time">
+                                        <span class="number">43</span>
+                                        <span class="label">Secs</span>
+                                    </div>
+                                </div>
+        
+                                <div class="availability">Available: <span class="price">380</span></div>
+        
+                                <!-- Slider -->
+                                <div class="slider-container">
+                                    <div class="range">
+                                        <input type="range" name="" id="range1">
+                                    </div>
+                                </div>
+                                <!-- Slider -->
+        
+                                <button class="shop-now">Shop Now</button>
+        
+                                <div class="icons">
+                                    <button class="wishlist"><i class="fa fa-heart"></i></button>
+                                    <button class="compare"><i class="fa fa-exchange" aria-hidden="true"></i></button>
+                                    <button class="share"><i class="fa fa-eye"></i></button>
+                                </div>
+        
+        
+                            </div>
+                        </div>
                     </div>
-                    <div class="availability">Available: 380</div>
-                    <button class="shop-now">Shop Now</button>
-                    <div class="icons">
-                        <button class="wishlist"><i class="fa-regular fa-heart"></i></button>
-                        <button class="compare">⇄</button>
-                        <button class="share"><i class="fa-regular fa-eye"></i></button>
+        
+                    <!-- Top Right Product -->
+                    <div class="product-card">
+                        <div class="row">
+                            <div class="discount-label">On Sale -10%</div>
+        
+                            <div class="col-md-4">
+                                <!-- <img src="fjg.jpg" alt="testing"> -->
+                            </div>
+        
+                            <div class="col-md-8">
+                                <div class="small">
+                                    <div class="product-category">CCTV</div>
+                                    <h3 style="color: #1F3C74;">IP Hikvision DS-2CD123G0E</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
+                                    <div class="price">
+                                        <span class="new-price">$12.52</span>
+                                        <span class="old-price">$13.89</span>
+                                    </div>
+                                    <button class="shop-now">Shop Now</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Top Right Product -->
-                <div class="product-card small">
-                    <!-- <div class="discount-label">On Sale -20%</div> -->
-                    <div class="product-category">Mouse</div>
-                    <h3>Microsoft Surface Arc Mouse</h3>
-                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
-                    <div class="price">
-                        <span class="new-price">$12.02</span>
-                        <span class="old-price">$14.99</span>
+        
+                    <!-- Bottom Left Product -->
+                    <div class="product-card">
+                        <div class="row">
+                            <div class="discount-label">On Sale -10%</div>
+        
+                            <div class="col-md-4">
+                                <!-- <img src="fjg.jpg" alt="testing"> -->
+                            </div>
+        
+                            <div class="col-md-8">
+                                <div class="small">
+                                    <div class="product-category">CCTV</div>
+                                    <h3 style="color: #1F3C74;">IP Hikvision DS-2CD123G0E</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
+                                    <div class="price">
+                                        <span class="new-price">$12.52</span>
+                                        <span class="old-price">$13.89</span>
+                                    </div>
+                                    <button class="shop-now">Shop Now</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="shop-now">Shop Now</button>
-                </div>
-
-                <!-- Bottom Left Product -->
-                <div class="product-card small">
-                    <!-- <div class="discount-label">On Sale -30%</div> -->
-                    <div class="product-category">Smart Watch</div>
-                    <h3>Samsung Galaxy Watch 4 45mm</h3>
-                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
-                    <div class="price">
-                        <span class="new-price">$18.52</span>
-                        <span class="old-price">$32.00</span>
+        
+        
+                    <!-- Bottom Right Product -->
+                    <div class="product-card">
+                        <div class="row">
+                            <div class="discount-label">On Sale -10%</div>
+        
+                            <div class="col-md-4">
+                                <!-- <img src="fjg.jpg" alt="testing"> -->
+                            </div>
+        
+                            <div class="col-md-8">
+                                <div class="small">
+                                    <div class="product-category">CCTV</div>
+                                    <h3 style="color: #1F3C74;">IP Hikvision DS-2CD123G0E</h3>
+                                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
+                                    <div class="price">
+                                        <span class="new-price">$12.52</span>
+                                        <span class="old-price">$13.89</span>
+                                    </div>
+                                    <button class="shop-now">Shop Now</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="shop-now">Shop Now</button>
-                </div>
-
-                <!-- Bottom Right Product -->
-                <div class="product-card small">
-                    <!-- <div class="discount-label">On Sale -25%</div> -->
-                    <div class="product-category">Game</div>
-                    <h3>Sony Playstation VR CHB-2703</h3>
-                    <div class="rating">⭐⭐⭐⭐⭐ 32 reviews</div>
-                    <div class="price">
-                        <span class="new-price">$32.52</span>
-                        <span class="old-price">$43.89</span>
-                    </div>
-                    <button class="shop-now">Shop Now</button>
+        
                 </div>
             </div>
-        </div> --}}
+        </section>
         <!-- Deal of the Day Ends -->
 
 

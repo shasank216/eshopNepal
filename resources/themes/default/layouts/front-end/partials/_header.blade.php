@@ -265,91 +265,26 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex justify-content-between flex-wrap pt-2 bg-white">
-            <div class="nav_product ">
+        <div class="product_details px-5 d-flex flex-wrap pt-2 bg-white gap-2">
+            @foreach($categories as $key => $category)
+                @if ($key<10)
+                    <div class="nav_product">
+                        <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
+                            <img alt="{{ $category->name }}"
+                                src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}" width="64" height="64" style="height: 64px; width: 64px;">
+                            <div class="product_text">
+                                <p>{{Str::limit($category->name, 12)}}</p>
+                            </div>
+                        </a>
+                    </div>
+                @endif
+            @endforeach
+            {{-- <div class="nav_product ">
               <img src="image/product.png" width="50px" />
               <div class="product_text">
                 <p>Grocery</p>
               </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/product.png" width="50px" />
-              <div class="product_text">
-                <p>Grocery</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/product.png" width="50px" />
-              <div class="product_text">
-                <p>Grocery</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/product1.png" width="50px" />
-              <div class="product_text">
-                <p>Mobiles</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/img1.png" width="50px" />
-              <div class="product_text">
-                <p>Fashion</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/img2.png" width="50px" />
-              <div class="product_text">
-                <p>Electronics</p>
-              </div>
-            </div>
-            <div class="nav_product ">
-              <img src="image/img3.png" width="50px" />
-              <div class="product_text">
-                <p>Home</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img4.png" width="50px" />
-              <div class="product_text">
-                <p>Appliances</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img5.png" width="50px" />
-              <div class="product_text">
-                <p>Travel</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img6.png" width="50px" />
-              <div class="product_text">
-                <p>Top Offers</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img7.png" width="50px" />
-              <div class="product_text">
-                <p>Beauty, Toys & More</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img8.png" width="50px" />
-              <div class="product_text">
-                <p>Two Wheelers</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img8.png" width="50px" />
-              <div class="product_text">
-                <p>Two Wheelers</p>
-              </div>
-            </div>
-            <div class="nav_product">
-              <img src="image/img8.png" width="50px" />
-              <div class="product_text">
-                <p>Two Wheelers</p>
-              </div>
-            </div>
+            </div> --}}
     
         </div>
         <div class="navbar navbar-expand-md navbar-stuck-menu">

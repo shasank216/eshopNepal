@@ -8659,3 +8659,7 @@ input.form-control.fz-30 {
 .widget-list-link{
     color: #5C5C5C !important;
 }
+.product_text {
+    font-size: 14px;
+    font-weight: 500;
+}
