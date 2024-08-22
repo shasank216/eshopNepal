@@ -141,6 +141,7 @@ class WebController extends Controller
     public function all_brands(Request $request)
     {
         $brand_status = BusinessSetting::where(['type' => 'product_brand'])->value('value');
+        $categories = Category::all();
         session()->put('product_brand', $brand_status);
         if($brand_status == 1){
             $order_by = $request->order_by ?? 'desc';
@@ -149,7 +150,7 @@ class WebController extends Controller
                                     $query->where('name', 'LIKE', '%' . $request->search . '%');
                                 })->latest()->paginate(15)->appends(['order_by'=>$order_by, 'search'=>$request->search]);
 
-            return view(VIEW_FILE_NAMES['all_brands'], compact('brands'));
+            return view(VIEW_FILE_NAMES['all_brands'], compact('brands','categories'));
         }else{
             return redirect()->route('home');
         }
@@ -162,6 +163,7 @@ class WebController extends Controller
             Toastr::warning(translate('access_denied') . ' !!');
             return back();
         }
+        $categories = Category::all();
         $sellers = Shop::active()->with(['seller.product'])
             ->withCount(['products' => function ($query) {
                 $query->active();
@@ -262,13 +264,15 @@ class WebController extends Controller
         return view(VIEW_FILE_NAMES['all_stores_page'], [
             'sellers' => $sellers->paginate(12),
             'order_by' => $request['order_by'],
+            'categories' => $categories,
         ]);
     }
 
     public function seller_profile($id)
     {
         $seller_info = Seller::find($id);
-        return view('web-views.seller-profile', compact('seller_info'));
+        $categories = Category::all();
+        return view('web-views.seller-profile', compact('seller_info','categories'));
     }
 
     public function searched_products(Request $request)
@@ -670,6 +674,7 @@ class WebController extends Controller
             ['id' => strval($request->category_id)],
             ])
             ->paginate(12);
+        $categories = Category::all();    
         $shop = Shop::where('seller_id', $id)->first();
         if ($request['sort_by'] == null) {
             $request['sort_by'] = 'latest';
@@ -681,7 +686,7 @@ class WebController extends Controller
             ], 200);
         }
 
-        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop'))->with('seller_id', $id);
+        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories'))->with('seller_id', $id);
     }
 
     public function getQuickView(Request $request): JsonResponse

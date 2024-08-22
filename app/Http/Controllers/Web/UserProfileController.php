@@ -15,6 +15,7 @@ use App\Models\ProductCompare;
 use App\Models\RefundRequest;
 use App\Models\Review;
 use App\Models\Seller;
+use App\Models\Category;
 use App\Models\ShippingAddress;
 use App\Models\SupportTicket;
 use App\Models\Wishlist;
@@ -639,7 +640,10 @@ class UserProfileController extends Controller
 
     public function track_order()
     {
-        return view(VIEW_FILE_NAMES['tracking-page']);
+        $categories = Category::all();
+        return view(VIEW_FILE_NAMES['tracking-page'], [
+            'categories' => $categories,
+        ]);
     }
     public function track_order_wise_result(Request $request)
     {

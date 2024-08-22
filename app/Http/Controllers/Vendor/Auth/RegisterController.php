@@ -11,6 +11,7 @@ use App\Events\VendorRegistrationMailEvent;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Vendor\VendorAddRequest;
 use App\Services\ShopService;
+use App\Models\Category;
 use App\Services\VendorService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,7 +47,12 @@ class RegisterController extends BaseController
             Toastr::warning(translate('access_denied').'!!');
             return redirect('/');
         }
-        return view(VIEW_FILE_NAMES[Auth::VENDOR_REGISTRATION[VIEW]]);
+
+        $categories = Category::all();
+
+        return view(VIEW_FILE_NAMES[Auth::VENDOR_REGISTRATION[VIEW]], [
+            'categories' => $categories,
+        ]);
     }
     public function add(VendorAddRequest $request):JsonResponse
     {
