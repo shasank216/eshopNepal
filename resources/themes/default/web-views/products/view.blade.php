@@ -68,6 +68,170 @@
             }
         }
 
+        .checkbox-wrapper-48 {
+    --gray: #636e72;
+    --very-light-gray: #eee;
+    --light-gray: #9098A9;
+    --x-light-gray: #dfe6e9;
+    --gradient: linear-gradient(180deg, #1F3C74 0%, #1F3C74 100%);
+}
+
+.checkbox-wrapper-48 label {
+    font-size: 1.35em;
+}
+
+/* CORE STYLES */
+.checkbox-wrapper-48 input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    font: inherit;
+    border: 0.1em solid var(--light-gray);
+    margin-bottom: -0.125em;
+}
+
+/*.checkbox-wrapper-48 input[type=checkbox] {
+    border-radius: 0.25em;
+}*/
+
+.checkbox-wrapper-48 input:checked {
+    border-color: transparent;
+    background: var(--gradient) border-box;
+    box-shadow: 0 0 0 0.1em inset #fff;
+}
+
+.checkbox-wrapper-48 input:not(:checked):hover {
+    border-color: transparent;
+    background: linear-gradient(#fff, #fff) padding-box, var(--gradient) border-box;
+}
+
+.categories_text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-align: left;
+}
+
+.categories_span {
+    color: lightgray;
+}
+
+.header_categories {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    text-align: left;
+    color: #774EA5;
+}
+
+.purple-icon {
+    color: #774EA5;
+}
+
+.collapse-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.collapse-button .fa {
+    margin-left: 10px;
+}
+
+.slider-price-range {
+    background-color: #f0f0f0;
+    padding: 3px 1rem;
+    border-radius: 11px;
+    color: #774EA5;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.0025em;
+    text-align: left;
+}
+
+#priceRange {
+    appearance: none;
+    /* Standard */
+    -webkit-appearance: none;
+    /* Safari and Chrome */
+    -moz-appearance: none;
+    /* Firefox */
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, #8974F7 0%, #1F3C74 100%);
+    border: 1px solid rgba(255, 173, 155, 1);
+    border-radius: 5px;
+    outline: none;
+}
+
+#priceRange::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid rgba(255, 173, 155, 1);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#priceRange::-moz-range-thumb {
+    appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid rgba(255, 173, 155, 1);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.custom-checkbox {
+    display: none;
+    /* Hide default checkbox */
+}
+
+.custom-checkbox+.form-check-label {
+    display: inline-block;
+    width: 32px;
+    /* Set width and height */
+    height: 32px;
+    border: none;
+    /* Border for square */
+    border-radius: 3px;
+    /* Optional: rounded corners */
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-checkbox:checked+.form-check-label::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background: white;
+    /* Color for check mark */
+    border-radius: 2px;
+    /* Optional: rounded corners */
+    transform: translate(-50%, -50%);
+}
+
+.custom-checkbox:checked+.form-check-label {
+    border-color: transparent;
+}
+
+.rating_star span img{
+    width: 22px;
+    margin-bottom: 7px;
+}
+
     </style>
 @endpush
 
@@ -149,6 +313,36 @@
                             <i class="tio-clear"></i>
                         </button>
                     </div>
+                    
+                    <div class="form-group">
+                    <!-- Container for button and icon -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#checkboxCollapse"
+                            aria-expanded="true" aria-controls="checkboxCollapse">
+                            <h4 class="header_categories">{{translate('categories')}}</h4>
+                        </button>
+                        <span id="icon1" class="fa fa-minus collapse-button"></span>
+                    </div>
+
+                    <!-- Collapsible content (collapsed by default) -->
+                    <div class="collapse show" id="checkboxCollapse">
+                        @php($categories=\App\Utils\CategoryManager::parents())
+                        <div class="card card-body border-0 py-0">
+                            @foreach($categories as $category)
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center" data-link="{{ route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1]) }}">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">{{$category['name']}}
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+                    
                     <div class="pb-0">
                         <div class="text-center">
                             <div class="__cate-side-title border-bottom">
@@ -188,6 +382,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div>
                         <div class="text-center">
                             <div class="__cate-side-title pt-0">
@@ -357,4 +552,101 @@
 
 @push('script')
 <script src="{{ theme_asset(path: 'public/assets/front-end/js/product-view.js') }}"></script>
+
+<script>
+        $(document).ready(function () {
+            // Toggle icons for the first collapsible section
+            $('#checkboxCollapse').on('show.bs.collapse', function () {
+                $('#icon1').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon1').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon1').on('click', function () {
+                $('#checkboxCollapse').collapse('toggle');
+            });
+
+            // Toggle icons for the second collapsible section (Budget Slider)
+            $('#sliderCollapse').on('show.bs.collapse', function () {
+                $('#icon2').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon2').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon2').on('click', function () {
+                $('#sliderCollapse').collapse('toggle');
+            });
+
+            // Toggle icons for the third collapsible section (Brand Selection)
+            $('#brandCollapse').on('show.bs.collapse', function () {
+                $('#icon3').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon3').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon3').on('click', function () {
+                $('#brandCollapse').collapse('toggle');
+            });
+
+            // Toggle icons for the fourth collapsible section (Show More)
+            $('#moreCollapse').on('show.bs.collapse', function () {
+                $('#icon4').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon4').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon4').on('click', function () {
+                $('#moreCollapse').collapse('toggle');
+            });
+
+            // Toggle icons for the fifth collapsible section (Show More)
+            $('#colorCollapse').on('show.bs.collapse', function () {
+                $('#icon5').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon5').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon5').on('click', function () {
+                $('#colorCollapse').collapse('toggle');
+            });
+
+            // Toggle icons for the fifth collapsible section (Show More)
+            $('#internalstorage').on('show.bs.collapse', function () {
+                $('#icon6').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon6').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon6').on('click', function () {
+                $('#internalstorage').collapse('toggle');
+            });
+
+            // Toggle icons for the sixth collapsible section (Show More)
+            $('#condition').on('show.bs.collapse', function () {
+                $('#icon7').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon7').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon7').on('click', function () {
+                $('#condition').collapse('toggle');
+            });
+
+            // Toggle icons for the seventh collapsible section (Show More)
+            $('#rating').on('show.bs.collapse', function () {
+                $('#icon8').removeClass('fa-plus').addClass('fa-minus');
+            }).on('hide.bs.collapse', function () {
+                $('#icon8').removeClass('fa-minus').addClass('fa-plus');
+            });
+
+            $('#icon8').on('click', function () {
+                $('#rating').collapse('toggle');
+            });
+
+            // Update price range value dynamically
+            $('#priceRange').on('input', function () {
+                $('#priceValue').text(`$${$(this).val()}`);
+            });
+        });
+    </script>
 @endpush
