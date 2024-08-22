@@ -797,6 +797,7 @@ a {
 
 .page-footer {
     background: #183f56;
+    background: #e9ebf1;
 }
 
 .page-footer hr {
@@ -831,7 +832,7 @@ a {
     padding-top: 0;
     padding-bottom: 0;
     font-weight: 600;
-    font-size: 20px !important;
+    /* font-size: 20px !important;  */
     text-transform: uppercase;
 }
 
@@ -2366,9 +2367,9 @@ a {
     overflow: hidden;
 }
 
-.__inline-9 .widget-list-link {
+/* .__inline-9 .widget-list-link {
     color: white !important;
-}
+} */
 
 .__inline-9 .widget-list-link:hover {
     color: #5C5C5C !important;
@@ -8623,8 +8624,8 @@ input.form-control.fz-30 {
   }
   
   .signup h6 {
-    font-family: "Montserrat";
     font-size: 20px;
+    font-weight: 600;
     color: white;
   }
   
@@ -8637,9 +8638,8 @@ input.form-control.fz-30 {
   }
   
   .shopping h6 {
-    /* font-family: "Montserrat"; */
     font-size: 14px;
-    letter-spacing: 0.15%;
+    letter-spacing: 0.0015em;
     color: white;
     font-weight: 600;
   }
@@ -8674,3 +8674,99 @@ input.form-control.fz-30 {
     line-height: 16px !important;
     font-weight: 600;
 }
+
+
+/* footer */
+.footer-brand_desc {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0.005em;
+}
+
+.text-def {
+    color: #5C5C5C;
+}
+
+.footer-head {
+    font-size: 20px;
+    letter-spacing: 0.0015em;
+}
+
+.widget-list-link {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    color: #5C5C5C;
+}
+
+.widget-list-link img {
+    width: 163px;
+    height: 49.59px;
+}
+
+.f-32 {
+    font-size: 25px;
+}
+
+.hr {
+    height: 0.5px;
+    background-color: #898989;
+    width: 100%;
+}
+
+.footer-additional {
+    margin: 1.5rem 0;
+}
+
+.footer-additional-content {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.foot-bottom-head {
+    background: #fff;
+    padding: 8px 12px 8px 12px;
+    border-radius: 10px;
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer-bottom-content {
+    display: flex;
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+.foot-bottom-payment img {
+    width: 54px;
+    height: 33.99px;
+    border-radius: 5px;
+}
+
+.foot-bottom-copyright {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: 0.0125em;
+}
+/* footer ends */
+
+/* Search Page */
+.breadcrumb {
+    gap: 0.5rem;
+}
+.breadcrumb a, .breadcrumb i, .breadcrumb span {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #898989;
+}
+/* Search Page Ends */
