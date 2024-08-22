@@ -8769,4 +8769,15 @@ input.form-control.fz-30 {
     letter-spacing: 0.005em;
     color: #898989;
 }
+
+.search-page-header {
+    background: unset;
+    box-shadow: unset;
+    padding: 0;
+}
+
+.cz-sidebar {
+    background: unset;
+    border: unset;
+}
 /* Search Page Ends */

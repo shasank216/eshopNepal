@@ -94,6 +94,8 @@
                 <h5 class="font-semibold mb-1">{{translate(str_replace('_',' ',$data['data_from']))}} {{translate('products')}} {{ isset($data['brand_name']) ? '('.$data['brand_name'].')' : ''}}</h5>
                 <div><span class="view-page-item-count">{{$products->total()}}</span> {{translate('items_found')}}</div>
             </div> -->
+
+            {{--
             <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
                 <input hidden name="data_from" value="{{$data['data_from']}}">
                 <div class="sorting-item">
@@ -130,6 +132,7 @@
                     <i class="tio-filter"></i>
                 </div>
             </div>
+            --}}
         </div>
 
     </div>
