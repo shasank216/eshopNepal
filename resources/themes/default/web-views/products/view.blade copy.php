@@ -77,23 +77,10 @@
 
     <div class="container py-3" dir="{{Session::get('direction')}}">
         <div class="search-page-header">
-
-            <div class="breadcrumb">
-                <a href="{{ url('/') }}">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    Home
-                </a>
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-                <span>
-                    {{ isset($data['brand_name']) ? $data['brand_name'] : ''}}    
-                </span>
-            </div>
-
-            
-            <!-- <div>
+            <div>
                 <h5 class="font-semibold mb-1">{{translate(str_replace('_',' ',$data['data_from']))}} {{translate('products')}} {{ isset($data['brand_name']) ? '('.$data['brand_name'].')' : ''}}</h5>
                 <div><span class="view-page-item-count">{{$products->total()}}</span> {{translate('items_found')}}</div>
-            </div> -->
+            </div>
             <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
                 <input hidden name="data_from" value="{{$data['data_from']}}">
                 <div class="sorting-item">

@@ -500,12 +500,10 @@
             @endif
         </section>
 
-        <!-- Deal of the Day -->
-        <!-- Deal of the day -->
         
     <!-- Deal of the day -->
         <!-- Top Left Product -->
-        <section class="container rtl pt-4 bestSelling-section mb-5">
+        {{-- <section class="container rtl pt-4 bestSelling-section mb-5">
             <nav class="navbar ">
                 <p style="font-size: 34px; font-weight: 600;">Deal Of The Day</p>
                 <span class="form-inline">
@@ -696,7 +694,7 @@
         
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- Deal of the Day Ends -->
 
         {{-- Advertise section --}}
