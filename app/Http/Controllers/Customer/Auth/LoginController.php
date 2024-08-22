@@ -6,6 +6,7 @@ use App\Utils\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCompare;
 use App\Models\Wishlist;
+use App\Models\Category;
 use App\User;
 use App\Utils\CartManager;
 use Brian2694\Toastr\Facades\Toastr;
@@ -50,9 +51,10 @@ class LoginController extends Controller
     public function login()
     {
         session()->put('keep_return_url', url()->previous());
+        $categories = Category::all();
 
         if(theme_root_path() == 'default'){
-            return view('web-views.customer-views.auth.login');
+            return view('web-views.customer-views.auth.login', compact('categories'));
         }else{
             return redirect()->route('home');
         }

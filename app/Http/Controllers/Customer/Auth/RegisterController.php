@@ -8,6 +8,7 @@ use App\Http\Requests\Web\CustomerRegistrationRequest;
 use App\Models\BusinessSetting;
 use App\Models\PhoneOrEmailVerification;
 use App\Models\Wishlist;
+use App\Models\Category;
 use App\User;
 use App\Utils\CartManager;
 use App\Utils\Helpers;
@@ -34,7 +35,8 @@ class RegisterController extends Controller
     public function register(): View
     {
         session()->put('keep_return_url', url()->previous());
-        return view('web-views.customer-views.auth.register');
+        $categories = Category::all();
+        return view('web-views.customer-views.auth.register', compact('categories'));
     }
 
     public function submit(CustomerRegistrationRequest $request)
