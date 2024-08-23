@@ -181,8 +181,8 @@
 
                 <div class="actions">
                     <button class="action-btn"><i class="fa fa-heart"></i></button>
-                    <button class="action-btn"><i class="fa fa-sync-alt"></i></button>
-                    <button class="action-btn"><i class="fa fa-eye"></i></button>
+                    {{-- <button class="action-btn"><i class="fa fa-sync-alt"></i></button> --}}
+                    <a href="{{route('product',$product->slug)}}" class="action-btn"><i class="fa fa-eye"></i></a>
                 </div>
 
 
@@ -209,10 +209,9 @@
 
             <div class="">
                 <div class="gallery">
-                    <figure><img src="" alt="image"></figure>
-                    <figure><img src="" alt="image"></figure>
-                    <figure><img src="" alt="image"></figure>
-                    <figure><img src="" alt="image"></figure>
+                    @foreach ($product as $products)
+                    <figure><img src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/'.$product['thumbnail'], type: 'product') }}" alt="image"></figure>
+                    @endforeach
                 </div>
             </div>
         </div>
