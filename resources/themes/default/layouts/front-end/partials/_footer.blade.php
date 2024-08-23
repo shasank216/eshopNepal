@@ -299,18 +299,26 @@
                         </div>
                         <div class="footer-additional-content">
                             <div class="foot-bottom-head text-def">
-                                Information:
+                                Categories:
                             </div>
                             <div class="foot-bottom-content text-def">
-                                4G Mobiles / Smartphones / Samsung Mobiles / Micromax Mobiles
+                                @foreach($categories as $key => $category)
+                                    <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="text-def">
+                                        {{ $category->name }} /
+                                    </a>    
+                                @endforeach
                             </div>
                         </div>
                         <div class="footer-additional-content">
                             <div class="foot-bottom-head text-def">
-                                Information:
+                                Products:
                             </div>
                             <div class="foot-bottom-content text-def">
-                                4G Mobiles / Smartphones / Samsung Mobiles / Micromax Mobiles
+                                {{-- @foreach($latest_products as $key => $product)
+                                <a href="{{route('product',$product->slug)}}" class="text-def">
+                                    {{ $product->name }} /
+                                </a>
+                                @endforeach --}}
                             </div>
                         </div>
                     </div>
