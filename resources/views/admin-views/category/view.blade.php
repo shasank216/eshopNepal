@@ -53,7 +53,7 @@
 
                                         <select class="form-control" name="priority" id="" required>
                                             <option disabled selected>{{ translate('set_Priority') }}</option>
-                                            @for ($i = 0; $i <= 10; $i++)
+                                            @for ($i = 0; $i <= 15; $i++)
                                                 <option value="{{ $i}}">{{ $i}}</option>
                                             @endfor
                                         </select>

@@ -6,6 +6,7 @@ use App\Events\ChattingEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chatting;
 use App\Models\DeliveryMan;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\ProductCompare;
 use App\Models\Seller;
@@ -30,6 +31,7 @@ class ChattingController extends Controller
 
     public function chat_list(Request $request, $type)
     {
+        $categories = Category::all();
         if ($type == 'seller') {
             if ($request->has('id') && $request['id'] == 0) {
                 $lastChatting = Chatting::where(['user_id' => auth('customer')->id(), 'admin_id' => 0])
@@ -119,6 +121,7 @@ class ChattingController extends Controller
                     'last_chat' => $lastChatting,
                     'inhouseShop' => $inhouseShop,
                     'inhouseShopUnseenMessage' => $inhouseShopUnseenMessage,
+                    'categories' => $categories
                 ]);
             }
         } elseif ($type == 'delivery-man') {
@@ -166,12 +169,15 @@ class ChattingController extends Controller
                 return view(VIEW_FILE_NAMES['user_inbox'], [
                     'chattings' => $chattings,
                     'unique_shops' => $uniqueShops,
-                    'last_chat' => $lastChatting
+                    'last_chat' => $lastChatting,
+                    'categories' => $categories
                 ]);
             }
         }
 
-        return view(VIEW_FILE_NAMES['user_inbox']);
+        return view(VIEW_FILE_NAMES['user_inbox'],[
+            'categories' => $categories
+        ]);
 
     }
     public function messages(Request $request)

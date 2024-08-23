@@ -354,7 +354,7 @@ class WebController extends Controller
             Toastr::error(translate('invalid_access'));
             return redirect('/');
         }
-
+        $categories = Category::all();
         $response = self::checkValidationForCheckoutPages($request);
         if ($response['status'] == 0) {
             foreach ($response['message'] as $message) {
@@ -394,7 +394,8 @@ class WebController extends Controller
             'billing_input_by_customer' => $billingInputByCustomer,
             'default_location' => $defaultLocation,
             'shipping_addresses' => $shippingAddresses,
-            'billing_addresses' => $shippingAddresses
+            'billing_addresses' => $shippingAddresses,
+            'categories' => $categories
         ]);
     }
 
@@ -407,6 +408,8 @@ class WebController extends Controller
             }
             return $response['redirect'] ? redirect($response['redirect']) : redirect('/');
         }
+
+        $categories = Category::all();
 
         $cartItemGroupIDs = CartManager::get_cart_group_ids();
         $cartGroupList = Cart::whereIn('cart_group_id', $cartItemGroupIDs)->get()->groupBy('cart_group_id');
@@ -450,7 +453,8 @@ class WebController extends Controller
                 'myr' => $myr,
                 'payment_gateway_published_status' => $paymentGatewayPublishedStatus,
                 'payment_gateways_list' => payment_gateways(),
-                'offline_payment_methods' => $offlinePaymentMethods
+                'offline_payment_methods' => $offlinePaymentMethods,
+                'categories' => $categories
             ]);
         }
 
@@ -467,6 +471,7 @@ class WebController extends Controller
         $order_ids = [];
         $cart_group_ids = CartManager::get_cart_group_ids();
         $carts = Cart::whereIn('cart_group_id', $cart_group_ids)->get();
+        $categories = Category::all();
 
         $product_stock = CartManager::product_stock_check($carts);
         if(!$product_stock){
@@ -504,7 +509,7 @@ class WebController extends Controller
             CartManager::cart_clean();
 
 
-            return view(VIEW_FILE_NAMES['order_complete'], compact('order_ids'));
+            return view(VIEW_FILE_NAMES['order_complete'], compact('order_ids', 'categories'));
         }
 
         return back()->with('error', 'Something went wrong!');
@@ -519,6 +524,7 @@ class WebController extends Controller
         $order_ids = [];
         $cart_group_ids = CartManager::get_cart_group_ids();
         $carts = Cart::whereIn('cart_group_id', $cart_group_ids)->get();
+        $categories = Category::all();
 
         $product_stock = CartManager::product_stock_check($carts);
         if(!$product_stock){
@@ -566,11 +572,12 @@ class WebController extends Controller
         CartManager::cart_clean();
 
 
-        return view(VIEW_FILE_NAMES['order_complete'], compact('order_ids'));
+        return view(VIEW_FILE_NAMES['order_complete'], compact('order_ids', 'categories'));
     }
     public function checkout_complete_wallet(Request $request = null)
     {
         $cartTotal = CartManager::cart_grand_total();
+        $categories = Category::all();
         $user = Helpers::get_customer($request);
         if( $cartTotal > $user->wallet_balance)
         {
@@ -614,7 +621,7 @@ class WebController extends Controller
         if (session()->has('payment_mode') && session('payment_mode') == 'app') {
             return redirect()->route('payment-success');
         }
-        return view(VIEW_FILE_NAMES['order_complete'], compact('order_ids'));
+        return view(VIEW_FILE_NAMES['order_complete'], compact('order_ids', 'categories'));
     }
 
     public function order_placed(): View
@@ -624,6 +631,7 @@ class WebController extends Controller
 
     public function shop_cart(Request $request): View|RedirectResponse
     {
+        $categories = Category::all();
         if (
             (auth('customer')->check() && Cart::where(['customer_id' => auth('customer')->id()])->count() > 0)
             || (getWebConfig(name: 'guest_checkout') && session()->has('guest_id') && session('guest_id'))
@@ -659,7 +667,7 @@ class WebController extends Controller
                 $newSellers     =  $sellerList->sortByDesc('id')->take(12);
                 $topRatedShops =  $sellerList->where('rating_count', '!=', 0)->sortByDesc('average_rating')->take(12);
             }
-            return view(VIEW_FILE_NAMES['cart_list'], compact('topRatedShops', 'newSellers', 'currentDate', 'request'));
+            return view(VIEW_FILE_NAMES['cart_list'], compact('topRatedShops', 'newSellers', 'currentDate', 'request', 'categories'));
         }
         Toastr::info(translate('invalid_access'));
         return redirect('/');
@@ -856,6 +864,7 @@ class WebController extends Controller
     public function viewWishlist(Request $request): View
     {
         $brand_setting = BusinessSetting::where('type', 'product_brand')->first()->value;
+        $categories = Category::all();
 
         $wishlists = Wishlist::with([
             'productFullInfo',
@@ -873,7 +882,7 @@ class WebController extends Controller
         })
         ->where('customer_id', auth('customer')->id())->paginate(15);
 
-        return view(VIEW_FILE_NAMES['account_wishlist'], compact('wishlists', 'brand_setting'));
+        return view(VIEW_FILE_NAMES['account_wishlist'], compact('wishlists', 'brand_setting', 'categories'));
     }
 
     public function storeWishlist(Request $request)

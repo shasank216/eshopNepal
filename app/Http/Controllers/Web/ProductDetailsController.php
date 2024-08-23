@@ -16,6 +16,7 @@ use App\Models\Review;
 use App\Models\Seller;
 use App\Models\Tag;
 use App\Models\Wishlist;
+use App\Models\Category;
 use App\Repositories\DealOfTheDayRepository;
 use App\Repositories\WishlistRepository;
 use App\Traits\ProductTrait;
@@ -111,6 +112,7 @@ class ProductDetailsController extends Controller
                 dataLimit: 12,
                 offset: 1
             );
+            $categories = Category::all();
             $dealOfTheDay = $this->dealOfTheDayRepo->getFirstWhere(['product_id' => $product['id'], 'status' => 1]);
             $currentDate = date('Y-m-d');
             $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
@@ -127,7 +129,7 @@ class ProductDetailsController extends Controller
             return view(VIEW_FILE_NAMES['products_details'], compact('product', 'countWishlist', 'countOrder', 'relatedProducts',
                 'dealOfTheDay', 'currentDate', 'sellerVacationStartDate', 'sellerVacationEndDate', 'sellerTemporaryClose',
                 'inHouseVacationStartDate', 'inHouseVacationEndDate', 'inHouseVacationStatus', 'inHouseTemporaryClose', 'overallRating',
-                'wishlistStatus', 'productReviews', 'rating', 'totalReviews', 'productsForReview', 'moreProductFromSeller', 'decimalPointSettings'));
+                'wishlistStatus', 'productReviews', 'rating', 'totalReviews', 'productsForReview', 'moreProductFromSeller', 'decimalPointSettings', 'categories'));
         }
 
         Toastr::error(translate('not_found'));
