@@ -1,28 +1,34 @@
 @extends('layouts.front-end.app')
 
-@section('title',translate($data['data_from']).' '.translate('products'))
+@section('title', translate($data['data_from']) . ' ' . translate('products'))
 
 @push('css_or_js')
-    <meta property="og:image" content="{{dynamicStorage(path: 'storage/app/public/company')}}/{{$web_config['web_logo']}}"/>
-    <meta property="og:title" content="Products of {{$web_config['name']}} "/>
-    <meta property="og:url" content="{{env('APP_URL')}}">
+    <meta property="og:image"
+        content="{{ dynamicStorage(path: 'storage/app/public/company') }}/{{ $web_config['web_logo'] }}" />
+    <meta property="og:title" content="Products of {{ $web_config['name'] }} " />
+    <meta property="og:url" content="{{ env('APP_URL') }}">
     <meta property="og:description"
-          content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
+        content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)), 0, 160) }}">
 
-    <meta property="twitter:card" content="{{dynamicStorage(path: 'storage/app/public/company')}}/{{$web_config['web_logo']}}"/>
-    <meta property="twitter:title" content="Products of {{$web_config['name']}}"/>
-    <meta property="twitter:url" content="{{env('APP_URL')}}">
+    <meta property="twitter:card"
+        content="{{ dynamicStorage(path: 'storage/app/public/company') }}/{{ $web_config['web_logo'] }}" />
+    <meta property="twitter:title" content="Products of {{ $web_config['name'] }}" />
+    <meta property="twitter:url" content="{{ env('APP_URL') }}">
     <meta property="twitter:description"
-          content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
+        content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)), 0, 160) }}">
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" rel="stylesheet">
+
 
     <style>
         .for-count-value {
-        {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 0.6875 rem;;
+            {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0.6875 rem;
+            ;
         }
 
         .for-count-value {
 
-        {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 0.6875 rem;
+            {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0.6875 rem;
         }
 
         .for-brand-hover:hover {
@@ -30,7 +36,7 @@
         }
 
         .for-hover-label:hover {
-            color: var(--web-primary)!important;
+            color: var(--web-primary) !important;
         }
 
         .page-item.active .page-link {
@@ -38,25 +44,25 @@
         }
 
         .for-sorting {
-            padding- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 9px;
+            padding- {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 9px;
         }
 
         .sidepanel {
-        {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 0;
+            {{ Session::get('direction') === 'rtl' ? 'right' : 'left' }}: 0;
         }
 
         .sidepanel .closebtn {
-        {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 25 px;
+            {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 25 px;
         }
 
         @media (max-width: 360px) {
             .for-sorting-mobile {
-                margin- {{Session::get('direction') === "rtl" ? 'left' : 'right'}}: 0% !important;
+                margin- {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0% !important;
             }
 
             .for-mobile {
 
-                margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 10% !important;
+                margin- {{ Session::get('direction') === 'rtl' ? 'right' : 'left' }}: 10% !important;
             }
 
         }
@@ -64,174 +70,199 @@
         @media (max-width: 500px) {
             .for-mobile {
 
-                margin- {{Session::get('direction') === "rtl" ? 'right' : 'left'}}: 27%;
+                margin- {{ Session::get('direction') === 'rtl' ? 'right' : 'left' }}: 27%;
             }
         }
 
         .checkbox-wrapper-48 {
-    --gray: #636e72;
-    --very-light-gray: #eee;
-    --light-gray: #9098A9;
-    --x-light-gray: #dfe6e9;
-    --gradient: linear-gradient(180deg, #1F3C74 0%, #1F3C74 100%);
-}
+            --gray: #636e72;
+            --very-light-gray: #eee;
+            --light-gray: #9098A9;
+            --x-light-gray: #dfe6e9;
+            --gradient: linear-gradient(180deg, #1F3C74 0%, #1F3C74 100%);
+        }
 
-.checkbox-wrapper-48 label {
-    font-size: 1.35em;
-}
+        .checkbox-wrapper-48 label {
+            font-size: 1.35em;
+        }
 
-/* CORE STYLES */
-.checkbox-wrapper-48 input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 1em;
-    height: 1em;
-    font: inherit;
-    border: 0.1em solid var(--light-gray);
-    margin-bottom: -0.125em;
-}
+        /* CORE STYLES */
+        .checkbox-wrapper-48 input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 1em;
+            height: 1em;
+            font: inherit;
+            border: 0.1em solid var(--light-gray);
+            margin-bottom: -0.125em;
+        }
 
-/*.checkbox-wrapper-48 input[type=checkbox] {
-    border-radius: 0.25em;
-}*/
+        /*.checkbox-wrapper-48 input[type=checkbox] {
+            border-radius: 0.25em;
+        }*/
 
-.checkbox-wrapper-48 input:checked {
-    border-color: transparent;
-    background: var(--gradient) border-box;
-    box-shadow: 0 0 0 0.1em inset #fff;
-}
+        .checkbox-wrapper-48 input:checked {
+            border-color: transparent;
+            background: var(--gradient) border-box;
+            box-shadow: 0 0 0 0.1em inset #fff;
+        }
 
-.checkbox-wrapper-48 input:not(:checked):hover {
-    border-color: transparent;
-    background: linear-gradient(#fff, #fff) padding-box, var(--gradient) border-box;
-}
+        .checkbox-wrapper-48 input:not(:checked):hover {
+            border-color: transparent;
+            background: linear-gradient(#fff, #fff) padding-box, var(--gradient) border-box;
+        }
 
-.categories_text {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0.005em;
-    text-align: left;
-}
+        .categories_text {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0.005em;
+            text-align: left;
+        }
 
-.categories_span {
-    color: lightgray;
-}
+        .categories_span {
+            color: lightgray;
+        }
 
-.header_categories {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 24px;
-    letter-spacing: 0.0015em;
-    text-align: left;
-    color: #774EA5;
-}
+        .header_categories {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 24px;
+            letter-spacing: 0.0015em;
+            text-align: left;
+            color: #774EA5;
+        }
 
-.purple-icon {
-    color: #774EA5;
-}
+        .purple-icon {
+            color: #774EA5;
+        }
 
-.collapse-button {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
+        .collapse-button {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
 
-.collapse-button .fa {
-    margin-left: 10px;
-}
+        .collapse-button .fa {
+            margin-left: 10px;
+        }
 
-.slider-price-range {
-    background-color: #f0f0f0;
-    padding: 3px 1rem;
-    border-radius: 11px;
-    color: #774EA5;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: 0.0025em;
-    text-align: left;
-}
+        .slider-price-range {
+            background-color: #f0f0f0;
+            padding: 3px 1rem;
+            border-radius: 11px;
+            color: #774EA5;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            letter-spacing: 0.0025em;
+            text-align: left;
+        }
 
-#priceRange {
-    appearance: none;
-    /* Standard */
-    -webkit-appearance: none;
-    /* Safari and Chrome */
-    -moz-appearance: none;
-    /* Firefox */
-    width: 100%;
-    height: 8px;
-    background: linear-gradient(90deg, #8974F7 0%, #1F3C74 100%);
-    border: 1px solid rgba(255, 173, 155, 1);
-    border-radius: 5px;
-    outline: none;
-}
+        #priceRange {
+            appearance: none;
+            /* Standard */
+            -webkit-appearance: none;
+            /* Safari and Chrome */
+            -moz-appearance: none;
+            /* Firefox */
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #8974F7 0%, #1F3C74 100%);
+            border: 1px solid rgba(255, 173, 155, 1);
+            border-radius: 5px;
+            outline: none;
+        }
 
-#priceRange::-webkit-slider-thumb {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border: 2px solid rgba(255, 173, 155, 1);
-    border-radius: 50%;
-    cursor: pointer;
-}
+        #priceRange::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 2px solid rgba(255, 173, 155, 1);
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-#priceRange::-moz-range-thumb {
-    appearance: none;
-    -moz-appearance: none;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border: 2px solid rgba(255, 173, 155, 1);
-    border-radius: 50%;
-    cursor: pointer;
-}
+        #priceRange::-moz-range-thumb {
+            appearance: none;
+            -moz-appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 2px solid rgba(255, 173, 155, 1);
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-.custom-checkbox {
-    display: none;
-    /* Hide default checkbox */
-}
+        .custom-checkbox {
+            display: none;
+            /* Hide default checkbox */
+        }
 
-.custom-checkbox+.form-check-label {
-    display: inline-block;
-    width: 32px;
-    /* Set width and height */
-    height: 32px;
-    border: none;
-    /* Border for square */
-    border-radius: 3px;
-    /* Optional: rounded corners */
-    position: relative;
-    cursor: pointer;
-}
+        .custom-checkbox+.form-check-label {
+            display: inline-block;
+            width: 32px;
+            /* Set width and height */
+            height: 32px;
+            border: none;
+            /* Border for square */
+            border-radius: 3px;
+            /* Optional: rounded corners */
+            position: relative;
+            cursor: pointer;
+        }
 
-.custom-checkbox:checked+.form-check-label::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-    background: white;
-    /* Color for check mark */
-    border-radius: 2px;
-    /* Optional: rounded corners */
-    transform: translate(-50%, -50%);
-}
+        .custom-checkbox:checked+.form-check-label::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: white;
+            /* Color for check mark */
+            border-radius: 2px;
+            /* Optional: rounded corners */
+            transform: translate(-50%, -50%);
+        }
 
-.custom-checkbox:checked+.form-check-label {
-    border-color: transparent;
-}
+        .custom-checkbox:checked+.form-check-label {
+            border-color: transparent;
+        }
 
-.rating_star span img{
-    width: 22px;
-    margin-bottom: 7px;
-}
+        .rating_star span img {
+            width: 22px;
+            margin-bottom: 7px;
+        }
 
+        .noUi-target, .noUi-connects {
+            height: 6px;
+        }
+
+        .noUi-horizontal .noUi-handle, .noUi-touch-area {
+            width: 18.48px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .noUi-touch-area {
+            background: #1F3C74;
+        }
+
+        .noUi-handle:after, .noUi-handle:before {
+            background: unset !important;
+        }
+
+        .noUi-connect {
+            background: linear-gradient(90deg, #8974F7 0%, #1F3C74 100%);
+        }
+
+        .noUi-tooltip {
+            display: none;
+        }
     </style>
 @endpush
 
@@ -239,7 +270,7 @@
 
     @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
 
-    <div class="container py-3" dir="{{Session::get('direction')}}">
+    <div class="container py-3" dir="{{ Session::get('direction') }}">
         <div class="search-page-header">
 
             <div class="breadcrumb">
@@ -249,15 +280,15 @@
                 </a>
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
                 <span>
-                    {{ isset($data['brand_name']) ? $data['brand_name'] : ''}}    
+                    {{ isset($data['brand_name']) ? $data['brand_name'] : '' }}
                 </span>
             </div>
 
-            
+
             <!-- <div>
-                <h5 class="font-semibold mb-1">{{translate(str_replace('_',' ',$data['data_from']))}} {{translate('products')}} {{ isset($data['brand_name']) ? '('.$data['brand_name'].')' : ''}}</h5>
-                <div><span class="view-page-item-count">{{$products->total()}}</span> {{translate('items_found')}}</div>
-            </div> -->
+                        <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                        <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                    </div> -->
 
             {{--
             <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
@@ -301,92 +332,210 @@
 
     </div>
 
-    <div class="container pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{Session::get('direction')}}">
+    <div class="container pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
         <div class="row">
             <aside
-                class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{Session::get('direction') === "rtl" ? 'pl-2' : 'pr-2'}}"
+                class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{ Session::get('direction') === 'rtl' ? 'pl-2' : 'pr-2' }}"
                 id="SearchParameters">
                 <div class="cz-sidebar __inline-35" id="shop-sidebar">
                     <div class="cz-sidebar-header bg-light">
-                        <button class="close ms-auto"
-                                type="button" data-dismiss="sidebar" aria-label="Close">
+                        <button class="close ms-auto" type="button" data-dismiss="sidebar" aria-label="Close">
                             <i class="tio-clear"></i>
                         </button>
                     </div>
-                    
+
+                    <!-- Categories -->
                     <div class="form-group">
-                    <!-- Container for button and icon -->
-                    <div class="d-flex justify-content-between align-items-center">
-                        <button class="btn" type="button" data-toggle="collapse" data-target="#checkboxCollapse"
-                            aria-expanded="true" aria-controls="checkboxCollapse">
-                            <h4 class="header_categories">{{translate('categories')}}</h4>
-                        </button>
-                        <span id="icon1" class="fa fa-minus collapse-button"></span>
-                    </div>
+                        <!-- Container for button and icon -->
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#checkboxCollapse"
+                                aria-expanded="true" aria-controls="checkboxCollapse">
+                                <h4 class="header_categories">{{ translate('categories') }}</h4>
+                            </button>
+                            <span id="icon1" class="fa fa-minus collapse-button"></span>
+                        </div>
 
-                    <!-- Collapsible content (collapsed by default) -->
-                    <div class="collapse show" id="checkboxCollapse">
-                        @php($categories=\App\Utils\CategoryManager::parents())
-                        <div class="card card-body border-0 py-0">
-                            @foreach($categories as $category)
-                                <div class="checkbox-wrapper-48">
-                                    <label class="d-flex align-items-center" data-link="{{ route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1]) }}">
-                                        <input type="checkbox" class="mr-2 " name="buy_phone">
-                                        <p class="m-0 categories_text">{{$category['name']}}
-                                            <span class="categories_span">(10)</span>
-                                        </p>
-                                    </label>
-                                </div>
-                            @endforeach
+                        <!-- Collapsible content (collapsed by default) -->
+                        <div class="collapse show" id="checkboxCollapse">
+                            @php($categories = \App\Utils\CategoryManager::parents())
+                            <div class="card card-body border-0 py-0">
+                                @foreach ($categories as $category)
+                                    <div class="checkbox-wrapper-48">
+                                        <label class="d-flex align-items-center"
+                                            data-link="{{ route('products', ['id' => $category['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                            <input type="checkbox" class="mr-2 " name="buy_phone">
+                                            <p class="m-0 categories_text">{{ $category['name'] }}
+                                                <span class="categories_span">(10)</span>
+                                            </p>
+                                        </label>
+                                    </div>
+                                @endforeach
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                    
+                    <!-- Categories Ends -->
+
+                    <hr>
+
+                    <!-- Budget -->
+                    <div class="form-group mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#sliderCollapse"
+                                aria-expanded="true" aria-controls="sliderCollapse">
+                                <h4 class="header_categories">Budget</h4>
+                            </button>
+                            <span id="icon2" class="fa fa-minus collapse-button purple-icon"></span>
+                        </div>
+                        <div class="collapse show" id="sliderCollapse">
+                            <div class="card card-body border-0 p-0">
+                                <div class="container slider-container">
+                                    <div class="slider-labels d-flex justify-content-between">
+                                        <span class="slider-price-range">Min: $<span id="minPrice">10</span></span>
+                                        <span class="slider-price-range">Max: $<span id="maxPrice">10000</span></span>
+                                    </div>
+                                    <div id="priceSlider" class="mt-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Budget Ends -->
+
+                    <!-- Brand -->
+                    <ul id="lista1" class="__brands-cate-wrap" data-simplebar
+                                    data-simplebar-auto-hide="false">
+                                    @foreach (\App\Utils\BrandManager::get_active_brands() as $brand)
+                                        <div class="brand mt-2 for-brand-hover {{ Session::get('direction') === 'rtl' ? 'mr-2' : '' }}"
+                                            id="brand">
+                                            <li class="flex-between __inline-39 get-view-by-onclick"
+                                                data-link="{{ route('products', ['id' => $brand['id'], 'data_from' => 'brand', 'page' => 1]) }}">
+                                                <div class="text-start">
+                                                    {{ $brand['name'] }}
+                                                </div>
+                                                <div class="__brands-cate-badge">
+                                                    <span>
+                                                        {{ $brand['brand_products_count'] }}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    @endforeach
+                                </ul>
+
+                    <div class="form-group mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#brandCollapse"
+                                aria-expanded="false" aria-controls="brandCollapse">
+                                <h4 class="header_categories">Brand</h4>
+                            </button>
+                            <span id="icon3" class="fa fa-plus collapse-button purple-icon"></span>
+                        </div>
+                        <div class="collapse show" id="brandCollapse">
+                            <div class="card card-body border-0 py-1">
+
+                                @foreach (\App\Utils\BrandManager::get_active_brands() as $brand)
+                                    <div class="checkbox-wrapper-48">
+                                        <label class="d-flex align-items-center">
+                                            <input type="checkbox" class="mr-2 " name="buy_phone">
+                                            <p class="m-0 categories_text">
+                                                {{ $brand['name'] }}
+                                                <span class="categories_span">
+                                                    ({{ $brand['brand_products_count'] }})
+                                                </span>
+                                            </p>
+                                        </label>
+                                    </div>
+                                @endforeach
+    
+                                <!--Show More Starts-->
+                                <div class="form-group mt-2">
+                                    <div class="d-flex align-items-center">
+                                        <a class="" style="text-decoration: underline; color: #1F3C74;" type="button"
+                                            data-toggle="collapse" data-target="#moreCollapse" aria-expanded="false"
+                                            aria-controls="moreCollapse">
+                                            Show More
+                                        </a>
+                                        <!--<span id="icon4" class="fas fa-plus collapse-button"></span>-->
+                                    </div>
+                                    <div class="collapse mt-3" id="moreCollapse">
+                                        <div class="card card-body border-0 p-0">
+                                            <!-- Additional content goes here -->
+                                            <div class="checkbox-wrapper-48">
+                                                <label class="d-flex align-items-center">
+                                                    <input type="checkbox" class="mr-2 " name="buy_phone">
+                                                    <p class="m-0 categories_text">Xiaomi
+                                                        <span class="categories_span">(10)</span>
+                                                    </p>
+                                                </label>
+                                            </div>
+    
+                                            <div class="checkbox-wrapper-48">
+                                                <label class="d-flex align-items-center">
+                                                    <input type="checkbox" class="mr-2 " name="buy_phone">
+                                                    <p class="m-0 categories_text">Honor
+                                                        <span class="categories_span">(10)</span>
+                                                    </p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Show More Ends-->
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Brand Ends -->
+
+
                     <div class="pb-0">
                         <div class="text-center">
                             <div class="__cate-side-title border-bottom">
-                                <span class="widget-title font-semibold">{{translate('filter')}} </span>
+                                <span class="widget-title font-semibold">{{ translate('filter') }} </span>
                             </div>
                             <div class="__p-25-10 w-100 pt-4">
                                 <label class="w-100 opacity-75 text-nowrap for-sorting d-block mb-0 ps-0" for="sorting">
                                     <select class="form-control custom-select" id="searchByFilterValue">
-                                        <option selected disabled>{{translate('choose')}}</option>
+                                        <option selected disabled>{{ translate('choose') }}</option>
                                         <option
-                                            value="{{route('products',['id'=> $data['id'],'data_from'=>'best-selling','page'=>1])}}" {{isset($data['data_from'])!=null?$data['data_from']=='best-selling'?'selected':'':''}}>{{translate('best_selling_product')}}</option>
+                                            value="{{ route('products', ['id' => $data['id'], 'data_from' => 'best-selling', 'page' => 1]) }}"
+                                            {{ isset($data['data_from']) != null ? ($data['data_from'] == 'best-selling' ? 'selected' : '') : '' }}>
+                                            {{ translate('best_selling_product') }}</option>
                                         <option
-                                            value="{{route('products',['id'=> $data['id'],'data_from'=>'top-rated','page'=>1])}}" {{isset($data['data_from'])!=null?$data['data_from']=='top-rated'?'selected':'':''}}>{{translate('top_rated')}}</option>
+                                            value="{{ route('products', ['id' => $data['id'], 'data_from' => 'top-rated', 'page' => 1]) }}"
+                                            {{ isset($data['data_from']) != null ? ($data['data_from'] == 'top-rated' ? 'selected' : '') : '' }}>
+                                            {{ translate('top_rated') }}</option>
                                         <option
-                                            value="{{route('products',['id'=> $data['id'],'data_from'=>'most-favorite','page'=>1])}}" {{isset($data['data_from'])!=null?$data['data_from']=='most-favorite'?'selected':'':''}}>{{translate('most_favorite')}}</option>
+                                            value="{{ route('products', ['id' => $data['id'], 'data_from' => 'most-favorite', 'page' => 1]) }}"
+                                            {{ isset($data['data_from']) != null ? ($data['data_from'] == 'most-favorite' ? 'selected' : '') : '' }}>
+                                            {{ translate('most_favorite') }}</option>
                                         <option
-                                            value="{{route('products',['id'=> $data['id'],'data_from'=>'featured_deal','page'=>1])}}" {{isset($data['data_from'])!=null?$data['data_from']=='featured_deal'?'selected':'':''}}>{{translate('featured_deal')}}</option>
+                                            value="{{ route('products', ['id' => $data['id'], 'data_from' => 'featured_deal', 'page' => 1]) }}"
+                                            {{ isset($data['data_from']) != null ? ($data['data_from'] == 'featured_deal' ? 'selected' : '') : '' }}>
+                                            {{ translate('featured_deal') }}</option>
                                     </select>
                                 </label>
                             </div>
 
                             <div class="__p-25-10 w-100 pt-0 d-lg-none">
                                 <form id="search-form" action="{{ route('products') }}" method="GET">
-                                    <input hidden name="data_from" value="{{$data['data_from']}}">
+                                    <input hidden name="data_from" value="{{ $data['data_from'] }}">
                                     <select class="form-control product-list-filter-on-viewpage">
-                                        <option value="latest">{{translate('latest')}}</option>
-                                        <option
-                                            value="low-high">{{translate('low_to_High_Price')}} </option>
-                                        <option
-                                            value="high-low">{{translate('High_to_Low_Price')}}</option>
-                                        <option
-                                            value="a-z">{{translate('A_to_Z_Order')}}</option>
-                                        <option
-                                            value="z-a">{{translate('Z_to_A_Order')}}</option>
+                                        <option value="latest">{{ translate('latest') }}</option>
+                                        <option value="low-high">{{ translate('low_to_High_Price') }} </option>
+                                        <option value="high-low">{{ translate('High_to_Low_Price') }}</option>
+                                        <option value="a-z">{{ translate('A_to_Z_Order') }}</option>
+                                        <option value="z-a">{{ translate('Z_to_A_Order') }}</option>
                                     </select>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div>
                         <div class="text-center">
                             <div class="__cate-side-title pt-0">
-                                <span class="widget-title font-semibold">{{translate('price')}} </span>
+                                <span class="widget-title font-semibold">{{ translate('price') }} </span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center __cate-side-price">
@@ -394,23 +543,24 @@
                                     <input
                                         class="bg-white cz-filter-search form-control form-control-sm appended-form-control"
                                         type="number" value="0" min="0" max="1000000" id="min_price"
-                                        placeholder="{{ translate('min')}}">
+                                        placeholder="{{ translate('min') }}">
 
                                 </div>
                                 <div class="__w-10p">
-                                    <p class="m-0">{{translate('to')}}</p>
+                                    <p class="m-0">{{ translate('to') }}</p>
                                 </div>
                                 <div class="__w-35p">
                                     <input value="100" min="100" max="1000000"
-                                           class="bg-white cz-filter-search form-control form-control-sm appended-form-control"
-                                           type="number" id="max_price" placeholder="{{ translate('max')}}">
+                                        class="bg-white cz-filter-search form-control form-control-sm appended-form-control"
+                                        type="number" id="max_price" placeholder="{{ translate('max') }}">
 
                                 </div>
 
                                 <div class="d-flex justify-content-center align-items-center __number-filter-btn">
 
                                     <a class="action-search-products-by-price">
-                                        <i class="__inline-37 czi-arrow-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"></i>
+                                        <i
+                                            class="__inline-37 czi-arrow-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}"></i>
                                     </a>
 
                                 </div>
@@ -418,11 +568,11 @@
                         </div>
                     </div>
 
-                    @if($web_config['brand_setting'])
+                    @if ($web_config['brand_setting'])
                         <div>
                             <div class="text-center">
                                 <div class="__cate-side-title">
-                                    <span class="widget-title font-semibold">{{translate('brands')}}</span>
+                                    <span class="widget-title font-semibold">{{ translate('brands') }}</span>
                                 </div>
                                 <div class="__cate-side-price pb-3">
                                     <div class="input-group-overlay input-group-sm">
@@ -430,20 +580,19 @@
                                             class="__inline-38 cz-filter-search form-control form-control-sm appended-form-control"
                                             type="text" id="search-brand">
                                         <div class="input-group-append-overlay">
-                                        <span class="input-group-text">
-                                            <i class="czi-search"></i>
-                                        </span>
+                                            <span class="input-group-text">
+                                                <i class="czi-search"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                                 <ul id="lista1" class="__brands-cate-wrap" data-simplebar
                                     data-simplebar-auto-hide="false">
-                                    @foreach(\App\Utils\BrandManager::get_active_brands() as $brand)
-                                        <div
-                                            class="brand mt-2 for-brand-hover {{Session::get('direction') === "rtl" ? 'mr-2' : ''}}"
+                                    @foreach (\App\Utils\BrandManager::get_active_brands() as $brand)
+                                        <div class="brand mt-2 for-brand-hover {{ Session::get('direction') === 'rtl' ? 'mr-2' : '' }}"
                                             id="brand">
                                             <li class="flex-between __inline-39 get-view-by-onclick"
-                                                data-link="{{ route('products',['id'=> $brand['id'],'data_from'=>'brand','page'=>1]) }}">
+                                                data-link="{{ route('products', ['id' => $brand['id'], 'data_from' => 'brand', 'page' => 1]) }}">
                                                 <div class="text-start">
                                                     {{ $brand['name'] }}
                                                 </div>
@@ -463,56 +612,53 @@
                     <div class="mt-3 __cate-side-arrordion">
                         <div>
                             <div class="text-center __cate-side-title">
-                                <span class="widget-title font-semibold">{{translate('categories')}}</span>
+                                <span class="widget-title font-semibold">{{ translate('categories') }}</span>
                             </div>
-                            @php($categories=\App\Utils\CategoryManager::parents())
+                            @php($categories = \App\Utils\CategoryManager::parents())
                             <div class="accordion mt-n1 __cate-side-price" id="shop-categories">
-                                @foreach($categories as $category)
+                                @foreach ($categories as $category)
                                     <div class="menu--caret-accordion">
                                         <div class="card-header flex-between">
                                             <div>
                                                 <label class="for-hover-label cursor-pointer get-view-by-onclick"
-                                                       data-link="{{ route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1]) }}">
-                                                    {{$category['name']}}
+                                                    data-link="{{ route('products', ['id' => $category['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                                    {{ $category['name'] }}
                                                 </label>
                                             </div>
                                             <div class="px-2 cursor-pointer menu--caret">
                                                 <strong class="pull-right for-brand-hover">
-                                                    @if($category->childes->count()>0)
+                                                    @if ($category->childes->count() > 0)
                                                         <i class="tio-next-ui fs-13"></i>
                                                     @endif
                                                 </strong>
                                             </div>
                                         </div>
-                                        <div
-                                            class="card-body p-0 ms-2 d--none"
-                                            id="collapse-{{$category['id']}}">
-                                            @foreach($category->childes as $child)
+                                        <div class="card-body p-0 ms-2 d--none" id="collapse-{{ $category['id'] }}">
+                                            @foreach ($category->childes as $child)
                                                 <div class="menu--caret-accordion">
                                                     <div class="for-hover-label card-header flex-between">
                                                         <div>
                                                             <label class="cursor-pointer get-view-by-onclick"
-                                                                   data-link="{{ route('products',['id'=> $child['id'],'data_from'=>'category','page'=>1]) }}">
-                                                                {{$child['name']}}
+                                                                data-link="{{ route('products', ['id' => $child['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                                                {{ $child['name'] }}
                                                             </label>
                                                         </div>
                                                         <div class="px-2 cursor-pointer menu--caret">
                                                             <strong class="pull-right">
-                                                                @if($child->childes->count()>0)
+                                                                @if ($child->childes->count() > 0)
                                                                     <i class="tio-next-ui fs-13"></i>
                                                                 @endif
                                                             </strong>
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        class="card-body p-0 ms-2 d--none"
-                                                        id="collapse-{{$child['id']}}">
-                                                        @foreach($child->childes as $ch)
+                                                    <div class="card-body p-0 ms-2 d--none"
+                                                        id="collapse-{{ $child['id'] }}">
+                                                        @foreach ($child->childes as $ch)
                                                             <div class="card-header">
                                                                 <label
                                                                     class="for-hover-label d-block cursor-pointer text-left get-view-by-onclick"
-                                                                    data-link="{{ route('products',['id'=> $ch['id'],'data_from'=>'category','page'=>1]) }}">
-                                                                    {{$ch['name']}}
+                                                                    data-link="{{ route('products', ['id' => $ch['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                                                    {{ $ch['name'] }}
                                                                 </label>
                                                             </div>
                                                         @endforeach
@@ -531,122 +677,152 @@
 
             <section class="col-lg-9">
                 <div class="row" id="ajax-products">
-                    @include('web-views.products._ajax-products',['products'=>$products,'decimal_point_settings'=>$decimal_point_settings])
+                    @include('web-views.products._ajax-products', [
+                        'products' => $products,
+                        'decimal_point_settings' => $decimal_point_settings,
+                    ])
                 </div>
             </section>
         </div>
     </div>
 
-    <span id="products-search-data-backup"
-        data-url="{{ url('/products') }}"
-        data-id="{{ $data['id'] }}"
-        data-name="{{ $data['name'] }}"
-        data-from="{{ $data['data_from'] }}"
-        data-sort="{{ $data['sort_by'] }}"
-        data-min-price="{{ $data['min_price'] }}"
-        data-max-price="{{ $data['max_price'] }}"
-        data-message="{{ translate('items_found') }}"
-    ></span>
+    <span id="products-search-data-backup" data-url="{{ url('/products') }}" data-id="{{ $data['id'] }}"
+        data-name="{{ $data['name'] }}" data-from="{{ $data['data_from'] }}" data-sort="{{ $data['sort_by'] }}"
+        data-min-price="{{ $data['min_price'] }}" data-max-price="{{ $data['max_price'] }}"
+        data-message="{{ translate('items_found') }}"></span>
 
 @endsection
 
 @push('script')
-<script src="{{ theme_asset(path: 'public/assets/front-end/js/product-view.js') }}"></script>
+    <script src="{{ theme_asset(path: 'public/assets/front-end/js/product-view.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
 
-<script>
-        $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
             // Toggle icons for the first collapsible section
-            $('#checkboxCollapse').on('show.bs.collapse', function () {
+            $('#checkboxCollapse').on('show.bs.collapse', function() {
                 $('#icon1').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon1').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon1').on('click', function () {
+            $('#icon1').on('click', function() {
                 $('#checkboxCollapse').collapse('toggle');
             });
 
             // Toggle icons for the second collapsible section (Budget Slider)
-            $('#sliderCollapse').on('show.bs.collapse', function () {
+            $('#sliderCollapse').on('show.bs.collapse', function() {
                 $('#icon2').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon2').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon2').on('click', function () {
+            $('#icon2').on('click', function() {
                 $('#sliderCollapse').collapse('toggle');
             });
 
             // Toggle icons for the third collapsible section (Brand Selection)
-            $('#brandCollapse').on('show.bs.collapse', function () {
+            $('#brandCollapse').on('show.bs.collapse', function() {
                 $('#icon3').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon3').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon3').on('click', function () {
+            $('#icon3').on('click', function() {
                 $('#brandCollapse').collapse('toggle');
             });
 
             // Toggle icons for the fourth collapsible section (Show More)
-            $('#moreCollapse').on('show.bs.collapse', function () {
+            $('#moreCollapse').on('show.bs.collapse', function() {
                 $('#icon4').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon4').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon4').on('click', function () {
+            $('#icon4').on('click', function() {
                 $('#moreCollapse').collapse('toggle');
             });
 
             // Toggle icons for the fifth collapsible section (Show More)
-            $('#colorCollapse').on('show.bs.collapse', function () {
+            $('#colorCollapse').on('show.bs.collapse', function() {
                 $('#icon5').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon5').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon5').on('click', function () {
+            $('#icon5').on('click', function() {
                 $('#colorCollapse').collapse('toggle');
             });
 
             // Toggle icons for the fifth collapsible section (Show More)
-            $('#internalstorage').on('show.bs.collapse', function () {
+            $('#internalstorage').on('show.bs.collapse', function() {
                 $('#icon6').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon6').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon6').on('click', function () {
+            $('#icon6').on('click', function() {
                 $('#internalstorage').collapse('toggle');
             });
 
             // Toggle icons for the sixth collapsible section (Show More)
-            $('#condition').on('show.bs.collapse', function () {
+            $('#condition').on('show.bs.collapse', function() {
                 $('#icon7').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon7').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon7').on('click', function () {
+            $('#icon7').on('click', function() {
                 $('#condition').collapse('toggle');
             });
 
             // Toggle icons for the seventh collapsible section (Show More)
-            $('#rating').on('show.bs.collapse', function () {
+            $('#rating').on('show.bs.collapse', function() {
                 $('#icon8').removeClass('fa-plus').addClass('fa-minus');
-            }).on('hide.bs.collapse', function () {
+            }).on('hide.bs.collapse', function() {
                 $('#icon8').removeClass('fa-minus').addClass('fa-plus');
             });
 
-            $('#icon8').on('click', function () {
+            $('#icon8').on('click', function() {
                 $('#rating').collapse('toggle');
             });
 
             // Update price range value dynamically
-            $('#priceRange').on('input', function () {
-                $('#priceValue').text(`$${$(this).val()}`);
+            // $('#priceRange').on('input', function() {
+            //     $('#priceValue').text(`$${$(this).val()}`);
+            // });
+
+            // Budget
+            var priceSlider = document.getElementById('priceSlider');
+
+            noUiSlider.create(priceSlider, {
+                start: [10, 10000], // Initial values for handles
+                connect: true,
+                range: {
+                    'min': 10,
+                    'max': 10000
+                },
+                step: 1,
+                tooltips: [true, true],
+                format: {
+                    to: function(value) {
+                        return Math.round(value);
+                    },
+                    from: function(value) {
+                        return Number(value);
+                    }
+                }
             });
+
+            priceSlider.noUiSlider.on('update', function(values, handle) {
+                if (handle === 0) {
+                    document.getElementById('minPrice').innerText = values[0];
+                } else {
+                    document.getElementById('maxPrice').innerText = values[1];
+                }
+            });
+
+            // Budget Ends
         });
     </script>
 @endpush

@@ -60,204 +60,207 @@
             }
 
             .dealOfTheDayProducts {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
 
-.dealOfTheDay{
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 20px; 
-    width: 100%;
-    max-width: 1200px;
+            .dealOfTheDay {
+                display: grid;
+                grid-template-columns: 1fr 2fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                grid-gap: 20px;
+                width: 100%;
+                max-width: 1200px;
 
-}
-.product {
-    
+            }
 
-    /* ----------- Added  ---------- */
-    position: relative;
-
-    /* max-width: 290px; */
-    /* ----------- Added  ---------- */
-}
-
-.product-card {
-    background-color: #f5f5f5;
-    padding: 20px;
-    /* border-radius: 8px; */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    text-align: center;
-
-    border: none;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    transition: transform 0.2s ease-in-out;
-}
-
-.product-card.large {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
-    text-align: left;
-    position: relative;
-    overflow: hidden;
-}
-
-.discount-label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: color-mix(in srgb, #FF3B3B, #fff 20%);
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-}
-
-.discount-label.center {
-    top: 5%;
-    left: 31px;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    padding: 42px 82px;
-    font-size: 16px;
-}
-
-.product-category {
-    color: #727272;
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 5px;
-}
-
-.rating {
-    margin-top: 5px;
-}
-
-.price {
-    margin: 10px 0;
-}
-
-.new-price {
-    color: #e60000;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.old-price {
-    color: #999;
-    text-decoration: line-through;
-    margin-left: 10px;
-}
-
-.shop-now {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.countdown {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-}
-
-.time {
-    background-color: #e6e6e6;
-    padding: 5px 10px;
-    border-radius: 4px;
-}
-
-.availability {
-    margin: 10px 0;
-    font-size: 14px;
-    color: #555;
-}
-
-.icons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.icons button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-}
-.custom-card {
-    width: 100%;
-    height: 300px;
-    border: none;
-    position: relative;
-    background-color: #D9D9D9;
-
-    margin-bottom: 0;
-}
-
-.custom-long-card {
-    width: 100%;
-    height: 300px;
-    border: none;
-    position: relative;
-    background-color: #D9D9D9;
-
-    margin-bottom: 0;
-}
-
-.category-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 15px;
-    background-color: #FFFFFF;
-    color: #000;
-}
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
-}
-
-/* .card-title {
-    margin-bottom: 0;
-    font-size: 26px;
-    font-weight: 600;
-    color: #FFFFFF;
-} */
-
-/* ========== */
-.card-title {
-    font-size: 26px;
-    font-weight: 600;
-    color: #FFFFFF;
-    white-space: nowrap;
-    /* Prevents text from wrapping to the next line */
-    overflow: hidden;
-    /* Hides any overflow text */
-    text-overflow: ellipsis;
-    /* Adds ellipsis (...) if text overflows */
-    margin-bottom: 0;
-}
-
-/* ========== */
+            .product {
 
 
-.card-subtitle {
-    font-size: 14px;
-    font-weight: 400;
-    color: #FFFFFF;
-}
+                /* ----------- Added  ---------- */
+                position: relative;
+
+                /* max-width: 290px; */
+                /* ----------- Added  ---------- */
+            }
+
+            .product-card {
+                background-color: #f5f5f5;
+                padding: 20px;
+                /* border-radius: 8px; */
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                position: relative;
+                text-align: center;
+
+                border: none;
+                /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+                transition: transform 0.2s ease-in-out;
+            }
+
+            .product-card.large {
+                grid-column: 2 / 3;
+                grid-row: 1 / 3;
+                text-align: left;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .discount-label {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: color-mix(in srgb, #FF3B3B, #fff 20%);
+                color: #fff;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+            }
+
+            .discount-label.center {
+                top: 5%;
+                left: 31px;
+                transform: translate(-50%, -50%) rotate(-45deg);
+                padding: 42px 82px;
+                font-size: 16px;
+            }
+
+            .product-category {
+                color: #727272;
+                font-size: 16px;
+                font-weight: 400;
+                margin-bottom: 5px;
+            }
+
+            .rating {
+                margin-top: 5px;
+            }
+
+            .price {
+                margin: 10px 0;
+            }
+
+            .new-price {
+                color: #e60000;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            .old-price {
+                color: #999;
+                text-decoration: line-through;
+                margin-left: 10px;
+            }
+
+            .shop-now {
+                background-color: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-top: 15px;
+            }
+
+            .countdown {
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0;
+            }
+
+            .time {
+                background-color: #e6e6e6;
+                padding: 5px 10px;
+                border-radius: 4px;
+            }
+
+            .availability {
+                margin: 10px 0;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .icons {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+
+            .icons button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 18px;
+            }
+
+            .custom-card {
+                width: 100%;
+                height: 300px;
+                border: none;
+                position: relative;
+                background-color: #D9D9D9;
+
+                margin-bottom: 0;
+            }
+
+            .custom-long-card {
+                width: 100%;
+                height: 300px;
+                border: none;
+                position: relative;
+                background-color: #D9D9D9;
+
+                margin-bottom: 0;
+            }
+
+            .category-badge {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 14px;
+                font-weight: 500;
+                border-radius: 15px;
+                background-color: #FFFFFF;
+                color: #000;
+            }
+
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                height: 100%;
+            }
+
+            /* .card-title {
+                margin-bottom: 0;
+                font-size: 26px;
+                font-weight: 600;
+                color: #FFFFFF;
+            } */
+
+            /* ========== */
+            .card-title {
+                font-size: 26px;
+                font-weight: 600;
+                color: #FFFFFF;
+                white-space: nowrap;
+                /* Prevents text from wrapping to the next line */
+                overflow: hidden;
+                /* Hides any overflow text */
+                text-overflow: ellipsis;
+                /* Adds ellipsis (...) if text overflows */
+                margin-bottom: 0;
+            }
+
+            /* ========== */
+
+
+            .card-subtitle {
+                font-size: 14px;
+                font-weight: 400;
+                color: #FFFFFF;
+            }
         </style>
     @endpush
 
@@ -500,8 +503,8 @@
             @endif
         </section>
 
-        
-    <!-- Deal of the day -->
+
+        <!-- Deal of the day -->
         <!-- Top Left Product -->
         {{-- <section class="container rtl pt-4 bestSelling-section mb-5">
             <nav class="navbar ">
@@ -751,15 +754,14 @@
         <section class="container">
             @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
 
-            <div class="container pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{Session::get('direction')}}">
+            <div class="container pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
                 <div class="row">
                     <aside
-                        class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{Session::get('direction') === "rtl" ? 'pl-2' : 'pr-2'}}"
+                        class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{ Session::get('direction') === 'rtl' ? 'pl-2' : 'pr-2' }}"
                         id="SearchParameters">
                         <div class="cz-sidebars __inline-35 bg-white" id="shop-sidebar">
                             <div class="cz-sidebar-header bg-light">
-                                <button class="close ms-auto"
-                                        type="button" data-dismiss="sidebar" aria-label="Close">
+                                <button class="close ms-auto" type="button" data-dismiss="sidebar" aria-label="Close">
                                     <i class="tio-clear"></i>
                                 </button>
                             </div>
@@ -767,58 +769,60 @@
                             <div class="mt-3 __cate-side-arrordion">
                                 <div>
                                     <div class="home text-center __cate-side-title">
-                                        <span class="widget-title font-semibold">{{translate('shops by categories')}}</span>
+                                        <span
+                                            class="widget-title font-semibold">{{ translate('shops by categories') }}</span>
                                     </div>
-                                    @php($categories=\App\Utils\CategoryManager::parents())
+                                    @php($categories = \App\Utils\CategoryManager::parents())
                                     <div class="accordion mt-n1 __cate-side-price" id="shop-categories">
-                                        @foreach($categories as $category)
+                                        @foreach ($categories as $category)
                                             <div class="menu--caret-accordion">
                                                 <div class="card-header flex-between">
                                                     <div>
                                                         <img alt="{{ $category->name }}"
-                                                            src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}" width="64" height="64" style="height: 20px; width: 20px;">
-                                                        <label class="for-hover-label cursor-pointer get-view-by-onclick home-category"
-                                                            data-link="{{ route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1]) }}">
-                                                            {{$category['name']}}
+                                                            src="{{ getValidImage(path: 'storage/app/public/category/' . $category->icon, type: 'category') }}"
+                                                            width="64" height="64"
+                                                            style="height: 20px; width: 20px;">
+                                                        <label
+                                                            class="for-hover-label cursor-pointer get-view-by-onclick home-category"
+                                                            data-link="{{ route('products', ['id' => $category['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                                            {{ $category['name'] }}
                                                         </label>
                                                     </div>
                                                     <div class="px-2 cursor-pointer menu--caret">
                                                         <strong class="pull-right for-brand-hover">
-                                                            @if($category->childes->count()>0)
+                                                            @if ($category->childes->count() > 0)
                                                                 <i class="tio-next-ui fs-13"></i>
                                                             @endif
                                                         </strong>
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="card-body p-0 ms-2 d--none"
-                                                    id="collapse-{{$category['id']}}">
-                                                    @foreach($category->childes as $child)
+                                                <div class="card-body p-0 ms-2 d--none"
+                                                    id="collapse-{{ $category['id'] }}">
+                                                    @foreach ($category->childes as $child)
                                                         <div class="menu--caret-accordion">
                                                             <div class="for-hover-label card-header flex-between">
                                                                 <div>
                                                                     <label class="cursor-pointer get-view-by-onclick"
-                                                                        data-link="{{ route('products',['id'=> $child['id'],'data_from'=>'category','page'=>1]) }}">
-                                                                        {{$child['name']}}
+                                                                        data-link="{{ route('products', ['id' => $child['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                                                        {{ $child['name'] }}
                                                                     </label>
                                                                 </div>
                                                                 <div class="px-2 cursor-pointer menu--caret">
                                                                     <strong class="pull-right">
-                                                                        @if($child->childes->count()>0)
+                                                                        @if ($child->childes->count() > 0)
                                                                             <i class="tio-next-ui fs-13"></i>
                                                                         @endif
                                                                     </strong>
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="card-body p-0 ms-2 d--none"
-                                                                id="collapse-{{$child['id']}}">
-                                                                @foreach($child->childes as $ch)
+                                                            <div class="card-body p-0 ms-2 d--none"
+                                                                id="collapse-{{ $child['id'] }}">
+                                                                @foreach ($child->childes as $ch)
                                                                     <div class="card-header">
                                                                         <label
                                                                             class="for-hover-label d-block cursor-pointer text-left get-view-by-onclick"
-                                                                            data-link="{{ route('products',['id'=> $ch['id'],'data_from'=>'category','page'=>1]) }}">
-                                                                            {{$ch['name']}}
+                                                                            data-link="{{ route('products', ['id' => $ch['id'], 'data_from' => 'category', 'page' => 1]) }}">
+                                                                            {{ $ch['name'] }}
                                                                         </label>
                                                                     </div>
                                                                 @endforeach
@@ -837,34 +841,39 @@
 
                     <section class="col-lg-9">
                         <div class="row" id="ajax-products">
-                            @if(count($products) > 0)
+                            @if (count($products) > 0)
 
-                            @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
-                            @foreach($products as $product)
-                                @if(!empty($product['product_id']))
-                                    @php($product=$product->product)
-                                @endif
-                                <div class=" {{Request::is('products*')?'col-lg-4 col-md-4 col-sm-4 col-6':'col-lg-4 col-md-4 col-sm-4 col-6'}} {{Request::is('shopView*')?'col-lg-3 col-md-4 col-sm-4 col-6':''}} p-2">
-                                    @if(!empty($product))
-                                        @include('web-views.partials._filter-single-product',['product'=>$product, 'decimal_point_settings'=>$decimal_point_settings])
+                                @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
+                                @foreach ($products as $product)
+                                    @if (!empty($product['product_id']))
+                                        @php($product = $product->product)
                                     @endif
-                                </div>
-                            @endforeach
+                                    <div
+                                        class=" {{ Request::is('products*') ? 'col-lg-4 col-md-4 col-sm-4 col-6' : 'col-lg-4 col-md-4 col-sm-4 col-6' }} {{ Request::is('shopView*') ? 'col-lg-3 col-md-4 col-sm-4 col-6' : '' }} p-2">
+                                        @if (!empty($product))
+                                            @include('web-views.partials._filter-single-product', [
+                                                'product' => $product,
+                                                'decimal_point_settings' => $decimal_point_settings,
+                                            ])
+                                        @endif
+                                    </div>
+                                @endforeach
 
-                            <div class="col-12">
-                                <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation"
-                                    id="paginator-ajax">
-                                    {!! $products->links() !!}
-                                </nav>
-                            </div>
-                        @else
-                            <div class="d-flex justify-content-center align-items-center w-100 py-5">
-                                <div>
-                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/media/product.svg') }}" class="img-fluid" alt="">
-                                    <h6 class="text-muted">{{ translate('no_product_found') }}</h6>
+                                <div class="col-12">
+                                    <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation"
+                                        id="paginator-ajax">
+                                        {!! $products->links() !!}
+                                    </nav>
                                 </div>
-                            </div>
-                        @endif
+                            @else
+                                <div class="d-flex justify-content-center align-items-center w-100 py-5">
+                                    <div>
+                                        <img src="{{ theme_asset(path: 'public/assets/front-end/img/media/product.svg') }}"
+                                            class="img-fluid" alt="">
+                                        <h6 class="text-muted">{{ translate('no_product_found') }}</h6>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </section>
                 </div>
@@ -888,7 +897,8 @@
             <nav class="navbar">
                 <p style="font-size: 34px; font-weight: 600;">Latest News</p>
                 <span class="form-inline ml-auto">
-                    <p style="margin-bottom: 0;"><u><a href="#" style="color: #000; font-size: 16px; font-weight: 600;">See All
+                    <p style="margin-bottom: 0;"><u><a href="#"
+                                style="color: #000; font-size: 16px; font-weight: 600;">See All
                                 <i class="fa fa-arrow-right"></i></a></u></p>
                 </span>
             </nav>
@@ -941,7 +951,8 @@
                             <div class="card-body">
                                 <span class="badge badge-light category-badge">Game</span>
                                 <div class="card-text mt-auto">
-                                    <h5 class="card-title" style="line-height: 44px;">What's interesting about VR games?</h5>
+                                    <h5 class="card-title" style="line-height: 44px;">What's interesting about VR games?
+                                    </h5>
                                     <p class="card-subtitle">by Alpha on August 8, 2024</p>
                                 </div>
                             </div>
@@ -953,7 +964,8 @@
                             <div class="card-body">
                                 <span class="badge badge-light category-badge">Camera</span>
                                 <div class="card-text mt-auto">
-                                    <h5 class="card-title" style="line-height: 44px;">The peak quality of the viewfinder</h5>
+                                    <h5 class="card-title" style="line-height: 44px;">The peak quality of the viewfinder
+                                    </h5>
                                     <p class="card-subtitle">by Alpha on August 8, 2024</p>
                                 </div>
                             </div>
@@ -1030,4 +1042,16 @@
 @push('script')
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/owl.carousel.min.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/home.js') }}"></script>
+
+    
+<script>
+    $('.product').each(function() {
+        var $this = $(this);
+        var hoverDetail = $this.find('.hover-detail');
+
+        $this.hover(function() {
+            hoverDetail.toggleClass('d-none');
+        });
+    });
+</script>
 @endpush

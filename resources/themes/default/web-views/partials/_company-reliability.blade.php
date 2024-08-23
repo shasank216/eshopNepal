@@ -7,12 +7,15 @@
                         <div class="d-flex justify-content-center">
                             <div class="shipping-method-system">
                                 <div class="w-100 d-flex justify-content-center mb-1">
-                                    <img alt="" class="size-60"
+                                    <img alt="" class="size-100"
                                          src="{{ getValidImage(path: 'storage/app/public/company-reliability/'.$value['image'], type: 'source', source: theme_asset(path: 'public/assets/front-end/img').'/'.$value['item'].'.png') }}"
                                     >
                                 </div>
                                 <div class="w-100 text-center">
-                                    <p class="m-0">{{ $value['title'] }}</p>
+                                    <p class="m-0 reliability-title">{{ $value['title'] }}</p>
+                                    <p class="m-0 reliability-desc">
+                                        All payment secured and trusted
+                                    </p>
                                 </div>
                             </div>
                         </div>
