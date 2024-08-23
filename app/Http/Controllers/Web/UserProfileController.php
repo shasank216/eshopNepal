@@ -68,7 +68,8 @@ class UserProfileController extends Controller
     {
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $customerDetail = User::where('id', auth('customer')->id())->first();
-        return view(VIEW_FILE_NAMES['user_account'], compact('customerDetail'));
+        $categories = Category::all();
+        return view(VIEW_FILE_NAMES['user_account'], compact('customerDetail', 'categories'));
 
     }
     public function user_update(Request $request)
@@ -133,8 +134,9 @@ class UserProfileController extends Controller
         $countries = $country_restrict_status ? $this->get_delivery_country_array() : COUNTRIES;
 
         $zip_codes = $zip_restrict_status ? DeliveryZipCode::all() : 0;
+        $categories = Category::all();
 
-        return view(VIEW_FILE_NAMES['account_address_add'], compact('countries', 'zip_restrict_status', 'zip_codes', 'default_location'));
+        return view(VIEW_FILE_NAMES['account_address_add'], compact('countries', 'zip_restrict_status', 'zip_codes', 'default_location','categories'));
     }
 
     public function account_delete($id)
@@ -169,6 +171,7 @@ class UserProfileController extends Controller
 
         $countries = $country_restrict_status ? $this->get_delivery_country_array() : COUNTRIES;
         $zip_codes = $zip_restrict_status ? DeliveryZipCode::all() : 0;
+        $categories = Category::all();
 
         $countriesName = [];
         $countriesCode = [];
@@ -179,7 +182,7 @@ class UserProfileController extends Controller
 
         if (auth('customer')->check()) {
             $shippingAddresses = ShippingAddress::where('customer_id', auth('customer')->id())->latest()->get();
-            return view('web-views.users-profile.account-address', compact('shippingAddresses', 'country_restrict_status', 'zip_restrict_status', 'countries', 'zip_codes', 'countriesName', 'countriesCode'));
+            return view('web-views.users-profile.account-address', compact('shippingAddresses', 'country_restrict_status', 'zip_restrict_status', 'countries', 'zip_codes', 'countriesName', 'countriesCode', 'categories'));
         } else {
             return redirect()->route('home');
         }
@@ -338,6 +341,7 @@ class UserProfileController extends Controller
     public function account_order(Request $request)
     {
         $order_by = $request->order_by ?? 'desc';
+        $categories = Category::all();
         if(theme_root_path() == 'theme_fashion'){
             $show_order = $request->show_order ?? 'ongoing';
 
@@ -360,11 +364,12 @@ class UserProfileController extends Controller
                 ->paginate(10);
         }
 
-        return view(VIEW_FILE_NAMES['account_orders'], compact('orders', 'order_by'));
+        return view(VIEW_FILE_NAMES['account_orders'], compact('orders', 'order_by', 'categories'));
     }
 
     public function account_order_details(Request $request): View|RedirectResponse
     {
+        $categories = Category::all();
         $order = $this->order->with(['deliveryManReview', 'customer', 'offlinePayments'])
             ->where(['id' => $request['id'], 'customer_id' => auth('customer')->id(), 'is_guest' => '0'])
             ->first();
@@ -394,6 +399,7 @@ class UserProfileController extends Controller
                 'order' => $order,
                 'refund_day_limit' => getWebConfig(name: 'refund_day_limit'),
                 'current_date' => Carbon::now(),
+                'categories' => $categories,
             ]);
         }
 
@@ -504,9 +510,10 @@ class UserProfileController extends Controller
 
     public function account_tickets()
     {
+        $categories = Category::all();
         if (auth('customer')->check()) {
                 $supportTickets = SupportTicket::where('customer_id', auth('customer')->id())->latest()->paginate(10);
-            return view(VIEW_FILE_NAMES['account_tickets'], compact('supportTickets'));
+            return view(VIEW_FILE_NAMES['account_tickets'], compact('supportTickets', 'categories'));
         } else {
             return redirect()->route('home');
         }
@@ -898,6 +905,7 @@ class UserProfileController extends Controller
     {
         $seller_ids = Seller::approved()->pluck('id')->toArray();
         $seller_ids = array_merge($seller_ids, [NULL, '0']);
+        $categories = Category::all();
 
         $coupons = Coupon::with('seller')
                     ->where(['status' => 1])
@@ -907,6 +915,6 @@ class UserProfileController extends Controller
                     ->whereDate('expire_date', '>=', date('Y-m-d'))
                     ->paginate(8);
 
-        return view(VIEW_FILE_NAMES['user_coupons'], compact('coupons'));
+        return view(VIEW_FILE_NAMES['user_coupons'], compact('coupons', 'categories'));
     }
 }

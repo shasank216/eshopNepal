@@ -9,6 +9,7 @@ use App\Contracts\Repositories\ShopRepositoryInterface;
 use App\Contracts\Repositories\VendorRepositoryInterface;
 use App\Enums\ViewPaths\Vendor\Chatting;
 use App\Events\ChattingEvent;
+use App\Http\Models\Category;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Vendor\ChattingRequest;
 use App\Services\ChattingService;
@@ -85,12 +86,14 @@ class ChattingController extends BaseController
                     relations: ['deliveryMan'],
                     dataLimit: 'all'
                 );
+                $categories = Category::all();
 
                 return view(Chatting::INDEX[VIEW], [
                     'userType' => $type,
                     'allChattingUsers' => $allChattingUsers,
                     'lastChatUser' => $lastChatUser,
                     'chattingMessages' => $chattingMessages,
+                    'categories' => $categories
                 ]);
             }
         } elseif ($type == 'customer') {
@@ -116,11 +119,13 @@ class ChattingController extends BaseController
                     relations: ['customer'],
                     dataLimit: 'all'
                 );
+                $categories = Category::all();
                 return view(Chatting::INDEX[VIEW], [
                     'userType' => $type,
                     'allChattingUsers' => $allChattingUsers,
                     'lastChatUser' => $lastChatUser,
                     'chattingMessages' => $chattingMessages,
+                    'categories' => $categories
                 ]);
             }
         }
@@ -241,6 +246,7 @@ class ChattingController extends BaseController
      */
     protected function getRenderMessagesView(object $user, object $message, string $type): array
     {
+       
         $userData = ['name' => $user['f_name'].' '.$user['l_name'],'phone' => $user['country_code'].$user['phone']];
 
         if ($type == 'customer') {

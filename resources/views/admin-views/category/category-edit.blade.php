@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label class="title-color" for="priority">{{ translate('priority') }}</label>
                                         <select class="form-control" name="priority" id="" required>
-                                            @for ($index = 0; $index <= 10; $index++)
+                                            @for ($index = 0; $index <= 15; $index++)
                                                 <option
                                                     value="{{ $index }}" {{ $category['priority']==$index?'selected':''}}>{{ $index }}</option>
                                             @endfor

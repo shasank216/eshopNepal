@@ -9,6 +9,7 @@ use App\Contracts\Repositories\DeliveryManRepositoryInterface;
 use App\Contracts\Repositories\ShopRepositoryInterface;
 use App\Enums\ViewPaths\Admin\Chatting;
 use App\Events\ChattingEvent;
+use App\Http\Models\Category;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\ChattingRequest;
 use App\Services\ChattingService;
@@ -84,12 +85,14 @@ class ChattingController extends BaseController
                     relations: ['deliveryMan'],
                     dataLimit: 'all'
                 );
+                $categories = Category::all();
 
                 return view(Chatting::INDEX[VIEW], [
                     'userType' => $type,
                     'allChattingUsers' => $allChattingUsers,
                     'lastChatUser' => $lastChatUser,
                     'chattingMessages' => $chattingMessages,
+                    'categories' => $categories
                 ]);
             }
         } elseif ($type == 'customer') {
@@ -115,11 +118,13 @@ class ChattingController extends BaseController
                     relations: ['customer'],
                     dataLimit: 'all'
                 );
+                $categories = Category::all();
                 return view(Chatting::INDEX[VIEW], [
                     'userType' => $type,
                     'allChattingUsers' => $allChattingUsers,
                     'lastChatUser' => $lastChatUser,
                     'chattingMessages' => $chattingMessages,
+                    'categories' => $categories
                 ]);
             }
         }
