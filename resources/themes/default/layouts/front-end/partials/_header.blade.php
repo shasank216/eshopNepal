@@ -235,7 +235,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="d-flex flex-column ms-2">
                                     <small class="fw-bold" style="color: #4b566b !important">Contact Us</small>
-                                   <span class="cart-total-price  fs-14">{{$web_config['phone']->value}}</span> 
+                                   <span class="cart-total-price fs-14">{{$web_config['phone']->value}}</span> 
                                 </div>
                             </div>
                         </a>
@@ -480,15 +480,15 @@
                         </div>
                     @endif
                 </div>
-                <div>
+                {{-- <div>
                     <a href="https://flipkart.questal.in/customer/auth/login" style="padding:0.2rem 2rem;" class="btn btn-light">Login</a>
                 </div>
                     <a href="#">
                         <span class="text-white mx-3">Become a Seller</span>
-                    </a>
+                    </a> --}}
                     <div class="navbar-tool dropdown d-none d-md-block {{Session::get('direction') === "rtl" ? 'mr-md-3' : 'ml-md-3'}}">
                         <a class="navbar-tool-icon-box dropdown-toggle" href="{{route('wishlists')}}" style="border-radius: 10px;background:#606BBF;">
-                            <span class="navbar-tool-label" style="right:-10px;top: 0.6875rem;background-color:#FBB835 !important; border:2px solid white;color:white;">
+                            <span class="navbar-tool-label d-flex justify-content-center align-items-center" style="right:-10px;top: 0.6875rem;background-color:#FBB835 !important; border:2px solid white;color:white;">
                                 <span class="countWishlist">
                                     {{session()->has('wish_list')?count(session('wish_list')):0}}
                                 </span>

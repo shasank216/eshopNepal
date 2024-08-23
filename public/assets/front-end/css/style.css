@@ -569,7 +569,7 @@ a {
 
     .__slide-img {
         height: unset;
-        min-height: 420px;
+        max-height: 420px;
     }
 
     /* .p-xl-35 {
@@ -9203,12 +9203,12 @@ input.form-control.fz-30 {
 }
 
 .footer-head {
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 0.0015em;
 }
 
 .widget-list-link {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.005em;
     color: #5C5C5C;
@@ -9217,6 +9217,18 @@ input.form-control.fz-30 {
 .widget-list-link img {
     width: 163px;
     height: 49.59px;
+}
+
+.widget-list, .footer-offer {
+    margin-top: 1.5rem;
+}
+
+.footer-offer {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    width: 75%;
 }
 
 .f-32 {
@@ -9240,10 +9252,26 @@ input.form-control.fz-30 {
     margin-bottom: 0.5rem;
 }
 
+.foot-bottom-content.text-def a  {
+    text-transform: capitalize;
+}
+
 .foot-bottom-head {
     background: #fff;
     padding: 8px 12px 8px 12px;
     border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+}
+
+.foot-bottom-content {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-align: start;
 }
 
 .footer-bottom {
@@ -9260,13 +9288,13 @@ input.form-control.fz-30 {
 
 .foot-bottom-payment img {
     width: 54px;
-    height: 33.99px;
+    height: 30px;
     border-radius: 5px;
 }
 
 .foot-bottom-copyright {
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 20px;
     letter-spacing: 0.0125em;
 }
@@ -9328,4 +9356,16 @@ input.form-control.fz-30 {
     font-weight: 600;
     line-height: 40px;
     letter-spacing: 0.0025em;
+}
+
+.navbar-tool-text>small, .dropdown .navbar-tool-text::after, .navbar-tool-text {
+    color: #fff !important;
+}
+
+.navbar-tool-text {
+    font-size: 14px !important;
+}
+
+.navbar-tool-text>small {
+    margin-bottom: 2px;
 }
