@@ -265,13 +265,13 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex flex-wrap pt-2 bg-white gap-2">
+        <div class="product_details px-5 d-flex flex-wrap pt-3 bg-white justify-content-between">
             @foreach($categories as $key => $category)
-                @if ($key<10)
+                @if ($key<14)
                     <div class="nav_product">
                         <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                             <img alt="{{ $category->name }}"
-                                src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}" width="64" height="64" style="height: 64px; width: 64px;">
+                                src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}" style="height: 64px; width: 64px;">
                             <div class="product_text">
                                 <p>{{Str::limit($category->name, 12)}}</p>
                             </div>
