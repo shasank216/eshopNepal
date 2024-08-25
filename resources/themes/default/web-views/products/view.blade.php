@@ -17,7 +17,7 @@
     <meta property="twitter:description"
         content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)), 0, 160) }}">
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css" rel="stylesheet">
 
 
     <style>
@@ -99,8 +99,8 @@
         }
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
-            border-radius: 0.25em;
-        }*/
+                border-radius: 0.25em;
+            }*/
 
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
@@ -238,11 +238,13 @@
             margin-bottom: 7px;
         }
 
-        .noUi-target, .noUi-connects {
+        .noUi-target,
+        .noUi-connects {
             height: 6px;
         }
 
-        .noUi-horizontal .noUi-handle, .noUi-touch-area {
+        .noUi-horizontal .noUi-handle,
+        .noUi-touch-area {
             width: 18.48px;
             height: 18px;
             border-radius: 50%;
@@ -252,7 +254,8 @@
             background: #1F3C74;
         }
 
-        .noUi-handle:after, .noUi-handle:before {
+        .noUi-handle:after,
+        .noUi-handle:before {
             background: unset !important;
         }
 
@@ -263,6 +266,29 @@
         .noUi-tooltip {
             display: none;
         }
+
+        /* Sorting Products */
+        .items-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        .item {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .w-20 {
+            width: 20px;
+        }
+
+        .h-20 {
+            height: 20px;
+        }
+        /* Sorting Products Ends */
     </style>
 @endpush
 
@@ -286,11 +312,10 @@
 
 
             <!-- <div>
-                        <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                        <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                    </div> -->
+                            <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                            <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                        </div> -->
 
-            {{--
             <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
                 <input hidden name="data_from" value="{{$data['data_from']}}">
                 <div class="sorting-item">
@@ -327,7 +352,22 @@
                     <i class="tio-filter"></i>
                 </div>
             </div>
-            --}}
+
+            <div class="button-group">
+                <button class="btn p-0" onclick="changeItemsPerRow(1)">
+                    <i class="fa fa-th-list" aria-hidden="true"></i>
+                </button>
+                <button class="btn p-0" onclick="changeItemsPerRow(2)">
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                </button>
+                <button class="btn p-0" onclick="changeItemsPerRow(3)">
+                    <i class="fa fa-th" aria-hidden="true"></i>
+                </button>
+                {{-- <button class="btn p-0" onclick="changeItemsPerRow(4)">
+                    <img class="w-20 h-20 p-0" src="{{ asset('public/assets/front-end/img/icons/four-items.png') }}" alt="">
+                </button> --}}
+            </div>
+
         </div>
 
     </div>
@@ -402,25 +442,24 @@
                     <!-- Budget Ends -->
 
                     <!-- Brand -->
-                    <ul id="lista1" class="__brands-cate-wrap" data-simplebar
-                                    data-simplebar-auto-hide="false">
-                                    @foreach (\App\Utils\BrandManager::get_active_brands() as $brand)
-                                        <div class="brand mt-2 for-brand-hover {{ Session::get('direction') === 'rtl' ? 'mr-2' : '' }}"
-                                            id="brand">
-                                            <li class="flex-between __inline-39 get-view-by-onclick"
-                                                data-link="{{ route('products', ['id' => $brand['id'], 'data_from' => 'brand', 'page' => 1]) }}">
-                                                <div class="text-start">
-                                                    {{ $brand['name'] }}
-                                                </div>
-                                                <div class="__brands-cate-badge">
-                                                    <span>
-                                                        {{ $brand['brand_products_count'] }}
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </div>
-                                    @endforeach
-                                </ul>
+                    <ul id="lista1" class="__brands-cate-wrap" data-simplebar data-simplebar-auto-hide="false">
+                        @foreach (\App\Utils\BrandManager::get_active_brands() as $brand)
+                            <div class="brand mt-2 for-brand-hover {{ Session::get('direction') === 'rtl' ? 'mr-2' : '' }}"
+                                id="brand">
+                                <li class="flex-between __inline-39 get-view-by-onclick"
+                                    data-link="{{ route('products', ['id' => $brand['id'], 'data_from' => 'brand', 'page' => 1]) }}">
+                                    <div class="text-start">
+                                        {{ $brand['name'] }}
+                                    </div>
+                                    <div class="__brands-cate-badge">
+                                        <span>
+                                            {{ $brand['brand_products_count'] }}
+                                        </span>
+                                    </div>
+                                </li>
+                            </div>
+                        @endforeach
+                    </ul>
 
                     <div class="form-group mt-4">
                         <div class="d-flex justify-content-between align-items-center">
@@ -446,13 +485,13 @@
                                         </label>
                                     </div>
                                 @endforeach
-    
+
                                 <!--Show More Starts-->
                                 <div class="form-group mt-2">
                                     <div class="d-flex align-items-center">
-                                        <a class="" style="text-decoration: underline; color: #1F3C74;" type="button"
-                                            data-toggle="collapse" data-target="#moreCollapse" aria-expanded="false"
-                                            aria-controls="moreCollapse">
+                                        <a class="" style="text-decoration: underline; color: #1F3C74;"
+                                            type="button" data-toggle="collapse" data-target="#moreCollapse"
+                                            aria-expanded="false" aria-controls="moreCollapse">
                                             Show More
                                         </a>
                                         <!--<span id="icon4" class="fas fa-plus collapse-button"></span>-->
@@ -468,7 +507,7 @@
                                                     </p>
                                                 </label>
                                             </div>
-    
+
                                             <div class="checkbox-wrapper-48">
                                                 <label class="d-flex align-items-center">
                                                     <input type="checkbox" class="mr-2 " name="buy_phone">
@@ -487,7 +526,296 @@
                     <hr>
                     <!-- Brand Ends -->
 
+                    <!-- Color Collapsible Section -->
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#colorCollapse"
+                                aria-expanded="false" aria-controls="colorCollapse">
+                                <h4 class="header_categories">Color</h4>
+                            </button>
+                            <span id="icon5" class="fa fa-plus collapse-button purple-icon"></span>
+                        </div>
+                        <div class="collapse show mt-3" id="colorCollapse">
+                            <div class="d-flex flex-wrap border-0 p-0">
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="black"
+                                        id="colorBlack">
+                                    <label class="form-check-label" for="colorBlack"
+                                        style="background-color: black;"></label>
+                                </div>
 
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="blue"
+                                        id="colorBlue">
+                                    <label class="form-check-label" for="colorBlue"
+                                        style="background-color: blue;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="red"
+                                        id="colorRed">
+                                    <label class="form-check-label" for="colorRed"
+                                        style="background-color: red;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="green"
+                                        id="colorGreen">
+                                    <label class="form-check-label" for="colorGreen"
+                                        style="background-color: green;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="yellow"
+                                        id="colorYellow">
+                                    <label class="form-check-label" for="colorYellow"
+                                        style="background-color: yellow; border: 1px solid #ddd;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="purple"
+                                        id="colorPurple">
+                                    <label class="form-check-label" for="colorPurple"
+                                        style="background-color: purple;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="orange"
+                                        id="colorOrange">
+                                    <label class="form-check-label" for="colorOrange"
+                                        style="background-color: orange;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="pink"
+                                        id="colorPink">
+                                    <label class="form-check-label" for="colorPink"
+                                        style="background-color: pink; border: 1px solid #ddd;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="gray"
+                                        id="colorGray">
+                                    <label class="form-check-label" for="colorGray"
+                                        style="background-color: gray;"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Color Collapsible Section Ends -->
+
+                    <hr>
+
+                    <!-- Internal Storage Section -->
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#internalstorage"
+                                aria-expanded="false" aria-controls="internalstorage">
+                                <h4 class="header_categories">Internal Storage</h4>
+                            </button>
+                            <span id="icon6" class="fa fa-plus collapse-button purple-icon"></span>
+                        </div>
+                        <div class="collapse show " id="internalstorage">
+                            <div class="card card-body border-0  py-1">
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">16 GB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">32 GB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">64 GB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">128 GB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">256 GB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">512 GB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">1 TB
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Internal Storage Section Ends -->
+
+                    <hr>
+
+                    <!-- Condition Section -->
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#condition"
+                                aria-expanded="false" aria-controls="condition">
+                                <h4 class="header_categories">Condition</h4>
+                            </button>
+                            <span id="icon7" class="fa fa-plus collapse-button purple-icon"></span>
+                        </div>
+                        <div class="collapse show " id="condition">
+                            <div class="card card-body border-0  py-1">
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">New
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">Refurbished
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">Used
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <p class="m-0 categories_text">Open Box
+                                            <span class="categories_span">(10)</span>
+                                        </p>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Condition Section Ends -->
+
+                    <hr>
+
+                    <!-- Rating Section -->
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn" type="button" data-toggle="collapse" data-target="#rating"
+                                aria-expanded="false" aria-controls="rating">
+                                <h4 class="header_categories">Rating</h4>
+                            </button>
+                            <span id="icon8" class="fa fa-plus collapse-button purple-icon"></span>
+                        </div>
+                        <div class="collapse show " id="rating">
+                            <div class="card card-body border-0 py-1">
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <div class="rating_star">
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                        </div>
+
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <div class="rating_star">
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <div class="rating_star">
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <div class="rating_star">
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-wrapper-48">
+                                    <label class="d-flex align-items-center">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <div class="rating_star">
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                        </div>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Rating Section Ends -->
+
+                    <!-- Filter -->
                     <div class="pb-0">
                         <div class="text-center">
                             <div class="__cate-side-title border-bottom">
@@ -676,7 +1004,8 @@
             </aside>
 
             <section class="col-lg-9">
-                <div class="row" id="ajax-products">
+                {{-- <div class="row" id="ajax-products"> --}}
+                <div class="items-container" id="ajax-products">
                     @include('web-views.products._ajax-products', [
                         'products' => $products,
                         'decimal_point_settings' => $decimal_point_settings,
@@ -824,5 +1153,12 @@
 
             // Budget Ends
         });
+
+        // Sorting items
+        function changeItemsPerRow(numItems) {
+            const container = document.querySelector('.items-container');
+            container.style.gridTemplateColumns = `repeat(${numItems}, 1fr)`;
+        }
+        // Sorting items Ends
     </script>
 @endpush
