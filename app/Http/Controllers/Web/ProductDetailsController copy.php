@@ -51,8 +51,6 @@ class ProductDetailsController extends Controller
      */
     public function index(string $slug): View|RedirectResponse
     {
-      
-    
         $theme_name = theme_root_path();
 
         return match ($theme_name) {
@@ -65,8 +63,6 @@ class ProductDetailsController extends Controller
 
     public function getDefaultTheme(string $slug): View|RedirectResponse
     {
-    
-      
         $product = $this->productRepo->getFirstWhereActive(params: ['slug' => $slug], relations: ['reviews', 'seller.shop']);
         if ($product) {
             $overallRating = getOverallRating(reviews: $product->reviews);

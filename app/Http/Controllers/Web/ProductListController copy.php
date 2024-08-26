@@ -23,6 +23,7 @@ class ProductListController extends Controller
 {
     public function products(Request $request)
     {
+       
         $theme_name = theme_root_path();
 
         return match ($theme_name){
@@ -33,8 +34,7 @@ class ProductListController extends Controller
         };
     }
 
-    public function default_theme(Request $request) {
-       
+    public function default_theme($request) {
 
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
@@ -172,7 +172,6 @@ class ProductListController extends Controller
         $products = $fetched->paginate(20)->appends($data);
 
         if ($request->ajax()) {
-           
 
             return response()->json([
                 'total_product'=>$products->total(),
@@ -192,37 +191,6 @@ class ProductListController extends Controller
             }
         }
 
-
-
-        // $query = Product::active()->with(['reviews']);
-       
-    
-        // // Filter products by selected categories if categories are passed in the request
-        
-
-           
-        //     if ($request->has('categories')) {
-        //         $categoryIds = $request->input('categories', []);
-        //         $query->whereHas('categories', function ($q) use ($categoryIds) {
-        //             $q->whereIn('id', $categoryIds);
-        //         });
-        //     }
-    
-        //     $products = $query->paginate(20);
-    
-        //     // If no products are found, return null
-        //     if ($products->isEmpty()) {
-               
-        //         return response()->json(null);
-        //     }
-    
-        //     // Return the filtered products as a partial view
-        //     return response()->json([
-        //         'data'=>'bibek',
-        //         'status'=>'hello'
-        //     ]);
-       
-        
         return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data'));
     }
 

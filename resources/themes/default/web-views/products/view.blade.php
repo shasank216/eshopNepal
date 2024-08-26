@@ -409,7 +409,7 @@
                         </button>
                     </div>
 
-                    <!-- Categories -->
+                <!-- Categories -->
                     <div class="form-group">
                         <!-- Container for button and icon -->
                         <div class="d-flex justify-content-between align-items-center">
@@ -426,16 +426,14 @@
                             <div class="card card-body border-0 py-0">
                                 @foreach ($categories as $category)
                                     <div class="checkbox-wrapper-48">
-                                        <label class="d-flex align-items-center"
-                                            data-link="{{ route('products', ['id' => $category['id'], 'data_from' => 'category', 'page' => 1]) }}">
-                                            <input type="checkbox" class="mr-2 " name="buy_phone">
+                                        <label class="d-flex align-items-center">
+                                            <input type="checkbox" class="mr-2 category-checkbox" name="categories[]" value="{{ $category['id'] }}">
                                             <p class="m-0 categories_text">{{ $category['name'] }}
                                                 <span class="categories_span">(10)</span>
                                             </p>
                                         </label>
                                     </div>
                                 @endforeach
-
                             </div>
                         </div>
                     </div>
@@ -1198,4 +1196,37 @@
 
         // Sorting items Ends
     </script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+<script>
+    $(document).ready(function() {
+        $('.category-checkbox').on('change', function() {
+            // Collect all selected category IDs
+            
+            let selectedCategories = [];
+          
+            $('.category-checkbox:checked').each(function() {
+                selectedCategories.push($(this).val());
+            });
+            // alert(selectedCategories);
+            // Make AJAX request to filter products
+            $.ajax({
+                url: "{{ route('products') }}", // Adjust this route if needed
+                type: 'GET',
+                data: {
+                    categories: selectedCategories
+                },
+                success: function(response) {
+                    console.log(response);
+                    // Replace the content of the product list with the response
+                    $('#product-list').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error filtering products:', error);
+                }
+            });
+        });
+    });
+</script>
+
+
 @endpush
