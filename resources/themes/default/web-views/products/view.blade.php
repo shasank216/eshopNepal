@@ -99,8 +99,8 @@
         }
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
-                border-radius: 0.25em;
-            }*/
+                            border-radius: 0.25em;
+                        }*/
 
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
@@ -273,13 +273,26 @@
             gap: 10px;
         }
 
-        .item {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            text-align: center;
+        /*  */
+        .button-group button i {
+            /* padding: 10px 20px; */
+            margin-right: 10px;
+            border: none;
+            color: #e0e0e0;
+            cursor: pointer;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
+
+        .button-group button.active i {
+            color: #1F3C74;
+        }
+
+        .items-container {
+            display: grid;
+            gap: 10px;
+        }
+        /*  */
 
         .w-20 {
             width: 20px;
@@ -288,6 +301,14 @@
         .h-20 {
             height: 20px;
         }
+
+        .sorting-item {
+            border-radius: unset !important;
+            border: unset !important;
+            box-shadow: unset !important;
+            background: unset !important;
+        }
+
         /* Sorting Products Ends */
     </style>
 @endpush
@@ -312,60 +333,64 @@
 
 
             <!-- <div>
-                            <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                            <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                        </div> -->
+                                        <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                                        <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                                    </div> -->
 
-            <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
-                <input hidden name="data_from" value="{{$data['data_from']}}">
-                <div class="sorting-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
-                        <path d="M11.6667 7.80078L14.1667 5.30078L16.6667 7.80078" stroke="#D9D9D9" stroke-width="2"
-                              stroke-linecap="round" stroke-linejoin="round"/>
-                        <path
-                            d="M7.91675 4.46875H4.58341C4.3533 4.46875 4.16675 4.6553 4.16675 4.88542V8.21875C4.16675 8.44887 4.3533 8.63542 4.58341 8.63542H7.91675C8.14687 8.63542 8.33341 8.44887 8.33341 8.21875V4.88542C8.33341 4.6553 8.14687 4.46875 7.91675 4.46875Z"
-                            stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path
-                            d="M7.91675 11.9688H4.58341C4.3533 11.9688 4.16675 12.1553 4.16675 12.3854V15.7188C4.16675 15.9489 4.3533 16.1354 4.58341 16.1354H7.91675C8.14687 16.1354 8.33341 15.9489 8.33341 15.7188V12.3854C8.33341 12.1553 8.14687 11.9688 7.91675 11.9688Z"
-                            stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M14.1667 5.30078V15.3008" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round"
-                              stroke-linejoin="round"/>
-                    </svg>
-                    <label class="for-sorting" for="sorting">
-                        <span>{{translate('sort_by')}}</span>
-                    </label>
-                    <select class="product-list-filter-on-viewpage">
-                        <option value="latest" {{ request('sort_by') == 'latest' ? 'selected':'' }}>{{translate('latest')}}</option>
-                        <option
-                            value="low-high" {{ request('sort_by') == 'low-high' ? 'selected':'' }}>{{translate('low_to_High_Price')}} </option>
-                        <option
-                            value="high-low" {{ request('sort_by') == 'high-low' ? 'selected':'' }}>{{translate('High_to_Low_Price')}}</option>
-                        <option
-                            value="a-z" {{ request('sort_by') == 'a-z' ? 'selected':'' }}>{{translate('A_to_Z_Order')}}</option>
-                        <option
-                            value="z-a" {{ request('sort_by') == 'z-a' ? 'selected':'' }}>{{translate('Z_to_A_Order')}}</option>
-                    </select>
+            <div class="d-flex align-items-center gap-3">
+                <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
+                    <input hidden name="data_from" value="{{ $data['data_from'] }}">
+                    <div class="sorting-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
+                            fill="none">
+                            <path d="M11.6667 7.80078L14.1667 5.30078L16.6667 7.80078" stroke="#D9D9D9" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M7.91675 4.46875H4.58341C4.3533 4.46875 4.16675 4.6553 4.16675 4.88542V8.21875C4.16675 8.44887 4.3533 8.63542 4.58341 8.63542H7.91675C8.14687 8.63542 8.33341 8.44887 8.33341 8.21875V4.88542C8.33341 4.6553 8.14687 4.46875 7.91675 4.46875Z"
+                                stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M7.91675 11.9688H4.58341C4.3533 11.9688 4.16675 12.1553 4.16675 12.3854V15.7188C4.16675 15.9489 4.3533 16.1354 4.58341 16.1354H7.91675C8.14687 16.1354 8.33341 15.9489 8.33341 15.7188V12.3854C8.33341 12.1553 8.14687 11.9688 7.91675 11.9688Z"
+                                stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14.1667 5.30078V15.3008" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <label class="for-sorting" for="sorting">
+                            <span>{{ translate('sort_by') }}</span>
+                        </label>
+                        <select class="product-list-filter-on-viewpage">
+                            <option value="latest" {{ request('sort_by') == 'latest' ? 'selected' : '' }}>
+                                {{ translate('latest') }}</option>
+                            <option value="low-high" {{ request('sort_by') == 'low-high' ? 'selected' : '' }}>
+                                {{ translate('low_to_High_Price') }} </option>
+                            <option value="high-low" {{ request('sort_by') == 'high-low' ? 'selected' : '' }}>
+                                {{ translate('High_to_Low_Price') }}</option>
+                            <option value="a-z" {{ request('sort_by') == 'a-z' ? 'selected' : '' }}>
+                                {{ translate('A_to_Z_Order') }}</option>
+                            <option value="z-a" {{ request('sort_by') == 'z-a' ? 'selected' : '' }}>
+                                {{ translate('Z_to_A_Order') }}</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="d-lg-none">
+                    <div class="filter-show-btn btn btn--primary py-1 px-2 m-0">
+                        <i class="tio-filter"></i>
+                    </div>
                 </div>
-            </form>
-            <div class="d-lg-none">
-                <div class="filter-show-btn btn btn--primary py-1 px-2 m-0">
-                    <i class="tio-filter"></i>
-                </div>
-            </div>
 
-            <div class="button-group">
-                <button class="btn p-0" onclick="changeItemsPerRow(1)">
-                    <i class="fa fa-th-list" aria-hidden="true"></i>
-                </button>
-                <button class="btn p-0" onclick="changeItemsPerRow(2)">
-                    <i class="fa fa-th-large" aria-hidden="true"></i>
-                </button>
-                <button class="btn p-0" onclick="changeItemsPerRow(3)">
-                    <i class="fa fa-th" aria-hidden="true"></i>
-                </button>
-                {{-- <button class="btn p-0" onclick="changeItemsPerRow(4)">
+                <div class="button-group">
+                    <button class="btn p-0 mr-2 active" onclick="changeItemsPerRow(1, this)">
+                        <i class="fa fa-th-list fa-lg" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn p-0 mr-2" onclick="changeItemsPerRow(2, this)">
+                        <i class="fa fa-th-large fa-lg" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn p-0 mr-2" onclick="changeItemsPerRow(3, this)">
+                        <i class="fa fa-th fa-lg" aria-hidden="true"></i>
+                    </button>
+                    {{-- <button class="btn p-0" onclick="changeItemsPerRow(4)">
                     <img class="w-20 h-20 p-0" src="{{ asset('public/assets/front-end/img/icons/four-items.png') }}" alt="">
                 </button> --}}
+                </div>
             </div>
 
         </div>
@@ -1004,6 +1029,10 @@
             </aside>
 
             <section class="col-lg-9">
+
+                <div class="top-right-img">
+                    <img src="{{ asset('public/assets/front-end/img/media/top_right.png') }}" width="100%" alt="">
+                </div>
                 {{-- <div class="row" id="ajax-products"> --}}
                 <div class="items-container" id="ajax-products">
                     @include('web-views.products._ajax-products', [
@@ -1155,10 +1184,18 @@
         });
 
         // Sorting items
-        function changeItemsPerRow(numItems) {
+        function changeItemsPerRow(numItems, element) {
             const container = document.querySelector('.items-container');
             container.style.gridTemplateColumns = `repeat(${numItems}, 1fr)`;
+
+            // Remove the 'active' class from all buttons
+            const buttons = document.querySelectorAll('.button-group button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Add the 'active' class to the clicked button
+            element.classList.add('active');
         }
+
         // Sorting items Ends
     </script>
 @endpush
