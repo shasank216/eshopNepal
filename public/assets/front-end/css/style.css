@@ -9369,3 +9369,98 @@ input.form-control.fz-30 {
 .navbar-tool-text>small {
     margin-bottom: 2px;
 }
+
+.category-wise-products_header {
+    flex-wrap: nowrap !important;
+    overflow-x: scroll;
+}
+
+.nav_product {
+    min-width: 90px;
+}
+
+.header-search-input, .all-categories-dropdown-btn, .header-categories_links, .search_button span {
+    font-size: 14px;
+}
+
+.header-categories_links {
+    text-transform: capitalize;
+}
+
+
+
+@media (max-width: 1024px) {
+    .signup h6 {
+        font-size: 16px;
+    }
+
+    .shopping h6, .__inline-9 .subscribe-border, .__inline-9 .subscribe-button {
+        font-size: 12px;
+    }
+
+    .footer-brand_desc, .foot-bottom-content {
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .widget-list-link, .footer-offer, .foot-bottom-head, .foot-bottom-copyright {
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .widget-list-link img {
+        width: 150px;
+        height: 100%;
+    }
+
+    .footer-head {
+        font-size: 14px;
+    }
+
+    .f-32 {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+    .signup {
+        padding-top: 1rem;
+    }
+
+    .footer-company-content_container, .footer-additional {
+        padding: 0 2rem;
+    }
+
+    .footer-social_media {
+        justify-content: center !important;
+    }
+
+    .footer-additional-content {
+        flex-direction: column;
+    }
+
+    .foot-bottom-copyright {
+        font-size: 12px;
+    }
+
+    .foot-bottom-payment img {
+        width: 30px;
+        height: 20px;
+    }
+
+    .footer-bottom {
+        justify-content: space-around;
+    }
+}
+
+@media (max-width: 575px) {
+    .subscribe-container {
+        padding-top: 1rem;
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .shopping-first {
+        display: none;
+    }
+}

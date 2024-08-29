@@ -100,7 +100,7 @@
                     <form action="{{route('products')}}" type="submit" class="search_form">
                         <div class="d-flex border-shape">
                             <div class="d-flex align-items-center gap-2">
-                                <input class="form-control appended-form-control search-bar-input border-0 " style="border-radius: 8px;" type="search"
+                                <input class="form-control appended-form-control search-bar-input border-0 header-search-input" style="border-radius: 8px;" type="search"
                                     autocomplete="off"
                                     placeholder="{{ translate("search_for_items")}}..."
                                     name="name" value="{{ request('name') }}">
@@ -125,7 +125,7 @@
                                 @foreach($categories as $category)
                                {{-- <a class="dropdown-item" href="#"><span>{{$category['name']}}</span></a>--}}
                                <a <?php if ($category->childes->count() > 0) echo "" ?> 
-                                href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="p-1 ps-3">
+                                href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="p-1 ps-3 header-categories_links">
                                  <span>{{$category['name']}}</span>
 
                                 </a><br>
@@ -265,7 +265,7 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex flex-wrap pt-3 bg-white justify-content-between">
+        <div class="product_details px-5 d-flex flex-wrap pt-3 bg-white justify-content-between category-wise-products_header">
             @foreach($categories as $key => $category)
                 @if ($key<14)
                     <div class="nav_product">

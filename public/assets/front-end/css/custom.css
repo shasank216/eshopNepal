@@ -1262,3 +1262,11 @@ img, figure {
     height: 100%;
     width: auto;
 }
+
+
+
+@media (max-width: 1190px) {
+    .search-bar-input {
+        padding-right: 0 !important;
+    }
+}

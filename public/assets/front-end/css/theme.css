@@ -14959,7 +14959,8 @@ a.nav-link:hover .media-tab-media {
 
 @media (min-width: 992px) {
     .navbar-sticky.navbar-stuck {
-        position: fixed;
+        /* position: fixed; */
+        position: unset !important;
         top: 0;
         left: 0;
         width: 100%;
