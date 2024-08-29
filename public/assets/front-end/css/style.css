@@ -7601,10 +7601,10 @@ span.badge-accent:hover {
     display: none !important;
 }
 
-.nav--tabs li a.active {
+/* .nav--tabs li a.active {
     color: #ffffff !important;
     background: var(--base) !important;
-}
+} */
 
 .hr-right-before {
     position: relative;
