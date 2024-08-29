@@ -48,9 +48,9 @@
 
 @section('content')
     <div class="__inline-23">
-        <div class="container mt-4 rtl text-align-direction">
-            <!-- Bread Crumb -->
-            <div class="braed-crumbs">
+        <!-- Bread Crumb -->
+        <div class="braed-crumbs">
+            <div class="container-fluid">
                 <span>
                     <a href="{{ url('/') }}" class="home">
                         <i class="fa fa-home" aria-hidden="true"></i>
@@ -60,7 +60,9 @@
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
                 <span class="text-capitalize product">{{ $product->name }}</span>
             </div>
-            <!-- Bread Crumb Ends -->
+        </div>
+        <!-- Bread Crumb Ends -->
+        <div class="container-fluid mt-4 rtl text-align-direction">
             <div class="row {{ Session::get('direction') === 'rtl' ? '__dir-rtl' : '' }}">
                 <div class="col-lg-12 col-12">
                     <div class="row">
@@ -469,27 +471,22 @@
 
                                     <div class="mt-3">
                                         <div class="row align-items-center">
-                                            <span class="share-text">Share on:</span>
+                                            <span class="share-text mr-2">Share on:</span>
                                             <!-- Share buttons container -->
                                             <div class="share-buttons">
                                                 <a id="facebook-share" class="share-btn" title="Share on Facebook">
-                                                    <i class="fa fa-facebook"></i> 
+                                                    <i class="fa fa-facebook"></i>
                                                 </a>
                                                 <a id="twitter-share" class="share-btn" title="Share on Twitter">
-                                                    <i class="fa fa-twitter"></i> 
+                                                    <i class="fa fa-twitter"></i>
                                                 </a>
-                                                <a id="instagram-share" class="share-btn"
-                                                    title="Share on Instagram">
-                                                    <i class="fa fa-instagram"></i> 
+                                                <a id="instagram-share" class="share-btn" title="Share on Instagram">
+                                                    <i class="fa fa-instagram"></i>
                                                 </a>
-                                                <a id="pinterest-share" class="share-btn"
-                                                    title="Share on Pinterest">
-                                                    <i class="fa fa-pinterest"></i> 
+                                                <a id="pinterest-share" class="share-btn" title="Share on Pinterest">
+                                                    <i class="fa fa-pinterest"></i>
                                                 </a>
                                             </div>
-
-
-
                                         </div>
                                     </div>
                                 </form>
@@ -502,8 +499,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div>
-                                        <div
-                                            class="px-4 pb-3 mb-3 mr-0 mr-md-2 bg-white __review-overview __rounded-10 pt-3">
+                                        <div class="pb-3 mb-3 mr-0 mr-md-2 pt-3">
                                             <ul class="nav nav-tabs nav--tabs d-flex justify-content-center mt-3"
                                                 role="tablist">
                                                 <li class="nav-item">
@@ -515,25 +511,74 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link __inline-27" href="#reviews" data-toggle="tab"
                                                         role="tab">
-                                                        {{ translate('reviews') }}
+                                                        {{ translate('reviews') }} ({{ $productReviews->total() }})
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link __inline-27" href="#video" data-toggle="tab"
+                                                        role="tab">
+                                                        Our Video
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link __inline-27" href="#deliveryReturn" data-toggle="tab"
+                                                        role="tab">
+                                                        Delivery & Return
                                                     </a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content px-lg-3">
+                                                <!-- Overview -->
                                                 <div class="tab-pane fade show active text-justify" id="overview"
                                                     role="tabpanel">
                                                     <div class="row pt-2 specification">
 
-                                                        @if ($product->video_url != null && str_contains($product->video_url, 'youtube.com/embed/'))
-                                                            <div class="col-12 mb-4">
-                                                                <iframe width="420" height="315"
-                                                                    src="{{ $product->video_url }}">
-                                                                </iframe>
-                                                            </div>
-                                                        @endif
                                                         @if ($product['details'])
+                                                            <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                                                                @php($companyReliability = getWebConfig('company_reliability'))
+                                                                @if ($companyReliability != null)
+                                                                    <div class="companyReliability row">
+                                                                        @foreach ($companyReliability as $key => $value)
+                                                                            @if ($value['status'] == 1 && !empty($value['title']))
+                                                                                <div class="col-md-6 col-sm-6">
+                                                                                    <div
+                                                                                        class="px-3 py-3 d-flex flex-column align-items-center companyReliability-single">
+                                                                                        <img class="{{ Session::get('direction') === 'rtl' ? 'float-right ml-2' : 'mr-2' }} __img-100"
+                                                                                            src="{{ getValidImage(path: 'storage/app/public/company-reliability/' . $value['image'], type: 'source', source: theme_asset(path: 'public/assets/front-end/img') . '/' . $value['item'] . '.png') }}"
+                                                                                            alt="">
+                                                                                        <span
+                                                                                            class="title">{{ translate($value['title']) }}</span>
+                                                                                        <span class="desc text-center">
+                                                                                            Free shipping on all order over
+                                                                                            $250
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </div>
+                                                                @endif
+
+                                                                <!-- Exchange Of Goods -->
+                                                                <div class="exchangeOfGoods">
+                                                                    <h3>
+                                                                        Exchange and return of goods
+                                                                    </h3>
+                                                                    <span>
+                                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing
+                                                                        elit, sed diam nonummy nibh euismod tincidunt ut
+                                                                        laoreet dolore magna aliquam erat volutpat. Ut wisi
+                                                                        enim ad minim veniam, quis nostrud exerci tation
+                                                                        ullamcorper suscipit lobortis nisl ut aliquip ex ea
+                                                                        commodo consequat. Duis autem vel eum iriure dolor
+                                                                        in hendrerit in vulputate velit esse molestie
+                                                                        consequat
+                                                                    </span>
+                                                                </div>
+                                                                <!-- Exchange Of Goods Ends -->
+                                                            </div>
                                                             <div
-                                                                class="text-body col-lg-12 col-md-12 overflow-scroll fs-13 text-justify details-text-justify">
+                                                                class="py-4 px-2 text-body col-lg-6 col-md-12 col-sm-12 col-12 overflow-scroll fs-13 text-justify details-text-justify product-description">
                                                                 {!! $product['details'] !!}
                                                             </div>
                                                         @endif
@@ -553,7 +598,9 @@
                                                         </div>
                                                     @endif
                                                 </div>
+                                                <!-- Overview Ends -->
 
+                                                <!-- Review -->
                                                 <div class="tab-pane fade" id="reviews" role="tabpanel">
                                                     @if (count($product->reviews) == 0 && $productReviews->total() == 0)
                                                         <div>
@@ -737,6 +784,48 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <!-- Review Ends -->
+
+                                                <!-- Video -->
+                                                <div class="tab-pane fade" id="video" role="tabpanel">
+                                                    
+                                                    @if ($product->video_url != null && str_contains($product->video_url, 'youtube.com/embed/'))
+                                                        <div class="col-12 mb-4">
+                                                            <iframe width="420" height="315"
+                                                                src="{{ $product->video_url }}">
+                                                            </iframe>
+                                                        </div>
+                                                    @endif
+                                                    
+                                                </div>
+                                                <!-- Video Ends -->
+
+                                                <!-- Delivery and Return -->
+                                                <div class="tab-pane fade px-5" id="deliveryReturn" role="tabpanel">
+                                                    <div class="shipping">
+                                                        <h3>
+                                                            Shipping
+                                                        </h3>
+                                                        <ul class="shipping-ul">
+                                                            <li>Complimentary ground shipping within 1 to 7 business days</li>
+                                                            <li>In-store collection available within 1 to 7 business days</li>
+                                                            <li>Next-day and Express delivery options also available</li>
+                                                            <li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception of certain items</li>
+                                                            <li>See the delivery FAQs for details on shipping methods, costs and delivery times</li>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="shipping">
+                                                        <h3>
+                                                            Shipping
+                                                        </h3>
+                                                        <ul class="shipping-ul">
+                                                            <li>Easy and complimentary, within 14 days</li>
+                                                            <li>See conditions and procedure in our return FAQs</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <!-- Delivery and Return Ends -->
                                             </div>
                                         </div>
                                     </div>
@@ -746,7 +835,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-12">
+                {{-- <div class="col-lg-12">
                     @php($companyReliability = getWebConfig('company_reliability'))
                     @if ($companyReliability != null)
                         <div class="product-details-shipping-details">
@@ -767,7 +856,6 @@
 
                     @if (getWebConfig(name: 'business_mode') == 'multi')
                         <div class="__inline-31">
-
                             @if ($product->added_by == 'seller')
                                 @if (isset($product->seller->shop))
                                     <div class="row position-relative">
@@ -789,11 +877,7 @@
                                                 </div>
                                                 <div class="d-flex align-items-center">
 
-                                                    @if (
-                                                        $sellerTemporaryClose ||
-                                                            ($product->seller->shop->vacation_status &&
-                                                                $currentDate >= $sellerVacationStartDate &&
-                                                                $currentDate <= $sellerVacationEndDate))
+                                                    @if ($sellerTemporaryClose || ($product->seller->shop->vacation_status && $currentDate >= $sellerVacationStartDate && $currentDate <= $sellerVacationEndDate))
                                                         <span class="chat-seller-info product-details-seller-info"
                                                             data-toggle="tooltip"
                                                             title="{{ translate('this_shop_is_temporary_closed_or_on_vacation') . ' ' . translate('You_cannot_add_product_to_cart_from_this_shop_for_now') }}">
@@ -875,12 +959,7 @@
                                                 </span><br>
                                             </div>
 
-                                            @if (
-                                                $product->added_by == 'admin' &&
-                                                    ($inHouseTemporaryClose ||
-                                                        ($inHouseVacationStatus &&
-                                                            $currentDate >= $inHouseVacationStartDate &&
-                                                            $currentDate <= $inHouseVacationEndDate)))
+                                            @if ($product->added_by == 'admin' && ($inHouseTemporaryClose || ($inHouseVacationStatus && $currentDate >= $inHouseVacationStartDate && $currentDate <= $inHouseVacationEndDate)))
                                                 <div
                                                     class="{{ Session::get('direction') === 'rtl' ? 'right' : 'ml-3' }}">
                                                     <span class="chat-seller-info" data-toggle="tooltip"
@@ -969,7 +1048,7 @@
                             ])
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -1025,14 +1104,19 @@
         </div>
 
         @if (count($relatedProducts) > 0)
-            <div class="container rtl text-align-direction">
-                <div class="card __card border-0">
-                    <div class="card-body">
-                        <div class="row flex-between">
+            <div class="container-fluid rtl text-align-direction">
+                <div class="px-4">
+                    <div class="">
+                        <div class="row justify-content-center">
                             <div class="ms-1">
-                                <h4 class="text-capitalize font-bold fs-16">{{ translate('similar_products') }}</h4>
+                                <h4 class="text-center font-bold fs-16 youmight-like-head mb-0">
+                                    You Might Also Like
+                                </h4>
+                                <p class="youmight-like-para">
+                                    Stay ahead of the electronic trends with our new selection
+                                </p>
                             </div>
-                            <div class="view_all d-flex justify-content-center align-items-center">
+                            {{-- <div class="view_all d-flex justify-content-center align-items-center">
                                 <div>
                                     @php($category = json_decode($product['category_ids']))
                                     @if ($category)
@@ -1043,7 +1127,7 @@
                                         </a>
                                     @endif
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="row g-3 mt-1">
@@ -1060,6 +1144,29 @@
                 </div>
             </div>
         @endif
+
+        {{-- <div class="container-fluid">
+            <div class="row px-4">
+                <div class="col-lg-6 col-md-12">
+                    <h6 class="download-app-head">
+                        Download Our App
+                    </h6>
+                    <img src="{{ asset('public/assets/front-end/img/media/qr.jpg') }}" alt="">
+                    <p>
+                        Scan this code with your phone’s camera
+                    </p>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <h6 class="download-app-head">
+                        Download Our App
+                    </h6>
+                    <img src="{{ asset('public/assets/front-end/img/media/qr.jpg') }}" alt="">
+                    <p>
+                        Scan this code with your phone’s camera
+                    </p>
+                </div>
+            </div>
+        </div> --}}
 
         <div class="modal fade rtl text-align-direction" id="show-modal-view" tabindex="-1" role="dialog"
             aria-labelledby="show-modal-image" aria-hidden="true">
