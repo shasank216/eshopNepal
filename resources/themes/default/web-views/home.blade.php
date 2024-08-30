@@ -366,7 +366,7 @@
     }
 
     .carding {
-        width: 247px;
+        /* width: 247px; */
         height: 300px;
         background-color: color-mix(in srgb, #606BBF, #fff 90%);
         border-radius: 15px;
@@ -382,7 +382,11 @@
         /* top: -25px;
         left: -10px; */
         width: 246px;
+        margin-right: 10px;
+    }
 
+    .product-hover_details .carding img {
+        border-radius: 15px;
     }
 
     .category-badge {
@@ -761,6 +765,11 @@
         font-weight: 500;
         color: #727272;
     }
+
+    .latest-slider .owl-stage-outer .owl-stage .owl-item.active {
+        z-index: 1;
+    }
+
 </style>
     @endpush
 
@@ -1545,6 +1554,15 @@
 
     
 <script>
+    // $('.product').each(function() {
+    //     var $this = $(this);
+    //     var hoverDetail = $this.find('.product-hover_details');
+
+    //     $this.hover(function() {
+    //         hoverDetail.toggleClass('d-none');
+    //     });
+    // });
+
     $('.product').each(function() {
         var $this = $(this);
         var hoverDetail = $this.find('.product-hover_details');
@@ -1553,5 +1571,6 @@
             hoverDetail.toggleClass('d-none');
         });
     });
+
 </script>
 @endpush

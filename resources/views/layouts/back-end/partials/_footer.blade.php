@@ -28,11 +28,11 @@
                             {{translate('home')}}
                         </a>
                     </li>
-                    <li class="list-inline-item">
+                    {{-- <li class="list-inline-item">
                         <label class="badge badge-soft-version text-capitalize">
                             {{translate('software_version').' '.env('SOFTWARE_VERSION') }}
                         </label>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
