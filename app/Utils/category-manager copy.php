@@ -67,22 +67,17 @@ class CategoryManager
     }
 
     public static function get_categories_with_counting()
-{
-    $categories = Category::withCount(['products' => function ($query) {
-        $query->where('status', '1'); // Example filter for active products
-    }])
-    ->with(['childes' => function ($query) {
-        $query->withCount(['products' => function ($query) {
-            $query->where('status', '1'); // Example filter for active products
-        }])
-        ->with(['childes' => function ($query) {
-            $query->withCount(['products' => function ($query) {
-                $query->where('status', '1'); // Example filter for active products
-            }]);
-        }]);
-    }])
-    ->get();
+    {
+        $categories = Category::withCount(['product'=>function($query){
+                        $query->where(['status'=>'1']);
+                    }])->with(['childes' => function ($query) {
+                        $query->with(['childes' => function ($query) {
+                            $query->withCount(['subSubCategoryProduct'])->where('position', 2);
+                        }])->withCount(['subCategoryProduct'])->where('position', 1);
+                    }, 'childes.childes'])
+                    ->where('position', 0)
+                    ->get();
 
-    return $categories;
-}
+        return $categories;
+    }
 }

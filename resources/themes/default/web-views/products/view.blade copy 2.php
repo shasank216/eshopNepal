@@ -99,8 +99,8 @@
         }
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
-                                                        border-radius: 0.25em;
-                                                    }*/
+                                border-radius: 0.25em;
+                            }*/
 
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
@@ -334,9 +334,9 @@
 
 
             <!-- <div>
-                                                                    <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                                                                    <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                                                                </div> -->
+                                            <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                                            <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                                        </div> -->
 
             <div class="d-flex align-items-center gap-3">
                 <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
@@ -423,7 +423,7 @@
 
                         <!-- Collapsible content (collapsed by default) -->
                         <div class="collapse show" id="checkboxCollapse">
-                            @php($categories = \App\Utils\CategoryManager::get_categories_with_counting())
+                            @php($categories = \App\Utils\CategoryManager::parents())
                             <div class="card card-body border-0 py-0">
                                 @foreach ($categories as $category)
                                     <div class="checkbox-wrapper-48">
@@ -431,12 +431,7 @@
                                             <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
                                                 value="{{ $category['id'] }}">
                                             <p class="m-0 categories_text">{{ $category['name'] }}
-                                                <span class="categories_span">
-                                                    {{-- (10) --}}
-                                                   
-                                                    ({{ $category->products_count }}) <!-- Display parent category product count -->
-
-                                                </span>
+                                                <span class="categories_span">(10)</span>
                                             </p>
                                         </label>
                                     </div>
@@ -491,7 +486,6 @@
                         @endforeach
                     </ul> --}}
 
-                    <!-- Brand Collapsible Section -->
                     <div class="form-group mt-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <button class="btn" type="button" data-toggle="collapse" data-target="#brandCollapse"
@@ -502,8 +496,8 @@
                         </div>
                         <div class="collapse show" id="brandCollapse">
                             <div class="card card-body border-0 py-1">
-                                <!-- Initial set of brands -->
-                                @foreach (\App\Utils\BrandManager::get_active_brands()->take(4) as $brand)
+
+                                @foreach (\App\Utils\BrandManager::get_active_brands() as $brand)
                                     <div class="checkbox-wrapper-48">
                                         <label class="d-flex align-items-center">
                                             <!-- Checkbox for each brand -->
@@ -519,40 +513,43 @@
                                     </div>
                                 @endforeach
 
-                                <!-- Show More Starts -->
+                                <!--Show More Starts-->
                                 <div class="form-group mt-2">
                                     <div class="d-flex align-items-center">
-                                        <a class="show-more-link" style="text-decoration: underline; color: #1F3C74;"
+                                        <a class="" style="text-decoration: underline; color: #1F3C74;"
                                             type="button" data-toggle="collapse" data-target="#moreCollapse"
                                             aria-expanded="false" aria-controls="moreCollapse">
                                             Show More
                                         </a>
+                                        <!--<span id="icon4" class="fas fa-plus collapse-button"></span>-->
                                     </div>
                                     <div class="collapse mt-3" id="moreCollapse">
                                         <div class="card card-body border-0 p-0">
-                                            <!-- All remaining brands -->
-                                            @foreach (\App\Utils\BrandManager::get_active_brands()->skip(4) as $brand)
-                                                <div class="checkbox-wrapper-48">
-                                                    <label class="d-flex align-items-center">
-                                                        <input type="checkbox" class="mr-2 brand-checkbox"
-                                                            value="{{ $brand['id'] }}" name="buy_phone">
-                                                        <p class="m-0 categories_text">
-                                                            {{ $brand['name'] }}
-                                                            <span class="categories_span">
-                                                                ({{ $brand['brand_products_count'] }})
-                                                            </span>
-                                                        </p>
-                                                    </label>
-                                                </div>
-                                            @endforeach
+                                            <!-- Additional content goes here -->
+                                            <div class="checkbox-wrapper-48">
+                                                <label class="d-flex align-items-center">
+                                                    <input type="checkbox" class="mr-2 " name="buy_phone">
+                                                    <p class="m-0 categories_text">Xiaomi
+                                                        <span class="categories_span">(10)</span>
+                                                    </p>
+                                                </label>
+                                            </div>
+
+                                            <div class="checkbox-wrapper-48">
+                                                <label class="d-flex align-items-center">
+                                                    <input type="checkbox" class="mr-2 " name="buy_phone">
+                                                    <p class="m-0 categories_text">Honor
+                                                        <span class="categories_span">(10)</span>
+                                                    </p>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Show More Ends -->
+                                <!--Show More Ends-->
                             </div>
                         </div>
                     </div>
-                    <!-- Brand Collapsible Section Ends -->
                     <hr>
                     <!-- Brand Ends -->
 
@@ -567,19 +564,62 @@
                         </div>
                         <div class="collapse show mt-3" id="colorCollapse">
                             <div class="d-flex flex-wrap border-0 p-0">
-                                <!-- Initial 10 colors -->
-                                @foreach ($colors as $color)
-                                    <div class="form-check color-item">
-                                        <input class="form-check-input custom-checkbox" type="checkbox"
-                                            value="{{ ucfirst($color) }}" id="{{ ucfirst($color) }}"
-                                            name="colorFilter">
-                                        <label class="form-check-label" for="{{ ucfirst($color) }}"
-                                            style="background-color:{{ $color}};">
-                                        </label>
-                                    </div>
-                                @endforeach
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="black"
+                                        id="colorBlack">
+                                    <label class="form-check-label" for="colorBlack"
+                                        style="background-color: black;"></label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="blue"
+                                        id="colorBlue">
+                                    <label class="form-check-label" for="colorBlue"
+                                        style="background-color: blue;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="red"
+                                        id="colorRed">
+                                    <label class="form-check-label" for="colorRed"
+                                        style="background-color: red;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="green"
+                                        id="colorGreen">
+                                    <label class="form-check-label" for="colorGreen"
+                                        style="background-color: green;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="yellow"
+                                        id="colorYellow">
+                                    <label class="form-check-label" for="colorYellow"
+                                        style="background-color: yellow; border: 1px solid #ddd;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="purple"
+                                        id="colorPurple">
+                                    <label class="form-check-label" for="colorPurple"
+                                        style="background-color: purple;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="orange"
+                                        id="colorOrange">
+                                    <label class="form-check-label" for="colorOrange"
+                                        style="background-color: orange;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="pink"
+                                        id="colorPink">
+                                    <label class="form-check-label" for="colorPink"
+                                        style="background-color: pink; border: 1px solid #ddd;"></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input custom-checkbox" type="checkbox" value="gray"
+                                        id="colorGray">
+                                    <label class="form-check-label" for="colorGray"
+                                        style="background-color: gray;"></label>
+                                </div>
                             </div>
-                           
                         </div>
                     </div>
                     <!-- Color Collapsible Section Ends -->
@@ -587,7 +627,7 @@
                     <hr>
 
                     <!-- Internal Storage Section -->
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <div class="d-flex justify-content-between align-items-center">
                             <button class="btn" type="button" data-toggle="collapse" data-target="#internalstorage"
                                 aria-expanded="false" aria-controls="internalstorage">
@@ -661,13 +701,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <!-- Internal Storage Section Ends -->
 
                     <hr>
 
                     <!-- Condition Section -->
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <div class="d-flex justify-content-between align-items-center">
                             <button class="btn" type="button" data-toggle="collapse" data-target="#condition"
                                 aria-expanded="false" aria-controls="condition">
@@ -715,12 +755,12 @@
 
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <!-- Condition Section Ends -->
 
                     <hr>
 
-                    {{-- <!-- Rating Section -->
+                    <!-- Rating Section -->
                     <div class="form-group">
                         <div class="d-flex justify-content-between align-items-center">
                             <button class="btn" type="button" data-toggle="collapse" data-target="#rating"
@@ -733,15 +773,13 @@
                             <div class="card card-body border-0 py-1">
                                 <div class="checkbox-wrapper-48">
                                     <label class="d-flex align-items-center">
-                                        <input type="checkbox" class="mr-2 " name="rating" value="1">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
                                         <div class="rating_star">
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-
-                                           
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
                                         </div>
 
                                     </label>
@@ -749,102 +787,63 @@
 
                                 <div class="checkbox-wrapper-48">
                                     <label class="d-flex align-items-center">
-                                        <input type="checkbox" class="mr-2 " name="rating" value="2">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
                                         <div class="rating_star">
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                           
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="checkbox-wrapper-48">
                                     <label class="d-flex align-items-center">
-                                        <input type="checkbox" class="mr-2 " name="rating" value="3">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
                                         <div class="rating_star">
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                            
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="checkbox-wrapper-48">
                                     <label class="d-flex align-items-center">
-                                        <input type="checkbox" class="mr-2 " name="rating" value="4">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
                                         <div class="rating_star">
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/whiteStar.jpg') }}" alt="Star"></span>
-                                           
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/white.png" alt="silver"></span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="checkbox-wrapper-48">
                                     <label class="d-flex align-items-center">
-                                        <input type="checkbox" class="mr-2 " name="rating" value="5">
+                                        <input type="checkbox" class="mr-2 " name="buy_phone">
                                         <div class="rating_star">
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                            <span><img src="{{ asset('public/images/yellowStar.jpg') }}" alt="Star"></span>
-                                           
+                                            <span><img src="./images/gold.png" alt="gold"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
+                                            <span><img src="./images/gold.png" alt="silver"></span>
                                         </div>
                                     </label>
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Rating Section Ends --> --}}
-
-                    <!-- Rating Section -->
-                    <div class="form-group">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#rating"
-                                aria-expanded="false" aria-controls="rating">
-                                <h4 class="header_categories">Rating</h4>
-                            </button>
-                            <span id="icon8" class="fa fa-plus collapse-button purple-icon"></span>
-                        </div>
-                        <div class="collapse show" id="rating">
-                            <div class="card card-body border-0 py-1">
-                                <!-- Rating Checkbox List -->
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <div class="checkbox-wrapper-48">
-                                        <label class="d-flex align-items-center">
-                                            <input type="checkbox" class="mr-2 rating-filter" name="rating"
-                                                value="{{ $i }}">
-                                            <div class="rating_star">
-                                                @for ($j = 1; $j <= 5; $j++)
-                                                    <span>
-                                                        <img src="{{ asset($j <= $i ? 'public/images/yellowStar.jpg' : 'public/images/whiteStar.jpg') }}"
-                                                            alt="Star">
-                                                    </span>
-                                                @endfor
-                                            </div>
-                                        </label>
-                                    </div>
-                                @endfor
                             </div>
                         </div>
                     </div>
                     <!-- Rating Section Ends -->
 
-
-
                     <!-- Filter -->
-                    {{-- <div class="pb-0">
+                    <div class="pb-0">
                         <div class="text-center">
                             <div class="__cate-side-title border-bottom">
                                 <span class="widget-title font-semibold">{{ translate('filter') }} </span>
@@ -886,9 +885,9 @@
                                 </form>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
-                    {{-- <div>
+                    <div>
                         <div class="text-center">
                             <div class="__cate-side-title pt-0">
                                 <span class="widget-title font-semibold">{{ translate('price') }} </span>
@@ -922,9 +921,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
-                    {{-- @if ($web_config['brand_setting'])
+                    @if ($web_config['brand_setting'])
                         <div>
                             <div class="text-center">
                                 <div class="__cate-side-title">
@@ -963,9 +962,9 @@
                                 </ul>
                             </div>
                         </div>
-                    @endif --}}
+                    @endif
 
-                    {{-- <div class="mt-3 __cate-side-arrordion">
+                    <div class="mt-3 __cate-side-arrordion">
                         <div>
                             <div class="text-center __cate-side-title">
                                 <span class="widget-title font-semibold">{{ translate('categories') }}</span>
@@ -1026,7 +1025,7 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
 
             </aside>
@@ -1227,9 +1226,9 @@
                         $('#ajax-products').html(response.data);
                     },
                     error: function(xhr, status, error) {
-                        // console.error('Error filtering products:', xhr.responseText);
-                        // // Display a user-friendly error message
-                        // alert('An error occurred while filtering products. Please try again.');
+                        console.error('Error filtering products:', xhr.responseText);
+                        // Display a user-friendly error message
+                        alert('An error occurred while filtering products. Please try again.');
                     }
                 });
             });
@@ -1265,9 +1264,9 @@
                         $('#ajax-products').html(response.data);
                     },
                     error: function(xhr, status, error) {
-                        // console.error('Error filtering products:', xhr.responseText);
-                        // // Notify the user of an error
-                        // alert('An error occurred while filtering products. Please try again.');
+                        console.error('Error filtering products:', xhr.responseText);
+                        // Notify the user of an error
+                        alert('An error occurred while filtering products. Please try again.');
                     }
                 });
             });
@@ -1278,152 +1277,58 @@
     <script>
         // Initialize the noUiSlider
         var priceSlider = document.getElementById('priceSlider');
-
+    
         noUiSlider.create(priceSlider, {
-    start: [10, 10000],
-    connect: true,
-    range: {
-        'min': 0,
-        'max': 10000
-    },
-    step: 1,
-    tooltips: [true, true],
-    format: {
-        to: function(value) {
-            return Math.round(value); // Round to the nearest whole number
-        },
-        from: function(value) {
-            return Number(value); // Convert string to number
-        }
-    }
-});
-
+            start: [10, 10000],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 10000
+            },
+            step: 1,
+            tooltips: [true, true],
+            format: {
+                to: function (value) {
+                    return value;  // Return value without the dollar sign
+                },
+                from: function (value) {
+                    return Number(value);  // Convert string to number
+                }
+            }
+        });
+    
         // Update the min and max values displayed
-        priceSlider.noUiSlider.on('update', function(values, handle) {
+        priceSlider.noUiSlider.on('update', function (values, handle) {
             document.getElementById('minPrice').textContent = values[0];
             document.getElementById('maxPrice').textContent = values[1];
         });
-
+    
         // Trigger filtering when the slider values change
-        priceSlider.noUiSlider.on('change', function(values, handle) {
+        priceSlider.noUiSlider.on('change', function (values, handle) {
             filterProducts(values[0], values[1]);
         });
-
+    
         // Function to filter products
         function filterProducts(minPrice, maxPrice) {
             $.ajax({
-                url: '{{ route('price.filter') }}', // Define this route in your routes/web.php
+                url: '{{ route("price.filter") }}',  // Define this route in your routes/web.php
                 method: 'GET',
                 data: {
                     min_price: minPrice,
                     max_price: maxPrice
                 },
                 success: function(response) {
-                    // Update the products display with the filtered products
-                    $('#ajax-products').html(response.data);
-                    // console.log(response);
+                        // Update the products display with the filtered products
+                        $('#ajax-products').html(response.data);
+                        // console.log(response);
 
-                },
-                error: function(xhr, status, error) {
-                    // console.error('Error filtering products:', xhr.responseText);
-                    // // Notify the user of an error
-                    // alert('An error occurred while filtering products. Please try again.');
-                }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error filtering products:', xhr.responseText);
+                        // Notify the user of an error
+                        alert('An error occurred while filtering products. Please try again.');
+                    }
             });
         }
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Function to handle checkbox changes
-            $('.rating-filter').change(function() {
-                // Get all checked checkboxes
-                var selectedRatings = [];
-
-                $('.rating-filter:checked').each(function() {
-                    selectedRatings.push($(this).val());
-                });
-
-                // Make AJAX request to filter data
-                $.ajax({
-                    url: "{{ route('filter.ratings') }}", // Your route to handle the request
-                    method: "GET",
-                    data: {
-                        ratings: selectedRatings
-                    },
-                    success: function(response) {
-                        // Update the products display with the filtered products
-                        $('#ajax-products').html(response.data);
-                        // console.log(response);
-
-                    },
-                    error: function(xhr, status, error) {
-                        // console.error('Error filtering products:', xhr.responseText);
-                        // // Notify the user of an error
-                        // alert('An error occurred while filtering products. Please try again.');
-                    }
-                });
-            });
-        });
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const showMoreBtn = document.getElementById('showMoreBtn');
-            const moreColors = document.getElementById('moreColors');
-
-            showMoreBtn.addEventListener('click', function() {
-                if (moreColors.style.display === 'none') {
-                    moreColors.style.display = 'flex'; // or 'block'
-                    showMoreBtn.textContent = 'Show Less';
-                } else {
-                    moreColors.style.display = 'none';
-                    showMoreBtn.textContent = 'Show More';
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            function getSelectedColors() {
-                var selectedColors = [];
-                $('.form-check-input:checked').each(function() {
-                    selectedColors.push($(this).val());
-                });
-                return selectedColors;
-            }
-
-            function updateProducts() {
-                var selectedColors = getSelectedColors();
-
-                // Debugging: Uncomment to see selected colors in alert
-                // alert(selectedColors);
-
-                $.ajax({
-                    url: "{{ route('filter.ColorWise') }}",
-                    method: 'get',
-                    data: {
-                        colors: selectedColors,
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        // Update the products display with the filtered products
-                        $('#ajax-products').html(response.data);
-                        // console.log(response);
-
-                    },
-                    error: function(xhr, status, error) {
-                        // console.error('Error filtering products:', xhr.responseText);
-                        // // Notify the user of an error
-                        // alert('An error occurred while filtering products. Please try again.');
-                    }
-                });
-            }
-
-            $('.form-check-input').on('change', function() {
-                updateProducts();
-            });
-        });
     </script>
 @endpush
