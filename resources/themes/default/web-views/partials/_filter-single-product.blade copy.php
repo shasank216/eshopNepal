@@ -23,13 +23,12 @@
                     <img alt="" src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/'.$product['thumbnail'], type: 'product') }}">
                 </a>
             </div>
-           
 
             <div class="quick-view">
                 <a class="btn-circle stopPropagation action-product-quick-view" href="javascript:" data-product-id="{{ $product->id }}">
                     <i class="czi-eye align-middle"></i>
                 </a>
-            </div> 
+            </div>
             @if($product->product_type == 'physical' && $product->current_stock <= 0)
                 <span class="out_fo_stock">{{translate('out_of_stock')}}</span>
             @endif
@@ -74,5 +73,3 @@
         </div>
     </div>
 </div>
-
-

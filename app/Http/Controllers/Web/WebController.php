@@ -277,6 +277,7 @@ class WebController extends Controller
 
     public function searched_products(Request $request)
     {
+       
         $request->validate([
             'name' => 'required',
         ], [

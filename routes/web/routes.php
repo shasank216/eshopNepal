@@ -106,6 +106,15 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
 
     Route::get('/product/{slug}', 'ProductDetailsController@index')->name('product');
     Route::get('products', 'ProductListController@products')->name('products');
+    Route::get('/products/filter', 'ProductListController@filterProducts')->name('products.filter');
+    Route::get('/brand/filter', 'ProductListController@filterBrand')->name('brand.filter');
+    Route::get('/price/filter', 'ProductListController@filterPrice')->name('price.filter');
+    Route::get('/filter-ratings', 'ProductListController@filterRatings')->name('filter.ratings');
+    Route::get('/filter-colorProduct', 'ProductListController@filtercolorProduct')->name('filter.ColorWise');
+   
+
+   
+
     Route::post('ajax-filter-products', 'ShopViewController@ajax_filter_products')->name('ajax-filter-products'); // Theme fashion, ALl purpose
     Route::get('orderDetails', 'WebController@orderdetails')->name('orderdetails');
     Route::get('discounted-products', 'WebController@discounted_products')->name('discounted-products');

@@ -95,6 +95,11 @@ class Category extends Model
         return $query->orderBy('priority', 'asc');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 
     protected static function boot(): void
     {

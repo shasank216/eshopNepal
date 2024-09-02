@@ -1,5 +1,6 @@
 @php($overallRating = getOverallRating($product->reviews))
 
+
 <div class="product">
     <div class="carding position-relative p-4">
         <img class="h-100" alt="{{ $product->name }}"
@@ -14,11 +15,14 @@
             @endif
         @endif
         <div class="ribbon ribbon-new">New</div>
+
     </div>
 
     <div class="text-center">
         <div class="details main-details">
+
             <p class="title m-0">{{ $product->brand_id }}</p>
+
             <span class="bold-subtitle">
                 {{ Str::limit($product['name'], 23) }}
             </span>
@@ -60,6 +64,7 @@
                 </div>
             </div>
 
+
             <div class="gallery">
                 {{-- @foreach (json_decode($product->images) as $key => $photo)
                     <figure><img
@@ -80,8 +85,10 @@
         </div>
 
         <div class="text-center">
+
             <div class="details">
                 <p class="title">{{ $product->brand_id }}</p>
+
                 <span class="bold-subtitle">{{ Str::limit($product['name'], 23) }}</span>
                 <p style="color: red; font-weight: 600; font-size: 20px;">
                     @if ($product->discount > 0)

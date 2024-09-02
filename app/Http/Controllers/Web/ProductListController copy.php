@@ -18,12 +18,12 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Color;
 
 class ProductListController extends Controller
 {
     public function products(Request $request)
     {
+       
         $theme_name = theme_root_path();
 
         return match ($theme_name){
@@ -34,8 +34,8 @@ class ProductListController extends Controller
         };
     }
 
-    public function default_theme(Request $request) {
-     
+    public function default_theme($request) {
+
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
         $porduct_data = Product::active()->with(['reviews']);
@@ -172,7 +172,6 @@ class ProductListController extends Controller
         $products = $fetched->paginate(20)->appends($data);
 
         if ($request->ajax()) {
-           
 
             return response()->json([
                 'total_product'=>$products->total(),
@@ -184,7 +183,6 @@ class ProductListController extends Controller
         }
         if ($request['data_from'] == 'brand') {
             $brand_data = Brand::active()->find((int)$request['id']);
-           
             if($brand_data) {
                 $data['brand_name'] = $brand_data->name;
             }else {
@@ -193,143 +191,8 @@ class ProductListController extends Controller
             }
         }
 
-
-    //    $colors= Color::all();
-    $colorData = Product::distinct()->pluck('colors');
-     // Initialize an array to store the parsed colors
-     $colors = [];
-
-     // Parse each JSON string
-     foreach ($colorData as $jsonString) {
-         $parsedColors = json_decode($jsonString, true);
- 
-         // Merge parsed colors into the $colors array if not empty
-         if (!empty($parsedColors)) {
-             $colors = array_merge($colors, $parsedColors);
-         }
-     }
-
-
-
-        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors'));
+        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data'));
     }
-
-
-
-    //biwek
-// Controller method
-public function filterProducts(Request $request)
-{
-    $categories = $request->input('categories');
-
-        // Retrieve filtered products with pagination
-        $products = Product::whereIn('category_id', $categories)
-            ->paginate(10); // Adjust pagination per page if needed
-        
-        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
-
-        // Return the rendered view for AJAX
-        return response()->json([
-            'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
-        ]);
-}
-
-public function filterBrand(Request $request)
-{
-    // Get the brand IDs from the request
-    $brandIds = $request->input('brands'); // Make sure 'brands' matches the key in your AJAX request
-
-    // Check if any brand IDs were provided
-    if (!empty($brandIds)) {
-        // Retrieve filtered products based on the selected brand IDs with pagination
-        $products = Product::whereIn('brand_id', $brandIds)
-            ->paginate(10); // Adjust pagination per page if needed
-    } else {
-        // If no brand IDs were provided, return an empty collection or handle as needed
-        $products = collect(); // Empty collection
-    }
-
-    // Retrieve decimal point settings
-    $decimal_point_settings = getWebConfig('decimal_point_settings');
-
-    // Return the rendered view for AJAX
-    // dd( $products);
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
-    ]);
-}
-public function filterPrice(Request $request)
-{
-    $minPrice = $request->input('min_price');
-    $maxPrice = $request->input('max_price');
-
-    // Validate inputs
-    $validated = $request->validate([
-        'min_price' => 'required|numeric|min:0',
-        'max_price' => 'required|numeric|min:0',
-    ]);
-
-    // Filter products based on the price range
-    $products = Product::whereBetween('unit_price', [$minPrice, $maxPrice])->paginate(10); // Using pagination for better performance
-
-    // Get additional settings
-    $decimal_point_settings = getWebConfig('decimal_point_settings');
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
-    ]);
-}
-
-// filter rating
-public function filterRatings(Request $request)
-{
-    $ratings = $request->input('ratings');
-
-    // Get all product IDs that have reviews with the selected ratings
-    $ratingProductIds = Review::whereIn('rating', $ratings)->pluck('product_id');
-
-    // Get all products that match the product IDs
-    $products = Product::whereIn('id', $ratingProductIds)->paginate(10);
-   
-
-//    dd($products);
-    // Get additional settings
-    $decimal_point_settings = getWebConfig('decimal_point_settings');
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
-    ]);
-}
-// filter color
-public function filtercolorProduct(Request $request)
-{
-    // Get the colors from the request, defaulting to an empty array if none are provided
-    $colors = $request->input('colors', []);
-
-    // Ensure colors array is not empty
-    if (!empty($colors)) {
-        // Filter products where the JSON column 'color' contains any of the colors in the $colors array
-        $products = Product::where(function($query) use ($colors) {
-            foreach ($colors as $color) {
-                $query->orWhereJsonContains('colors', $color);
-            }
-        })->paginate(10);
-    } else {
-        // If no colors are selected, fetch all products or handle accordingly
-        $products = Product::paginate(10);
-    }
-
-    // Debugging: View the products retrieved
-    // dd($products);
-
-    $decimal_point_settings = getWebConfig('decimal_point_settings');
-
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
-    ]);
-}
-
-
-
-    
 
     public function theme_aster($request)
     {
