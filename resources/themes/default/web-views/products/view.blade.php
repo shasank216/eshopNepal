@@ -1033,10 +1033,10 @@
 
             <section class="col-lg-9">
 
-                <div class="top-right-img">
+                {{-- <div class="top-right-img">
                     <img src="{{ asset('public/assets/front-end/img/media/top_right.png') }}" width="100%"
                         alt="">
-                </div>
+                </div> --}}
                 {{-- <div class="row" id="ajax-products"> --}}
                 <div class="items-container" id="ajax-products">
 
