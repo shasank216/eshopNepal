@@ -1270,3 +1270,18 @@ img, figure {
         padding-right: 0 !important;
     }
 }
+
+/* added css */
+
+.tio-star.text-star, .tio-star.text-warning {
+    color: #ffd400 !important;
+}
+
+
+.category-single-product-price {
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #727272 !important;
+}
+/* added css ends */
