@@ -606,7 +606,7 @@ a {
 }
 
 .__best-selling:hover img {
-    transform: scale(1.14);
+    /* transform: scale(1.14); */
 }
 
 .__best-selling:hover .ptr {
