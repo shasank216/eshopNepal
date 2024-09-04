@@ -9340,7 +9340,7 @@ input.form-control.fz-30 {
 }
 
 .product-item_container a {
-    font-size: 16px;
+    font-size: 16px !important;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.005em;
@@ -9349,6 +9349,7 @@ input.form-control.fz-30 {
 }
 
 .product-item_container p {
+    color: #727272;
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
@@ -9357,6 +9358,7 @@ input.form-control.fz-30 {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin: 0;
 }
 
 .design-1 .search-product-image {
@@ -9369,6 +9371,28 @@ input.form-control.fz-30 {
 
 .muntiple-designs.design-2 {
     flex-direction: column;
+}
+
+.product-price .text-accent {
+    font-size: 18px;
+    font-weight: 600;
+    /* line-height: 36px; */
+    color: #1F3C74 !important;
+}
+
+.action-buy-now-this-product {
+    background: #1F3C74;
+    border-radius: 50px;
+}
+
+.action-add-to-cart-form {
+    border: 2px solid #1F3C74;
+    border-radius: 50px;
+    color: #1F3C74;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
 }
 
 /* Search Page Ends */
@@ -9414,3 +9438,121 @@ input.form-control.fz-30 {
     margin-bottom: 2px;
 }
 
+.category-wise-products_header {
+    overflow-x: scroll;
+    flex-wrap: nowrap !important;
+    padding: 0 !important;
+}
+
+.nav_product a {
+    width: 90px;
+}
+
+.footer-head {
+    color: #303560;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    margin: 0;
+}
+
+@media (max-width: 991px) {
+    .signup h6 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .shopping h6, .__inline-9 .subscribe-border, .page-footer .subscribe-button {
+        font-size: 12px !important;
+        margin: 0;
+    }
+
+    .footer-brand_desc {
+        font-size: 13px;
+        line-height: 20px;
+    }
+
+    .widget-list {
+        margin-top: 0.5rem;
+    }
+
+    .f-32 {
+        font-size: 16px;
+    }    
+}
+
+@media (max-width: 767px) {
+    .subscribe-container {
+        justify-content: center;
+        padding: 2rem;
+        flex-direction: column;
+    }
+
+    .subscribe-container div {
+        text-align: center;
+    }
+
+    .footer-social_media {
+        justify-content: center !important;
+    }
+
+    .footer-company-content_container {
+        margin: 0 auto;
+        padding: 0 3rem;
+    }
+
+    .foot-bottom-head, .foot-bottom-content {
+        font-size: 13px;
+    }
+
+    .footer-bottom, .footer-additional {
+        padding: 0 1rem;
+    }
+
+    .foot-bottom-payment img {
+        width: 45px;
+        height: 25px;
+    }
+
+    @media ( max-width: 425px ) {
+        .footer-company-content_container {
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .footer-head {
+            font-size: 16px;
+        }
+
+        .widget-list-link {
+            font-size: 13px;
+        }
+
+        .foot-bottom-copyright {
+            font-size: 12px;
+        }
+
+        .foot-bottom-payment img {
+            width: 35px;
+            height: 20px;
+        }
+
+        .footer-additional-content {
+            flex-direction: column;
+        }
+
+        .foot-bottom-content {
+            text-align: center;
+        }
+
+        .p-5 {
+            padding: 0 1rem !important;
+        }
+
+        .footer-head, .widget-list-link {
+            text-align: center;
+        }
+    }
+
+}

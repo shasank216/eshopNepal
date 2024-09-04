@@ -1279,6 +1279,7 @@ img, figure {
 
 
 .category-single-product-price {
+    font-size: 13px !important;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.005em;
