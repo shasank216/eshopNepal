@@ -84,9 +84,9 @@
                     </div>
                     <div class="col-lg-9 col-md-7">
                         <div class="row footer-company-content_container">
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6 footer-padding-bottom text-start">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
                                 <h6
-                                    class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                                    class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Products</h6>
                                 <ul class="widget-list __pb-10px">
                                     @php( $flash_deals = \App\Models\FlashDeal::where(['status' => 1, 'deal_type' => 'flash_deal'])->whereDate('start_date', '<=', date('Y-m-d'))->whereDate('end_date', '>=', date('Y-m-d'))->first() )
@@ -125,9 +125,9 @@
 
                                 </ul>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6 footer-padding-bottom text-start">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
                                 <h6
-                                    class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                                    class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Our Company</h6>
                                 @php($refund_policy = getWebConfig(name: 'refund-policy'))
                                 @php($return_policy = getWebConfig(name: 'return-policy'))
@@ -210,9 +210,9 @@
                                     </ul>
                                 @endif
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6 footer-padding-bottom text-start">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
                                 <h6
-                                    class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                                    class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Download App</h6>
                                 <p class="m-0 footer-offer text-def">
                                     Save $3 with app & new user only
@@ -238,26 +238,26 @@
 
                                 </ul>
                             </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6 footer-padding-bottom text-start">
-                                <h6 class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
+                                <h6 class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Store Infomation
                                 </h6>
                                     <ul class="widget-list __pb-10px">
-                                        <li class="widget-list-item">
+                                        <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center">
                                                 <i class="fa fa-map-marker me-2 mt-2 mb-2 f-32"></i>
                                                 {{ getWebConfig(name: 'shop_address') }}
                                             </a>
                                         </li>
 
-                                        <li class="widget-list-item">
+                                        <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'tel:' . $web_config['phone']->value }}">
                                                 <i class="fa fa-phone  me-2 mt-2 mb-2 f-32"></i>
                                                 {{ getWebConfig(name: 'company_phone') }}
                                             </a>
                                         </li>
 
-                                        <li class="widget-list-item">
+                                        <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'mailto:' . getWebConfig(name: 'company_email') }}"
                                                 style="text-transform: none;">
                                                 <i class="fa fa-envelope  me-2 mt-2 mb-2 f-32"></i>
