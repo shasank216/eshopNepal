@@ -378,7 +378,7 @@
                     </div>
                 </div>
 
-                <div class="button-group">
+                <div class="button-group changeItemPerRow">
                     <button class="btn p-0 mr-2 active" onclick="changeItemsPerRow(1, this)">
                         <i class="fa fa-th-list fa-lg" aria-hidden="true"></i>
                     </button>

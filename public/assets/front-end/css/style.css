@@ -2609,9 +2609,9 @@ a {
 }
 
 @media (max-width: 767px) {
-    .__inline-10 .search_button {
+    /* .__inline-10 .search_button {
         background-color: transparent !important;
-    }
+    } */
 
     .__inline-10 .navbar-expand-md .dropdown-menu>.dropdown>.dropdown-toggle {
         position: relative;
@@ -7660,6 +7660,7 @@ span.badge-accent:hover {
         z-index: 100;
         background: rgb(233, 243, 255);
         transition: all ease 0.3s;
+        padding: 2rem 0 2rem 1rem;
         box-shadow: 0px 9.0754146576px 18.1508293152px -2.7226247787px rgba(145, 158, 171, 0.05),
             0px 0px 1.8150832653px 0px rgba(145, 158, 171, 0.2);
     }
@@ -9457,6 +9458,10 @@ input.form-control.fz-30 {
     margin: 0;
 }
 
+.close-search-form-mobile {
+    display: none !important;
+}
+
 @media (max-width: 991px) {
     .signup h6 {
         font-size: 16px;
@@ -9480,6 +9485,74 @@ input.form-control.fz-30 {
     .f-32 {
         font-size: 16px;
     }    
+
+    .navbar-light .navbar-tool-icon-box.bg-secondary {
+        border-radius: 10px;
+        background: #f0f0f0 !important;
+        margin-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-nav {
+        align-items: center;
+    }
+
+    button#dropdownMenuButton {
+        font-size: 14px;
+    }
+
+    div#navbarCollapse {
+        padding: 0.5rem;
+    }
+
+    .header-search-input {
+        background-color: unset;
+    }
+
+    .search-form-mobile .search_form .border-shape {
+        /* width: 98%; */
+        display: flex;
+        height: calc(1.5em + 1.25rem + 2px);
+    }
+
+    .search-form-mobile .search_form .border-shape .d-flex.align-items-center.gap-2 {
+        /* width: 100%; */
+        align-items: center !important;
+    }
+
+    .border-unset {
+        border: unset !important;
+    }
+
+    .close-search-form-mobile {
+        display: block !important;
+        position: absolute;
+        top: 5%;
+        right: 2%;
+    }
+}
+
+@media (max-width: 956px) {
+    .muntiple-designs.design-2 .search-product-details .single-product-details .product-item_container p {
+        line-height: unset;
+    }
+    
+    .muntiple-designs.design-2 .search-product-details .single-product-details .__btn-grp {
+        gap: 0;
+    }
+}
+
+@media (max-width: 910px) {
+    .muntiple-designs.design-2 .search-product-details .single-product-details .__btn-grp button {
+        width: 100%;
+        gap: 5px !important;
+    }
+
+    .muntiple-designs.design-2 .search-product-details .single-product-details .__btn-grp {
+        gap: 5px !important;
+    }
 }
 
 @media (max-width: 767px) {
@@ -9502,8 +9575,13 @@ input.form-control.fz-30 {
         padding: 0 3rem;
     }
 
-    .foot-bottom-head, .foot-bottom-content {
-        font-size: 13px;
+    .foot-bottom-head, .foot-bottom-content, .font-style-phone, .__language-bar .topbar-link.dropdown-toggle, .breadcrumb a, .breadcrumb i, .breadcrumb span,
+    .header-search-input, .all-categories-dropdown-btn, .input-group-append-overlay.search_button span, .header-categories_links  {
+        font-size: 13px !important;
+    }
+
+    .header-categories_links {
+        text-transform: capitalize;
     }
 
     .footer-bottom, .footer-additional {
@@ -9515,44 +9593,114 @@ input.form-control.fz-30 {
         height: 25px;
     }
 
-    @media ( max-width: 425px ) {
-        .footer-company-content_container {
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .footer-head {
-            font-size: 16px;
-        }
-
-        .widget-list-link {
-            font-size: 13px;
-        }
-
-        .foot-bottom-copyright {
-            font-size: 12px;
-        }
-
-        .foot-bottom-payment img {
-            width: 35px;
-            height: 20px;
-        }
-
-        .footer-additional-content {
-            flex-direction: column;
-        }
-
-        .foot-bottom-content {
-            text-align: center;
-        }
-
-        .p-5 {
-            padding: 0 1rem !important;
-        }
-
-        .footer-head, .widget-list-link {
-            text-align: center;
-        }
+    .tab-none {
+        display: none;
     }
 
+    .navbar-tool.open-search-form-mobile.d-lg-none.ml-md-3 {
+        margin-right: 0.5rem;
+    }
+
+    .filter-show-btn, .changeItemPerRow button i {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .button-group.changeItemPerRow button:nth-last-child(1) {
+        display: none;
+    }
+    
+}
+
+@media ( max-width: 425px ) {
+    .footer-company-content_container {
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .footer-head {
+        font-size: 16px;
+    }
+
+    .widget-list-link {
+        font-size: 13px;
+    }
+
+    .foot-bottom-copyright {
+        font-size: 12px;
+    }
+
+    .foot-bottom-payment img {
+        width: 35px;
+        height: 20px;
+    }
+
+    .footer-additional-content {
+        flex-direction: column;
+    }
+
+    .foot-bottom-content {
+        text-align: center;
+    }
+
+    .p-5 {
+        padding: 0 1rem !important;
+    }
+
+    .footer-head, .widget-list-link {
+        text-align: center;
+    }
+
+    .product-item_container p {
+        line-height: unset;
+    }
+
+    .checkbox-color.product-search-page {
+        justify-content: center;
+    }
+
+    .search-page-buttons {
+        gap: 5px;
+    }
+
+    .items-container {
+        gap: 0;
+    }
+
+    .button-group.changeItemPerRow {
+        display: none;
+    }
+
+    .open-search-form-mobile a.navbar-tool-icon-box.bg-secondary, .navbar-light .navbar-tool-icon-box.bg-secondary {
+        margin: 0;
+    }
+
+    .mobile-search-text {
+        display: none;
+    }
+
+    [dir="ltr"] .navbar form .search_button {
+        top: 34% !important;
+    }
+
+}
+
+@media (max-width: 411px) {
+    .search-page-buttons button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 375px) {
+    .header-search-input, .all-categories-dropdown-btn, .search_button .input-group-text i, .header-categories_links {
+        font-size: 12px !important;
+    }
+
+    .all-categories-dropdown-btn,  .header-search-input {
+        padding: 0.625rem 0.5rem;
+    }
+
+    .header-search-input {
+        width: 43%;
+    }
 }
