@@ -105,10 +105,12 @@
                                     placeholder="{{ translate("search_for_items")}}..."
                                     name="name" value="{{ request('name') }}">
 
-                                <button class="input-group-append-overlay search_button d-none d-md-block" type="submit">
+                                <button class="input-group-append-overlay search_button d-md-block" type="submit">
                                         <span class="input-group-text text-white">
                                             <i class="czi-search text-white me-2"></i>
-                                            Search
+                                            <span class="mobile-search-text">
+                                                Search
+                                            </span>
                                         </span>
                                         
                                 </button>
@@ -132,10 +134,11 @@
 
                             </div>
                             
+                            <span class="close-search-form-mobile fs-14 font-semibold text-muted d-md-block" type="submit">
+                                {{-- {{ translate('cancel') }} --}}
+                                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                            </span>
                         </div>
-                        <span class="close-search-form-mobile fs-14 font-semibold text-muted d-md-none" type="submit">
-                            {{ translate('cancel') }}
-                        </span>
 
                         <input name="data_from" value="search" hidden>
                         <input name="page" value="1" hidden>

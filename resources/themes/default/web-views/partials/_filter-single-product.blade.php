@@ -80,8 +80,8 @@
                         <div>
                             @if (!empty($product->colors) && count(json_decode($product->colors)) > 0)
                                 <div class="flex-start align-items-center">
-                                    <div>
-                                        <ul class="list-inline checkbox-color mb-0 flex-start ps-0">
+                                    <div class="w-100">
+                                        <ul class="list-inline checkbox-color product-search-page mb-0 flex-start ps-0">
                                             @foreach (json_decode($product->colors) as $key => $color)
                                                 <li>
                                                     {{-- <input type="radio"
@@ -119,7 +119,7 @@
                             </div>
                         </div>
 
-                        <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
+                        <div class="__btn-grp search-page-buttons mt-2 mb-3 d-sm-flex">
                             {{-- @if (($product->added_by == 'seller' && ($sellerTemporaryClose || (isset($product->seller->shop) && $product->seller->shop->vacation_status && $currentDate >= $sellerVacationStartDate && $currentDate <= $sellerVacationEndDate))) || ($product->added_by == 'admin' && ($inHouseTemporaryClose || ($inHouseVacationStatus && $currentDate >= $inHouseVacationStartDate && $currentDate <= $inHouseVacationEndDate))))
                                 <button class="btn btn-secondary" type="button" disabled>
                                     {{ translate('buy_now') }}
