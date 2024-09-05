@@ -3,14 +3,14 @@
 updateFlashDealProgressBar();
 setInterval(updateFlashDealProgressBar, 10000);
 
-$(document).ready(function (){
+$(document).ready(function () {
     var directionFromSession = $('#direction-from-session').data('value');
     directionFromSession = directionFromSession ? directionFromSession : 'ltr';
 
     $('.flash-deal-slider').owlCarousel({
         loop: false,
         autoplay: true,
-        center:false,
+        center: false,
         margin: 10,
         nav: true,
         navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
@@ -49,7 +49,7 @@ $(document).ready(function (){
     $('.flash-deal-slider-mobile').owlCarousel({
         loop: false,
         autoplay: true,
-        center:true,
+        center: true,
         margin: 10,
         nav: true,
         navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
@@ -164,7 +164,7 @@ $(document).ready(function (){
         },
     })
 
-    $('.category-wise-product-slider').each(function() {
+    $('.category-wise-product-slider').each(function () {
         $(this).owlCarousel({
             loop: true,
             autoplay: true,
@@ -205,23 +205,35 @@ $(document).ready(function (){
     function checkNavigationButtons(event) {
         var itemCount = event.item.count;
         let owlNav = $('.owl-nav');
-        itemCount > 1 ?  owlNav.show() : owlNav.hide()
+        itemCount > 1 ? owlNav.show() : owlNav.hide()
     }
 
-    $('.hero-slider').owlCarousel({
+    // $('.hero-slider').owlCarousel({
+    //     loop: true,
+    //     autoplay: true,
+    //     margin: 20,
+    //     nav: true,
+    //     navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
+    //     dots: true,
+    //     autoplayHoverPause: true,
+    //     autoplaySpeed: 1500,
+    //     // slideTransition: 'linear',
+    //     items: 1,
+    //     // rtl: directionFromSession === 'rtl',
+    //     // ltr: directionFromSession === 'ltr',
+    // });
+
+    // $(document).ready(function(){
+    $("#home-hero-slider").owlCarousel({
+        items: 1,
+        nav: true,
         loop: true,
         autoplay: true,
-        margin: 20,
-        nav: true,
-        navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
-        dots: true,
+        autoplayTimeout: 2000,
         autoplayHoverPause: true,
-        autoplaySpeed: 1500,
-        // slideTransition: 'linear',
-        items: 1,
-        // rtl: directionFromSession === 'rtl',
-        // ltr: directionFromSession === 'ltr',
+        smartSpeed: 1000
     });
+    //   });
 
     $('.latest-slider').owlCarousel({
         loop: true,
