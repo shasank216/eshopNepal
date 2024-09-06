@@ -1,9 +1,9 @@
 <div class="row no-gutters position-relative rtl">
-    {{-- @if ($categories->count() > 0 )
+    {{-- @if ($categories->count() > 0)
         <div class="col-xl-3 position-static d-none d-xl-block __top-slider-cate">
             <div class="category-menu-wrap position-static">
                 <ul class="category-menu mt-0">
-                    @foreach ($categories as $key=>$category)
+                    @foreach ($categories as $key => $category)
                         <li>
                             <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">{{$category->name}}</a>
                             @if ($category->childes->count() > 0)
@@ -11,7 +11,7 @@
                                     @foreach ($category->childes as $sub_category)
                                         <div class="mega_menu_inner">
                                             <h6><a href="{{route('products',['id'=> $sub_category['id'],'data_from'=>'category','page'=>1])}}">{{$sub_category->name}}</a></h6>
-                                            @if ($sub_category->childes->count() >0)
+                                            @if ($sub_category->childes->count() > 0)
                                                 @foreach ($sub_category->childes as $sub_sub_category)
                                                     <div><a href="{{route('products',['id'=> $sub_sub_category['id'],'data_from'=>'category','page'=>1])}}">{{$sub_sub_category->name}}</a></div>
                                                 @endforeach
@@ -33,10 +33,12 @@
     @endif --}}
 
     {{-- <div class="col-12 __top-slider-images"> --}}
+
+    {{--         
     <div class="">
         <div class="{{Session::get('direction') === "rtl" ? 'pr-xl-0' : 'pl-xl-0'}}">
             <div class="owl-theme owl-carousel hero-slider">
-                @foreach($main_banner as $key=>$banner)
+                @foreach ($main_banner as $key => $banner)
                 <a href="{{$banner['url']}}" class="d-block" target="_blank">
                     <img class="w-100 __slide-img" alt=""
                         src="{{ getValidImage(path: 'storage/app/public/banner/'.$banner['photo'], type: 'banner') }}">
@@ -44,6 +46,15 @@
                 @endforeach
             </div>
         </div>
+    </div> --}}
+
+
+    <div class="owl-carousel" id="home-hero-slider">
+        @foreach ($main_banner as $key => $banner)
+            <a href="{{ $banner['url'] }}" target="_blank">
+                <img src="{{ getValidImage(path: 'storage/app/public/banner/' . $banner['photo'], type: 'banner') }}"
+                    alt="">
+            </a>
+        @endforeach
     </div>
 </div>
-
