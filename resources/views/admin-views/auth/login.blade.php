@@ -26,8 +26,8 @@
         </figure>
     </div>
     <div class="container py-5 py-sm-7">
-        <label class="badge badge-soft-success float-right __inline-2">{{translate('software_version')}}
-            : {{ env('SOFTWARE_VERSION') }}</label>
+        {{-- <label class="badge badge-soft-success float-right __inline-2">{{translate('software_version')}}
+            : {{ env('SOFTWARE_VERSION') }}</label> --}}
         @php($e_commerce_logo = getWebConfig(name: 'company_web_logo'))
         <a class="d-flex justify-content-center mb-5" href="{{ route('home') }}">
             <img class="z-index-2 onerror-logo" height="40" src="{{ getValidImage(path: "storage/app/public/company/".$e_commerce_logo, type:'backend-logo') }}" alt="Logo">

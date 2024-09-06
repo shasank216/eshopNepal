@@ -3,18 +3,18 @@
     <div class="background_class page-footer font-small mdb-color rtl" style="background-color: #1f3c74;">
 
         <div class="container">
-            <div class="row mt-5 align-items-center">
-                <div class="col-lg-4 mt-1">
+            <div class="row mt-5 align-items-center subscribe-container">
+                <div class="col-md-4 col-sm-6 mt-1">
                     <div class="signup">
                         <h6><i class="fa fa-envelope-o" aria-hidden="true"></i> Sign Up For Newsletter</h6>
                     </div>
                 </div>
-                <div class="col-lg-4 mt-2">
+                <div class="col-md-4 col-sm-6 mt-2 shopping-first">
                     <div class="shopping">
                         <h6>Shopping First For Coupon $25 Receive And...</h6>
                     </div>
                 </div>
-                <div class="col-sm-4 footer-padding-bottom offset-max-sm--1 pb-3 pt-3 pb-sm-0 __inline-9">
+                <div class="col-md-4 colsm-12 footer-padding-bottom offset-max-sm--1 pb-3 pt-3 pb-sm-0 __inline-9">
                     <div class="text-nowrap mb-3 position-relative">
                         <form action="{{ route('subscription') }}" method="post">
                             @csrf
@@ -34,13 +34,13 @@
             <div class="container text-center __pb-13px px-0 pb-0">
 
                 <div class="row mt-3">
-                    <div class="col-md-3 footer-web-logo text-center text-md-start p-5">
+                    <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
                         <p class="m-0 footer-brand_desc text-def">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
                             tincidunt ut laoreet dolore magna aliquam erat volutpat.
                         </p>
 
-                        <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction">
+                        <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction footer-social_media">
                             @if ($web_config['social_media'])
                                 @foreach ($web_config['social_media'] as $item)
                                     <span class="social-media ">
@@ -82,11 +82,11 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="row">
-                            <div class="col-sm-3 col-6 footer-padding-bottom text-start">
+                    <div class="col-lg-9 col-md-7">
+                        <div class="row footer-company-content_container">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
                                 <h6
-                                    class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                                    class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Products</h6>
                                 <ul class="widget-list __pb-10px">
                                     @php( $flash_deals = \App\Models\FlashDeal::where(['status' => 1, 'deal_type' => 'flash_deal'])->whereDate('start_date', '<=', date('Y-m-d'))->whereDate('end_date', '>=', date('Y-m-d'))->first() )
@@ -125,9 +125,9 @@
 
                                 </ul>
                             </div>
-                            <div class="col-sm-3 col-6 footer-padding-bottom text-start">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
                                 <h6
-                                    class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                                    class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Our Company</h6>
                                 @php($refund_policy = getWebConfig(name: 'refund-policy'))
                                 @php($return_policy = getWebConfig(name: 'return-policy'))
@@ -210,9 +210,9 @@
                                     </ul>
                                 @endif
                             </div>
-                            <div class="col-sm-3 col-6 footer-padding-bottom text-start">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
                                 <h6
-                                    class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                                    class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Download App</h6>
                                 <p class="m-0 footer-offer text-def">
                                     Save $3 with app & new user only
@@ -238,26 +238,26 @@
 
                                 </ul>
                             </div>
-                            <div class="col-sm-3 col-6 footer-padding-bottom text-start">
-                                <h6 class="text-uppercase mobile-fs-12 font-semi-bold footer-header text-def footer-head">
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
+                                <h6 class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Store Infomation
                                 </h6>
                                     <ul class="widget-list __pb-10px">
-                                        <li class="widget-list-item">
+                                        <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center">
                                                 <i class="fa fa-map-marker me-2 mt-2 mb-2 f-32"></i>
                                                 {{ getWebConfig(name: 'shop_address') }}
                                             </a>
                                         </li>
 
-                                        <li class="widget-list-item">
+                                        <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'tel:' . $web_config['phone']->value }}">
                                                 <i class="fa fa-phone  me-2 mt-2 mb-2 f-32"></i>
                                                 {{ getWebConfig(name: 'company_phone') }}
                                             </a>
                                         </li>
 
-                                        <li class="widget-list-item">
+                                        <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'mailto:' . getWebConfig(name: 'company_email') }}"
                                                 style="text-transform: none;">
                                                 <i class="fa fa-envelope  me-2 mt-2 mb-2 f-32"></i>

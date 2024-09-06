@@ -20,7 +20,7 @@
     @else
         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-white" href="{{ route('customer.auth.login') }}"
             style="border-radius:10px; background: #1F3C74 !important;">
-            <span class="navbar-tool-label"
+            <span class="navbar-tool-label d-flex align-items-center justify-content-center"
                 style="right: -10px;
     top: 0.6875rem;
     background-color: #FBB835 !important;

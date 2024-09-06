@@ -13647,7 +13647,7 @@ h5 .dropdown-toggle::after,
     display: flex;
     position: absolute;
     top: 5px;
-    height: 100%;
+    /* height: 100%; */
     z-index: 5;
 }
 
@@ -14959,7 +14959,8 @@ a.nav-link:hover .media-tab-media {
 
 @media (min-width: 992px) {
     .navbar-sticky.navbar-stuck {
-        position: fixed;
+        /* position: fixed; */
+        position: unset !important;
         top: 0;
         left: 0;
         width: 100%;
@@ -19266,4 +19267,12 @@ html[dir="rtl"] .badge-style {
     min-width: 304px !important;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+}
+
+@media (max-width: 767px) {
+    .navbar-light .navbar-tool-icon-box.bg-secondary {
+        border-radius: 10px;
+        background: #f0f0f0 !important;
+        margin-right: 0.5rem;
+    }
 }

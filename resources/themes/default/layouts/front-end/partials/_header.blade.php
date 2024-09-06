@@ -96,43 +96,48 @@
                          alt="{{$web_config['name']->value}}"/>
                 </a>
 
-                <div class="input-group-overlay mx-lg-4 search-form-mobile text-align-direction">
+                <div class="input-group-overlay mx-lg-4 search-form-mobile text-align-direction w-100">
                     <form action="{{route('products')}}" type="submit" class="search_form">
                         <div class="d-flex border-shape">
                             <div class="d-flex align-items-center gap-2">
-                                <input class="form-control appended-form-control search-bar-input border-0 " style="border-radius: 8px;" type="search"
+                                <input class="form-control appended-form-control search-bar-input border-0 header-search-input" style="border-radius: 8px;" type="search"
                                     autocomplete="off"
                                     placeholder="{{ translate("search_for_items")}}..."
                                     name="name" value="{{ request('name') }}">
 
-                                <button class="input-group-append-overlay search_button d-none d-md-block" type="submit">
+                                <button class="input-group-append-overlay search_button d-md-block" type="submit">
                                         <span class="input-group-text text-white">
                                             <i class="czi-search text-white me-2"></i>
-                                            Search
+                                            <span class="mobile-search-text">
+                                                Search
+                                            </span>
                                         </span>
                                         
                                 </button>
 
-                                <span class="close-search-form-mobile fs-14 font-semibold text-muted d-md-none" type="submit">
-                                    {{ translate('cancel') }}
-                                </span>
-                            </div>
-                            <div class="dropdown py-1">
-                                <button class="btn dropdown-toggle all-categories-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                All Categories
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 115px;">
-                                @foreach($categories as $category)
-                               {{-- <a class="dropdown-item" href="#"><span>{{$category['name']}}</span></a>--}}
-                               <a <?php if ($category->childes->count() > 0) echo "" ?> 
-                                href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="p-1 ps-3">
-                                 <span>{{$category['name']}}</span>
-
-                                </a><br>
-                               
-                                @endforeach
+                                <div class="dropdown py-1">
+                                    <button class="btn dropdown-toggle all-categories-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    All Categories
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 115px;">
+                                    @foreach($categories as $category)
+                                   {{-- <a class="dropdown-item" href="#"><span>{{$category['name']}}</span></a>--}}
+                                   <a <?php if ($category->childes->count() > 0) echo "" ?> 
+                                    href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="p-1 ps-3 header-categories_links">
+                                     <span>{{$category['name']}}</span>
+    
+                                    </a><br>
+                                   
+                                    @endforeach
+                                    </div>
                                 </div>
+
                             </div>
+                            
+                            <span class="close-search-form-mobile fs-14 font-semibold text-muted d-md-block" type="submit">
+                                {{-- {{ translate('cancel') }} --}}
+                                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                            </span>
                         </div>
 
                         <input name="data_from" value="search" hidden>
@@ -229,7 +234,7 @@
                         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-dark" href="tel:{{$web_config['phone']->value}}"
                             style="border-radius:10px; background: #f0f0f0 !important;">
                            
-                            <i class="fa fa-headphones navbar-tool-icon " style="    font-size: 1.7rem !important;line-height: 2.875rem !important;"></i>
+                            <i class="fa fa-headphones navbar-tool-icon "></i>
                         </a>
                         <a class="topbar-link d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">
                             <div class="d-flex align-items-center">
@@ -265,7 +270,7 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex flex-wrap pt-3 bg-white justify-content-between">
+        <div class="product_details px-5 d-flex flex-wrap pt-3 bg-white justify-content-between category-wise-products_header">
             @foreach($categories as $key => $category)
                 @if ($key<14)
                     <div class="nav_product">
