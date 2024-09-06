@@ -113,7 +113,8 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('/filter-colorProduct', 'ProductListController@filtercolorProduct')->name('filter.ColorWise');
    
 
-   
+    // blogs Details
+    Route::get('/blogs-details/{id}', 'HomeController@blogsdetailsView')->name('blogDetailsView');
 
     Route::post('ajax-filter-products', 'ShopViewController@ajax_filter_products')->name('ajax-filter-products'); // Theme fashion, ALl purpose
     Route::get('orderDetails', 'WebController@orderdetails')->name('orderdetails');

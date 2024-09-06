@@ -17,12 +17,14 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\Review;
+use App\Models\Tag;
 use App\Utils\ProductManager;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Poster;
 
 class HomeController extends Controller
 {
@@ -85,6 +87,8 @@ class HomeController extends Controller
                 $seller['average_rating'] = $seller['total_rating'] / ($seller['review_count'] == 0 ? 1 : $seller['review_count']);
             });
 
+            
+
         //end
 
         //feature products finding based on selling
@@ -94,6 +98,7 @@ class HomeController extends Controller
             ->take(12)
             ->get();
         //end
+        
 
         $latest_products = $this->product->with(['reviews'])->active()->orderBy('id', 'desc')->take(8)->get();
         $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
@@ -108,7 +113,7 @@ class HomeController extends Controller
             ->orderBy("count", 'desc')
             ->take(6)
             ->get();
-
+            
         //Top-rated
         $topRated = Review::with('product')
             ->whereHas('product', function ($query) {
@@ -136,11 +141,33 @@ class HomeController extends Controller
         $product=$this->product->active()->inRandomOrder()->first();
         $footer_banner = $this->banner->where('banner_type','Footer Banner')->where('theme', theme_root_path())->where('published',1)->orderBy('id','desc')->get();
 
+        $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+        $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+        $product_tags = Product::all();
+
+        // dd($product_tags);
+         // Retrieves a collection of tags associated with this product
+        
+
+
+         $blogs = Poster::latest()->take(10)->get();
+        //  dd( $blogs);
         return view(VIEW_FILE_NAMES['home'],
             compact(
                 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands',
                 'deal_of_the_day', 'top_sellers', 'home_categories', 'brand_setting', 'main_banner', 'main_section_banner',
-                'current_date','product','footer_banner','products',
+                'current_date','product','footer_banner','products','sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
+                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
+                'inHouseTemporaryClose','product_tags','blogs'
             )
         );
     }
@@ -993,6 +1020,114 @@ class HomeController extends Controller
         return view(VIEW_FILE_NAMES['home'], compact('main_banner','footer_banner','categories','best_sellling_products',
             'discounted_products','featured_deals','just_for_you','deal_of_the_day','order_again_products','top_rated_brands','top_sellers',
             'more_sellers','latest_products_count', 'latest_products', 'category_wise_products'));
+    }
+
+    public function blogsdetailsView($id){
+        $theme_name = theme_root_path();
+        $brand_setting = BusinessSetting::where('type', 'product_brand')->first()->value;
+        $home_categories = Category::where('home_status', true)->priority()->get();
+        $home_categories->map(function ($data) {
+            $id = '"' . $data['id'] . '"';
+            $data['products'] = Product::active()
+                ->where('category_ids', 'like', "%{$id}%")
+                ->inRandomOrder()->take(12)->get();
+        });
+        $current_date = date('Y-m-d H:i:s');
+        //products based on top seller
+        $top_sellers = $this->seller->approved()->with(['shop','orders','product.reviews'])
+                            ->whereHas('orders',function($query){
+                                $query->where('seller_is','seller');
+                            })
+                            ->withCount(['orders','product' => function ($query) {
+                                $query->active();
+                            }])->orderBy('orders_count', 'DESC')->take(12)->get();
+
+            $top_sellers?->map(function($seller){
+                $seller->product?->map(function($product){
+                    $product['rating'] = $product?->reviews->pluck('rating')->sum();
+                    $product['review_count'] = $product->reviews->count();
+                });
+                $seller['total_rating'] = $seller?->product->pluck('rating')->sum();
+                $seller['review_count'] = $seller->product->pluck('review_count')->sum();
+                $seller['average_rating'] = $seller['total_rating'] / ($seller['review_count'] == 0 ? 1 : $seller['review_count']);
+            });
+
+        //end
+
+        //feature products finding based on selling
+        $featured_products = $this->product->with(['reviews','category'])->active()
+            ->where('featured', 1)
+            ->withCount(['orderDetails'])->orderBy('order_details_count', 'DESC')
+            ->take(12)
+            ->get();
+        //end
+
+        $latest_products = $this->product->with(['reviews'])->active()->orderBy('id', 'desc')->take(8)->get();
+        $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->get();
+        $brands = Brand::active()->take(15)->get();
+        //best sell product
+        $bestSellProduct = $this->order_details->with('product.reviews')
+            ->whereHas('product', function ($query) {
+                $query->active();
+            })
+            ->select('product_id', DB::raw('COUNT(product_id) as count'))
+            ->groupBy('product_id')
+            ->orderBy("count", 'desc')
+            ->take(6)
+            ->get();
+
+        //Top-rated
+        $topRated = Review::with('product')
+            ->whereHas('product', function ($query) {
+                $query->active();
+            })
+            ->select('product_id', DB::raw('AVG(rating) as count'))
+            ->groupBy('product_id')
+            ->orderBy("count", 'desc')
+            ->take(6)
+            ->get();
+
+        if ($bestSellProduct->count() == 0) {
+            $bestSellProduct = $latest_products;
+        }
+
+        if ($topRated->count() == 0) {
+            $topRated = $bestSellProduct;
+        }
+//        dd($featured_products);
+        $product = Product::all();
+        $deal_of_the_day = DealOfTheDay::join('products', 'products.id', '=', 'deal_of_the_days.product_id')->select('deal_of_the_days.*', 'products.unit_price')->where('products.status', 1)->where('deal_of_the_days.status', 1)->first();
+        $main_banner = $this->banner->where(['banner_type'=>'Main Banner', 'theme'=>$theme_name, 'published'=> 1])->latest()->get();
+        $main_section_banner = $this->banner->where(['banner_type'=> 'Main Section Banner', 'theme'=>$theme_name, 'published'=> 1])->orderBy('id', 'desc')->latest()->first();
+
+        // $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+        // $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+        // $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = (isset($product['added_by']) == 'admin') ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = (isset($product['added_by']) == 'admin') ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = (isset($product['added_by']) == 'admin') ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = (isset($product['added_by']) && $product['added_by'] == 'admin') ? $temporaryClose['status'] : false;
+        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+
+        $product=$this->product->active()->inRandomOrder()->first();
+        $footer_banner = $this->banner->where('banner_type','Footer Banner')->where('theme', theme_root_path())->where('published',1)->orderBy('id','desc')->take(2)->get();
+        $blogs = Poster::latest()->take(10)->get();
+        $blogs_details = Poster::where('id',$id)->get()->first();
+
+        
+        return view(VIEW_FILE_NAMES['blogdetails'],
+            compact(
+                'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands',
+                'deal_of_the_day', 'top_sellers', 'home_categories', 'brand_setting', 'main_banner', 'main_section_banner',
+                'current_date','product','footer_banner', 'temporaryClose', 'inHouseVacation', 'inHouseTemporaryClose','inHouseVacationStartDate',
+                'inHouseVacationEndDate', 'inHouseVacationStatus','blogs','blogs_details'
+            )
+        );
+       
+        // return view(VIEW_FILE_NAMES['blogdetails'], compact('id'));
     }
 
 
