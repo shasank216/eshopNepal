@@ -74,33 +74,42 @@
             <div class="row">
                 <!-- First Row -->
                 @if ($blogs->isEmpty())
-
-                    <p>No blogs Available.</p>
+                    <p>No blogs available.</p>
                 @else
                     @foreach ($blogs as $blog)
-                        <!-- Blog Card -->
-                        <div class="col-md-3 mb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                             <div class="card custom-card" style="border-radius: 0;">
                                 <!-- Image -->
-                                <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}" class="card-img-top"
-                                    alt="{{ $blog->title }}" style="border-radius: 0;">
+                                <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}" 
+                                     class="card-img-top img-fluid" 
+                                     alt="{{ $blog->title }}" 
+                                     style="border-radius: 0;">
+                                
                                 <div class="card-body">
                                     <span class="badge badge-light category-badge">{{ $blog->title }}</span>
+                                    
                                     <div class="card-text mt-auto">
                                         <h5 class="card-title" style="line-height: 44px;">
-                                            {{ strip_tags($blog->details) }}</h5>
-                                        <p class="card-subtitle">by {{ $blog->added_by }}
-                                            {{ $blog->created_at->format('Y-m-d') }}</p>
+                                            {{ strip_tags($blog->details) }}
+                                        </h5>
+                                        <p class="card-subtitle">
+                                            by {{ $blog->added_by }} 
+                                            {{ $blog->created_at->format('Y-m-d') }}
+                                        </p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     @endforeach
-                    {{ $blogs->links() }}
+                    <!-- Pagination Links -->
+                    <div class="col-12 d-flex justify-content-center">
+                        {{ $blogs->links() }}
+                    </div>
                 @endif
             </div>
         </div>
+        
+        
     </section>
 
 
