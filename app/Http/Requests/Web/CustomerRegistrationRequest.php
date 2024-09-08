@@ -49,8 +49,18 @@ class CustomerRegistrationRequest extends FormRequest
 {
     return [
         'f_name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email', // Ensure email is unique in the users table
-        'phone' => 'required|unique:users,phone',       // Ensure phone number is unique
+        'email' => [
+            'required',
+            'email',
+            'unique:users,email', // Ensure email is unique in the users table
+            'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', // Only accept emails from @example.com
+        ],
+        'phone' => [
+            'required',
+            'unique:users,phone',    // Ensure phone number is unique
+            'min:10',                // Minimum length of 10 characters (adjust as needed)
+            'max:15',                // Maximum length of 15 characters (adjust as needed)
+        ],      // Ensure phone number is unique
         'password' => [
             'required',
             'confirmed',  // Matches password_confirmation field
