@@ -34,54 +34,64 @@
             <div class="container text-center __pb-13px px-0 pb-0">
 
                 <div class="row mt-3">
-                    <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
+                    {{-- <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
                         <p class="m-0 footer-brand_desc text-def">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
                             tincidunt ut laoreet dolore magna aliquam erat volutpat.
                         </p>
+                    </div> --}}
+                    <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
+                        <h6 class="text-uppercase font-semi-bold footer-header text-def footer-head">
+                            Shortcut Links
+                        </h6>
+                        <ul class="widget-list __pb-10px">
+                            <li class="widget-list-item">
+                                <a class="widget-list-link" href="{{ url('/') }}">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="widget-list-item">
+                                <a class="widget-list-link"
+                                    href="{{ route('products') }}">
+                                    Shop
+                                </a>
+                            </li>
+                            <li class="widget-list-item">
+                                @if ($web_config['guest_checkout_status'] || auth('customer')->check())
+                                    <a class="widget-list-link"
+                                        href="{{ route('shop-cart') }}">
+                                        Cart
+                                    </a>
+                                @else
+                                    <a class="widget-list-link"
+                                        href="{{ route('customer.auth.login') }}">
+                                        Cart
+                                    </a>
+                                @endif
+                            </li>
+                            <li class="widget-list-item">
+                                <a class="widget-list-link"
+                                    href="#">
+                                    Blogs
+                                </a>
+                            </li>
+                            <li class="widget-list-item">
+                                @if (auth('customer')->check())
+                                    <a class="widget-list-link"
+                                        href="{{route('user-account')}}">
+                                        My Account
+                                    </a>
+                                @else
+                                    <a class="widget-list-link"
+                                        href="{{ route('customer.auth.login') }}">
+                                        Sign in
+                                    </a>
+                                @endif
+                            </li>
 
-                        <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction footer-social_media">
-                            @if ($web_config['social_media'])
-                                @foreach ($web_config['social_media'] as $item)
-                                    <span class="social-media ">
-                                        @if ($item->name == 'twitter')
-                                            <a class="social-btn text-white sb-light sb-{{ $item->name }} me-2 mb-2 d-flex justify-content-center align-items-center"
-                                                target="_blank" href="{{ $item->link }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16"
-                                                    height="16" viewBox="0 0 24 24">
-                                                    <g opacity=".3">
-                                                        <polygon fill="#fff" fill-rule="evenodd"
-                                                            points="16.002,19 6.208,5 8.255,5 18.035,19"
-                                                            clip-rule="evenodd">
-                                                        </polygon>
-                                                        <polygon points="8.776,4 4.288,4 15.481,20 19.953,20 8.776,4">
-                                                        </polygon>
-                                                    </g>
-                                                    <polygon fill-rule="evenodd"
-                                                        points="10.13,12.36 11.32,14.04 5.38,21 2.74,21"
-                                                        clip-rule="evenodd">
-                                                    </polygon>
-                                                    <polygon fill-rule="evenodd"
-                                                        points="20.74,3 13.78,11.16 12.6,9.47 18.14,3"
-                                                        clip-rule="evenodd">
-                                                    </polygon>
-                                                    <path
-                                                        d="M8.255,5l9.779,14h-2.032L6.208,5H8.255 M9.298,3h-6.93l12.593,18h6.91L9.298,3L9.298,3z"
-                                                        fill="currentColor">
-                                                    </path>
-                                                </svg>
-                                            </a>
-                                        @else
-                                            <a class="social-btn text-white sb-light sb-{{ $item->name }} me-2 mb-2"
-                                                target="_blank" href="{{ $item->link }}">
-                                                <i class="{{ $item->icon }}" aria-hidden="true"></i>
-                                            </a>
-                                        @endif
-                                    </span>
-                                @endforeach
-                            @endif
-                        </div>
+                        </ul>
                     </div>
+
                     <div class="col-lg-9 col-md-7">
                         <div class="row footer-company-content_container">
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
@@ -266,6 +276,48 @@
                                             </a>
                                         </li>
                                     </ul>
+
+                                    <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction footer-social_media">
+                                        @if ($web_config['social_media'])
+                                            @foreach ($web_config['social_media'] as $item)
+                                                <span class="social-media ">
+                                                    @if ($item->name == 'twitter')
+                                                        <a class="social-btn text-white sb-light sb-{{ $item->name }} me-2 mb-2 d-flex justify-content-center align-items-center"
+                                                            target="_blank" href="{{ $item->link }}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16"
+                                                                height="16" viewBox="0 0 24 24">
+                                                                <g opacity=".3">
+                                                                    <polygon fill="#fff" fill-rule="evenodd"
+                                                                        points="16.002,19 6.208,5 8.255,5 18.035,19"
+                                                                        clip-rule="evenodd">
+                                                                    </polygon>
+                                                                    <polygon points="8.776,4 4.288,4 15.481,20 19.953,20 8.776,4">
+                                                                    </polygon>
+                                                                </g>
+                                                                <polygon fill-rule="evenodd"
+                                                                    points="10.13,12.36 11.32,14.04 5.38,21 2.74,21"
+                                                                    clip-rule="evenodd">
+                                                                </polygon>
+                                                                <polygon fill-rule="evenodd"
+                                                                    points="20.74,3 13.78,11.16 12.6,9.47 18.14,3"
+                                                                    clip-rule="evenodd">
+                                                                </polygon>
+                                                                <path
+                                                                    d="M8.255,5l9.779,14h-2.032L6.208,5H8.255 M9.298,3h-6.93l12.593,18h6.91L9.298,3L9.298,3z"
+                                                                    fill="currentColor">
+                                                                </path>
+                                                            </svg>
+                                                        </a>
+                                                    @else
+                                                        <a class="social-btn text-white sb-light sb-{{ $item->name }} me-2 mb-2"
+                                                            target="_blank" href="{{ $item->link }}">
+                                                            <i class="{{ $item->icon }}" aria-hidden="true"></i>
+                                                        </a>
+                                                    @endif
+                                                </span>
+                                            @endforeach
+                                        @endif
+                                    </div>
                             </div>
                             {{-- <div class="col-sm-5 footer-padding-bottom offset-max-sm--1 pb-3 pb-sm-0">
                                 <div class="mb-2">

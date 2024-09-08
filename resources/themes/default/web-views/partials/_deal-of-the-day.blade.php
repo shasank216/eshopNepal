@@ -145,7 +145,7 @@
 
             <div class="col-xl-12 col-md-12">
                 <div class="latest-product-margin">
-                    <div class="d-flex justify-content-between mb-14px">
+                    <div class="d-flex justify-content-between align-items-center mb-14px">
                         <div class="text-center">
                             <span class="for-feature-title __text-22px font-bold text-center">
                                 {{ translate('latest_products')}}

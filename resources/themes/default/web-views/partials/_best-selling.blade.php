@@ -1,7 +1,7 @@
 <div class="col-lg-12 px-max-md-0">
     <div class="h-100">
         <div class="card-body p-0">
-            <div class="row d-flex justify-content-between mb-3">
+            <div class="row d-flex justify-content-between mb-3 product-head-border">
                 {{-- <div> --}}
                 {{-- <img class="size-30" src="{{theme_asset(path: "public/assets/front-end/png/best-sellings.png")}}"
                          alt=""> --}}
@@ -48,68 +48,51 @@
                                 @endif
                                 <div class="ribbon ribbon-new">New</div>
 
-                                {{-- @if ($bestSell->product->discount > 0) --}}
-                                    {{-- <div class="carding position-relative p-4 mx-auto">
-                                        @if ($bestSell->product->discount_type == 'percent')
-                                            <div class="ribbon ribbon-sale">On Sale
-                                                -{{ round($bestSell->product->discount) }}%</div>
-                                        @elseif($bestSell->product->discount_type == 'flat')
-                                            <div class="ribbon ribbon-sale">On Sale
-                                                -{{ webCurrencyConverter(amount: $bestSell->product->discount) }}
-                                            </div>
-                                        @endif
-                                        <div class="ribbon ribbon-new">New</div>
-
-                                        <div class="d-flex justify-content-between timer mt-4">
-                                            <div class="time-box text-center">
-                                                <span class="number d-block">30</span>
-                                                <span class="label d-block">Days</span>
-                                            </div>
-                                            <div class="time-box text-center">
-                                                <span class="number d-block">12</span>
-                                                <span class="label d-block">Hours</span>
-                                            </div>
-                                            <div class="time-box text-center">
-                                                <span class="number d-block">45</span>
-                                                <span class="label d-block">Min</span>
-                                            </div>
-                                            <div class="time-box text-center">
-                                                <span class="number d-block">50</span>
-                                                <span class="label d-block">Sec</span>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-                                {{-- @endif --}}
-
-
-
-
                                 <div class="products">
-
-
                                     <div class="text-center">
                                         <div class="details main-details">
-                                            {{-- @dd($bestSell->product); --}}
-                                            {{-- <p class="title">{{ $bestSell->product->brand_id }}</p> --}}
-                                            <p class="bold-subtitle"> {{ $bestSell->product->brand->name }}</p>
+                                            <p class="bold-subtitle m-0"> {{ $bestSell->product->brand->name }}</p>
 
+                                            {{-- @dd($bestSell); --}}
+
+                                                {{-- @if ($overallRating[0] != 0)
+                                                    <div class="rating-show justify-content-between">
+                                                        <span class="d-inline-block font-size-sm text-body">
+                                                            @for ($inc = 1; $inc <= 5; $inc++)
+                                                                @if ($inc <= (int) $overallRating[0])
+                                                                    <i class="tio-star text-warning"></i>
+                                                                @elseif ($overallRating[0] != 0 && $inc <= (int) $overallRating[0] + 1.1 && $overallRating[0] > ((int) $overallRating[0]))
+                                                                    <i class="tio-star-half text-warning"></i>
+                                                                @else
+                                                                    <i class="tio-star-outlined text-warning"></i>
+                                                                @endif
+                                                            @endfor
+                                                            <label class="badge-style review-text-container"> {{ count($product->reviews) }}
+                                                                <span class="review-text">reviews</span>
+                                                            </label>
+                                                        </span>
+                                                    </div>
+                                                @endif --}}
+                                                
                                             <span
-                                                class="bold-subtitle">{{ Str::limit($bestSell->product['name'], 100) }}</span>
-                                            {{-- <div class="rating">⭐⭐⭐⭐⭐ 162 
-                                                    <a href="#">reviews</a>
-                                                </div> --}}
+                                                class="bold-title">{{ Str::limit($bestSell->product['name'], 100) }}
+                                            </span>
 
-                                            <p style="color: red; font-weight: 600; font-size: 20px;">
-                                                {{ webCurrencyConverter(
-                                                    amount: $bestSell->product->unit_price -
-                                                        getProductDiscount(product: $bestSell->product, price: $bestSell->product->unit_price),
-                                                ) }}
-
-                                                @if ($bestSell->product->discount > 0)
-                                                    <del
-                                                        style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">{{ webCurrencyConverter(amount: $bestSell->product->unit_price) }}</del>
-                                                @endif
-                                            </p>
+                                            @if ($product->discount > 0)
+                                                <p class="product-price m-0">
+                                                    {{ webCurrencyConverter(amount: $bestSell->product->unit_price) }}
+                                                    <del class="product-discount-price">
+                                                        {{ webCurrencyConverter(
+                                                            amount: $bestSell->product->unit_price -
+                                                                getProductDiscount(product: $bestSell->product, price: $bestSell->product->unit_price),
+                                                        ) }}
+                                                    </del>
+                                                </p>
+                                            @else
+                                                <p class="product-without-discount m-0">
+                                                    {{ webCurrencyConverter(amount: $bestSell->product->unit_price) }}
+                                                </p>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -147,20 +130,10 @@
                                                         <button class="action-btn"><i class="fa fa-eye"></i></button>
                                                     </div>
 
-
-
-
                                                 </div>
 
                                                 <div class="">
                                                     <div class="gallery">
-                                                        {{-- @dd($bestSell->product); --}}
-                                                        {{-- @foreach ($product as $bestSelling) 
-                                                            <figure>
-                                                                <img src="{{ asset('storage/app/public/product/' . $bestSelling->images ) }}" alt="image">
-                                                            </figure>
-                                                            @endforeach --}}
-
                                                         @foreach (array_slice(json_decode($bestSell->product->images), 0, 4) as $key => $photo)
                                                             <figure>
                                                                 <img src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
@@ -176,39 +149,30 @@
                                                 <div class="details ">
                                                     <p class="bold-subtitle"> {{ $bestSell->product->brand->name }}</p>
 
-                                                    {{-- <p class="bold-subtitle"> {{ $bestSell->product->brand_id }}</p>  --}}
-                                                    {{-- <p class="bold-subtitle"> {{ $bestSell->product->category->name }} --}}
+                                                    <span class="bold-title">
+                                                        {{ Str::limit($bestSell->product['name'], 23) }}
+                                                    </span>
 
-                                                    {{-- <div class="rating">⭐⭐⭐⭐⭐ 162 <a href="#">reviews</a></div> --}}
-                                                    <span
-                                                        class="bold-subtitle">{{ Str::limit($bestSell->product['name'], 23) }}</span>
-                                                    <p style="color: red; font-weight: 600; font-size: 20px;">
-                                                        {{ webCurrencyConverter(
-                                                            amount: $bestSell->product->unit_price -
-                                                                getProductDiscount(product: $bestSell->product, price: $bestSell->product->unit_price),
-                                                        ) }}
-
-                                                        @if ($bestSell->product->discount > 0)
-                                                            <del
-                                                                style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">{{ webCurrencyConverter(amount: $bestSell->product->unit_price) }}</del>
-                                                        @endif
-                                                    </p>
-                                                    {{-- <p style="color: red; font-weight: 600; font-size: 20px;">$9.122
-                                                            <del
-                                                                style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">$1.325</del>
-                                                        </p> --}}
+                                                    @if ($product->discount > 0)
+                                                        <p class="product-price m-0">
+                                                            {{ webCurrencyConverter(amount: $bestSell->product->unit_price) }}
+                                                            <del class="product-discount-price">
+                                                                {{ webCurrencyConverter(
+                                                                    amount: $bestSell->product->unit_price -
+                                                                        getProductDiscount(product: $bestSell->product, price: $bestSell->product->unit_price),
+                                                                ) }}
+                                                            </del>
+                                                        </p>
+                                                    @else
+                                                        <p class="product-without-discount m-0">
+                                                            {{ webCurrencyConverter(amount: $bestSell->product->unit_price) }}
+                                                        </p>
+                                                    @endif
                                                 </div>
 
                                                 <div class="product-tags">
-                                                    {{-- <span class="tag">USB 3.0</span>
-                                                        <span class="tag">Portable</span>
-                                                        <span class="tag">360 Reality Audio</span> --}}
-                                                    <!-- Loop through all products -->
                                                     @foreach ($product_tags as $product)
                                                         <div class="product">
-
-
-                                                            <!-- Display the associated tags -->
                                                             <div class="product-tags">
                                                                 @foreach ($product->tags as $tag)
                                                                     <span class="tag">{{ $tag->tag }}</span>
@@ -305,12 +269,13 @@
                                                             </button>
                                                         @else
                                                             <button
-                                                                class="btn add-to-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                                                class="btn add-to-cart product-card-add-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
                                                                 type="button"
                                                                 data-update-text="{{ translate('update_cart') }}"
                                                                 data-add-text="{{ translate('add_to_cart') }}">
+                                                                <i class="navbar-tool-icon czi-cart text-white me-2"></i>
                                                                 <span
-                                                                    class="string-limit">{{ translate('add_to_cart') }}</span>
+                                                                    class="string-limit text-white">{{ translate('add_to_cart') }}</span>
                                                             </button>
                                                         @endif
 
