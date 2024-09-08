@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/product-details.css') }}" />
 @endpush
 
-@section('content') 
+@section('content')
     <div class="__inline-23">
         <!-- Bread Crumb -->
         <div class="braed-crumbs">
@@ -68,91 +68,44 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-4 col-12">
                             <div class="cz-product-gallery">
-
-                                <div class="d-flex cz-product-images">
-                                    <div class="cz col-lg-3 col-md-3 col-sm-12">
-                                        <div class="table-responsive __max-h-515px" data-simplebar>
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <div id="syncs2" class="product-thumb-slider">
-                                                    @if ($product->images != null && json_decode($product->images) > 0)
-                                                        @if (json_decode($product->colors) && $product->color_image)
-                                                            @foreach (json_decode($product->color_image) as $key => $photo)
-                                                                @if ($photo->color != null)
-                                                                    <div class="cz-images">
-                                                                        <a style="width: 100px;height:92px;" class="product-preview-thumb color-variants-preview-box-{{ $photo->color }} {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
-                                                                            id="preview-img{{ $photo->color }}"
-                                                                            href="#image{{ $photo->color }}">
-                                                                            <img alt="{{ translate('product') }}"
-                                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
-                                                                        </a>
-                                                                    </div>
-                                                                @else
-                                                                    <div class="">
-                                                                        <a style="width: 100px; height:92px;" class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
-                                                                            id="preview-img{{ $key }}"
-                                                                            href="#image{{ $key }}">
-                                                                            <img alt="{{ translate('product') }}"
-                                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
-                                                                        </a>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
-                                                        @else
-                                                            @foreach (json_decode($product->images) as $key => $photo)
-                                                                <div class="cz-images-responsive">
-                                                                    <a class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
-                                                                        id="preview-img{{ $key }}"
-                                                                        href="#image{{ $key }}">
-                                                                        <img alt="{{ translate('product') }}"
-                                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}">
-                                                                    </a>
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cz-preview col-lg-9 col-md-9 col-sm-12">
-                                        <div id="sync1" class="owl-carousel owl-theme product-thumbnail-slider">
-                                            @if ($product->images != null && json_decode($product->images) > 0)
-                                                @if (json_decode($product->colors) && $product->color_image)
-                                                    @foreach (json_decode($product->color_image) as $key => $photo)
-                                                        @if ($photo->color != null)
-                                                            <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
-                                                                id="image{{ $photo->color }}">
-                                                                <img class="cz-image-zoom img-responsive w-100"
-                                                                    src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    alt="{{ translate('product') }}" width="">
-                                                                <div class="cz-image-zoom-pane"></div>
-                                                            </div>
-                                                        @else
-                                                            <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
-                                                                id="image{{ $key }}">
-                                                                <img class="cz-image-zoom img-responsive w-100"
-                                                                    src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    alt="{{ translate('product') }}" width="">
-                                                                <div class="cz-image-zoom-pane"></div>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    @foreach (json_decode($product->images) as $key => $photo)
+                                <div class="cz-preview">
+                                    <div id="sync1" class="owl-carousel owl-theme product-thumbnail-slider">
+                                        @if ($product->images != null && json_decode($product->images) > 0)
+                                            @if (json_decode($product->colors) && $product->color_image)
+                                                @foreach (json_decode($product->color_image) as $key => $photo)
+                                                    @if ($photo->color != null)
                                                         <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
-                                                            id="image{{ $key }}">
+                                                            id="image{{ $photo->color }}">
                                                             <img class="cz-image-zoom img-responsive w-100"
-                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
-                                                                data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
+                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
+                                                                data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
                                                                 alt="{{ translate('product') }}" width="">
                                                             <div class="cz-image-zoom-pane"></div>
                                                         </div>
-                                                    @endforeach
-                                                @endif
+                                                    @else
+                                                        <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
+                                                            id="image{{ $key }}">
+                                                            <img class="cz-image-zoom img-responsive w-100"
+                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
+                                                                data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
+                                                                alt="{{ translate('product') }}" width="">
+                                                            <div class="cz-image-zoom-pane"></div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @foreach (json_decode($product->images) as $key => $photo)
+                                                    <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
+                                                        id="image{{ $key }}">
+                                                        <img class="cz-image-zoom img-responsive w-100"
+                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
+                                                            data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
+                                                            alt="{{ translate('product') }}" width="">
+                                                        <div class="cz-image-zoom-pane"></div>
+                                                    </div>
+                                                @endforeach
                                             @endif
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -167,7 +120,50 @@
                                     </div>
                                 </div>
 
-                                
+                                <div class="cz">
+                                    <div class="table-responsive __max-h-515px" data-simplebar>
+                                        <div class="d-flex">
+                                            <div id="sync2" class="owl-carousel owl-theme product-thumb-slider">
+                                                @if ($product->images != null && json_decode($product->images) > 0)
+                                                    @if (json_decode($product->colors) && $product->color_image)
+                                                        @foreach (json_decode($product->color_image) as $key => $photo)
+                                                            @if ($photo->color != null)
+                                                                <div class="">
+                                                                    <a class="product-preview-thumb color-variants-preview-box-{{ $photo->color }} {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
+                                                                        id="preview-img{{ $photo->color }}"
+                                                                        href="#image{{ $photo->color }}">
+                                                                        <img alt="{{ translate('product') }}"
+                                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
+                                                                    </a>
+                                                                </div>
+                                                            @else
+                                                                <div class="">
+                                                                    <a class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
+                                                                        id="preview-img{{ $key }}"
+                                                                        href="#image{{ $key }}">
+                                                                        <img alt="{{ translate('product') }}"
+                                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
+                                                                    </a>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        @foreach (json_decode($product->images) as $key => $photo)
+                                                            <div class="">
+                                                                <a class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
+                                                                    id="preview-img{{ $key }}"
+                                                                    href="#image{{ $key }}">
+                                                                    <img alt="{{ translate('product') }}"
+                                                                        src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}">
+                                                                </a>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
