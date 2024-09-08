@@ -41,14 +41,6 @@
                 letter-spacing: 0.0015em;
             }
 
-            .product-price {
-                font-size: 20px !important;
-                font-weight: 600;
-                line-height: 24px;
-                letter-spacing: 0.0015em;
-            }
-
-
             .bestSelling-section {
                 margin-top: 1rem;
             }
@@ -232,37 +224,7 @@
                 justify-content: flex-end;
                 height: 100%;
             }
-
-            /* .card-title {
-                                        margin-bottom: 0;
-                                        font-size: 26px;
-                                        font-weight: 600;
-                                        color: #FFFFFF;
-                                    } */
-
-            /* ========== */
-            .card-title {
-                font-size: 26px;
-                font-weight: 600;
-                color: #FFFFFF;
-                white-space: nowrap;
-                /* Prevents text from wrapping to the next line */
-                overflow: hidden;
-                /* Hides any overflow text */
-                text-overflow: ellipsis;
-                /* Adds ellipsis (...) if text overflows */
-                margin-bottom: 0;
-            }
-
-            /* ========== */
-
-
-            .card-subtitle {
-                font-size: 14px;
-                font-weight: 400;
-                color: #FFFFFF;
-            }
-
+            
             .add-to-cart {
                 width: 100%;
                 padding: 10px;
@@ -348,22 +310,6 @@
                 height: 100%;
             }
 
-            .card-title {
-                font-size: 26px;
-                font-weight: 600;
-                color: #FFFFFF;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                margin-bottom: 0;
-            }
-
-            .card-subtitle {
-                font-size: 14px;
-                font-weight: 400;
-                color: #FFFFFF;
-            }
-
             .carding {
                 /* width: 247px; */
                 height: 300px;
@@ -383,7 +329,7 @@
 
             .product-hover_details .carding {
                 /* top: -25px;
-                                left: -10px; */
+                        left: -10px; */
                 width: 246px;
                 margin-right: 10px;
             }
@@ -620,8 +566,8 @@
             }
 
             /* .product-card:hover {
-                                transform: scale(1.05);
-                            } */
+                        transform: scale(1.05);
+                    } */
 
             .product-category {
                 color: #727272;
@@ -633,14 +579,14 @@
             .product-colors {
                 display: flex;
                 gap: 5px;
-                margin-bottom: 15px;
+                /* margin-bottom: 15px; */
             }
 
             .product-tags {
                 display: flex;
                 gap: 5px;
                 justify-content: center;
-                margin-bottom: 10px;
+                margin-bottom: 5px;
             }
 
             /* Range */
@@ -728,7 +674,7 @@
             }
 
             .tag {
-                background-color: #e0e0e0;
+                /* background-color: #e0e0e0; */
                 border-radius: 5px;
                 padding: 5px;
                 font-size: 12px;
@@ -777,6 +723,7 @@
             .latest-slider .owl-stage-outer .owl-stage .owl-item.active {
                 z-index: 1;
             }
+
         </style>
     @endpush
 
@@ -1033,6 +980,21 @@
             @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
 
             <div class="container pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
+                <div class="d-flex justify-content-between align-items-center mb-14px product-head-border">
+                    <div class="text-center mb-2">
+                        <span class="for-feature-title __text-22px font-bold text-center">
+                            Shop by Categories
+                        </span>
+                    </div>
+                    <div class="mr-1">
+                        <a class="text-capitalize view-all-text web-text-primary"
+                           href="{{route('products')}}">
+                            {{ translate('view_all')}}
+                            <i class="czi-arrow-{{Session::get('direction') === "rtl" ? 'left mr-1 ml-n1 mt-1 float-left' : 'right ml-1 mr-n1'}}"></i>
+                        </a>
+                    </div>
+                </div>
+
                 <div class="row">
                     <aside
                         class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{ Session::get('direction') === 'rtl' ? 'pl-2' : 'pr-2' }}"
@@ -1119,7 +1081,7 @@
 
                     <section class="col-lg-9">
 
-                        <div class="button-group">
+                        <div class="button-group home-shop-category d-flex justify-content-end">
                             <button class="btn p-0 mr-2" onclick="changeItemsPerRow(1, this)">
                                 <i class="fa fa-th-list fa-lg" aria-hidden="true"></i>
                             </button>
@@ -1134,7 +1096,7 @@
                                     alt="">
                             </button> --}}
                         </div>
-                        <div class="d-grid items-container" id="ajax-products">
+                        <div class="items-container home-category-section" id="ajax-products" style="display: grid;">
                             @if (count($products) > 0)
 
                                 @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
@@ -1142,7 +1104,8 @@
                                     @if (!empty($product['product_id']))
                                         @php($product = $product->product)
                                     @endif
-                                    <div class="p-2">
+                                    <div
+                                        class="p-2">
                                         @if (!empty($product))
                                             @include('web-views.partials._filter-single-product', [
                                                 'product' => $product,
@@ -1185,16 +1148,15 @@
         </section>
 
         <section class="container">
-            <!-- Latest News start -->
-
-            <nav class="navbar">
-                <p style="font-size: 34px; font-weight: 600;">Latest Blogs</p>
+            <div class="d-flex">
+                <p class="home-title">Latest Blogs</p>
                 <span class="form-inline ml-auto">
-                    <p style="margin-bottom: 0;"><u><a href="#"
-                                style="color: #000; font-size: 16px; font-weight: 600;">See All
-                                <i class="fa fa-arrow-right"></i></a></u></p>
+                    <a href="{{ url('blogs') }}" class="text-capitalize view-all-text web-text-primary">
+                            See All
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
                 </span>
-            </nav>
+            </div>
             <hr>
 
             <div class="container" style="margin-top: 40px;">
@@ -1202,7 +1164,7 @@
                     <!-- First Row -->
                     @foreach ($blogs as $blog)
                         <!-- Blog Card -->
-                        <div class="col-md-3 mb-4">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                             <div class="card custom-card" style="border-radius: 0;">
                                 <!-- Image -->
                                 <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}"
@@ -1210,13 +1172,15 @@
                                 <div class="card-body">
                                     <span class="badge badge-light category-badge">{{ $blog->title }}</span>
                                     <div class="card-text mt-auto">
-                                        <h5 class="card-title" style="line-height: 44px;">
-                                            {{ strip_tags($blog->details) }}</h5>
-                                        <p class="card-subtitle">by {{ $blog->added_by }}
-                                            {{ $blog->created_at->format('Y-m-d') }}</p>
+                                        <h5 class="blog-title text-white">
+                                            {{ strip_tags($blog->details) }}
+                                        </h5>
+                                        <p class="blog-created-by text-white">by {{ $blog->added_by }}
+                                            {{ $blog->created_at->format('Y-m-d') }}
+                                        </p>
                                     </div>
                                 </div>
-                                <a href="{{ route('blogDetailsView', ['id' => $blog]) }}" class="btn" tabindex="-1">
+                                {{-- <a href="{{ route('blogDetailsView', ['id' => $blog]) }}" class="btn" tabindex="-1">
                                     Read More
                                     <svg xmlns="http://www.w3.org/2000/svg" width="11" height="8"
                                         viewBox="0 0 11 8" fill="none">
@@ -1224,17 +1188,14 @@
                                             d="M6.92546 0.237956C6.69464 0.00714337 6.32042 0.00714327 6.08961 0.237955C5.8588 0.468767 5.8588 0.842988 6.08961 1.0738L9.01507 3.99926L6.08961 6.92471C5.8588 7.15552 5.8588 7.52974 6.08961 7.76055C6.32042 7.99137 6.69464 7.99137 6.92545 7.76055L10.2688 4.41718C10.4996 4.18636 10.4996 3.81214 10.2688 3.58133L6.92546 0.237956ZM1.91039 0.237955C1.67958 0.00714327 1.30536 0.00714337 1.07454 0.237956C0.843732 0.468768 0.843733 0.842988 1.07454 1.0738L4 3.99925L1.07454 6.92471C0.843732 7.15552 0.843733 7.52974 1.07455 7.76055C1.30536 7.99137 1.67958 7.99137 1.91039 7.76055L5.25377 4.41718C5.48458 4.18637 5.48458 3.81214 5.25377 3.58133L1.91039 0.237955Z">
                                         </path>
                                     </svg>
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>
 
-    </div>
-
-    <!-- Latest News ends -->
-    </section>
+        </section>
 
 
     {{-- @if ($web_config['brand_setting'] && $brands->count() > 0)
@@ -1313,7 +1274,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Set the third button (3 items per row) as active and apply its layout by default
-            changeItemsPerRow(3, document.querySelector('.button-group .btn:nth-child(3)'));
+            changeItemsPerRow(1, document.querySelector('.button-group .btn:nth-child(3)'));
         });
         // Sorting items
         function changeItemsPerRow(numItems, element) {

@@ -600,6 +600,7 @@ a {
     transition: all ease 0.5s;
     -o-object-fit: cover;
     object-fit: cover;
+    height: 300px;
 }
 
 .__best-selling .ptr {
@@ -800,6 +801,10 @@ a {
 
     .deal_of_the_day h1 {
         font-size: 20px;
+    }
+    
+    .view-all-text {
+        font-size: 12px;
     }
 }
 
@@ -9422,10 +9427,62 @@ input.form-control.fz-30 {
 }
 
 .for-feature-title {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 600;
     line-height: 40px;
     letter-spacing: 0.0025em;
+}
+
+.latest-slider .owl-item .product .carding img {
+    height: 300px;
+    border-radius: 15px;
+}
+
+.bold-subtitle {
+    color: #727272;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-transform: capitalize;
+}
+
+.bold-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+    color: #1F3C74;
+    text-transform: capitalize;
+}
+
+.product-price {
+    color: red;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+}
+
+.product-discount-price {
+    color: #303560;
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.product-without-discount {
+    color: #303560;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+}
+
+.product-card-add-cart {
+    border: unset;
+    background: #606abf;
+    border-radius: 10px;
 }
 
 .navbar-tool-text>small, .dropdown .navbar-tool-text::after, .navbar-tool-text {
@@ -9477,6 +9534,24 @@ input.form-control.fz-30 {
 .owl-prev span, .owl-next span {
     font-size: 25px;
     font-weight: 500;
+}
+
+.product-head-border {
+    border-bottom: 2px solid #efefef;
+}
+
+.blog-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+}
+
+.blog-created-by {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.0025em;
 }
 
 @media (max-width: 991px) {
@@ -9636,7 +9711,25 @@ input.form-control.fz-30 {
     .navbar.navbar-expand-md.navbar-stuck-menu {
         display: none;
     }
+
+    .for-feature-title, .home-title {
+        font-size: 20px;
+    }
+
+    .bold-subtitle, .product-discount-price {
+        font-size: 12px;
+    }
     
+    .bold-title, .product-without-discount, .product-price {
+        font-size: 16px;
+    }
+    
+}
+
+@media (max-width: 700px) {
+    .home-shop-category button:nth-last-child(1) {
+        display: none;
+    }
 }
 
 @media (max-width: 480px){
@@ -9746,7 +9839,10 @@ input.form-control.fz-30 {
     .product-hover_details{
         top: 0;
         left: unset !important;
+    }
 
+    .home-shop-category button {
+        display: none;
     }
 
 }
