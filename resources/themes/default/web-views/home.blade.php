@@ -234,11 +234,11 @@
             }
 
             /* .card-title {
-                                margin-bottom: 0;
-                                font-size: 26px;
-                                font-weight: 600;
-                                color: #FFFFFF;
-                            } */
+                                        margin-bottom: 0;
+                                        font-size: 26px;
+                                        font-weight: 600;
+                                        color: #FFFFFF;
+                                    } */
 
             /* ========== */
             .card-title {
@@ -262,7 +262,7 @@
                 font-weight: 400;
                 color: #FFFFFF;
             }
-            
+
             .add-to-cart {
                 width: 100%;
                 padding: 10px;
@@ -383,7 +383,7 @@
 
             .product-hover_details .carding {
                 /* top: -25px;
-                        left: -10px; */
+                                left: -10px; */
                 width: 246px;
                 margin-right: 10px;
             }
@@ -620,8 +620,8 @@
             }
 
             /* .product-card:hover {
-                        transform: scale(1.05);
-                    } */
+                                transform: scale(1.05);
+                            } */
 
             .product-category {
                 color: #727272;
@@ -1142,8 +1142,7 @@
                                     @if (!empty($product['product_id']))
                                         @php($product = $product->product)
                                     @endif
-                                    <div
-                                        class="p-2">
+                                    <div class="p-2">
                                         @if (!empty($product))
                                             @include('web-views.partials._filter-single-product', [
                                                 'product' => $product,
