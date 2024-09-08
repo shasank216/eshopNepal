@@ -1172,9 +1172,13 @@
                                 <div class="card-body">
                                     <span class="badge badge-light category-badge">{{ $blog->title }}</span>
                                     <div class="card-text mt-auto">
-                                        <h5 class="blog-title text-white">
-                                            {{ strip_tags($blog->details) }}
-                                        </h5>
+                                        <a href="{{ route('blogDetailsView', ['id' => $blog]) }}">
+                                            <h5 class="blog-title text-white">
+                                                {{ strip_tags($blog->details) }}
+                                            </h5>
+
+                                        </a>
+                                      
                                         <p class="blog-created-by text-white">by {{ $blog->added_by }}
                                             {{ $blog->created_at->format('Y-m-d') }}
                                         </p>

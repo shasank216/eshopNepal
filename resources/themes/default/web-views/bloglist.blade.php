@@ -80,20 +80,20 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                             <div class="card custom-card" style="border-radius: 0;">
                                 <!-- Image -->
-                                <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}" 
-                                     class="card-img-top img-fluid" 
-                                     alt="{{ $blog->title }}" 
-                                     style="border-radius: 0;">
-                                
+                                <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}"
+                                    class="card-img-top img-fluid" alt="{{ $blog->title }}" style="border-radius: 0;">
+
                                 <div class="card-body">
                                     <span class="badge badge-light category-badge">{{ $blog->title }}</span>
-                                    
                                     <div class="card-text mt-auto">
-                                        <h5 class="card-title" style="line-height: 44px;">
-                                            {{ strip_tags($blog->details) }}
-                                        </h5>
-                                        <p class="card-subtitle">
-                                            by {{ $blog->added_by }} 
+                                        <a href="{{ route('blogDetailsView', ['id' => $blog]) }}">
+                                            <h5 class="blog-title text-white">
+                                                {{ strip_tags($blog->details) }}
+                                            </h5>
+
+                                        </a>
+
+                                        <p class="blog-created-by text-white">by {{ $blog->added_by }}
                                             {{ $blog->created_at->format('Y-m-d') }}
                                         </p>
                                     </div>
@@ -108,8 +108,8 @@
                 @endif
             </div>
         </div>
-        
-        
+
+
     </section>
 
 
