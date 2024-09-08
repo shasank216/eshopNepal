@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Modules\Gateways\Traits\SmsGateway;
+use App\Models\Category;
 
 class ForgotPasswordController extends Controller
 {
@@ -26,9 +27,10 @@ class ForgotPasswordController extends Controller
 
     public function reset_password()
     {
+        $categories = Category::all();
         $verification_by=Helpers::get_business_settings('forgot_password_verification');
 
-        return view(VIEW_FILE_NAMES['recover_password'], compact('verification_by'));
+        return view(VIEW_FILE_NAMES['recover_password'], compact('verification_by','categories'));
     }
 
     public function reset_password_request(Request $request)
