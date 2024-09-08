@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <label class="form-label font-semibold">{{ translate('confirm_password') }}</label>
                                 <div class="password-toggle rtl">
-                                    <input class="form-control text-align-direction" name="con_password" type="password"
+                                    <input class="form-control text-align-direction" name="password_confirmation" type="password"
                                             placeholder="{{ translate('minimum_8_characters_long') }}"
                                             id="si-password" required>
                                     <label class="password-toggle-btn">

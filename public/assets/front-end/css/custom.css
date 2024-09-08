@@ -202,6 +202,7 @@ span.badge-accent:hover {
 @media (max-width: 767px) {
     .search_button .input-group-text i {
         color: var(--web-primary) !important;
+        color: #fff !important;
     }
 
     .mega-nav1 {
@@ -620,6 +621,7 @@ span.badge-accent:hover {
     left: unset;
     right: 0;
     top: 0;
+    height: 100%;
     border-radius: 8px;
     background: #1F3C74;
 }
@@ -1279,9 +1281,17 @@ img, figure {
 
 
 .category-single-product-price {
+    font-size: 13px !important;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.005em;
     color: #727272 !important;
+}
+
+@media (max-width: 991px) {
+    [dir="ltr"] .navbar form .search_button {
+        top: 30%;
+        height: auto;
+    }
 }
 /* added css ends */

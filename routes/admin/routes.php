@@ -146,6 +146,7 @@ use App\Http\Controllers\Admin\OrderReportController;
 use App\Http\Controllers\Admin\ProductWishlistReportController;
 use App\Http\Controllers\Admin\Settings\ReactSettingsController;
 use App\Enums\ViewPaths\Admin\ReactSetup;
+use App\Http\Controllers\Admin\PosterController;
 
 
 Route::post('change-language', [SharedController::class,'changeLanguage'])->name('change-language');
@@ -586,6 +587,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
         });
     });
     /* end notification */
+      // blogs
+      Route::group(['prefix' => 'poster', 'as' => 'poster.', 'namespace' => 'Admin'], function () {
+        Route::post('add-new', 'PosterController@store')->name('store');
+        Route::get('list', 'PosterController@list')->name('list');
+        Route::post('delete', 'PosterController@delete')->name('delete');
+        Route::post('status', 'PosterController@status')->name('status');
+        Route::get('edit/{id}', 'PosterController@edit')->name('edit');
+        Route::put('update/{id}', 'PosterController@update')->name('update');
+    });
+
+
     Route::group(['prefix' => 'support-ticket', 'as' => 'support-ticket.','middleware'=>['module:support_section']], function () {
         Route::controller(SupportTicketController::class)->group(function (){
             Route::get(SupportTicket::LIST[URI], 'index')->name('view');
