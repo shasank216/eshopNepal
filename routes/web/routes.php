@@ -26,6 +26,7 @@ use App\Http\Controllers\Payment_Methods\MercadoPagoController;
 use App\Http\Controllers\Payment_Methods\BkashPaymentController;
 use App\Http\Controllers\Payment_Methods\PaystackController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,6 +38,7 @@ use App\Http\Controllers\Payment_Methods\PaystackController;
 |
 */
 Route::get('maintenance-mode', 'Web\WebController@maintenance_mode')->name('maintenance-mode');
+Route::get('recover-password', 'ForgotPasswordController@reset_password')->name('reset-password');
 
 Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck']], function () {
     Route::group(['prefix' => 'product-compare', 'as' => 'product-compare.'], function () {
@@ -141,6 +143,11 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     //profile Route
     Route::get('user-profile', 'UserProfileController@user_profile')->name('user-profile')->middleware('customer'); //theme_aster
     Route::get('user-account', 'UserProfileController@user_account')->name('user-account')->middleware('customer');
+
+    Route::get('reset_password', 'UserProfileController@reset_password')->name('reset_password')->middleware('customer');
+
+   
+    Route::post('user-password-update', 'UserProfileController@user_password_update')->name('user-password-update');
     Route::post('user-account-update', 'UserProfileController@user_update')->name('user-update');
     Route::post('user-account-picture', 'UserProfileController@user_picture')->name('user-picture');
     Route::get('account-address-add', 'UserProfileController@account_address_add')->name('account-address-add');

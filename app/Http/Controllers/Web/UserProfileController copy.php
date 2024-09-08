@@ -32,7 +32,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UserProfileController extends Controller
 {
@@ -53,7 +52,6 @@ class UserProfileController extends Controller
 
     public function user_profile(Request $request)
     {
-        $categories = Category::all();
         $wishlists = $this->wishlist->whereHas('wishlistProduct', function ($q) {
             return $q;
         })->where('customer_id', auth('customer')->id())->count();
@@ -63,103 +61,17 @@ class UserProfileController extends Controller
         $addresses = ShippingAddress::where('customer_id', auth('customer')->id())->latest()->get();
         $customer_detail = User::where('id', auth('customer')->id())->first();
 
-        return view(VIEW_FILE_NAMES['user_profile'], compact('customer_detail', 'addresses', 'wishlists', 'total_order', 'total_loyalty_point', 'total_wallet_balance','categories'));
+        return view(VIEW_FILE_NAMES['user_profile'], compact('customer_detail', 'addresses', 'wishlists', 'total_order', 'total_loyalty_point', 'total_wallet_balance'));
     }
 
     public function user_account(Request $request)
     {
-      
-      
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $customerDetail = User::where('id', auth('customer')->id())->first();
         $categories = Category::all();
         return view(VIEW_FILE_NAMES['user_account'], compact('customerDetail', 'categories'));
 
     }
-
-    public function reset_password(Request $request)
-    {
-        $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
-        $customerDetail = User::where('id', auth('customer')->id())->first();
-        $categories = Category::all();
-    
-        return view()->file(resource_path('themes/default/web-views/users-profile/reset_password.blade.php'), compact('customerDetail', 'categories', 'country_restrict_status'));
-    }
-
-    // public function user_password_update(Request $request)
-    // {
-    //     if ($request['password']) {
-    //         $request->validate([
-    //             'password' => 'required|min:8|same:confirm_password',
-    //         ]);
-    //     }
-        
-
-      
-
-    //     if (User::where('id', '!=', auth('customer')->id())->where(['phone'=>$request['phone']])->first()) {
-    //         Toastr::warning(translate('phone_already_taken'));
-    //         return back();
-    //     }
-
-    //     $image = $request->file('image');
-
-    //     if ($image != null) {
-    //         $imageName = ImageManager::update('profile/', auth('customer')->user()->image, 'webp', $request->file('image'));
-    //     } else {
-    //         $imageName = auth('customer')->user()->image;
-    //     }
-
-    //     User::where('id', auth('customer')->id())->update([
-    //         'image' => $imageName,
-    //     ]);
-
-    //     $userDetails = [
-           
-    //         'password' => strlen($request['password']) > 5 ? bcrypt($request['password']) : auth('customer')->user()->password,
-    //     ];
-    //     if (auth('customer')->check()) {
-    //         User::where(['id' => auth('customer')->id()])->update($userDetails);
-    //         Toastr::info(translate('updated_successfully'));
-    //         return redirect()->back();
-    //     } else {
-    //         return redirect()->back();
-    //     }
-    // }
-    public function user_password_update(Request $request)
-{
-    // Validate password with strong password requirements
-    $request->validate([
-        'password' => [
-            'required',
-            'string',
-            // 'confirmed',
-            Password::min(8) // Minimum 8 characters
-                ->mixedCase()  // Requires at least one uppercase and one lowercase letter
-                ->letters()    // Requires at least one letter
-                ->numbers()    // Requires at least one number
-                ->symbols()    // Requires at least one special character
-                ->uncompromised(), // Ensure the password hasn't appeared in data leaks
-           
-        ],
-    ]);
-
-    // Only update the password if the user is authenticated
-    if (auth('customer')->check()) {
-        $userDetails = [
-            'password' => bcrypt($request['password']),
-        ];
-
-        // Update the user's password
-        User::where('id', auth('customer')->id())->update($userDetails);
-
-        // Show success message
-        Toastr::info(translate('Password updated successfully'));
-        return redirect()->back();
-    } else {
-        return redirect()->back()->withErrors(['error' => 'User not authenticated']);
-    }
-}
     public function user_update(Request $request)
     {
         $request->validate([
@@ -215,7 +127,6 @@ class UserProfileController extends Controller
 
     public function account_address_add()
     {
-     
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $zip_restrict_status = Helpers::get_business_settings('delivery_zip_code_area_restriction');
         $default_location = Helpers::get_business_settings('default_location');
@@ -743,6 +654,7 @@ class UserProfileController extends Controller
     }
     public function track_order_wise_result(Request $request)
     {
+        $categories = Category::all();
         if (auth('customer')->check()) {
             $orderDetails = Order::with('orderDetails')->where('id', $request['order_id'])->whereHas('details', function ($query) {
                 $query->where('customer_id', (auth('customer')->id()));
@@ -754,7 +666,7 @@ class UserProfileController extends Controller
             }
 
             $isOrderOnlyDigital = self::getCheckIsOrderOnlyDigital($orderDetails);
-            return view(VIEW_FILE_NAMES['track_order_wise_result'], compact('orderDetails', 'isOrderOnlyDigital'));
+            return view(VIEW_FILE_NAMES['track_order_wise_result'], compact('orderDetails', 'isOrderOnlyDigital','categories'));
         }
         return back();
     }
@@ -775,6 +687,7 @@ class UserProfileController extends Controller
 
     public function track_order_result(Request $request)
     {
+        $categories = Category::all();
         $isOrderOnlyDigital = false;
         $user = auth('customer')->user();
         $user_phone = $request['phone_number'] ?? '';
@@ -833,7 +746,7 @@ class UserProfileController extends Controller
                 return redirect()->back();
             }
             $isOrderOnlyDigital = self::getCheckIsOrderOnlyDigital($orderDetails);
-            return view(VIEW_FILE_NAMES['track_order'], compact('orderDetails', 'user_phone', 'order_verification_status', 'isOrderOnlyDigital'));
+            return view(VIEW_FILE_NAMES['track_order'], compact('orderDetails', 'user_phone', 'order_verification_status', 'isOrderOnlyDigital','categories'));
         }
 
         Toastr::error(translate('invalid_Order_Id_or_phone_Number'));
@@ -854,6 +767,7 @@ class UserProfileController extends Controller
 
     public function order_cancel($id)
     {
+        
         $order = Order::where(['id' => $id])->first();
         if ($order['payment_method'] == 'cash_on_delivery' && $order['order_status'] == 'pending') {
             OrderManager::stock_update_on_order_status_change($order, 'canceled');
@@ -871,6 +785,7 @@ class UserProfileController extends Controller
 
     public function refund_request(Request $request, $id)
     {
+        $categories = Category::all();
         $order_details = OrderDetail::find($id);
         $user = auth('customer')->user();
 
@@ -885,7 +800,7 @@ class UserProfileController extends Controller
             }
         }
 
-        return view('web-views.users-profile.refund-request', compact('order_details'));
+        return view('web-views.users-profile.refund-request', compact('order_details','categories'));
     }
 
     public function store_refund(Request $request)
@@ -949,6 +864,7 @@ class UserProfileController extends Controller
 
     public function refund_details($id)
     {
+        $categories = Category::all();
         $order_details = OrderDetail::find($id);
         $refund = RefundRequest::with(['product','order'])->where('customer_id', auth('customer')->id())
             ->where('order_details_id', $order_details->id)->first();
@@ -956,7 +872,7 @@ class UserProfileController extends Controller
         $order = $this->order->find($order_details->order_id);
 
         if($product) {
-            return view(VIEW_FILE_NAMES['refund_details'], compact('order_details', 'refund', 'product', 'order'));
+            return view(VIEW_FILE_NAMES['refund_details'], compact('order_details', 'refund', 'product', 'order','categories'));
         }
 
         Toastr::error(translate('product_not_found'));

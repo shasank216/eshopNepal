@@ -77,16 +77,12 @@ public function messages(): array
 {
     return [
         'f_name.required' => translate('first_name_is_required'),
-        'email.unique' => translate('email_already_has_been_taken'),  // Custom email error message
+        'email.unique' => translate('email_already_has_been_taken'),
         'phone.required' => translate('phone_number_is_required'),
         'phone.unique' => translate('phone_number_already_has_been_taken'),
         'password.required' => translate('password_is_required'),
         'password.confirmed' => translate('password_confirmation_does_not_match'),
-        'password.min' => translate('password_must_be_at_least_8_characters'),
-        'password.letters' => translate('password_must_contain_at_least_one_letter'),
-        'password.mixedCase' => translate('password_must_contain_upper_and_lower_case_letters'),
-        'password.numbers' => translate('password_must_contain_at_least_one_number'),
-        'password.symbols' => translate('password_must_contain_at_least_one_symbol'),
+        'password' => translate('password_must_be_at_least_8_characters, and combin uppercase,lowercase letters,number,symbol.'),
     ];
 }
     public function after(): array

@@ -20,7 +20,7 @@
                     </a>
                 </div>
                 <div class="d-none d-md-block mr-2 text-nowrap">
-                    <a class="topbar-link d-flex align-items-center  direction-ltr" href="https://flipkart.questal.in/account-oder">
+                    <a class="topbar-link d-flex align-items-center  direction-ltr" href="https://flipkart.questal.in/track-order">
                         <i class="fa fa-truck fa-flip-horizontal m-0"></i> 
                         <span class="ms-1 track-order">Track Your Order</span>
                     </a>
@@ -523,6 +523,7 @@
                                    href="{{route('account-oder')}}"> {{ translate('my_Order')}} </a>
                                 <a class="dropdown-item"
                                    href="{{route('user-account')}}"> {{ translate('my_Profile')}}</a>
+                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                    href="{{route('customer.auth.logout')}}">{{ translate('logout')}}</a>

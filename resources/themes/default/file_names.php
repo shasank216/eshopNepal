@@ -14,6 +14,7 @@ return [
     'account_address_edit' => 'web-views.users-profile.account-address-edit',
     'account_orders' => 'web-views.users-profile.account-orders',
     'user_account' => 'web-views.users-profile.user-account',
+    'reset_password' => 'web-views.users-profile.reset_password',
     'order_invoice' => 'web-views.order.invoice',
     'account_order_details' => 'web-views.users-profile.account-order-details',
     'refund_details' => 'web-views.users-profile.refund-details',
