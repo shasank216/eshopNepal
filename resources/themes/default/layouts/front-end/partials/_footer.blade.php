@@ -177,6 +177,7 @@
                                             <a class="widget-list-link"
                                                 href="{{ route('customer.auth.login') }}">{{ translate('profile_info') }}</a>
                                         </li>
+                                      
                                         <li class="widget-list-item">
                                             <a class="widget-list-link"
                                                 href="{{ route('customer.auth.login') }}">{{ translate('wish_list') }}</a>
