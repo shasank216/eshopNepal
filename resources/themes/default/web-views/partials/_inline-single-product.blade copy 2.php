@@ -77,11 +77,8 @@
             <div class="text-center">
                 <div class="details">
                     <p class="bold-subtitle"> {{ $product->brand->name }}</p>
-                    <a href="{{ route('product', $product->slug) }}">
-                        <span class="bold-subtitle">{{ Str::limit($product['name'], 23) }}</span>
 
-                    </a>
-
+                    <span class="bold-subtitle">{{ Str::limit($product['name'], 23) }}</span>
                     <p style="color: red; font-weight: 600; font-size: 20px;">
                         @if ($product->discount > 0)
                             {{ webCurrencyConverter(
@@ -131,7 +128,7 @@
                 <form id="add-to-cart-form" class="mb-2">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">
-                    <div class="d-none">
+                    {{-- <div class="d-flex justify-content-center align-items-center">
                         <div>
                             <div
                                 class="d-flex justify-content-center align-items-center quantity-box border rounded border-base web-text-primary">
@@ -141,7 +138,7 @@
                                         -
                                     </button>
                                 </span>
-                                <input type="hidden" name="quantity"
+                                <input type="text" name="quantity"
                                     class="form-control input-number text-center cart-qty-field __inline-29 border-0 "
                                     placeholder="{{ translate('1') }}" value="{{ $product->minimum_order_qty ?? 1 }}"
                                     data-producttype="{{ $product->product_type }}"
@@ -156,7 +153,7 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <input type="hidden" class="product-generated-variation-code" name="product_variation_code">
                     <input type="hidden" value="" class="in_cart_key form-control w-50" name="key">
 

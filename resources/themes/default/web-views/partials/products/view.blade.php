@@ -99,8 +99,8 @@
         }
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
-                                                                border-radius: 0.25em;
-                                                            }*/
+                                                        border-radius: 0.25em;
+                                                    }*/
 
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
@@ -334,9 +334,9 @@
 
 
             <!-- <div>
-                                                                            <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                                                                            <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                                                                        </div> -->
+                                                                    <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                                                                    <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                                                                </div> -->
 
             <div class="d-flex align-items-center gap-3">
                 <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
@@ -389,9 +389,8 @@
                         <i class="fa fa-th fa-lg" aria-hidden="true"></i>
                     </button>
                     {{-- <button class="btn p-0" onclick="changeItemsPerRow(4)">
-                        <img class="w-20 h-20 p-0" src="{{ asset('public/assets/front-end/img/icons/four-items.png') }}"
-                            alt="">
-                    </button> --}}
+                    <img class="w-20 h-20 p-0" src="{{ asset('public/assets/front-end/img/icons/four-items.png') }}" alt="">
+                </button> --}}
                 </div>
             </div>
 
@@ -434,9 +433,8 @@
                                             <p class="m-0 categories_text">{{ $category['name'] }}
                                                 <span class="categories_span">
                                                     {{-- (10) --}}
-
-                                                    ({{ $category->products_count }})
-                                                    <!-- Display parent category product count -->
+                                                   
+                                                    ({{ $category->products_count }}) <!-- Display parent category product count -->
 
                                                 </span>
                                             </p>
@@ -576,12 +574,12 @@
                                             value="{{ ucfirst($color) }}" id="{{ ucfirst($color) }}"
                                             name="colorFilter">
                                         <label class="form-check-label" for="{{ ucfirst($color) }}"
-                                            style="background-color:{{ $color }};">
+                                            style="background-color:{{ $color}};">
                                         </label>
                                     </div>
                                 @endforeach
                             </div>
-
+                           
                         </div>
                     </div>
                     <!-- Color Collapsible Section Ends -->
@@ -1040,7 +1038,7 @@
                         alt="">
                 </div> --}}
                 {{-- <div class="row" id="ajax-products"> --}}
-                <div class="items-container d-grid" id="ajax-products">
+                <div class="items-container" id="ajax-products">
 
 
                     @include('web-views.products._ajax-products', [
@@ -1196,17 +1194,6 @@
             const container = document.querySelector('.items-container');
             container.style.gridTemplateColumns = `repeat(${numItems}, 1fr)`;
 
-            // Ensure all items inside the product list get the correct class
-            const items = document.querySelectorAll('.product-single-hover .muntiple-designs');
-            items.forEach(item => {
-                item.classList.remove('design-1', 'design-2');
-                if (numItems === 1) {
-                    item.classList.add('design-1');
-                } else {
-                    item.classList.add('design-2');
-                }
-            });
-
             // Remove the 'active' class from all buttons
             const buttons = document.querySelectorAll('.button-group button');
             buttons.forEach(button => button.classList.remove('active'));
@@ -1214,8 +1201,8 @@
             // Add the 'active' class to the clicked button
             element.classList.add('active');
         }
-        // Sorting items Ends
 
+        // Sorting items Ends
     </script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script>
@@ -1293,23 +1280,23 @@
         var priceSlider = document.getElementById('priceSlider');
 
         noUiSlider.create(priceSlider, {
-            start: [10, 10000],
-            connect: true,
-            range: {
-                'min': 0,
-                'max': 10000
-            },
-            step: 1,
-            tooltips: [true, true],
-            format: {
-                to: function(value) {
-                    return Math.round(value); // Round to the nearest whole number
-                },
-                from: function(value) {
-                    return Number(value); // Convert string to number
-                }
-            }
-        });
+    start: [10, 10000],
+    connect: true,
+    range: {
+        'min': 0,
+        'max': 10000
+    },
+    step: 1,
+    tooltips: [true, true],
+    format: {
+        to: function(value) {
+            return Math.round(value); // Round to the nearest whole number
+        },
+        from: function(value) {
+            return Number(value); // Convert string to number
+        }
+    }
+});
 
         // Update the min and max values displayed
         priceSlider.noUiSlider.on('update', function(values, handle) {
