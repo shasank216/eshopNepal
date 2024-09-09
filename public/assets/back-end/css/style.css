@@ -2,14 +2,17 @@
     --c1: #0177cd;
     --c1-rgb: 1, 119, 205;
     --c2: #ff6767;
-    --title-color: #334257;
-    --text-color: #5b6777;
+    /* --title-color: #334257; */
+    --title-color: #fff;
+    /* --text-color: #5b6777; */
+    --text-color: #fff;
     --border-color: rgba(180, 208, 224, 0.5);
     --font: "Inter", sans-serif;
 }
 
 body {
     font-family: var(--font);
+    font-family: 'Inter';
     color: var(--text-color);
     line-height: 1.4;
     background-color: #f9f9fb;
@@ -30,6 +33,10 @@ h5,
 h6 {
     color: var(--title-color);
     line-height: 1.2;
+}
+#content.main {
+    min-height: 100vh;
+    background: #252b45;
 }
 
 .list-unstyled,
@@ -68,7 +75,7 @@ a:hover {
 }
 
 .btn-ghost-secondary {
-    color: rgb(7, 59, 116);
+    /* color: rgb(7, 59, 116); */
 }
 
 .navbar-brand img {
@@ -97,7 +104,7 @@ a:hover {
 }
 
 .navbar-vertical-content {
-    background: #073b74;
+    background: #202741;
     padding: 10px 15px;
 }
 
@@ -330,9 +337,9 @@ aside li .nav-link > span:not(:first-child) {
 }
 
 .table .thead-light th {
-    color: var(--title-color);
-    background-color: #f7faff;
-    border-color: rgba(1, 119, 205, 0.1);
+    /* color: var(--title-color); */
+    /* background-color: #f7faff; */
+    /* border-color: rgba(1, 119, 205, 0.1); */
 }
 
 thead.text-capitalize th {
@@ -345,7 +352,7 @@ thead.text-capitalize th {
 }
 
 .side-logo {
-    background-color: #ffffff;
+    background-color: #202741;
 }
 
 .grid-card-wrap {
@@ -738,6 +745,7 @@ label {
 }
 
 .business-analytics__subtitle {
+    color: #334257;
     font-size: 14px;
     margin-bottom: 10px;
     font-weight: 600;
@@ -746,6 +754,7 @@ label {
 .business-analytics__title {
     font-weight: 700;
     font-size: 24px;
+    color: #334257;
 }
 
 .business-analytics__img {
@@ -782,7 +791,7 @@ label {
 .order-stats__subtitle {
     font-weight: 600;
     font-size: 14px;
-    color: #334257;
+    color: white;
     margin-bottom: 0;
 }
 
@@ -899,6 +908,10 @@ label {
 
 .btn:hover svg path {
     fill: #fff;
+}
+
+#header{
+background-color: #202741;
 }
 
 .card-header {
@@ -1073,11 +1086,14 @@ label {
 }
 
 .card {
+    background: #262c46;
     border-color: #f4f4f4;
     box-shadow: 0px 5px 10px rgba(51, 66, 87, 0.05);
     transition: all 0.3s ease;
 }
-
+.card .card-header{
+    background-color: #202741;
+}
 .card:hover {
     box-shadow: 0px 5px 24px rgba(7, 59, 116, 0.15);
 }
@@ -1734,6 +1750,9 @@ img {
     max-block-size: 45vh;
     overflow-y: auto;
 }
+.billing-section-wrap thead.text-capitalize th{
+    color: black;
+}
 
 .min-w-120 {
     min-width: 120px;
@@ -1827,8 +1846,8 @@ ol li:not(:last-child) {
 }
 
 .btn-secondary {
-    background-color: #f4f5f7;
-    border-color: #f4f5f7;
+    /* background-color: #f4f5f7; */
+    /* border-color: #f4f5f7; */
     color: var(--title-color);
 }
 
@@ -2120,9 +2139,15 @@ select {
 }
 
 .billing-section-wrap {
-    max-height: calc(100vh - 180px);
+    /* max-height: calc(100vh - 180px); */
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.billing-section-wrap .bottom-sticky-buttons{
+    padding: unset !important;
+    background-color: #252B45;
+    margin-bottom: 0.8rem;
 }
 
 .table-hover tbody tr:hover {
@@ -5354,7 +5379,7 @@ select {
     position: sticky;
     top: 0;
     z-index: 9;
-    background: #073b74;
+    background: #202741;
 }
 
 aside .navbar-vertical-content {
@@ -6236,6 +6261,9 @@ body *::-webkit-scrollbar-thumb {
 .chat_ib.media-body {
     width: 0;
 }
+.media-body {
+    color: white;
+}
 .chat_people {
     align-items: center;
 }
@@ -6257,4 +6285,17 @@ body *::-webkit-scrollbar-thumb {
     border-right: none !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+}
+
+.bg-img-hero{
+    display: none;
+} 
+
+.input-label[for="signingAdminPassword"] span,
+.input-label[for="signingAdminEmail"]{
+    color: white;
+}
+
+.get-login-recaptcha-verify{
+    display: block;
 }
