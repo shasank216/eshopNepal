@@ -57,18 +57,20 @@
 
         /* Blog Title */
         .blog_title {
-            color: #000;
-            /* Change to black */
-            font-size: 30px;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 36px;
+            text-transform: capitalize;
+            color: #593b7b;
         }
 
         /* Blog Paragraph */
         .blog_detail_paragraph p {
+            font-size: 15px;
             font-weight: 400;
-            font-size: 18px;
+            line-height: 24px;
             letter-spacing: 0.005em;
             color: #727272;
-            /* Change to black */
         }
 
         /* Author and Date */
@@ -82,17 +84,15 @@
 
         /* Sidebar */
         .sideBar {
-            border: 1px solid #202741;
+            border: 1px solid #1f3c74;
             border-radius: 10px;
             align-self: flex-start;
             max-height: 67.1vh;
             overflow-y: auto;
             position: relative;
-            margin-top: 8.5rem !important;
+            margin-top: 4%;
             background-color: #fff;
-            /* Change to white */
             color: #000;
-            /* Change to black */
         }
 
         .sidebar-header {
@@ -107,8 +107,11 @@
         }
 
         .sidebar-header h1 {
-            font-size: 34px;
+            font-size: 26px;
             font-weight: 600;
+            line-height: 36px;
+            text-transform: capitalize;
+            color: #593b7b;
         }
 
         .list-group-container {
@@ -127,16 +130,27 @@
         }
 
         .card-text strong {
-            font-size: 1.2rem;
-            color: #000;
-            /* Change to black */
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 24px;
+            text-transform: capitalize;
+            color: #593b7b;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .card-text .small {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
+            line-height: 20px;
+            letter-spacing: 0.005em;
             color: #727272;
-            /* Change to black */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* Latest Blog Category Button */
@@ -159,7 +173,28 @@
 
         .blog_detail_image {
             width: 100%;
+            height: 400px;
+        }
 
+        .text-sm {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0.005em;
+            color: #454545;
+        }
+
+        img.latest_blog_image {
+            height: 183px;
+            width: 100%;
+        }
+
+        .blog-category {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            letter-spacing: 0.005em;
+            color: #454545;
         }
 
 
@@ -178,18 +213,20 @@
             }
 
             .latest_blog_image {
-               width: 100%;
-               height: 100%;
-               
-    
+                width: 100%;
+                height: 100%;
+
+
             }
-            .latest-blogs-responsive{
+
+            .latest-blogs-responsive {
                 display: flex;
                 gap: 5px;
             }
         }
-        @media (max-width: 450px){
-            .latest_blog_image{
+
+        @media (max-width: 450px) {
+            .latest_blog_image {
                 height: 70%;
             }
 
@@ -198,17 +235,44 @@
     </style>
 
     <div class="bg-white text-dark">
-        <div class="container mt-4 padding-rl">
+        <div class="container mt-2 padding-rl">
+
+            <div class="breadcrumb mb-4">
+                <a href="{{ url('/') }}">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Home
+                </a>
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                <span>
+                    {{ ucwords($blogs_details->title) }}
+                </span>
+            </div>
+
             <div class="row">
                 <div class="col-lg-8 col-md-12 padding-rl">
-                    <h2 class="font-weight-bold blog_title">{{ ucwords($blogs_details->title) }}</h2>
-                    <div class="d-flex justify-content-between mb-3 author_and_admin">
-                        <div>Author: {{ $blogs_details->added_by }}</div>
-                        <div class="text-right">Date: {{ $blogs_details->created_at->format('Y-m-d') }}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="font-weight-bold blog_title">{{ ucwords($blogs_details->title) }}</h2>
+                        @if ($blogs_details->blog_category)
+                            <p class="m-0 blog-category">
+                                {{ $blogs_details->blog_category ?? '' }}
+                            </p>
+                        @endif
                     </div>
                     <div>
-                        <img class="img-fluid blog_detail_image mb-4"
+                        <img class="img-fluid blog_detail_image"
                             src="{{ asset('storage/app/public/poster') }}/{{ $blogs_details['image'] }}" alt="Blog Image">
+                    </div>
+                    <div class="d-flex justify-content-between author_and_admin">
+                        <div class="text-sm">
+                            Author:
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{ $blogs_details->added_by }}
+                        </div>
+                        <div class="text-right text-sm">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Date:
+                            {{ $blogs_details->created_at->format('Y-m-d') }}
+                        </div>
                     </div>
 
                     <div class="blog_detail_paragraph">
@@ -226,6 +290,30 @@
                     <div class="list-group-container">
                         <div class="list-group list-group-flush border-bottom scrollarea">
                             @foreach ($blogs as $blog)
+                            <a class="blog-title text-white mb-2" href="{{ route('blogDetailsView', ['id' => $blog]) }}">
+                                <div class="card custom-card" style="border-radius: 15px;">
+                                    <img src="{{ asset('storage/app/public/poster') }}/{{ $blog['image'] }}"
+                                        class="card-img-top img-fluid" alt="{{ $blog->title }}" style="border-radius: 15px;">
+                                    <div class="card-body blog-body h-100">
+                                        @if ($blog->blog_category)
+                                            <span class="badge badge-light category-badge">
+                                                {{ $blog->blog_category ?? '' }}
+                                            </span>
+                                        @endif
+
+                                        <div class="card-text mt-auto">
+                                            <h5 class="blog-title text-white m-0">
+                                                {{ $blog->title }}
+                                            </h5>
+                                            <p class="blog-created-by text-white">by {{ $blog->added_by }}
+                                                {{ $blog->created_at->format('Y-m-d') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+{{--                             
                                 <a href="{{ route('blogDetailsView', ['id' => $blog]) }}"
                                     class="list-group-item list-group-item-action py-3 lh-tight card-item">
                                     <div class="latest-blogs-responsive">
@@ -245,7 +333,7 @@
 
                                     </div>
 
-                                </a>
+                                </a> --}}
                             @endforeach
                         </div>
                     </div>

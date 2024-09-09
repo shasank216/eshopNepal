@@ -59,13 +59,38 @@
             font-weight: 400;
             color: #FFFFFF;
         }
+
+        .all-text {
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 36px;
+            text-transform: capitalize;
+            color: #593b7b;
+            margin-bottom: 0.5rem;
+        }
+
+        img.card-img-top.img-fluid {
+            height: 250px;
+        }
     </style>
 
     <section class="container">
+
+        <div class="breadcrumb mb-4 mt-2">
+            <a href="{{ url('/') }}">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                Home
+            </a>
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span>
+                Blog List
+            </span>
+        </div>
+
         <!-- Blogs start -->
 
         <nav class="navbar">
-            <p style="font-size: 34px; font-weight: 600;">All Blogs</p>
+            <p class="all-text">All Blogs</p>
 
         </nav>
         <hr>
@@ -78,27 +103,28 @@
                 @else
                     @foreach ($blogs as $blog)
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                            <div class="card custom-card" style="border-radius: 0;">
-                                <!-- Image -->
-                                <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}"
-                                    class="card-img-top img-fluid" alt="{{ $blog->title }}" style="border-radius: 0;">
+                            <a class="blog-title text-white m-0" href="{{ route('blogDetailsView', ['id' => $blog]) }}">
+                                <div class="card custom-card" style="border-radius: 0;">
+                                    <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}"
+                                        class="card-img-top img-fluid" alt="{{ $blog->title }}" style="border-radius: 0;">
+                                    <div class="card-body blog-body h-100">
+                                        @if ($blog->blog_category)
+                                            <span class="badge badge-light category-badge">
+                                                {{ $blog->blog_category ?? '' }}
+                                            </span>
+                                        @endif
 
-                                <div class="card-body">
-                                    <span class="badge badge-light category-badge">{{ $blog->title }}</span>
-                                    <div class="card-text mt-auto">
-                                        <a href="{{ route('blogDetailsView', ['id' => $blog]) }}">
-                                            <h5 class="blog-title text-white">
-                                                {{ strip_tags($blog->details) }}
+                                        <div class="card-text mt-auto">
+                                            <h5 class="blog-title text-white m-0">
+                                                {{ $blog->title }}
                                             </h5>
-
-                                        </a>
-
-                                        <p class="blog-created-by text-white">by {{ $blog->added_by }}
-                                            {{ $blog->created_at->format('Y-m-d') }}
-                                        </p>
+                                            <p class="blog-created-by text-white">by {{ $blog->added_by }}
+                                                {{ $blog->created_at->format('Y-m-d') }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                     <!-- Pagination Links -->
