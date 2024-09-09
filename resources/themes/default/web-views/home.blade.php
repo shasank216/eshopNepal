@@ -621,24 +621,31 @@
             }
 
             .ribbon-new {
-                top: 60px;
+                top: 45px;
                 left: -6px;
                 width: 60px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 background-color: #1F3C74;
-                font-size: 14px;
-                font-weight: 500;
                 z-index: 1;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 20px;
+                letter-spacing: 0.0025em;
+                height: 20px;
             }
 
             .ribbon-sale {
                 background-color: color-mix(in srgb, #FF3B3B, #fff 20%);
                 display: flex;
-                justify-content: center;
+                justify-content: start;
                 align-items: center;
                 width: 130px;
+                font-size: 11px;
+                font-weight: 400;
+                padding-left: 1rem;
+                height: 20px;
             }
 
             .row>.col-md-3,
@@ -1165,35 +1172,32 @@
                     @foreach ($blogs as $blog)
                         <!-- Blog Card -->
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                            <div class="card custom-card" style="border-radius: 0;">
-                                <!-- Image -->
-                                <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}"
-                                    class="card-img-top" alt="{{ $blog->title }}" style="border-radius: 0;">
-                                <div class="card-body">
-                                    <span class="badge badge-light category-badge">{{ $blog->title }}</span>
-                                    <div class="card-text mt-auto">
-                                        <a href="{{ route('blogDetailsView', ['id' => $blog]) }}">
-                                            <h5 class="blog-title text-white">
-                                                {{ strip_tags($blog->details) }}
-                                            </h5>
-
-                                        </a>
-                                      
-                                        <p class="blog-created-by text-white">by {{ $blog->added_by }}
-                                            {{ $blog->created_at->format('Y-m-d') }}
-                                        </p>
+                            <a class="blog-title text-white" href="{{ route('blogDetailsView', ['id' => $blog]) }}">
+                                <div class="card custom-card blog-card" style="border-radius: 0;">
+                                    <!-- Image -->
+                                    <img src="{{ asset('storage/app/public/poster/' . $blog['image']) }}"
+                                        class="card-img-top" alt="{{ $blog->title }}" style="border-radius: 0;">
+                                    <div class="card-body blog-body">
+                                        @if ($blog->blog_category)
+                                            <span class="badge badge-light category-badge">
+                                                {{ $blog->blog_category ?? '' }}
+                                            </span>
+                                        @endif
+                                        {{-- <span class="badge badge-light category-badge">category</span> --}}
+                                        <div class="card-text mt-auto">
+                                            <h5 class="blog-title text-white m-0">{{ $blog->title }}</h5>
+                                                {{-- {{ strip_tags($blog->details) }} --}}
+                                            <p class="blog-created-by text-white">
+                                                by 
+                                                <span class="blog-added-by">
+                                                    {{ $blog->added_by }}
+                                                </span>
+                                                {{ $blog->created_at->format('Y-m-d') }}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                {{-- <a href="{{ route('blogDetailsView', ['id' => $blog]) }}" class="btn" tabindex="-1">
-                                    Read More
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="8"
-                                        viewBox="0 0 11 8" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M6.92546 0.237956C6.69464 0.00714337 6.32042 0.00714327 6.08961 0.237955C5.8588 0.468767 5.8588 0.842988 6.08961 1.0738L9.01507 3.99926L6.08961 6.92471C5.8588 7.15552 5.8588 7.52974 6.08961 7.76055C6.32042 7.99137 6.69464 7.99137 6.92545 7.76055L10.2688 4.41718C10.4996 4.18636 10.4996 3.81214 10.2688 3.58133L6.92546 0.237956ZM1.91039 0.237955C1.67958 0.00714327 1.30536 0.00714337 1.07454 0.237956C0.843732 0.468768 0.843733 0.842988 1.07454 1.0738L4 3.99925L1.07454 6.92471C0.843732 7.15552 0.843733 7.52974 1.07455 7.76055C1.30536 7.99137 1.67958 7.99137 1.91039 7.76055L5.25377 4.41718C5.48458 4.18637 5.48458 3.81214 5.25377 3.58133L1.91039 0.237955Z">
-                                        </path>
-                                    </svg>
-                                </a> --}}
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
