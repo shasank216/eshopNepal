@@ -1,6 +1,6 @@
 @extends('layouts.back-end.app')
 
-@section('title', translate('Poster'))
+@section('title', translate('Blog'))
 
 @push('css_or_js')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,7 +13,7 @@
             <div>
                 <h2 class="h1 mb-1 text-capitalize d-flex align-items-center gap-2">
                     <img width="20" src="{{asset('/public/assets/back-end/img/banner.png')}}" alt="">
-                    {{translate('poster_update_form')}}
+                    {{translate('blog_update_form')}}
                 </h2>
             </div>
             <div>
@@ -34,20 +34,37 @@
                             @method('put')
                             <div class="row g-3">
                                 <div class="col-md-6">
+                                  
+                                    <div class="form-group mb-3">
+                                        <label for="name" class="title-color text-capitalize">{{ translate('blog_Category') }}</label>
+                                        <select name="blog_category" id="" class="form-control" required>
+                                            <option value="">----Select Category----</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->name }}" 
+                                                    {{ $banner->blog_category == $category->name ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="hidden" id="id" name="id">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="name" class="title-color text-capitalize">{{ translate('poster_title')}}</label>
+                                        <label for="name" class="title-color text-capitalize">{{ translate('blog_title')}}</label>
                                         <input type="text" name="title" class="form-control" id="url" required placeholder="{{ translate('enter_title') }}" value="{{$banner['title']}}">
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group mb-3">
-                                            <label for="details" class="title-color text-capitalize">{{ translate('Poster_details')}}</label>
+                                            <label for="details" class="title-color text-capitalize">{{ translate('blog_details')}}</label>
                                             <textarea name="details" class="form-control" id="url" required placeholder="{{ translate('Enter_poster_details') }}">{{$banner['details']}}</textarea>
                                         </div>
     
-                                    </div>
+                                    </div> --}}
+                                    
 
                                     {{-- For Theme Fashion - New input Field - Start --}}
                                     {{-- @if(theme_root_path() == 'theme_fashion')
@@ -62,6 +79,12 @@
                                     @endif --}}
                                     {{-- For Theme Fashion - New input Field - End --}}
 
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group mb-6">
+                                        <label for="details" class="title-color text-capitalize">{{ translate('blog_details') }}</label>
+                                        <textarea name="details" class="textarea editor-textarea" required placeholder="{{ translate('Enter_poster_details') }}">{{$banner['details']}}</textarea>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 d-flex flex-column justify-content-center">
                                     <div>
@@ -80,17 +103,17 @@
                                             {{ translate('banner_image')}}
                                         </label>
                                         <span class="text-info" id="theme_ratio">( {{translate('ratio')}} 4:1 )</span>
-                                        <p>{{ translate('banner_Image_ratio_is_not_same_for_all_sections_in_website') }}. {{ translate('please_review_the_ratio_before_upload') }}</p>
+                                        <p>{{ translate('blog_Image_ratio_is_not_same_for_all_sections_in_website') }}. {{ translate('please_review_the_ratio_before_upload') }}</p>
 
                                          <!-- For Theme Fashion - New input Field - Start -->
                                          @if(theme_root_path() == 'theme_fashion')
                                          <div class="form-group mt-4 input_field_for_main_banner {{$banner['banner_type'] !='Main Banner'?'d-none':''}}">
                                              <label for="title" class="title-color text-capitalize">{{ translate('Title')}}</label>
-                                             <input type="text" name="title" class="form-control" id="title" placeholder="{{ translate('Enter_banner_title') }}" value="{{$banner['title']}}">
+                                             <input type="text" name="title" class="form-control" id="title" placeholder="{{ translate('Enter_blog_title') }}" value="{{$banner['title']}}">
                                          </div>
                                          <div class="form-group mb-0 input_field_for_main_banner {{$banner['banner_type'] !='Main Banner'?'d-none':''}}">
                                              <label for="sub_title" class="title-color text-capitalize">{{ translate('Sub_Title')}}</label>
-                                             <input type="text" name="sub_title" class="form-control" id="sub_title" placeholder="{{ translate('Enter_banner_sub_title') }}" value="{{$banner['sub_title']}}">
+                                             <input type="text" name="sub_title" class="form-control" id="sub_title" placeholder="{{ translate('Enter_blog_sub_title') }}" value="{{$banner['sub_title']}}">
                                          </div>
                                          @endif
                                          <!--  For Theme Fashion - New input Field - End -->
@@ -220,4 +243,15 @@
     </script>
     <!-- New Added JS - End -->
 
+    <!-- Include CKEditor 5 (latest version) -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+<!-- Initialize CKEditor 5 -->
+<script>
+    ClassicEditor
+        .create(document.querySelector('.editor-textarea'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @endpush

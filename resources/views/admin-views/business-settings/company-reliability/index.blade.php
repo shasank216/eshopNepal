@@ -49,6 +49,13 @@
                                             <input type="text" class="form-control" name="title" value="{{$value->title}}"
                                             placeholder="{{ translate('type_your_title_text') }}">
                                         </div>
+                                        <div class="mb-3">
+                                            <label for="Description">{{ translate('Description') }}</label>
+                                            <textarea name="" id="" cols="10" rows="2" class="form-control" name="description"  placeholder="{{ translate('type_your_dscription_text') }}"></textarea>
+
+                                            {{-- <input type="text" class="form-control" name="description" value="{{$value->title}}"
+                                            placeholder="{{ translate('type_your_escription_text') }}"> --}}
+                                        </div>
                                         <div class="custom_upload_input">
                                             <input type="file" name="image" class="custom-upload-input-file aspect-ratio-3-15 upload-color-image" data-imgpreview="pre_img_header_logo{{$key}}" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                                             <span class="delete_file_input btn btn-outline-danger btn-sm square-btn d-none">

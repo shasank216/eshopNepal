@@ -72,14 +72,19 @@ class FeaturesSectionController extends BaseController
 
     public function getCompanyReliabilityView(): View
     {
+     
         $companyReliabilityData = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'company_reliability']);
+       
         return view(FeaturesSection::COMPANY_RELIABILITY[VIEW], compact('companyReliabilityData'));
     }
 
     public function updateCompanyReliability(Request $request, FeaturesSectionService $featuresSectionService): RedirectResponse
     {
+        dd($request);
+       
         $data = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'company_reliability']);
         $item = $featuresSectionService->getReliabilityUpdateData(request: $request, data: $data);
+        dd($item);
         $this->businessSettingRepo->updateOrInsert(type: 'company_reliability', value: json_encode($item));
         return back();
     }

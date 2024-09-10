@@ -1,6 +1,6 @@
 @extends('layouts.back-end.app')
 
-@section('title', translate('Poster'))
+@section('title', translate('Blog'))
 
 @push('css_or_js')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -12,7 +12,7 @@
         <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
             <h2 class="h1 mb-1 text-capitalize d-flex align-items-center gap-2">
                 <img width="20" src="{{asset('/public/assets/back-end/img/banner.png')}}" alt="">
-                {{translate('poster_Setup')}}
+                {{translate('Blog_Setup')}}
                 <small>
                     <strong class="text--primary"> ({{str_replace("_", " ", theme_root_path())}})</strong>
                 </small>
@@ -42,7 +42,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 text-capitalize">{{ translate('poster_form')}}</h5>
+                        <h5 class="mb-0 text-capitalize">{{ translate('blog_form')}}</h5>
                     </div>
                     <div class="card-body">
                         <form action="{{route('admin.poster.store')}}" method="post" enctype="multipart/form-data"
@@ -50,21 +50,36 @@
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <input type="hidden" id="id" name="id">
+                                  
 
                                     <div class="form-group mb-3">
-                                        <label for="name" class="title-color text-capitalize">{{ translate('Poster_title')}}</label>
-                                        <input type="text" name="title" class="form-control" id="url" required placeholder="{{ translate('Enter_poster_title') }}">
+                                        <label for="name" class="title-color text-capitalize">{{ translate('blog_Category')}}</label>
+                                        <select name="blog_category" id="" class="form-control" required>
+                                            <option value="">----Select Category----</option>
+                                            @foreach ($categories as $category)
+                                            <option value="{{$category->name}}">{{$category->name}}</option>
+                                                
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
+                                    <input type="hidden" id="id" name="id">
+
                                     <div class="form-group mb-3">
-                                        <label for="details" class="title-color text-capitalize">{{ translate('Poster_details')}}</label>
-                                        <textarea name="details" class="form-control" id="url" required placeholder="{{ translate('Enter_poster_details') }}"></textarea>
+                                        <label for="name" class="title-color text-capitalize">{{ translate('blog_title')}}</label>
+                                        <input type="text" name="title" class="form-control" id="url" required placeholder="{{ translate('Enter_blog_title') }}">
                                     </div>
 
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group mb-6">
+                                        <label for="details" class="title-color text-capitalize">{{ translate('blog_details') }}</label>
+                                        <textarea name="details" class="textarea editor-textarea" id="blog-details" style="color: black;">{{ old('details') }}</textarea>
+                                    </div>
+                                </div>
+                               
                                 <div class="col-md-6 d-flex flex-column justify-content-center">
                                     <div>
                                         <center class="mx-auto">
@@ -76,25 +91,26 @@
                                             </div>
                                         </center>
                                         <label for="name" class="title-color text-capitalize">
-                                            {{ translate('banner_image')}}
+                                            {{ translate('blog_image')}}
                                         </label>
                                         <span class="title-color" id="theme_ratio">( {{translate('ratio')}} 4:1 )</span>
-                                        <p>{{ translate('banner_Image_ratio_is_not_same_for_all_sections_in_website') }}. {{ translate('please_review_the_ratio_before_upload') }}</p>
+                                        <p>{{ translate('blog_Image_ratio_is_not_same_for_all_sections_in_website') }}. {{ translate('please_review_the_ratio_before_upload') }}</p>
                                         <!-- For Theme Fashion - New input Field - Start -->
                                         @if(theme_root_path() == 'theme_fashion')
                                         <div class="form-group mt-4 input_field_for_main_banner">
                                             <label for="title" class="title-color text-capitalize">{{ translate('Title')}}</label>
-                                            <input type="text" name="title" class="form-control" id="title" placeholder="{{ translate('Enter_banner_title') }}">
+                                            <input type="text" name="title" class="form-control" id="title" placeholder="{{ translate('Enter_blog_title') }}">
                                         </div>
                                         <div class="form-group mb-0 input_field_for_main_banner">
                                             <label for="sub_title" class="title-color text-capitalize">{{ translate('Sub_Title')}}</label>
-                                            <input type="text" name="sub_title" class="form-control" id="sub_title" placeholder="{{ translate('Enter_banner_sub_title') }}">
+                                            <input type="text" name="sub_title" class="form-control" id="sub_title" placeholder="{{ translate('Enter_blog_sub_title') }}">
                                         </div>
                                         @endif
                                         <!-- For Theme Fashion - New input Field - End -->
 
                                     </div>
                                 </div>
+                               
                                 <div class="col-12 d-flex justify-content-end flex-wrap gap-10">
                                     <button class="btn btn-secondary cancel px-4" type="reset">{{ translate('reset')}}</button>
                                     <button id="add" type="submit"
@@ -116,7 +132,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-4 col-lg-6 mb-2 mb-md-0">
                                 <h5 class="mb-0 text-capitalize d-flex gap-2">
-                                    {{ translate('poster_table')}}
+                                    {{ translate('blog_table')}}
                                     <span
                                         class="badge badge-soft-dark radius-50 fz-12">{{ $banners->total() }}</span>
                                 </h5>
@@ -124,7 +140,7 @@
                             <div class="col-md-8 col-lg-6">
                                 <div class="row gy-2 gx-2 align-items-center text-left">
                                     <div class="col-sm-12 col-md-9">
-                                        <form action="{{ url()->current() }}" method="GET">
+                                        {{-- <form action="{{ url()->current() }}" method="GET">
                                             <div class="row gy-2 gx-2 align-items-center text-left">
                                                 <div class="col-sm-12 col-md-9">
                                                     <select class="form-control __form-control" name="search" id="date_type">
@@ -157,11 +173,11 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form> --}}
                                     </div>
                                     <div class="col-sm-12 col-md-3">
                                         <div id="banner-btn">
-                                            <button id="main-banner-add" class="btn btn--primary text-nowrap text-capitalize">
+                                            <button id="main-banner-add" class="btn btn--primary text-nowrap text-capitalize" style="position: relative;left:-35px;">
                                                 <i class="tio-add"></i>
                                                 {{ translate('add_banner')}}
                                             </button>
@@ -182,7 +198,7 @@
                                 <th>{{translate('image')}}</th>
                                 <th>{{translate('title')}}</th>
                                 <th>{{translate('added_by')}}</th>
-                                {{-- <th>{{translate('published')}}</th> --}}
+                                <th>{{translate('blog_category')}}</th>
                                 <th class="text-center">{{translate('action')}}</th>
                             </tr>
                             </thead>
@@ -197,6 +213,7 @@
                                     </td>
                                     <td>{{translate(str_replace('_',' ',$banner->title))}}</td>
                                     <td>{{translate(str_replace('_',' ',$banner->added_by))}}</td>
+                                    <td>{{translate(str_replace('_',' ',$banner->blog_category))}}</td>
                                     {{-- <td>
                                          <form action="{{route('admin.poster.status')}}" method="post" id="banner_status{{$banner['id']}}_form" class="banner_status_form">
                                             @csrf
@@ -402,4 +419,20 @@
         });
     </script>
     <!-- New Added JS - End -->
+    <!-- Include CKEditor script -->
+<!-- Include CKEditor 5 (latest version) -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+<!-- Initialize CKEditor 5 -->
+<script>
+    ClassicEditor
+        .create(document.querySelector('.editor-textarea'))
+        .catch(error => {
+            console.error(error);
+        });
+
+</script>
+
+
+
 @endpush
