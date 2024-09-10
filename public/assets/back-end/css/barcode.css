@@ -45,6 +45,8 @@ p.sansserif {
 }
 
 .barcode-a4 .item {
+    background-color: #e9f3ff;
+    color: #1e2022;
     display: flex;
     flex-direction: column;
     gap: 10px;

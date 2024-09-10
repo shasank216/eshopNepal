@@ -19,23 +19,23 @@
             <div class="d-flex flex-column gap-10 fz-14 mt-3">
 
                 <div class="d-flex align-items-center gap-2">
-                    <div class="font-weight-bold text-dark">{{ translate('SKU') }}:</div>
+                    <div class="font-weight-bold">{{ translate('SKU') }}:</div>
                     <div>{{ $product->code }}</div>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <div class="font-weight-bold text-dark">{{ translate('categories') }}: </div>
+                    <div class="font-weight-bold">{{ translate('categories') }}: </div>
                     <div>{{ $product->category->name ?? translate('not_found') }}</div>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <div class="font-weight-bold text-dark">{{ translate('brand') }}:</div>
+                    <div class="font-weight-bold">{{ translate('brand') }}:</div>
                     <div>{{ $product->brand->name ?? translate('not_found') }}</div>
                 </div>
 
                 @if (count($product->tags) > 0)
                     <div class="d-flex align-items-center gap-2 flex-wrap">
-                        <div class="font-weight-bold text-dark">{{ translate('tag') }}:</div>
+                        <div class="font-weight-bold">{{ translate('tag') }}:</div>
                         @foreach ($product->tags as $tag)
                             <div>{{ $tag->tag }},</div>
                         @endforeach
@@ -69,7 +69,7 @@
                     <span class="text-muted">({{ $product->reviews_count }} {{ translate('Customer_review') }})</span>
                 </div>
 
-                <div class="d-flex flex-wrap align-items-center gap-3 mb-2 text-dark">
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-2 ">
                     <h2 class="c1 text-accent price-range-with-discount d-flex gap-2 align-items-center">
                         {!! getPriceRangeWithDiscount(product: $product) !!}
                     </h2>
@@ -95,7 +95,7 @@
                     <div class="position-relative mb-4">
                         @if (count(json_decode($product->colors)) > 0)
                             <div class="d-flex flex-wrap gap-3 align-items-center">
-                                <strong class="text-dark">{{translate('color')}}</strong>
+                                <strong class="">{{translate('color')}}</strong>
 
                                 <div class="color-select d-flex gap-2 flex-wrap" id="option1">
                                     @foreach (json_decode($product->colors) as $key => $color)
@@ -124,7 +124,7 @@
                     @foreach (json_decode($product->choice_options) as $key => $choice)
                         <div class="d-flex gap-3 flex-wrap align-items-center mb-3">
                             <div class="my-2 w-43px">
-                                <strong class="text-dark">{{ ucfirst($choice->title) }}</strong>
+                                <strong class="">{{ ucfirst($choice->title) }}</strong>
                             </div>
                             <div class="d-flex gap-2 flex-wrap">
                                 @foreach ($choice->options as $index => $option)
@@ -141,11 +141,11 @@
 
                     <div class="d-flex flex-wrap gap-4 default-quantity-system">
                         <div class="d-flex gap-2 align-items-center mt-3">
-                            <strong class="text-dark">{{translate('qty')}}:</strong>
+                            <strong class="">{{translate('qty')}}:</strong>
                             <div class="product-quantity d-flex align-items-center">
                                 <div class="d-flex align-items-center">
                                     <span class="product-quantity-group">
-                                        <button type="button" class="btn-number bg-transparent"
+                                        <button type="button" class="btn-number bg-transparent text-white"
                                                 data-type="minus" data-field="quantity"
                                                 disabled="disabled">
                                                 <i class="tio-remove"></i>
@@ -153,7 +153,7 @@
                                         <input type="text" name="quantity"
                                             class="form-control input-number text-center cart-qty-field"
                                             placeholder="1" value="1" min="1" max="100">
-                                        <button type="button" class="btn-number bg-transparent cart-qty-field-plus" data-type="plus"
+                                        <button type="button" class="btn-number bg-transparent cart-qty-field-plus text-white" data-type="plus"
                                                 data-field="quantity">
                                                 <i class="tio-add"></i>
                                         </button>
@@ -163,7 +163,7 @@
                         </div>
 
                         <div class="d-flex flex-column gap-1 mt-3 title-color" id="chosen_price_div">
-                            <div class="product-description-label text-dark font-weight-bold">{{translate('total_Price')}}:</div>
+                            <div class="product-description-label  font-weight-bold">{{translate('total_Price')}}:</div>
                             <div class="product-price c1">
                                 <strong> {{getCurrencySymbol()}}</strong>
                                 <strong id="chosen_price"></strong>
@@ -175,7 +175,7 @@
 
                     <div class="flex-wrap gap-4 in-cart-quantity-system d--none">
                         <div class="d-flex gap-2 align-items-center mt-3">
-                            <strong class="text-dark">{{translate('qty')}}:</strong>
+                            <strong class="">{{translate('qty')}}:</strong>
                             <div class="product-quantity d-flex align-items-center">
                                 <div class="d-flex align-items-center">
                                     <span class="product-quantity-group">
@@ -194,7 +194,7 @@
                         </div>
 
                         <div class="d-flex flex-column gap-1 mt-3 title-color" id="chosen_price_div">
-                            <div class="product-description-label text-dark font-weight-bold">{{translate('total_Price')}}:</div>
+                            <div class="product-description-label  font-weight-bold">{{translate('total_Price')}}:</div>
                             <div class="product-price c1">
                                 <strong> {{getCurrencySymbol()}}</strong>
                                 <strong class="in-cart-chosen_price"></strong>

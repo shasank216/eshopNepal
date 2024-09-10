@@ -3,7 +3,7 @@
     --c1-rgb: 1, 119, 205;
     --c2: #ff6767;
     /* --title-color: #334257; */
-    --title-color: #8c98a4 !important;
+    --title-color: #8c98a4;
     /* --text-color: #5b6777; */
     --text-color: #fff;
     --border-color: rgba(180, 208, 224, 0.5);
@@ -17,6 +17,10 @@ body {
     line-height: 1.4;
     background-color: #f9f9fb;
     -webkit-font-smoothing: antialiased;
+}
+
+.textWhite{
+    color: #e9f3ff;
 }
 
 .h1,
@@ -1200,6 +1204,9 @@ h1 {
 .form-floating {
     position: relative;
 }
+.form-floating label{
+    color: #000;
+}
 
 .form-floating > .form-control:not(:-moz-placeholder-shown) {
     padding-top: 1rem;
@@ -1219,26 +1226,31 @@ h1 {
 .form-floating > .form-control-plaintext::-moz-placeholder,
 .form-floating > .form-control::-moz-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext:-ms-input-placeholder,
 .form-floating > .form-control:-ms-input-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext::-moz-placeholder,
 .form-floating > .form-control::-moz-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext:-ms-input-placeholder,
 .form-floating > .form-control:-ms-input-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext::placeholder,
 .form-floating > .form-control::placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > label,
@@ -1632,7 +1644,7 @@ img {
 
 .pos-product-item_price {
     font-weight: 700;
-    color: var(--c1);
+    /* color: var(--c1); */
 }
 
 .pos-product-item_hover-content {
@@ -1860,7 +1872,7 @@ ol li:not(:last-child) {
 .btn-secondary {
     /* background-color: #f4f5f7; */
     /* border-color: #f4f5f7; */
-    color: var(--title-color);
+    color: #fff;
 }
 
 .btn-secondary:focus,
@@ -6282,8 +6294,8 @@ body *::-webkit-scrollbar-thumb {
 .chat_ib.media-body {
     width: 0;
 }
-.media-body {
-    color: white;
+.media-body span {
+    color: #e9f3ff;
 }
 .chat_people {
     align-items: center;
@@ -6332,4 +6344,16 @@ body *::-webkit-scrollbar-thumb {
 
 .card-title {
     color: #fff;
+}
+
+#printableArea dt{
+    color: #8c98a4 !important;
+}
+
+#myInput{
+    color: #e9f3ff;
+}
+
+#add-customer .input-label{
+    color: #e9f3ff !important;
 }

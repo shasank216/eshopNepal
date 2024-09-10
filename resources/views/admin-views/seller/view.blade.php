@@ -46,7 +46,8 @@
             <div class="card-body">
                 <div class="d-flex flex-wrap gap-3 justify-content-between">
                     <div class="media flex-column flex-sm-row gap-3">
-                        <img class="avatar avatar-170 rounded-0"
+                        <img class="avatar rounded-0"
+                            style="width: 170px"
                              src="{{ getValidImage(path: 'storage/app/public/shop/'.$seller?->shop->image, type: 'backend-basic') }}"
                              alt="{{translate('image')}}">
                         <div class="media-body">
@@ -60,7 +61,7 @@
                                 </div>
                             @endif
                             <div class="d-block">
-                                <h2 class="mb-2 pb-1">{{ $seller->shop? $seller->shop->name : translate("shop_Name")." : ".translate("update_Please") }}</h2>
+                                <h2 class="mb-2 pb-1 textWhite">{{ $seller->shop? $seller->shop->name : translate("shop_Name")." : ".translate("update_Please") }}</h2>
                                 <div class="d-flex gap-3 flex-wrap mb-3 lh-1">
                                     <div class="review-hover position-relative cursor-pointer d-flex gap-2 align-items-center">
                                         <i class="tio-star"></i>
@@ -119,14 +120,14 @@
                                     </div>
                                     <span class="border-left"></span>
                                     <a href="javascript:"
-                                       class="text-dark">{{$seller->total_rating}} {{translate('ratings')}}</a>
+                                       class="textWhite">{{$seller->total_rating}} {{translate('ratings')}}</a>
                                     <span class="border-left"></span>
                                     <a href="{{ $seller['status']!="pending" ? route('admin.sellers.view',['id'=>$seller['id'], 'tab'=>'review']): 'javascript:' }}"
-                                       class="text-dark">{{$seller->rating_count}} {{translate('reviews')}}</a>
+                                       class="textWhite">{{$seller->rating_count}} {{translate('reviews')}}</a>
                                 </div>
                                 @if ( $seller['status']!="pending" && $seller['status']!="suspended" && $seller['status']!="rejected")
                                     <a href="{{route('shopView',['id'=>$seller['id']])}}"
-                                       class="btn btn-outline--primary px-4" target="_blank"><i
+                                       class="btn btn-outline--primary px-4 textWhite" target="_blank"><i
                                                 class="tio-globe"></i> {{translate('view_live')}}
                                         @endif
                                     </a>
@@ -175,12 +176,12 @@
                     <div class="border p-3 w-170">
                         <div class="d-flex flex-column mb-1">
                             <h6 class="font-weight-normal">{{translate('total_products')}} :</h6>
-                            <h3 class="text-primary fs-18">{{$seller->product_count}}</h3>
+                            <h3 class="textWhite fs-18">{{$seller->product_count}}</h3>
                         </div>
 
                         <div class="d-flex flex-column">
                             <h6 class="font-weight-normal">{{translate('total_orders')}} :</h6>
-                            <h3 class="text-primary fs-18">{{$seller->orders_count}}</h3>
+                            <h3 class="textWhite fs-18">{{$seller->orders_count}}</h3>
                         </div>
                     </div>
                     <div class="row gy-3 flex-grow-1 w-100">
@@ -242,7 +243,7 @@
                         </div>
                         @if ($seller['status']!="pending")
                             <div class="col-xxl-6">
-                                <div class="bg-light p-3 border border-primary-light rounded">
+                                <div class="p-3 border border-primary-light rounded">
                                     <h4 class="mb-3 text-capitalize">{{translate('bank_information')}}</h4>
 
                                     <div class="d-flex gap-5">
