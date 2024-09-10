@@ -46,7 +46,7 @@
 @endphp
 <div id="sidebarMain" class="d-none">
     <aside
-        class="bg-white js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered text-start">
+        class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered text-start">
         <div class="navbar-vertical-container">
             <div class="navbar-vertical-footer-offset pb-0">
                 <div class="navbar-brand-wrapper justify-content-between side-logo">
@@ -81,7 +81,7 @@
                             <a class="js-navbar-vertical-aside-menu-link nav-link" title="{{ translate('dashboard') }}"
                                 href="{{ route('admin.dashboard.index') }}">
                                 <i class="tio-home-vs-1-outlined nav-icon"></i>
-                                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                     {{ translate('dashboard') }}
                                 </span>
                             </a>
@@ -92,7 +92,7 @@
                                     href="{{ route('admin.pos.index') }}">
                                     <i class="tio-shopping nav-icon"></i>
                                     <span
-                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('POS') }}</span>
+                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('POS') }}</span>
                                 </a>
                             </li>
                         @endif
@@ -107,7 +107,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:" title="{{ translate('orders') }}">
                                     {{-- <i class="tio-shopping-cart-outlined nav-icon"></i> --}}
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                         {{ translate('order_management') }}
                                     </span>
                                 </a>
@@ -119,7 +119,7 @@
                                         <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                             href="javascript:" title="{{ translate('orders') }}">
                                             <i class="tio-shopping-cart-outlined nav-icon"></i>
-                                            <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                            <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('orders') }}
                                             </span>
                                         </a>
@@ -264,7 +264,7 @@
                                             href="javascript:" title="{{ translate('refund_Requests') }}">
                                             <i class="tio-receipt-outlined nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('refund_Requests') }}
                                             </span>
                                         </a>
@@ -348,7 +348,7 @@
                                     href="javascript:" title="{{ translate('product_management') }}">
                                     {{-- <i class="tio-star nav-icon"></i> --}}
                                     <span
-                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('product_management') }}</span>
+                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('product_management') }}</span>
                                 </a>
                                 <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                     style="display: {{ Request::is('admin/brand*') ? 'block' : 'none' }}">
@@ -359,7 +359,7 @@
                                             href="javascript:" title="{{ translate('category_Setup') }}">
                                             <i class="tio-filter-list nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('category_Setup') }}
                                             </span>
                                         </a>
@@ -400,7 +400,7 @@
                                             href="javascript:" title="{{ translate('brands') }}">
                                             <i class="tio-star nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('brands') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('brands') }}</span>
                                         </a>
                                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                             style="display: {{ Request::is('admin/brand*') ? 'block' : 'none' }}">
@@ -427,7 +427,7 @@
                                             title="{{ translate('product_Attribute_Setup') }}">
                                             <i class="tio-category-outlined nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('product_Attribute_Setup') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('product_Attribute_Setup') }}</span>
                                         </a>
                                     </li>
                                     <li
@@ -436,7 +436,7 @@
                                             href="javascript:" title="{{ translate('in-House_Products') }}">
                                             <i class="tio-shop nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 <span
                                                     class="text-truncate">{{ translate('in-house_Products') }}</span>
                                             </span>
@@ -482,7 +482,7 @@
                                             href="javascript:" title="{{ translate('vendor_Products') }}">
                                             <i class="tio-airdrop nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('vendor_Products') }}
                                             </span>
                                         </a>
@@ -563,7 +563,7 @@
                                     href="javascript:" title="{{ translate('notifications') }}">
                                     {{-- <i class="tio-users-switch nav-icon"></i> --}}
                                     <span
-                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('promotion_management') }}</span>
+                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('promotion_management') }}</span>
                                 </a>
                                 <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                     style="display: {{ Request::is('admin/notification*') || Request::is('admin/push-notification/*') ? 'block' : 'none' }}">
@@ -574,7 +574,7 @@
                                             title="{{ translate('banner_Setup') }}">
                                             <i class="tio-photo-square-outlined nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('banner_Setup') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('banner_Setup') }}</span>
                                         </a>
                                     </li>
 
@@ -584,7 +584,7 @@
                                             href="javascript:" title="{{ translate('offers_&_Deals') }}">
                                             <i class="tio-users-switch nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('offers_&_Deals') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('offers_&_Deals') }}</span>
                                         </a>
                                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                             style="display: {{ Request::is('admin/coupon*') || Request::is('admin/deal*') ? 'block' : 'none' }}">
@@ -595,7 +595,7 @@
                                                     title="{{ translate('coupon') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('coupon') }}</span>
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('coupon') }}</span>
                                                 </a>
                                             </li>
                                             <li
@@ -605,7 +605,7 @@
                                                     title="{{ translate('flash_Deals') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('flash_Deals') }}</span>
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('flash_Deals') }}</span>
                                                 </a>
                                             </li>
                                             <li
@@ -615,7 +615,7 @@
                                                     title="{{ translate('deal_of_the_day') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                         {{ translate('deal_of_the_day') }}
                                                     </span>
                                                 </a>
@@ -627,7 +627,7 @@
                                                     title="{{ translate('featured_Deal') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                         {{ translate('featured_Deal') }}
                                                     </span>
                                                 </a>
@@ -641,7 +641,7 @@
                                             href="javascript:" title="{{ translate('notifications') }}">
                                             <i class="tio-users-switch nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('notifications') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('notifications') }}</span>
                                         </a>
                                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                             style="display: {{ Request::is('admin/notification*') || Request::is('admin/push-notification/*') ? 'block' : 'none' }}">
@@ -654,7 +654,7 @@
                                                         alt="{{ translate('send_notification_svg') }}"
                                                         width="15" class="mr-2">
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate text-capitalize">
                                                         {{ translate('send_notification') }}
                                                     </span>
                                                 </a>
@@ -668,7 +668,7 @@
                                                         alt="{{ translate('push_notification_svg') }}"
                                                         width="15" class="mr-2">
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate text-capitalize">
                                                         {{ translate('push_notifications_setup') }}
                                                     </span>
                                                 </a>
@@ -682,7 +682,7 @@
                                             title="{{ translate('announcement') }}">
                                             <i class="tio-mic-outlined nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('announcement') }}
                                             </span>
                                         </a>
@@ -692,7 +692,7 @@
                                            href="{{route('admin.poster.list')}}" title="{{translate('articles')}}">
                                             <i class="tio-photo-square-outlined nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{translate('articles')}}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{translate('articles')}}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -718,7 +718,7 @@
                                                 title="{{ translate('offers_&_Deals') }}">
                                                 {!! $route['icon'] !!}
                                                 <span
-                                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate($route['name']) }}</span>
+                                                    class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate($route['name']) }}</span>
                                             </a>
 
                                             @if (count($route['route_list']) > 0)
@@ -732,7 +732,7 @@
                                                                 title="{{ translate($sub_route['name']) }}">
                                                                 <span class="tio-circle nav-indicator-icon"></span>
                                                                 <span
-                                                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate($sub_route['name']) }}</span>
+                                                                    class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate($sub_route['name']) }}</span>
                                                             </a>
                                                         </li>
                                                     @endforeach
@@ -756,7 +756,7 @@
                                     href="javascript:" title="{{ translate('help_&_support') }}">
                                     {{-- <i class="tio-users-switch nav-icon"></i> --}}
                                     <span
-                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('help_&_support') }}</span>
+                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('help_&_support') }}</span>
                                 </a>
                                 <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                     style="display: {{ Request::is('admin/notification*') || Request::is('admin/push-notification/*') ? 'block' : 'none' }}">
@@ -766,7 +766,7 @@
                                             href="{{ route('admin.messages.index', ['type' => 'customer']) }}">
                                             <i class="tio-chat nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('inbox') }}
                                             </span>
                                         </a>
@@ -778,7 +778,7 @@
                                             title="{{ translate('messages') }}">
                                             <i class="tio-messages nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 <span class="position-relative">
                                                     {{ translate('messages') }}
                                                     @php($message = \App\Models\Contact::where('seen', 0)->count())
@@ -797,7 +797,7 @@
                                             title="{{ translate('support_Ticket') }}">
                                             <i class="tio-support nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 <span class="position-relative">
                                                     {{ translate('support_Ticket') }}
                                                     @if (\App\Models\SupportTicket::where('status', 'open')->count() > 0)
@@ -827,7 +827,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:" title="{{ translate('reports_&_Analysis') }}">
                                     {{-- <i class="tio-chart-bar-4 nav-icon"></i> --}}
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                         {{ translate('reports_&_Analysis') }}
                                     </span>
                                 </a>
@@ -840,7 +840,7 @@
                                             title="{{ translate('sales_&_Transaction_Report') }}">
                                             <i class="tio-chart-bar-4 nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('sales_&_Transaction_Report') }}
                                             </span>
                                         </a>
@@ -853,7 +853,7 @@
                                                     title="{{ translate('Earning_Reports') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                         {{ translate('Earning_Reports') }}
                                                     </span>
                                                 </a>
@@ -886,7 +886,7 @@
                                                     title="{{ translate('transaction_Report') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                         {{ translate('transaction_Report') }}
                                                     </span>
                                                 </a>
@@ -901,7 +901,7 @@
                                             title="{{ translate('product_Report') }}">
                                             <i class="tio-chart-bar-4 nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 <span class="position-relative">
                                                     {{ translate('product_Report') }}
                                                 </span>
@@ -916,7 +916,7 @@
                                             title="{{ translate('order_Report') }}">
                                             <i class="tio-chart-bar-1 nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('order_Report') }}
                                             </span>
                                         </a>
@@ -940,7 +940,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:" title="{{ translate('user_management') }}">
                                     {{-- <i class="tio-user nav-icon"></i> --}}
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                         {{ translate('user_management') }}
                                     </span>
                                 </a>
@@ -952,7 +952,7 @@
                                             href="javascript:" title="{{ translate('customers') }}">
                                             <i class="tio-wallet nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('customers') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('customers') }}</span>
                                         </a>
                                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                             style="display: {{ Request::is('admin/customer/wallet*') || Request::is('admin/customer/' . Customer::LIST[URI]) || Request::is('admin/customer/' . Customer::VIEW[URI] . '*') || Request::is('admin/reviews*') || Request::is('admin/customer/loyalty/' . Customer::LOYALTY_REPORT[URI]) ? 'block' : 'none' }}">
@@ -970,7 +970,7 @@
                                                     title="{{ translate('customer_Reviews') }}">
                                                     <span class="tio-circle nav-indicator-icon"></span>
                                                     <span
-                                                        class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                        class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                         {{ translate('customer_Reviews') }}
                                                     </span>
                                                 </a>
@@ -1014,7 +1014,7 @@
                                             href="javascript:" title="{{ translate('vendors') }}">
                                             <i class="tio-users-switch nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">{{ translate('vendors') }}</span>
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">{{ translate('vendors') }}</span>
                                         </a>
                                         <ul class="js-navbar-vertical-aside-submenu nav nav-sub"
                                             style="display: {{ Request::is('admin/seller*') ? 'block' : 'none' }}">
@@ -1066,7 +1066,7 @@
                                             href="javascript:" title="{{ translate('delivery_men') }}">
                                             <i class="tio-user nav-icon"></i>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate text-capitalize">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate text-capitalize">
                                                 {{ translate('delivery_men') }}
                                             </span>
                                         </a>
@@ -1127,7 +1127,7 @@
                                                 href="javascript:" title="{{ translate('employees') }}">
                                                 <i class="tio-user nav-icon"></i>
                                                 <span
-                                                    class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                    class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                     {{ translate('employees') }}
                                                 </span>
                                             </a>
@@ -1140,7 +1140,7 @@
                                                         title="{{ translate('employee_Role_Setup') }}">
                                                         <span class="tio-circle nav-indicator-icon"></span>
                                                         <span
-                                                            class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                            class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                             {{ translate('employee_Role_Setup') }}</span>
                                                     </a>
                                                 </li>
@@ -1208,7 +1208,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:" title="{{ translate('business_Setup') }}">
                                     {{-- <i class="tio-pages-outlined nav-icon"></i> --}}
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                         {{ translate('business_Setup') }}
                                     </span>
                                 </a>
@@ -1267,7 +1267,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:" title="{{ translate('system_Setup') }}">
                                     {{-- <i class="tio-pages-outlined nav-icon"></i> --}}
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                         {{ translate('system_Setup') }}
                                     </span>
                                 </a>
@@ -1410,7 +1410,7 @@
                                             title="{{ translate('other_Configurations') }}">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('other_Configurations') }}
                                             </span>
                                         </a>
@@ -1431,7 +1431,7 @@
                                 <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                     href="javascript:" title="{{ translate('Pages_&_Media') }}">
                                     {{-- <i class="tio-pages-outlined nav-icon"></i> --}}
-                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                    <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                         {{ translate('Pages_&_Media') }}
                                     </span>
                                 </a>
@@ -1463,7 +1463,7 @@
                                             title="{{ translate('social_Media_Links') }}">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('social_Media_Links') }}
                                             </span>
                                         </a>
@@ -1476,7 +1476,7 @@
                                             title="{{ translate('gallery') }}">
                                             <span class="tio-circle nav-indicator-icon"></span>
                                             <span
-                                                class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                 {{ translate('gallery') }}
                                             </span>
                                         </a>
@@ -1502,7 +1502,7 @@
                                     <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle"
                                         href="javascript:" title="{{ translate('Pages_&_Media') }}">
                                         {{-- <i class="tio-puzzle nav-icon"></i> --}}
-                                        <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                        <span class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                             {{ translate('addon_Menus') }}
                                         </span>
                                     </a>
@@ -1523,7 +1523,7 @@
                                                         title="{{ translate($route['name']) }}">
                                                         <span class="tio-circle nav-indicator-icon"></span>
                                                         <span
-                                                            class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">
+                                                            class="navbar-vertical-aside-mini-mode-hidden-elements--removeAfterHypens text-truncate">
                                                             {{ translate($route['name']) }}
                                                         </span>
                                                     </a>

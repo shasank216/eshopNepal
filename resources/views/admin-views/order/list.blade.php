@@ -121,7 +121,7 @@
                     <div class="px-3 py-4 light-bg">
                         <div class="row g-2 align-items-center flex-grow-1">
                             <div class="col-md-4">
-                                <h5 class="text-capitalize d-flex gap-1">
+                                <h5 class="text-capitalize d-flex gap-1 text-black">
                                     {{translate('order_list')}}
                                     <span class="badge badge-soft-dark radius-50 fz-12">{{$orders->total()}}</span>
                                 </h5>

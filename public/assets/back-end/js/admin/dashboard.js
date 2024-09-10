@@ -62,7 +62,10 @@ function orderStatisticsApexChart(){
                 offsetX: 0,
                 formatter: function(value) {
                     return  "$"+value
-                }
+                },
+                style: {
+                    colors: '#e9f3ff' // Set Y-axis labels color to white
+                },
             },
         },
         colors: ['#4FA7FF', '#82C662'],
@@ -81,7 +84,7 @@ function orderStatisticsApexChart(){
             yaxis: {
                 lines: {
                     show: true
-                }
+                },
             },
             borderColor: '#CAD2FF',
             strokeDashArray: 5,
@@ -93,6 +96,11 @@ function orderStatisticsApexChart(){
             mode: 'light',
         },
         xaxis: {
+            labels: {
+                style: {
+                    colors: '#e9f3ff' // Set X-axis labels color to white
+                }
+            },
             categories: Object.values(label)
         },
         legend: {
@@ -105,6 +113,9 @@ function orderStatisticsApexChart(){
                 horizontal: 10,
                 vertical: 10
             },
+            labels: {
+                colors: '#e9f3ff', // Set legend labels color to white
+            }
         },
         padding: {
             top: 0,

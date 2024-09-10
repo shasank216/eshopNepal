@@ -37,7 +37,7 @@
                                             <input type="checkbox" name="tables[]" value="{{$table}}"
                                                 class="form-check-input"
                                                 id="business_section_{{$key}}">
-                                            <label class="form-check-label text-dark cursor-pointer user-select-none"
+                                            <label class="form-check-label  cursor-pointer user-select-none"
                                                 style="{{$direction === "rtl" ? 'margin-right: 1.25rem;' : ''}};"
                                                 for="business_section_{{$key}}">{{translate(str_replace('_',' ',Str::limit($table, 20)))}}</label>
                                             <span class="badge-pill badge-secondary mx-2">{{$rows[$key]}}</span>
