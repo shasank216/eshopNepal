@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Poster;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 
 class PosterController extends Controller
@@ -30,7 +31,8 @@ class PosterController extends Controller
             $banners = Poster::orderBy('id', 'desc');
         }
         $banners = $banners->paginate(Helpers::pagination_limit())->appends($query_param);
-        return view('admin-views.poster.view', compact('banners', 'search'));
+        $categories=Category::all();
+        return view('admin-views.poster.view', compact('banners', 'search','categories'));
     }
 
     public function store(Request $request)
@@ -45,6 +47,7 @@ class PosterController extends Controller
         ]);
 
         $banner = new Poster;
+        $banner->blog_category = $request->blog_category;
         $banner->title = $request->title;
         $banner->details = $request->details;
         $banner->added_by = 'Admin';
@@ -68,7 +71,8 @@ class PosterController extends Controller
     public function edit($id)
     {
         $banner = Poster::where('id', $id)->first();
-        return view('admin-views.poster.edit', compact('banner'));
+        $categories=Category::all();
+        return view('admin-views.poster.edit', compact('banner','categories'));
     }
 
     public function update(Request $request, $id)
@@ -80,6 +84,7 @@ class PosterController extends Controller
         ]);
 
         $banner = Poster::find($id);
+        $banner->blog_category = $request->blog_category;
         $banner->title = $request->title;
         $banner->details = $request->details;
         if ($request->file('image')) {

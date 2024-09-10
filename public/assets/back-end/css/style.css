@@ -3,7 +3,9 @@
     --c1-rgb: 1, 119, 205;
     --c2: #ff6767;
     /* --title-color: #334257; */
+
     --title-color: #8c98a4 !important;
+
     /* --text-color: #5b6777; */
     --text-color: #fff;
     --border-color: rgba(180, 208, 224, 0.5);
@@ -13,7 +15,9 @@
 body {
     font-family: var(--font);
     font-family: 'Inter';
+
     color: var(--text-color);
+
     line-height: 1.4;
     background-color: #f9f9fb;
     -webkit-font-smoothing: antialiased;
@@ -6326,6 +6330,7 @@ body *::-webkit-scrollbar-thumb {
     color: #1e2022;
 }
 
+
 .modal-content {
     background: #272d47;
 }
@@ -6333,3 +6338,4 @@ body *::-webkit-scrollbar-thumb {
 .card-title {
     color: #fff;
 }
+
