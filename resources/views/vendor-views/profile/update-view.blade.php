@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <label for="firstNameLabel"
-                                       class="col-sm-3 col-form-label input-label">{{translate('full_Name')}}
+                                       class="col-sm-3 col-form-label">{{translate('full_Name')}}
                                     <i
                                         class="tio-help-outlined text-body ml-1" data-toggle="tooltip"
                                         data-placement="right"
@@ -111,7 +111,7 @@
                             </div>
                             <div class="row">
                                 <label for="phoneLabel"
-                                       class="col-sm-3 col-form-label input-label">{{translate('phone')}} </label>
+                                       class="col-sm-3 col-form-label">{{translate('phone')}} </label>
                                 <div class="col-sm-9 mb-3">
                                     <input class="form-control form-control-user phone-input-with-country-picker"
                                            type="tel" id="exampleInputPhone" value="{{$vendor->phone ?? old('phone')}}"
@@ -123,7 +123,7 @@
                             </div>
                             <div class="row form-group">
                                 <label for="newEmailLabel"
-                                       class="col-sm-3 col-form-label input-label">{{translate('email')}}</label>
+                                       class="col-sm-3 col-form-label">{{translate('email')}}</label>
 
                                 <div class="col-sm-9">
                                     <input type="email" class="form-control" name="email" id="newEmailLabel"
@@ -152,7 +152,7 @@
                             @method('PATCH')
                             @csrf
                             <div class="row form-group">
-                                <label for="newPassword" class="col-sm-3 col-form-label input-label d-flex align-items-center"> {{translate('new_Password')}}
+                                <label for="newPassword" class="col-sm-3 col-form-label d-flex align-items-center"> {{translate('new_Password')}}
                                     <span class="input-label-secondary cursor-pointer" data-toggle="tooltip" data-placement="right" title="" data-original-title="{{translate('The_password_must_be_at_least_8_characters_long_and_contain_at_least_one_uppercase_letter').','.translate('_one_lowercase_letter').','.translate('_one_digit_').','.translate('_one_special_character').','.translate('_and_no_spaces').'.'}}">
                                         <img alt="" width="16" src={{dynamicAsset(path: 'public/assets/back-end/img/info-circle.svg') }} alt="" class="m-1">
                                     </span>
@@ -181,7 +181,7 @@
 
                             </div>
                             <div class="row form-group">
-                                <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label input-label pt-0"> {{translate('confirm_Password')}} </label>
+                                <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label pt-0"> {{translate('confirm_Password')}} </label>
                                 <div class="col-sm-9">
                                     <div class="mb-3">
                                         <div class="input-group input-group-merge">

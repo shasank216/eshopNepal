@@ -1,7 +1,7 @@
 @php($overallRating = getOverallRating($product->reviews))
 
 <div class="product">
-    <div class="carding position-relative">
+    <div class="carding position-relative p-4">
         <img alt="{{ $product->name }}"
             src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $product['thumbnail'], type: 'product') }}">
         @if ($product->discount > 0)
@@ -18,51 +18,21 @@
 
     <div class="text-center">
         <div class="details main-details">
-            <p class="bold-subtitle m-0"> {{ $product->brand->name }}</p>
+            <p class="bold-subtitle"> {{ $product->brand->name }}</p>
 
-            @if ($overallRating[0] != 0)
-                <div class="rating-show justify-content-between">
-                    <span class="d-inline-block font-size-sm text-body">
-                        @for ($inc = 1; $inc <= 5; $inc++)
-                            @if ($inc <= (int) $overallRating[0])
-                                <i class="tio-star text-warning"></i>
-                            @elseif ($overallRating[0] != 0 && $inc <= (int) $overallRating[0] + 1.1 && $overallRating[0] > ((int) $overallRating[0]))
-                                <i class="tio-star-half text-warning"></i>
-                            @else
-                                <i class="tio-star-outlined text-warning"></i>
-                            @endif
-                        @endfor
-                        <label class="badge-style review-text-container"> {{ count($product->reviews) }}
-                            <span class="review-text">reviews</span>
-                        </label>
-                    </span>
-                </div>
-            @endif
-
-            <a href="{{ route('product', $product->slug) }}">
-                <span class="bold-title">
-                    {{ Str::limit($product['name'], 23) }}
-                </span>
-            </a>
-            @if ($product->discount > 0)
-                <p class="product-price m-0">
+            <span class="bold-subtitle">
+                {{ Str::limit($product['name'], 23) }}
+            </span>
+            <p class="m-0" style="color: red; font-weight: 600; font-size: 20px;">
+                @if ($product->discount > 0)
+                    {{ webCurrencyConverter(
+                        amount: $product->unit_price - getProductDiscount(product: $product, price: $product->unit_price),
+                    ) }}
+                @endif
+                <del style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">
                     {{ webCurrencyConverter(amount: $product->unit_price) }}
-                    <del class="product-discount-price">
-                        {{ webCurrencyConverter(
-                            amount: $product->unit_price - getProductDiscount(product: $product, price: $product->unit_price),
-                        ) }}
-                    </del>
-                </p>
-            @else
-                <p class="product-without-discount m-0">
-                    {{ webCurrencyConverter(amount: $product->unit_price) }}
-                    {{-- <del style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">
-                        {{ webCurrencyConverter(
-                            amount: $product->unit_price - getProductDiscount(product: $product, price: $product->unit_price),
-                        ) }}
-                    </del> --}}
-                </p>
-            @endif
+                </del>
+            </p>
         </div>
     </div>
 
@@ -108,51 +78,20 @@
                 <div class="details">
                     <p class="bold-subtitle"> {{ $product->brand->name }}</p>
 
-                    @if ($overallRating[0] != 0)
-                        <div class="rating-show justify-content-between">
-                            <span class="d-inline-block font-size-sm text-body">
-                                @for ($inc = 1; $inc <= 5; $inc++)
-                                    @if ($inc <= (int) $overallRating[0])
-                                        <i class="tio-star text-warning"></i>
-                                    @elseif ($overallRating[0] != 0 && $inc <= (int) $overallRating[0] + 1.1 && $overallRating[0] > ((int) $overallRating[0]))
-                                        <i class="tio-star-half text-warning"></i>
-                                    @else
-                                        <i class="tio-star-outlined text-warning"></i>
-                                    @endif
-                                @endfor
-                                <label class="badge-style review-text-container"> {{ count($product->reviews) }}
-                                    <span class="review-text">reviews</span>
-                                </label>
-                            </span>
-                        </div>
-                    @endif
-                    
-                    <a href="{{ route('product', $product->slug) }}">
-                        <span class="bold-title">{{ Str::limit($product['name'], 23) }}</span>
-                    </a>
-
-                    @if ($product->discount > 0)
-                        <p class="product-price m-0">
+                    <span class="bold-subtitle">{{ Str::limit($product['name'], 23) }}</span>
+                    <p style="color: red; font-weight: 600; font-size: 20px;">
+                        @if ($product->discount > 0)
+                            {{ webCurrencyConverter(
+                                amount: $product->unit_price - getProductDiscount(product: $product, price: $product->unit_price),
+                            ) }}
+                        @endif
+                        <del style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">
                             {{ webCurrencyConverter(amount: $product->unit_price) }}
-                            <del class="product-discount-price">
-                                {{ webCurrencyConverter(
-                                    amount: $product->unit_price - getProductDiscount(product: $product, price: $product->unit_price),
-                                ) }}
-                            </del>
-                        </p>
-                    @else
-                        <p class="product-without-discount m-0">
-                            {{ webCurrencyConverter(amount: $product->unit_price) }}
-                            {{-- <del style="margin-left: 10px; color: #000;  font-weight: 500; font-size: 16px;">
-                                {{ webCurrencyConverter(
-                                    amount: $product->unit_price - getProductDiscount(product: $product, price: $product->unit_price),
-                                ) }}
-                            </del> --}}
-                        </p>
-                    @endif
+                        </del>
+                    </p>
                 </div>
 
-                {{-- <div class="product-tags">
+                <div class="product-tags">
                     @foreach ($product_tags as $product_tag)
                         <div class="product">
                             <div class="product-tags">
@@ -162,27 +101,21 @@
                             </div>
                         </div>
                     @endforeach
-                </div> --}}
-
-                <div class="product-tags">
-                    @foreach ($product_tags as $product_tag)
-                        <div class="product">
-                            <div class="product-tags">
-                                @foreach ($product_tag->tags as $tag)
-                                    @if(!empty(trim($tag->tag)))
-                                        <span class="tag">{{ $tag->tag }}</span>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
                 </div>
-                
 
                 <div class="product-colors d-flex justify-content-center">
+                    {{-- <span class="color-box" style="background-color: #ccc;"></span>
+                    <span class="color-box" style="background-color: #a3a3a3;"></span>
+                    <span class="color-box" style="background-color: #ff0000;"></span>
+                    <span class="color-box" style="background-color: #ffcc00;"></span>
+                    <span class="color-box" style="background-color: #f5a9bc;"></span> --}}
 
                     @foreach (json_decode($product->colors) as $key => $color)
                         <li style="list-style-type: none;">
+                            {{-- <input type="radio"
+                            id="{{ $product->id }}-color-{{ str_replace('#', '', $color) }}"
+                            name="color" value="{{ $color }}"
+                            @if ($key == 0) checked @endif> --}}
                             <label style="background: {{ $color }};"
                                 class="color-box"
                                 for="{{ $product->id }}-color-{{ str_replace('#', '', $color) }}"
@@ -195,7 +128,7 @@
                 <form id="add-to-cart-form" class="mb-2">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">
-                    <div class="d-none">
+                    {{-- <div class="d-flex justify-content-center align-items-center">
                         <div>
                             <div
                                 class="d-flex justify-content-center align-items-center quantity-box border rounded border-base web-text-primary">
@@ -205,7 +138,7 @@
                                         -
                                     </button>
                                 </span>
-                                <input type="hidden" name="quantity"
+                                <input type="text" name="quantity"
                                     class="form-control input-number text-center cart-qty-field __inline-29 border-0 "
                                     placeholder="{{ translate('1') }}" value="{{ $product->minimum_order_qty ?? 1 }}"
                                     data-producttype="{{ $product->product_type }}"
@@ -220,11 +153,11 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <input type="hidden" class="product-generated-variation-code" name="product_variation_code">
                     <input type="hidden" value="" class="in_cart_key form-control w-50" name="key">
 
-                    <div class="__btn-grp d-none d-sm-flex">
+                    <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
                         @if (
                             ($product->added_by == 'seller' &&
                                 ($sellerTemporaryClose ||
@@ -242,11 +175,10 @@
                             </button>
                         @else
                             <button
-                                class="btn add-to-cart product-card-add-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                class="btn add-to-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
                                 type="button" data-update-text="{{ translate('update_cart') }}"
                                 data-add-text="{{ translate('add_to_cart') }}">
-                                <i class="navbar-tool-icon czi-cart text-white me-2"></i>
-                                <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
+                                <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>
                         @endif
 

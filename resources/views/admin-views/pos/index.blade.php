@@ -10,7 +10,7 @@
             <div class="col-lg-7 mb-4 mb-lg-0">
                 <div class="card">
 
-                    <h5 class="p-3 m-0 bg-light">
+                    <h5 class="p-3 m-0 bg-light  text-black">
                         {{ translate('product_Section') }}
                     </h5>
 
@@ -68,10 +68,10 @@
 
             <div class="col-lg-5 mb-5">
                 <div class="card billing-section-wrap">
-                    <h5 class="p-3 m-0 bg-light">{{ translate('billing_Section') }}</h5>
+                    <h5 class="p-3 m-0 bg-light  text-black">{{ translate('billing_Section') }}</h5>
                     <div class="card-body">
                         <div class="d-flex justify-content-end mb-3">
-                            <button type="button" class="btn btn-outline--primary d-flex align-items-center gap-2 action-view-all-hold-orders"
+                            <button type="button" class="btn btn-outline--primary d-flex align-items-center gap-2 action-view-all-hold-orders text-white"
                             data-toggle="tooltip" data-placement="top"
                                     title="{{translate('please_resume_the_order_from_here')}}">
                                 {{ translate('view_All_Hold_Orders') }}

@@ -34,12 +34,11 @@
             <div class="container text-center __pb-13px px-0 pb-0">
 
                 <div class="row mt-3">
-                    <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
+                    <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start px-5">
                         <p class="m-0 footer-brand_desc text-def">
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
                             tincidunt ut laoreet dolore magna aliquam erat volutpat.
                         </p>
-
                         <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction footer-social_media">
                             @if ($web_config['social_media'])
                                 @foreach ($web_config['social_media'] as $item)
@@ -82,6 +81,59 @@
                             @endif
                         </div>
                     </div>
+                    
+                    {{-- <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
+                        <h6 class="text-uppercase font-semi-bold footer-header text-def footer-head">
+                            Shortcut Links
+                        </h6>
+                        <ul class="widget-list __pb-10px">
+                            <li class="widget-list-item">
+                                <a class="widget-list-link" href="{{ url('/') }}">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="widget-list-item">
+                                <a class="widget-list-link"
+                                    href="{{ route('products') }}">
+                                    Shop
+                                </a>
+                            </li>
+                            <li class="widget-list-item">
+                                @if ($web_config['guest_checkout_status'] || auth('customer')->check())
+                                    <a class="widget-list-link"
+                                        href="{{ route('shop-cart') }}">
+                                        Cart
+                                    </a>
+                                @else
+                                    <a class="widget-list-link"
+                                        href="{{ route('customer.auth.login') }}">
+                                        Cart
+                                    </a>
+                                @endif
+                            </li>
+                            <li class="widget-list-item">
+                                <a class="widget-list-link"
+                                    href="#">
+                                    Blogs
+                                </a>
+                            </li>
+                            <li class="widget-list-item">
+                                @if (auth('customer')->check())
+                                    <a class="widget-list-link"
+                                        href="{{route('user-account')}}">
+                                        My Account
+                                    </a>
+                                @else
+                                    <a class="widget-list-link"
+                                        href="{{ route('customer.auth.login') }}">
+                                        Sign in
+                                    </a>
+                                @endif
+                            </li>
+
+                        </ul>
+                    </div> --}}
+
                     <div class="col-lg-9 col-md-7">
                         <div class="row footer-company-content_container">
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
@@ -266,6 +318,7 @@
                                             </a>
                                         </li>
                                     </ul>
+
                             </div>
                             {{-- <div class="col-sm-5 footer-padding-bottom offset-max-sm--1 pb-3 pb-sm-0">
                                 <div class="mb-2">
@@ -286,6 +339,54 @@
                             </div> --}}
                         </div>
                     </div>
+
+                    
+                <ul class="widget-list widget-list-bottom-footer  __pb-10px">
+                    <li class="widget-list-item">
+                        <a class="widget-list-link" href="{{ url('/') }}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="widget-list-item">
+                        <a class="widget-list-link"
+                            href="{{ route('products') }}">
+                            Shop
+                        </a>
+                    </li>
+                    <li class="widget-list-item">
+                        @if ($web_config['guest_checkout_status'] || auth('customer')->check())
+                            <a class="widget-list-link"
+                                href="{{ route('shop-cart') }}">
+                                Cart
+                            </a>
+                        @else
+                            <a class="widget-list-link"
+                                href="{{ route('customer.auth.login') }}">
+                                Cart
+                            </a>
+                        @endif
+                    </li>
+                    <li class="widget-list-item">
+                        <a class="widget-list-link"
+                            href="#">
+                            Blogs
+                        </a>
+                    </li>
+                    <li class="widget-list-item">
+                        @if (auth('customer')->check())
+                            <a class="widget-list-link"
+                                href="{{route('user-account')}}">
+                                My Account
+                            </a>
+                        @else
+                            <a class="widget-list-link"
+                                href="{{ route('customer.auth.login') }}">
+                                Sign in
+                            </a>
+                        @endif
+                    </li>
+
+                </ul>
                     
                     <div class="hr"></div>
 

@@ -37,7 +37,7 @@
                     </button>
                     <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
                         <ul id="navbarSettings"
-                            class="js-sticky-block js-scrollspy navbar-nav navbar-nav-lg nav-tabs card card-navbar-nav">
+                            class="js-sticky-block js-scrollspy navbar-nav navbar-nav-lg nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link active" href="javascript:" id="general-section">
                                     <i class="tio-user-outlined nav-icon"></i>{{translate('basic_Information')}}
@@ -74,11 +74,11 @@
                     </div>
                     <div class="card mb-3 mb-lg-5">
                         <div class="card-header">
-                            <h2 class="card-title h4 text-capitalize">{{translate('basic_information')}}</h2>
+                            <h2 class=" h4 text-capitalize">{{translate('basic_information')}}</h2>
                         </div>
                         <div class="card-body">
                             <div class="row form-group">
-                                <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">
+                                <label for="firstNameLabel" class="col-sm-3 col-form-label">
                                     {{translate('full_name')}}
                                     <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip"
                                          data-placement="right"
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="phoneLabel" class="col-sm-3 col-form-label input-label">{{translate('phone')}} <span
+                                <label for="phoneLabel" class="col-sm-3 col-form-label">{{translate('phone')}} <span
                                         class="input-label-secondary">({{translate('optional')}})</span></label>
                                     <div class="col-sm-9 mb-3">
                                         <input class="form-control form-control-user phone-input-with-country-picker"
@@ -108,7 +108,7 @@
                                     </div>
                             </div>
                             <div class="row form-group">
-                                <label for="newEmailLabel" class="col-sm-3 col-form-label input-label">{{translate('email')}}</label>
+                                <label for="newEmailLabel" class="col-sm-3 col-form-label">{{translate('email')}}</label>
                                 <div class="col-sm-9">
                                     <input type="email" class="form-control" name="email" id="newEmailLabel"
                                            value="{{$admin->email}}"
@@ -127,13 +127,13 @@
                 </form>
                 <div id="password-div" class="card mb-3 mb-lg-5">
                     <div class="card-header">
-                        <h4 class="card-title">{{translate('change_your_password')}}</h4>
+                        <h4 class="">{{translate('change_your_password')}}</h4>
                     </div>
                     <div class="card-body">
                         <form id="change-password-form" action="{{route('admin.profile.update',[$admin->id])}}" method="post" enctype="multipart/form-data">
                         @csrf @method('patch')
                             <div class="row form-group">
-                                <label for="newPassword" class="col-sm-3 col-form-label input-label d-flex align-items-center">
+                                <label for="newPassword" class="col-sm-3 col-form-label d-flex align-items-center">
                                     {{translate('new_password')}}
                                     <span class="input-label-secondary cursor-pointer" data-toggle="tooltip" data-placement="right" title="" data-original-title="{{translate('The_password_must_be_at_least_8_characters_long_and_contain_at_least_one_uppercase_letter').','.translate('_one_lowercase_letter').','.translate('_one_digit_').','.translate('_one_special_character').','.translate('_and_no_spaces').'.'}}">
                                         <img alt="" width="16" src={{dynamicAsset(path: 'public/assets/back-end/img/info-circle.svg') }} alt="" class="m-1">
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label input-label"> {{translate('confirm_password')}} </label>
+                                <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label"> {{translate('confirm_password')}} </label>
                                 <div class="col-sm-9">
                                     <div class="mb-3">
                                         <div class="input-group input-group-merge">

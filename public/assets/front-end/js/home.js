@@ -239,7 +239,7 @@ $(document).ready(function () {
         loop: true,
         autoplay: true,
         margin: 20,
-        nav: true,
+        nav: false,
         navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
         dots: false,
         autoplayHoverPause: true,

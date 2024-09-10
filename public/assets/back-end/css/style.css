@@ -3,7 +3,9 @@
     --c1-rgb: 1, 119, 205;
     --c2: #ff6767;
     /* --title-color: #334257; */
-    --title-color: #fff;
+
+    --title-color: #8c98a4 !important;
+
     /* --text-color: #5b6777; */
     --text-color: #fff;
     --border-color: rgba(180, 208, 224, 0.5);
@@ -13,7 +15,9 @@
 body {
     font-family: var(--font);
     font-family: 'Inter';
-    /* color: var(--text-color); */
+
+    color: var(--text-color);
+
     line-height: 1.4;
     background-color: #f9f9fb;
     -webkit-font-smoothing: antialiased;
@@ -87,6 +91,10 @@ a:hover {
     object-position: left center;
 }
 
+#navbarVerticalNavMenu .nav-link{
+    color: white;
+}
+
 .navbar-brand-wrapper {
     overflow: hidden;
 }
@@ -101,6 +109,14 @@ a:hover {
 
 .navbar-vertical-aside-mini-mode .navbar-brand {
     display: none;
+}
+
+.navbar-vertical-aside-mini-mode  aside{
+    background-color: #202741;
+}
+
+.navbar-vertical-aside-mini-mode  aside .nav-link-toggle::before{
+    opacity: 0 !important;
 }
 
 .navbar-vertical-content {
@@ -3109,6 +3125,10 @@ select {
 .__inline-45 .modal-footer {
     border-top: none;
 }
+.footer {
+    margin: 0 !important;
+    position: relative;
+}
 
 .__inline-45 a {
     color: #030303;
@@ -5727,8 +5747,9 @@ aside .navbar-vertical-content {
     align-items: center;
 }
 
+
 .alert-danger {
-    color: #111;
+    color: #fff;
     background-color: rgba(237, 76, 120, 0.1);
     border-color: rgba(237, 76, 120, 0.3);
 }
@@ -5760,6 +5781,10 @@ aside .navbar-vertical-content {
 .cart-qty-input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+button[type="reset"]{
+    color: white;
 }
 
 .cart-qty-input[type="number"] {
@@ -5857,7 +5882,7 @@ body *::-webkit-scrollbar-thumb {
     background: #e9f3ff;
 }
 .content .badge-soft-danger {
-    color: #f55;
+    color: #000;
     border-radius: 5px;
     border: 1px solid rgba(255, 85, 85, 0.2);
     background: #fff2f2;
@@ -6304,3 +6329,13 @@ body *::-webkit-scrollbar-thumb {
 .select2-results__option{
     color: #1e2022;
 }
+
+
+.modal-content {
+    background: #272d47;
+}
+
+.card-title {
+    color: #fff;
+}
+

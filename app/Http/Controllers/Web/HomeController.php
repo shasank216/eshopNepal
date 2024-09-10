@@ -159,7 +159,7 @@ class HomeController extends Controller
         
 
 
-         $blogs = Poster::latest()->take(10)->get();
+         $blogs = Poster::latest()->take(4)->get();
         //  dd( $blogs);
         return view(VIEW_FILE_NAMES['home'],
             compact(
@@ -1128,6 +1128,16 @@ class HomeController extends Controller
         );
        
         // return view(VIEW_FILE_NAMES['blogdetails'], compact('id'));
+    }
+    public function bloglist()
+    {
+        $blogs = Poster::paginate(8);
+        $categories = Category::all();
+
+        return view('web-views.bloglist', compact('blogs','categories'));
+
+
+
     }
 
 
