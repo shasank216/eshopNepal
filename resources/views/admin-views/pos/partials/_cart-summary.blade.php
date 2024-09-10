@@ -20,7 +20,7 @@
                         <span class="key custom-flex-basis">{{ translate('contact') }}</span>
                         <span>:</span>
                         <a href="tel:{{ $currentCustomerData?->phone }}"
-                            class="value text-dark">{{ $currentCustomerData?->phone }}</a>
+                            class="value text-white">{{ $currentCustomerData?->phone }}</a>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             </button>
         </div>
     </div>
-    <a class="btn btn-secondary rounded text-nowrap action-clear-cart">
+    <a class="btn btn-secondary rounded text-nowrap action-clear-cart text-white">
         {{ translate('clear_Cart')}}
     </a>
     <a class="btn btn--primary rounded text-nowrap action-new-order">
