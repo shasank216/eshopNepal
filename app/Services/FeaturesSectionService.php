@@ -56,6 +56,7 @@ class FeaturesSectionService
                     'title' => $request->title ?? '',
                     'image' => $image === '' ? $data['image'] : $image,
                     'status' => $request->status ?? 0,
+                    'description' => $request->description ?? 'null',
                 ];
             } else {
                 $item_data = [
@@ -63,6 +64,7 @@ class FeaturesSectionService
                     'title' => $data['title'],
                     'image' => $data['image'] ,
                     'status' => $data['status'] ??0,
+                    'description' => $data['description'] ?? 'null',
                 ];
             }
             $item[] = $item_data;
