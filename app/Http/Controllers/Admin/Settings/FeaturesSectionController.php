@@ -16,9 +16,7 @@ class FeaturesSectionController extends BaseController
 
     public function __construct(
         private readonly BusinessSettingRepositoryInterface $businessSettingRepo,
-    )
-    {
-    }
+    ) {}
 
     /**
      * @param Request|null $request
@@ -33,10 +31,10 @@ class FeaturesSectionController extends BaseController
 
     public function getView(): View
     {
-        $featuresSectionTop = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'features_section_top']);
-        $featuresSectionMiddle = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'features_section_middle']);
-        $featuresSectionBottom = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'features_section_bottom']);
-        return view(FeaturesSection::VIEW[VIEW], compact('featuresSectionTop','featuresSectionMiddle','featuresSectionBottom'));
+        $featuresSectionTop = $this->businessSettingRepo->getFirstWhere(params: ['type' => 'features_section_top']);
+        $featuresSectionMiddle = $this->businessSettingRepo->getFirstWhere(params: ['type' => 'features_section_middle']);
+        $featuresSectionBottom = $this->businessSettingRepo->getFirstWhere(params: ['type' => 'features_section_bottom']);
+        return view(FeaturesSection::VIEW[VIEW], compact('featuresSectionTop', 'featuresSectionMiddle', 'featuresSectionBottom'));
     }
 
     public function update(Request $request, FeaturesSectionService $featuresSectionService): RedirectResponse
@@ -60,34 +58,75 @@ class FeaturesSectionController extends BaseController
         return back();
     }
 
+    /*public function update(Request $request, FeaturesSectionService $featuresSectionService): RedirectResponse
+    {
+        // Update the top section
+        $this->businessSettingRepo->updateOrInsert(
+            'features_section_top',
+            json_encode($request['features_section_top']),
+            $request['description'] ?? null  // Pass description here
+        );
+
+        // Fetch the existing data for the bottom section
+        $featuresBottomSection = $this->businessSettingRepo->getFirstWhere(['type' => 'features_section_bottom']);
+
+        // Process and update the middle section
+        $section_middle = [];
+        if ($request['features_section_middle']) {
+            foreach ($request['features_section_middle']['title'] as $key => $value) {
+                $section_middle[] = [
+                    'title' => $request['features_section_middle']['title'][$key] ?? '',
+                    'subtitle' => $request['features_section_middle']['subtitle'][$key] ?? '',
+                ];
+            }
+        }
+        $this->businessSettingRepo->updateOrInsert(
+            'features_section_middle',
+            json_encode($section_middle),
+            $request['description'] ?? null  // Pass description here
+        );
+
+        // Process and update the bottom section
+        if ($request['features_section_bottom']) {
+            $section_bottom = $featuresSectionService->getBottomSectionData($request, $featuresBottomSection);
+            $this->businessSettingRepo->updateOrInsert(
+                'features_section_bottom',
+                json_encode($section_bottom),
+                $request['description'] ?? null  // Pass description here
+            );
+        }
+
+        return back();
+    }*/
+
+
+
     public function delete(Request $request, FeaturesSectionService $featuresSectionService): JsonResponse
     {
-        $featuresData = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'features_section_bottom']);
-        if($featuresData){
+        $featuresData = $this->businessSettingRepo->getFirstWhere(params: ['type' => 'features_section_bottom']);
+        if ($featuresData) {
             $newArray = $featuresSectionService->getDeleteData(request: $request, data: $featuresData);
             $this->businessSettingRepo->updateOrInsert(type: 'features_section_bottom', value: json_encode($newArray));
         }
-        return response()->json(['status'=>'success']);
+        return response()->json(['status' => 'success']);
     }
 
     public function getCompanyReliabilityView(): View
     {
-     
-        $companyReliabilityData = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'company_reliability']);
-       
+
+        $companyReliabilityData = $this->businessSettingRepo->getFirstWhere(params: ['type' => 'company_reliability']);
+
         return view(FeaturesSection::COMPANY_RELIABILITY[VIEW], compact('companyReliabilityData'));
     }
 
     public function updateCompanyReliability(Request $request, FeaturesSectionService $featuresSectionService): RedirectResponse
     {
-        dd($request);
-       
-        $data = $this->businessSettingRepo->getFirstWhere(params: ['type'=>'company_reliability']);
+        // dd($request->all());
+
+        $data = $this->businessSettingRepo->getFirstWhere(params: ['type' => 'company_reliability']);
         $item = $featuresSectionService->getReliabilityUpdateData(request: $request, data: $data);
-        dd($item);
+        
         $this->businessSettingRepo->updateOrInsert(type: 'company_reliability', value: json_encode($item));
         return back();
     }
-
-
 }

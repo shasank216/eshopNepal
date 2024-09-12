@@ -553,8 +553,7 @@
                                                                                         <span
                                                                                             class="title">{{ translate($value['title']) }}</span>
                                                                                         <span class="desc text-center">
-                                                                                            Free shipping on all order over
-                                                                                            $250
+                                                                                            {{ translate($value['description']) }}
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
