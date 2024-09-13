@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\AdminProductData;
 
 /*
 |--------------------------------------------------------------------------
@@ -269,4 +270,7 @@ Route::group(['namespace' => 'RestAPI\v1', 'prefix' => 'v1', 'middleware' => ['a
 
     Route::post('contact-us', 'GeneralController@contact_store');
     Route::put('customer/language-change', 'CustomerController@language_change')->middleware('auth:api');
+     // by vivek start
+     Route::get('getAdminProductData',[AdminProductData::class,'getAdminProductData']);
+     // by vivek end 
 });

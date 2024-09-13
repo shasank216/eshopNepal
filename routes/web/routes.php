@@ -227,6 +227,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
 Route::group(['prefix' => 'cart', 'as' => 'cart.', 'namespace' => 'Web'], function () {
     Route::post('variant_price', 'CartController@variant_price')->name('variant_price');
     Route::post('add', 'CartController@addToCart')->name('add');
+   
     Route::post('update-variation', 'CartController@update_variation')->name('update-variation');//theme fashion
     Route::post('remove', 'CartController@removeFromCart')->name('remove');
     Route::get('remove-all', 'CartController@remove_all_cart')->name('remove-all');//theme fashion
