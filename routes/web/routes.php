@@ -114,6 +114,8 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('/filter-ratings', 'ProductListController@filterRatings')->name('filter.ratings');
     Route::get('/filter-colorProduct', 'ProductListController@filtercolorProduct')->name('filter.ColorWise');
    
+    // compare product
+    Route::get('/compare/product', 'ProductListController@compare_product_list')->name('compare.product');
 
     // blogs Details
     Route::get('/blogs-details/{id}', 'HomeController@blogsdetailsView')->name('blogDetailsView');
