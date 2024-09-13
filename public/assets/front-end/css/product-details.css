@@ -401,7 +401,7 @@ figure {
 }
 
 .product-title {
-    font-size: 26px !important;
+    font-size: 24px !important;
     font-weight: 600 !important;
     line-height: 36px;
     text-transform: capitalize;
@@ -415,14 +415,14 @@ figure {
 }
 
 span.discounted_unit_price.fs-24.font-bold {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 600;
     line-height: 36px;
     color: #1F3C74;
 }
 
 del.total_unit_price.align-middle.text-muted.fs-18.font-semibold {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.005em;
@@ -430,7 +430,7 @@ del.total_unit_price.align-middle.text-muted.fs-18.font-semibold {
 }
 
 .product-description-label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.005em;
@@ -499,7 +499,7 @@ label.__text-12px {
 
 .quantity {
     text-transform: lowercase;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -518,7 +518,7 @@ button.btn.btn--primary.element-center.btn-gap-right.action-add-to-cart-form {
 }
 
 .share-text {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.005em;
@@ -554,6 +554,7 @@ button.btn.btn--primary.element-center.btn-gap-right.action-add-to-cart-form {
 a.nav-link.__inline-27 {
     color: #727272 !important;
     font-size: 20px;
+    font-size: 16px;
     letter-spacing: 0.0015em;
     font-weight: 500;
     line-height: 26px;

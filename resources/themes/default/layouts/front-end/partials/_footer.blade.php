@@ -298,14 +298,14 @@
                                     <ul class="widget-list __pb-10px">
                                         <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center">
-                                                <i class="fa fa-map-marker me-2 mt-2 mb-2 f-32"></i>
+                                                <i class="fa fa-map-marker me-2 mt-2 mb-2 fa-lg"></i>
                                                 {{ getWebConfig(name: 'shop_address') }}
                                             </a>
                                         </li>
 
                                         <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'tel:' . $web_config['phone']->value }}">
-                                                <i class="fa fa-phone  me-2 mt-2 mb-2 f-32"></i>
+                                                <i class="fa fa-phone  me-2 mt-2 mb-2 fa-lg"></i>
                                                 {{ getWebConfig(name: 'company_phone') }}
                                             </a>
                                         </li>
@@ -313,7 +313,7 @@
                                         <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'mailto:' . getWebConfig(name: 'company_email') }}"
                                                 style="text-transform: none;">
-                                                <i class="fa fa-envelope  me-2 mt-2 mb-2 f-32"></i>
+                                                <i class="fa fa-envelope  me-2 mt-2 mb-2 fa-lg"></i>
                                                 {{ getWebConfig(name: 'company_email') }}
                                             </a>
                                         </li>
