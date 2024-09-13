@@ -1754,7 +1754,7 @@ a {
     font-weight: 600;
     margin-top: 0px;
     margin-bottom: 7px !important;
-    font-size: 17px;
+    font-size: 16px;
     color: #030303;
 }
 
@@ -2130,7 +2130,7 @@ a {
     border-radius: 50%;
     color: #4884ea;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 16px;
     height: 33px;
     position: absolute;
     right: 0;
@@ -3713,7 +3713,7 @@ a {
 }
 
 .__inline-53 .amount {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 @media (max-width: 600px) {
@@ -4415,7 +4415,7 @@ a {
 }
 
 .__inline-64 .amount {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .__inline-65 .page-item.active>.page-link {
@@ -4710,7 +4710,7 @@ a {
 }
 
 .__text-17px {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .__vertical-middle {
@@ -9155,9 +9155,10 @@ input.form-control.fz-30 {
 }
 
 .signup h6 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: white;
+    margin: 0;
 }
 
 .signup img {
@@ -9217,7 +9218,7 @@ input.form-control.fz-30 {
 .footer-brand_desc {
     font-size: 14px;
     font-weight: 500;
-    line-height: 28px;
+    line-height: 22px;
     letter-spacing: 0.005em;
 }
 
@@ -9231,7 +9232,7 @@ input.form-control.fz-30 {
 }
 
 .widget-list-link {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.005em;
     color: #5C5C5C;
@@ -9243,15 +9244,16 @@ input.form-control.fz-30 {
 }
 
 .widget-list, .footer-offer {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
 
 .footer-offer {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.005em;
     width: 75%;
+    margin-top: 1rem !important;
 }
 
 .f-32 {
@@ -9283,14 +9285,15 @@ input.form-control.fz-30 {
     background: #fff;
     padding: 8px 12px 8px 12px;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.005em;
+    color: #303560;
 }
 
 .foot-bottom-content {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.005em;
@@ -9305,18 +9308,18 @@ input.form-control.fz-30 {
 
 .footer-bottom-content {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin: 1rem 0;
 }
 
 .foot-bottom-payment img {
-    width: 54px;
-    height: 30px;
+    width: 45px;
+    height: 25px;
     border-radius: 5px;
 }
 
 .foot-bottom-copyright {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     line-height: 20px;
     letter-spacing: 0.0125em;
@@ -9443,7 +9446,7 @@ input.form-control.fz-30 {
 }
 
 .for-feature-title {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 600;
     line-height: 40px;
     letter-spacing: 0.0025em;
@@ -9451,6 +9454,7 @@ input.form-control.fz-30 {
 
 .latest-slider .owl-item .product .carding img {
     height: 300px;
+    width: 305.5px;
     border-radius: 15px;
 }
 
@@ -9464,7 +9468,7 @@ input.form-control.fz-30 {
 }
 
 .bold-title {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.0015em;
@@ -9475,7 +9479,7 @@ input.form-control.fz-30 {
 .product-price {
     color: red;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.0015em;
 }
@@ -9489,7 +9493,7 @@ input.form-control.fz-30 {
 
 .product-without-discount {
     color: #303560;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.0015em;
@@ -9526,7 +9530,7 @@ input.form-control.fz-30 {
 
 .footer-head {
     color: #303560;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 24px;
     letter-spacing: 0.0015em;
@@ -9574,9 +9578,8 @@ input.form-control.fz-30 {
     position: relative;
 }
 
-
-    height: 300px;
-
+.blog-card img {
+    height: 280px;
 }
 
 .blog-body {
@@ -9626,7 +9629,38 @@ input.form-control.fz-30 {
     align-items: center;
     width: 100%;
     justify-content: space-evenly;
-    margin-top: 0 !important;
+    /* margin-top: 0 !important; */
+}
+
+.category-wise-products_header .nav_product a img {
+    height: 64px;
+    width: 64px;
+    border-radius: 10px;
+}
+
+.search-width-85 {
+    width: 84%;
+}
+
+label.for-hover-label.cursor-pointer.get-view-by-onclick.home-category {
+    margin-left: 0.25rem !important;
+    text-transform: capitalize;
+}
+
+.product_text p {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.nav-item .nav-link {
+    font-size: 15px;
+}
+
+button#dropdownMenuButton {
+    color: #303560;
+    font-weight: 500;
 }
 
 @media (max-width: 991px) {

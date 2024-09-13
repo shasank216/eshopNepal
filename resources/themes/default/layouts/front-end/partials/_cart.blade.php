@@ -12,8 +12,11 @@
             </span>
             <i class="navbar-tool-icon czi-cart"></i>
         </a>
-        <a class="navbar-tool-text ms-2" href="{{ route('shop-cart') }}"><small class="fw-bold">{{ translate('my_cart') }}</small>
-            <span class="cart-total-price fs-14">
+        <a class="navbar-tool-text ms-2" href="{{ route('shop-cart') }}">
+            <small class="fw-bold" style="font-size: 14px; font-weight: 600; letter-spacing: 0.005em; color: #303560 !important;">
+                {{ translate('my_cart') }}
+            </small>
+            <span class="cart-total-price fs-14" style="letter-spacing: 0.005em; color: #5C5C5C;">
                 {{ webCurrencyConverter(amount: \App\Utils\CartManager::cart_total_applied_discount(\App\Utils\CartManager::get_cart())) }}
             </span>
         </a>
@@ -32,8 +35,8 @@
             <i class="navbar-tool-icon czi-cart"></i>
         </a>
         <a class="navbar-tool-text ms-2" href="{{ route('customer.auth.login') }}">
-            <small class="fw-bold">{{ translate('my_cart') }}</small>
-            <span class="cart-total-price  fs-14">
+            <small class="fw-bold" style="font-size: 14px; font-weight: 600; letter-spacing: 0.005em; color: #303560 !important;">{{ translate('my_cart') }}</small>
+            <span class="cart-total-price fs-14" style="letter-spacing: 0.005em; color: #5C5C5C;">
                 {{ webCurrencyConverter(amount: \App\Utils\CartManager::cart_total_applied_discount(\App\Utils\CartManager::get_cart())) }}
             </span>
         </a>

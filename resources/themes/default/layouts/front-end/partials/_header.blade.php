@@ -21,7 +21,8 @@
                 </div>
                 <div class="d-none d-md-block mr-2 text-nowrap">
                     <a class="topbar-link d-flex align-items-center  direction-ltr" href="https://flipkart.questal.in/track-order">
-                        <i class="fa fa-truck fa-flip-horizontal m-0"></i> 
+                        {{-- <i class="fa fa-truck fa-flip-horizontal m-0"></i>  --}}
+                        <img class="track-order-img" src="{{ asset('public/assets/front-end/img/icons/track-order.png') }}" alt="">
                         <span class="ms-1 track-order">Track Your Order</span>
                     </a>
                 </div>
@@ -78,7 +79,7 @@
 
 
     <div class="navbar-sticky bg-light mobile-head">
-        <div class="navbar navbar-expand-md navbar-light pt-4">
+        <div class="navbar navbar-expand-md navbar-light pt-4 pb-3">
             <div class="container ">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -99,7 +100,7 @@
                 <div class="input-group-overlay mx-lg-4 search-form-mobile text-align-direction w-100">
                     <form action="{{route('products')}}" type="submit" class="search_form">
                         <div class="d-flex border-shape">
-                            <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex align-items-center gap-2 search-width-85">
                                 <input class="form-control appended-form-control search-bar-input border-0 header-search-input" style="border-radius: 8px;" type="search"
                                     autocomplete="off"
                                     placeholder="{{ translate("search_for_items")}}..."
@@ -276,7 +277,7 @@
                     <div class="nav_product">
                         <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                             <img alt="{{ $category->name }}"
-                                src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}" style="height: 64px; width: 64px;">
+                                src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}">
                             <div class="product_text">
                                 <p>{{Str::limit($category->name, 12)}}</p>
                             </div>

@@ -46,7 +46,7 @@
             }
 
             .home-title {
-                font-size: 34px;
+                font-size: 26px;
                 font-weight: 600;
                 line-height: 40px;
                 letter-spacing: 0.0025em;
@@ -331,6 +331,7 @@
                 /* top: -25px;
                         left: -10px; */
                 width: 246px;
+                width: 100%;
                 margin-right: 10px;
             }
 
@@ -446,6 +447,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                display: none;
             }
 
             .gallery figure {
@@ -481,6 +483,7 @@
 
             .latest_product_hover:hover {
                 height: 250px;
+                height: 175px;
 
             }
 
