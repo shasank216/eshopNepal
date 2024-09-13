@@ -463,8 +463,8 @@
                             <div class="card card-body border-0 p-0">
                                 <div class="container slider-container">
                                     <div class="slider-labels d-flex justify-content-between">
-                                        <span class="slider-price-range">Min: $<span id="minPrice">10</span></span>
-                                        <span class="slider-price-range">Max: $<span id="maxPrice">10000</span></span>
+                                        <span class="slider-price-range">Min: {{$defaultCurrencies->symbol}}<span id="minPrice">10</span></span>
+                                        <span class="slider-price-range">Max: {{$defaultCurrencies->symbol}}<span id="maxPrice">10000</span></span>
                                     </div>
                                     <div id="priceSlider" class="mt-4"></div>
                                 </div>

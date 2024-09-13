@@ -147,9 +147,11 @@ class CurrencyController extends BaseController
             $default = $this->currencyRepo->getFirstWhere(params: ['id' => $request['currency_id']]);
             $allCurrencies = $this->currencyRepo->getListWhere(dataLimit: 'all');
             foreach ($allCurrencies as $data) {
+                
                 $this->currencyRepo->update(id: $data['id'], data: ['exchange_rate' => ($data['exchange_rate'] / $default['exchange_rate'])]);
             }
         }
+
         Toastr::success(translate('System_Default_currency_updated_successfully'));
         return back();
     }

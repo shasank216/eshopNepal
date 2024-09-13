@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Color;
+use App\Enums\ViewPaths\Admin\Currency;
 
 class ProductListController extends Controller
 {
@@ -181,6 +182,7 @@ class ProductListController extends Controller
         }
         if ($request['data_from'] == 'category') {
             $data['brand_name'] = Category::find((int)$request['id'])->name;
+           
         }
         if ($request['data_from'] == 'brand') {
             $brand_data = Brand::active()->find((int)$request['id']);
@@ -210,8 +212,12 @@ class ProductListController extends Controller
      }
 
 
-
-        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors'));
+     $business_settings = DB::table('business_settings')->where('id',1)->first();
+     $business_settings_value=$business_settings->value;
+     
+     $defaultCurrencies = DB::table('currencies')->where('id',$business_settings_value)->first();
+    
+        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies'));
     }
 
 
@@ -1064,5 +1070,12 @@ public function filtercolorProduct(Request $request)
             }
         }
         return view(VIEW_FILE_NAMES['products_view_page'], compact('products','product_ids','products_count','categories','colors_in_shop','banner','ratings'));
+    }
+
+
+
+
+    public function compare_product_list(){
+        return "hello";
     }
 }
