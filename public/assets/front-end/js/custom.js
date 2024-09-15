@@ -1661,3 +1661,209 @@ $('.password-check').on('keyup keypress change click', function () {
             passwordError.addClass('d-none').empty();
     }
 });
+
+
+// Compare products
+
+// without saving on local storage
+// $(document).ready(function () {
+//     // Array to store selected product IDs
+//     var selectedProducts = [];
+//     var maxItems = 4;
+//     var messageTimeout;
+
+//     // Function to update the compare count in the span
+//     function updateCompareCount() {
+//         if (selectedProducts.length > 0) {
+//             // Display the count only if the number of selected products is greater than 0
+//             $('#compare-product-count').text(selectedProducts.length);
+//             $('.compare-count').css('display', 'block');
+//         } else {
+//             // Hide the span if no products are selected
+//             $('#compare-product-count').text('');
+//             $('.compare-count').css('display', 'none');
+//         }
+//     }
+
+//     // Initially set the compare count to 0 and hide it
+//     updateCompareCount();
+
+//     // Handle the click event on the anchor tag
+//     $('.action-product-compare').on('click', function (e) {
+//         e.preventDefault(); // Prevent default anchor behavior
+
+//         // Get the product ID from the clicked anchor tag
+//         var productId = $(this).data('product-id');
+
+//         // Check if the product is already selected
+//         var index = $.inArray(productId, selectedProducts);
+
+//         if (index === -1) {
+//             // Check if the selectedProducts array has fewer than the max allowed items
+//             if (selectedProducts.length < maxItems) {
+//                 // Add the product ID to the array
+//                 selectedProducts.push(productId);
+//                 console.log("Product added:", productId);
+//                 console.log("Total selected products:", selectedProducts.length);
+//                 console.log("Selected product IDs:", selectedProducts);
+
+//                 // Update the compare count in the span
+//                 updateCompareCount();
+//             } else {
+//                 // Show the entire message (message + button) for 10 seconds
+//                 $('#compare-limit-message').css('display', 'block');
+//                 $('#compare-message-text').text('You have already selected 4 products.');
+
+//                 // Clear the previous timeout if there's any
+//                 clearTimeout(messageTimeout);
+
+//                 // Hide only the message text after 10 seconds, keep the button visible
+//                 messageTimeout = setTimeout(function () {
+//                     $('#compare-message-text').text(''); // Clear the text message
+//                 }, 10000);
+//             }
+//         } else {
+//             // Remove the product ID from the array
+//             selectedProducts.splice(index, 1);
+//             console.log("Product removed:", productId);
+//             console.log("Total selected products:", selectedProducts.length);
+//             console.log("Selected product IDs:", selectedProducts);
+
+//             // Update the compare count in the span
+//             updateCompareCount();
+//         }
+//     });
+
+//     // Handle the clear button click
+//     $('#clear-compare-items').on('click', function () {
+//         // Clear the selected products array
+//         selectedProducts = [];
+//         console.log("Compare items cleared.");
+
+//         // Update the compare count in the span
+//         updateCompareCount();
+
+//         // Hide the message text and the compare message container
+//         $('#compare-message-text').text('');
+//         $('#compare-limit-message').css('display', 'none');
+
+//         // Clear any existing timeout for the message
+//         clearTimeout(messageTimeout);
+//     });
+// });
+// without saving on local storage ends
+
+// Saving into local storage
+$(document).ready(function () {
+    // Maximum number of products allowed
+    var maxItems = 4;
+    var messageTimeout;
+
+    // Load selected products from local storage
+    function loadSelectedProducts() {
+        var savedProducts = localStorage.getItem('selectedProducts');
+        return savedProducts ? JSON.parse(savedProducts) : [];
+    }
+
+    // Save selected products to local storage
+    function saveSelectedProducts() {
+        localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+    }
+
+    // Array to store selected product IDs
+    var selectedProducts = loadSelectedProducts();
+
+    // Function to update the compare count in the span
+    function updateCompareCount() {
+        if (selectedProducts.length > 0) {
+            // Display the count only if the number of selected products is greater than 0
+            $('#compare-product-count').text(selectedProducts.length);
+            $('.compare-count').css('display', 'block');
+        } else {
+            // Hide the span if no products are selected
+            $('#compare-product-count').text('');
+            $('.compare-count').css('display', 'none');
+        }
+    }
+
+    // Initially set the compare count to match the local storage
+    updateCompareCount();
+
+    // Handle the click event on the anchor tag
+    $('.action-product-compare').on('click', function (e) {
+        e.preventDefault(); // Prevent default anchor behavior
+
+        // Get the product ID from the clicked anchor tag
+        var productId = $(this).data('product-id');
+
+        // Check if the product is already selected
+        var index = $.inArray(productId, selectedProducts);
+
+        if (index === -1) {
+            // Check if the selectedProducts array has fewer than the max allowed items
+            if (selectedProducts.length < maxItems) {
+                // Add the product ID to the array
+                selectedProducts.push(productId);
+                console.log("Product added:", productId);
+                console.log("Total selected products:", selectedProducts.length);
+                console.log("Selected product IDs:", selectedProducts);
+
+                // Update the compare count in the span
+                updateCompareCount();
+                // Save the updated selection to local storage
+                saveSelectedProducts();
+            } else {
+                // Show the entire message (message + button) for 10 seconds
+                $('#compare-limit-message').css('display', 'block');
+                $('#compare-message-text').text('You have already selected 4 products.');
+
+                // Clear the previous timeout if there's any
+                clearTimeout(messageTimeout);
+
+                // Hide only the message text after 10 seconds, keep the button visible
+                messageTimeout = setTimeout(function () {
+                    $('#compare-message-text').text(''); // Clear the text message
+                }, 10000);
+            }
+        } else {
+            // Remove the product ID from the array
+            selectedProducts.splice(index, 1);
+            console.log("Product removed:", productId);
+            console.log("Total selected products:", selectedProducts.length);
+            console.log("Selected product IDs:", selectedProducts);
+
+            // Update the compare count in the span
+            updateCompareCount();
+            // Save the updated selection to local storage
+            saveSelectedProducts();
+        }
+    });
+
+    // Handle the clear button click
+    $('#clear-compare-items').on('click', function () {
+        // Clear the selected products array
+        selectedProducts = [];
+        console.log("Compare items cleared.");
+
+        // Update the compare count in the span
+        updateCompareCount();
+
+        // Hide the message text and the compare message container
+        $('#compare-message-text').text('');
+        $('#compare-limit-message').css('display', 'none');
+
+        // Clear any existing timeout for the message
+        clearTimeout(messageTimeout);
+
+        // Remove from local storage
+        localStorage.removeItem('selectedProducts');
+    });
+});
+
+// Saving into local storage ends
+
+
+// Compare products ends
+
+
+

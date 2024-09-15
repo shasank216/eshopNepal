@@ -120,7 +120,7 @@
                                     <button class="btn dropdown-toggle all-categories-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     All Categories
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 115px;">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 115px; height: 80vh; overflow-y: scroll;">
                                     @foreach($categories as $category)
                                    {{-- <a class="dropdown-item" href="#"><span>{{$category['name']}}</span></a>--}}
                                    <a <?php if ($category->childes->count() > 0) echo "" ?> 
