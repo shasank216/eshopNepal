@@ -838,11 +838,6 @@
             </div>
         @endif
 
-        @php($businessMode = getWebConfig(name: 'business_mode'))
-        @if ($businessMode == 'multi' && count($top_sellers) > 0)
-            @include('web-views.partials._top-sellers')
-        @endif
-
         @include('web-views.partials._deal-of-the-day', [
             'decimal_point_settings' => $decimalPointSettings,
         ])
@@ -1157,6 +1152,13 @@
             data-message="{{ translate('items_found') }}"
             ></span> --}}
         </section>
+
+        <!-- Seller List -->
+        @php($businessMode = getWebConfig(name: 'business_mode'))
+        @if ($businessMode == 'multi' && count($top_sellers) > 0)
+            @include('web-views.partials._top-sellers')
+        @endif
+        <!-- Seller List Ends -->
 
         <section class="container">
             <div class="d-flex">

@@ -185,7 +185,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>  
 
             <div>
                 <div class="product-compare-table">
