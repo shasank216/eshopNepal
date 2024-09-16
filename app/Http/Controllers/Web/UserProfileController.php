@@ -778,6 +778,7 @@ class UserProfileController extends Controller
         $isOrderOnlyDigital = false;
         $user = auth('customer')->user();
         $user_phone = $request['phone_number'] ?? '';
+        $categories = Category::all();
 
         if (!isset($user)) {
             $userInfo = User::where('phone', $request['phone_number'])->orWhere('phone', 'like', "%{$request['phone_number']}%")->first();
@@ -833,7 +834,7 @@ class UserProfileController extends Controller
                 return redirect()->back();
             }
             $isOrderOnlyDigital = self::getCheckIsOrderOnlyDigital($orderDetails);
-            return view(VIEW_FILE_NAMES['track_order'], compact('orderDetails', 'user_phone', 'order_verification_status', 'isOrderOnlyDigital'));
+            return view(VIEW_FILE_NAMES['track_order'], compact('orderDetails', 'user_phone', 'order_verification_status', 'isOrderOnlyDigital', 'categories'));
         }
 
         Toastr::error(translate('invalid_Order_Id_or_phone_Number'));
