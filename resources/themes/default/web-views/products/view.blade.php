@@ -1052,20 +1052,6 @@
                 </div>
             </section>
 
-            <!-- Message Container for displaying limit warning -->
-            <div id="compare-limit-message" style="display:none;">
-                <span id="compare-message-text">
-                    You have already selected 4 products.
-                </span>
-                <button class="btn" id="clear-compare-items">Clear Compare Items</button>
-            </div>
-
-            <div class="compare-count" style="display:none;">
-                <a href="#">
-                    Compare <span id="compare-product-count"></span>
-                </a>
-            </div>
-
         </div>
     </div>
 

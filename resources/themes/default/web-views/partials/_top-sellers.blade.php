@@ -1,4 +1,4 @@
-<div class="container rtl pt-4 px-0 px-md-3">
+<div class="container rtl pb-5 px-0 px-md-3">
     <div class="seller-card">
         <div class="card __shadow h-100">
             <div class="card-body">

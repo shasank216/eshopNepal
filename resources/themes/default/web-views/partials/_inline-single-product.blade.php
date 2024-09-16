@@ -89,6 +89,10 @@
 
                     <div class="actions">
                         <button class="action-btn"><i class="fa fa-heart"></i></button>
+                        <a class="action-btn stopPropagation action-product-compare" href="javascript:"
+                            data-product-id="{{ $product->id }}">
+                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt=""/>
+                        </a>
                         <a href="{{ route('product', $product->slug) }}" class="action-btn"><i
                                 class="fa fa-eye"></i></a>
                     </div>

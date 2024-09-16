@@ -9678,6 +9678,7 @@ button#dropdownMenuButton {
     position: fixed;
     bottom: 5%;
     right: 8%;
+    z-index: 9;
 }
 
 .compare-count a {
@@ -9734,10 +9735,10 @@ button#dropdownMenuButton {
     padding: 0.625rem 0.625rem 0.625rem 0;
 }
 
-.compare-section {
+/* .compare-section {
     border-top: 1px solid #e8e8e8;
     border-bottom: 1px solid #e8e8e8;
-}
+} */
 
 .product-compare-section {
     display: grid;
@@ -9746,7 +9747,7 @@ button#dropdownMenuButton {
 
 .product-compare-table {
     padding: 0 16px;
-    border-right: 1px solid #e8e8e8;
+    /* border-right: 1px solid #e8e8e8; */
     height: 100%;
 }
 
