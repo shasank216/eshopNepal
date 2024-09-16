@@ -111,58 +111,28 @@ class CartController extends Controller
         ];
     }
 
-    // public function addToCart(Request $request)
-    // {
-      
-    //     $cart = CartManager::add_to_cart($request);
-    //     session()->forget('coupon_code');
-    //     session()->forget('coupon_type');
-    //     session()->forget('coupon_bearer');
-    //     session()->forget('coupon_discount');
-    //     session()->forget('coupon_seller_id');
-        
-    //     return response()->json($cart);
-    // }
-
-
     public function addToCart(Request $request)
-{
-  
-
-    try {
-        // Add to cart
-        $cart= CartManager::add_to_cart($request);
-
-        // Clear coupon-related session data
-        session()->forget(['coupon_code', 'coupon_type', 'coupon_bearer', 'coupon_discount', 'coupon_seller_id']);
-
-        // Redirect back with a success message
-        // return redirect()->back()->with('success', 'Product added to cart successfully');
-        return response()->json($cart);
-    } catch (\Exception $e) {
-        // Redirect back with an error message
-        return redirect()->back()->with('error', 'Failed to add to cart');
+    {
+    //   dd($request);
+        $cart = CartManager::add_to_cart($request);
+        // dd($cart['message']);
+        session()->forget('coupon_code');
+        session()->forget('coupon_type');
+        session()->forget('coupon_bearer');
+        session()->forget('coupon_discount');
+        session()->forget('coupon_seller_id');
+ 
+       
+        // return response()->json($cart);
+        return response()->json([
+            'status' => 1,
+            'message' => $cart['message'], // Access the message
+            'cart' => $cart,
+        ]);
     }
-}
-// public function addToCartfromHome(Request $request)
-// {
-// //   dd("hello");
 
-//     try {
-//         // Add to cart
-//         $cart= CartManager::add_to_cart($request);
 
-//         // Clear coupon-related session data
-//         session()->forget(['coupon_code', 'coupon_type', 'coupon_bearer', 'coupon_discount', 'coupon_seller_id']);
 
-//         // Redirect back with a success message
-//         return redirect()->back()->with('success', 'Product added to cart successfully');
-//         // return response()->json($cart);
-//     } catch (\Exception $e) {
-//         // Redirect back with an error message
-//         return redirect()->back()->with('error', 'Failed to add to cart');
-//     }
-// }
 
 
     public function updateNavCart()

@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/home.css') }}" />
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/owl.carousel.min.css') }}">
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/owl.theme.default.min.css') }}">
+      
         <style>
             .latest-product-margin {
                 border-bottom: 2px solid #efefef;
@@ -1205,6 +1206,7 @@
                     @endforeach
                 </div>
             </div>
+           
 
         </section>
 
@@ -1311,4 +1313,46 @@
             element.classList.add('active');
         }
     </script>
+
+     <script>
+        $(document).ready(function() {
+            // Event listener for the Add to Cart button
+            $('.add-to-cart').on('click', function(e) {
+                e.preventDefault();
+                    
+                // Get product ID dynamically from the form
+                var productId = $(this).closest('form').find('input[name="id"]').val();
+                     
+                // Set up the AJAX request
+                $.ajax({
+                    // alert(productId);
+                    url: "{{ route('cart.add') }}", // Add to cart route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // Pass CSRF token
+                        id: productId,                 // Pass the product ID
+                        quantity: 1                    // You can change the quantity if needed
+                    },
+                    success: function(response) {
+                        if (response.status === 1) {
+                            // console.log(response.cart);
+                            toastr.success(response.message);
+                            // alert('Product added to cart successfully!'); // You can replace with Toast message or a cart update
+                            // You can update your cart UI here, for example, update cart counter, etc.
+                        }
+                         else {
+                            // alert('Failed to add product to cart!');
+                            toastr.error('Something went wrong, please try again.');
+                        }
+                    },
+                    error: function(response) {
+                        // alert('Error occurred while adding to cart!');
+                        toastr.error('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script> 
+
+  
 @endpush
