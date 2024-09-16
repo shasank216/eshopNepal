@@ -150,8 +150,8 @@
                             
                             <!-- Add to Cart Button -->
                             <button type="submit" class="btn add-to-cart">
-                                <i class="navbar-tool-icon czi-cart text-white me-2"></i>
-                                <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
+                                <i class="navbar-tool-icon czi-cart me-2"></i>
+                                <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>
 
                         </form>

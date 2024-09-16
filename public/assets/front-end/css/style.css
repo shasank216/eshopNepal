@@ -9838,6 +9838,19 @@ button#dropdownMenuButton {
     line-height: 1.4;
 }
 
+.add-to-cart {
+    color: #1f3c74 !important;
+    font-weight: 600;
+    border: 2px solid #1f3c74;
+    border-radius: 50px;
+    background: unset;
+}
+
+.add-to-cart:hover {
+    color: #1f3c74 !important;
+    background: unset;
+}
+
 @media (max-width: 991px) {
     .signup h6 {
         font-size: 16px;
