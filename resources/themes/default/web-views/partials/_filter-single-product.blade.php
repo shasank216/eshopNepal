@@ -45,6 +45,7 @@
                             <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i>
                         </a>
 
+
                         <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
                             data-product-id="{{ $product->id }}">
                             <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt=""/>
@@ -54,6 +55,8 @@
                             data-product-id="{{ $product->id }}">
                             <i class="czi-eye align-middle web-text-primary"></i>
                         </a>
+
+                      
                     </div>
                     @if ($product->product_type == 'physical' && $product->current_stock <= 0)
                         <span class="out_fo_stock">{{ translate('out_of_stock') }}</span>
@@ -150,7 +153,14 @@
                                 <i class="navbar-tool-icon czi-cart text-white me-2"></i>
                                 <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
                             </button>
+
                         </form>
+
+                            {{-- @endif --}}
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>

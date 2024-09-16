@@ -1046,6 +1046,12 @@
                         'decimal_point_settings' => $decimal_point_settings,
                     ])
                 </div>
+
+                <div class="compare-count">
+                    <a href="#">
+                        Compare <span id="compare-product-count"></span>
+                    </a>
+                </div>
             </section>
         </div>
     </div>

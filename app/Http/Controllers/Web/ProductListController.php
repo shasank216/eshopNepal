@@ -1076,6 +1076,17 @@ public function filtercolorProduct(Request $request)
 
 
     public function compare_product_list(){
-        return "hello";
+        // Categories start
+        $categories = Category::withCount(['product'=>function($query){
+                $query->active();
+            }])->with(['childes' => function ($query) {
+                $query->with(['childes' => function ($query) {
+                    $query->withCount(['subSubCategoryProduct'])->where('position', 2);
+                }])->withCount(['subCategoryProduct'])->where('position', 1);
+            }, 'childes.childes'])
+            ->where('position', 0)->get();
+        // Categories End
+
+        return view(VIEW_FILE_NAMES['product_compare'], compact('categories'));
     }
 }

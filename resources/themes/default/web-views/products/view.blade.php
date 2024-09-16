@@ -99,8 +99,8 @@
         }
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
-                                                                border-radius: 0.25em;
-                                                            }*/
+                                                                    border-radius: 0.25em;
+                                                                }*/
 
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
@@ -334,9 +334,9 @@
 
 
             <!-- <div>
-                                                                            <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                                                                            <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                                                                        </div> -->
+                                                                                <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                                                                                <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                                                                            </div> -->
 
             <div class="d-flex align-items-center gap-3">
                 <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
@@ -463,8 +463,10 @@
                             <div class="card card-body border-0 p-0">
                                 <div class="container slider-container">
                                     <div class="slider-labels d-flex justify-content-between">
-                                        <span class="slider-price-range">Min: {{$defaultCurrencies->symbol}}<span id="minPrice">10</span></span>
-                                        <span class="slider-price-range">Max: {{$defaultCurrencies->symbol}}<span id="maxPrice">10000</span></span>
+                                        <span class="slider-price-range">Min: {{ $defaultCurrencies->symbol }}<span
+                                                id="minPrice">10</span></span>
+                                        <span class="slider-price-range">Max: {{ $defaultCurrencies->symbol }}<span
+                                                id="maxPrice">10000</span></span>
                                     </div>
                                     <div id="priceSlider" class="mt-4"></div>
                                 </div>
@@ -1049,6 +1051,21 @@
                     ])
                 </div>
             </section>
+
+            <!-- Message Container for displaying limit warning -->
+            <div id="compare-limit-message" style="display:none;">
+                <span id="compare-message-text">
+                    You have already selected 4 products.
+                </span>
+                <button class="btn" id="clear-compare-items">Clear Compare Items</button>
+            </div>
+
+            <div class="compare-count" style="display:none;">
+                <a href="#">
+                    Compare <span id="compare-product-count"></span>
+                </a>
+            </div>
+
         </div>
     </div>
 
@@ -1215,7 +1232,6 @@
             element.classList.add('active');
         }
         // Sorting items Ends
-
     </script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script>
