@@ -241,13 +241,18 @@
                                 {{ translate('add_to_cart') }}
                             </button>
                         @else
-                            <button
+                            {{-- <button
                                 class="btn add-to-cart product-card-add-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
                                 type="button" data-update-text="{{ translate('update_cart') }}"
-                                data-add-text="{{ translate('add_to_cart') }}">
+                                data-add-text="{{ translate('add_to_cart') }}"
+                                data-id="{{$product->id}}">
                                 <i class="navbar-tool-icon czi-cart text-white me-2"></i>
                                 <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
-                            </button>
+                            </button> --}}
+                            <button type="button" class="btn add-to-cart" data-id="{{$product->id}}">
+                                <i class="navbar-tool-icon czi-cart text-white me-2"></i>
+                                <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
+                            </button>
                            
                         @endif
 

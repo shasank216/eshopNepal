@@ -217,7 +217,7 @@
                                                     <form id="add-to-cart-form" class="mb-2">
                                                         @csrf
                                                         <input type="hidden" name="id"
-                                                            value="{{$bestSell->product->id }}">
+                                                            value="{{ $product->id }}">
                                                         <div>
                                                             <div class="d-none">
                                                                 <div
@@ -272,11 +272,20 @@
                                                                     {{ translate('add_to_cart') }}
                                                                 </button>
                                                             @else
-                                                               
-                                                            <button type="button" class="btn add-to-cart" data-id="{{ $bestSell->product->id }}">
-                                                                <i class="navbar-tool-icon czi-cart text-white me-2"></i>
-                                                                <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
-                                                            </button>
+                                                                {{-- <button
+                                                                    class="btn add-to-cart product-card-add-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                                                    type="button"
+                                                                    data-update-text="{{ translate('update_cart') }}"
+                                                                    data-add-text="{{ translate('add_to_cart') }}">
+                                                                    <i
+                                                                        class="navbar-tool-icon czi-cart text-white me-2"></i>
+                                                                    <span
+                                                                        class="string-limit text-white">{{ translate('add_to_cart') }}</span>
+                                                                </button> --}}
+                                                                <button type="button" class="btn add-to-cart" data-id="{{$product->id}}">
+                                                                    <i class="navbar-tool-icon czi-cart text-white me-2"></i>
+                                                                    <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
+                                                                </button>
                                                             @endif
 
                                                             @if (
