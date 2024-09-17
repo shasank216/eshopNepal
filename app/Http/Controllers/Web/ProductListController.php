@@ -1075,18 +1075,51 @@ public function filtercolorProduct(Request $request)
 
 
 
-    public function compare_product_list(){
-        // Categories start
-        $categories = Category::withCount(['product'=>function($query){
-                $query->active();
-            }])->with(['childes' => function ($query) {
-                $query->with(['childes' => function ($query) {
-                    $query->withCount(['subSubCategoryProduct'])->where('position', 2);
-                }])->withCount(['subCategoryProduct'])->where('position', 1);
-            }, 'childes.childes'])
-            ->where('position', 0)->get();
-        // Categories End
+    // public function compare_product_list(){
+    //     // Categories start
+    //     $categories = Category::withCount(['product'=>function($query){
+    //             $query->active();
+    //         }])->with(['childes' => function ($query) {
+    //             $query->with(['childes' => function ($query) {
+    //                 $query->withCount(['subSubCategoryProduct'])->where('position', 2);
+    //             }])->withCount(['subCategoryProduct'])->where('position', 1);
+    //         }, 'childes.childes'])
+    //         ->where('position', 0)->get();
+    //     // Categories End
 
-        return view(VIEW_FILE_NAMES['product_compare'], compact('categories'));
+    //     return view(VIEW_FILE_NAMES['product_compare'], compact('categories'));
+    // }
+
+
+    public function compare_product_list(Request $request) {
+        // Get the product IDs from the query string
+        $productIds = $request->input('ids');
+        
+        // Convert the product IDs into an array
+        $productIdsArray = $productIds ? explode(',', $productIds) : [];
+    
+        // Categories logic
+        $categories = Category::withCount(['product' => function ($query) {
+            $query->active();
+        }])
+        ->with(['childes' => function ($query) {
+            $query->with(['childes' => function ($query) {
+                $query->withCount(['subSubCategoryProduct'])->where('position', 2);
+            }])->withCount(['subCategoryProduct'])->where('position', 1);
+        }, 'childes.childes'])
+        ->where('position', 0)->get();
+    
+        // Filter products by selected product IDs and their categories
+        $products = !empty($productIdsArray)
+            ? Product::whereIn('id', $productIdsArray)
+                      ->whereIn('category_id', $categories->pluck('id')->toArray())
+                      ->get()
+            : collect(); // Empty collection if no products are selected
+
+        // Return the view with the categories and the filtered products
+        // dd($products);
+        return view(VIEW_FILE_NAMES['product_compare'], compact('categories', 'products'));
     }
+    
+    
 }

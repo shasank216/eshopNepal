@@ -6,7 +6,6 @@
         flex-wrap: wrap;
         gap: 10px;
     }
-
     .btn-grp-container .btn {
         flex: 1;
     }
@@ -47,7 +46,7 @@
 
                         <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
                             data-product-id="{{ $product->id }}">
-                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="" />
+                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt=""/>
                         </a>
 
                         <a class="btn-circle stopPropagation action-product-wishlist" href="javascript:"
@@ -105,7 +104,8 @@
                                                 <label style="background: {{ $color }};"
                                                     class="focus-preview-image-by-color shadow-border"
                                                     for="{{ $product->id }}-color-{{ str_replace('#', '', $color) }}"
-                                                    data-toggle="tooltip" data-key="{{ str_replace('#', '', $color) }}"
+                                                    data-toggle="tooltip"
+                                                    data-key="{{ str_replace('#', '', $color) }}"
                                                     data-colorid="preview-box-{{ str_replace('#', '', $color) }}">
                                                     <span class="outline"></span></label>
                                             </li>
@@ -136,13 +136,14 @@
                         <form class="add-to-cart-form btn-grp-container">
                             <!-- Hidden input field for product ID -->
                             <input type="hidden" name="id" value="{{ $product->id }}">
-
+                            
                             <!-- Buy Now Button -->
-                            <button class="btn text-white element-center action-buy-now-this-product" type="button"
-                                data-product-id="{{ $product->id }}">
+                            <button
+                                class="btn text-white element-center action-buy-now-this-product"
+                                type="button" data-product-id="{{ $product->id }}">
                                 <span class="string-limit">{{ translate('buy_now') }}</span>
                             </button>
-
+                            
                             <!-- Add to Cart Button -->
                             <button type="submit" class="btn add-to-cart">
                                 <i class="navbar-tool-icon czi-cart me-2"></i>
@@ -155,11 +156,11 @@
         </div>
     </div>
 
-    <!-- Compare Checkbox Below Product -->
-    <div class="compare-checkbox mt-2" style="margin-left: 15px;">
-        <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
-            value="{{ $product->id }}" data-product-id="{{ $product->id }}">
-        <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
-    </div>
+   <!-- Compare Checkbox Below Product -->
+<div class="compare-checkbox mt-2" style="margin-left: 15px;">
+    <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input" 
+        value="{{ $product->id }}" data-product-id="{{ $product->id }}">
+    <label for="compare-{{ $product->id }}">{{ translate('Compare') }}</label>
+</div>
 
 </div>
