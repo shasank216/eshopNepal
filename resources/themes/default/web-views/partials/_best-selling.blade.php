@@ -215,7 +215,12 @@
                                                             To
                                                             Cart</span></button> --}}
 
-
+                                                        <!-- Compare Checkbox Below Product -->
+                                                        <div class="compare-checkbox mt-2" style="margin-left: 15px;">
+                                                            <input type="checkbox" id="compare-{{ $bestSell->product->id }}" class="compare-checkbox-input"
+                                                                value="{{ $bestSell->product->id }}" data-product-id="{{ $bestSell->product->id }}">
+                                                            <label for="compare-{{ $bestSell->product->id }}">{{ translate('Add to Compare') }}</label>
+                                                        </div>
                                                     <form id="add-to-cart-form" class="mb-2">
                                                         @csrf
                                                         <input type="hidden" name="id"

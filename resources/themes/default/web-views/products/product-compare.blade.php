@@ -3,7 +3,7 @@
 @section('title', 'Product Compare')
 
 @push('css_or_js')
-    <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/product-details.css') }}" />
+    <link rel="stylesheet" href="{{ theme_asset('public/assets/front-end/css/product-details.css') }}" />
 @endpush
 
 @section('content')
@@ -24,190 +24,119 @@
 
     <section class="compare-section">
         <div class="product-compare-section container">
-
-            <div>
+            @forelse ($products as $product)
                 <div class="product-compare-table">
                     <div class="compare-product_item">
-                        <img src="https://rukminim2.flixcart.com/image/184/184/xif0q/mobile/n/l/u/-original-imah2fjd7wfd9ksh.jpeg?q=90"
-                            alt="">
+                        <img src="{{ getValidImage('storage/app/public/product/thumbnail/' . $product->thumbnail, 'product') }}"
+                             alt="{{ $product->name }}">
                         <div class="product-compart-title my-2">
-                            <a href="#">
-                                Motorola G85 5G (Olive Green)
+                            <a href="">
+                                {{ $product->name }} 
                             </a>
                         </div>
                         <div class="compare-product-price d-flex flex-wrap align-items-center gap-8 my-2">
                             <span class="text-accent text-dark">
-                                Rs.190.00
-                                <del class="compare-discount-product-price">
-                                    Rs.200.00
-                                </del>
+                                Rs.{{ number_format($product->unit_price, 2) }}
+                                @if ($product->discount > 0)
+                                    <del class="compare-discount-product-price">
+                                        Rs.{{ number_format($product->unit_price + $product->discount, 2) }}
+                                    </del>
+                                @endif
                             </span>
                         </div>
-
                     </div>
                     <div class="product-compare-description">
                         <div class="product-compare-rating my-3">
                             <div class="compare-stars">
-                                4.4
+                                {{ number_format($product->average_rating, 1) }}
                                 <i class="fa fa-star text-white" aria-hidden="true"></i>
                             </div>
                             <div class="compare-review-count">
-                                <a href="#" class="">1,200+ Reviews</a>
+                                <a href="#" class="">{{ number_format($product->reviews_count) }} Reviews</a>
                             </div>
                         </div>
 
                         <div class="product-compare-specification my-3">
                             <span>
-                                8 GB RAM | 128 GB ROM
-                                16.94 cm (6.67 inch) Full HD+ Display
-                                50MP + 8MP | 32MP Front Camera
-                                5000 mAh Battery
-                                6s Gen 3 Processor
-                                Warranty: 1 Year on Handset and 6 Months on Accessories
-                                Returns: 7 Days Replacement Policy
+                                {{ $product->specifications ?: 'No specifications available.' }}
                             </span>
                         </div>
 
                         <div class="product-compare-variants my-2">
-                            <p class="varients-title m-0">
-                                Color
-                            </p>
+                            <p class="varients-title m-0">Color</p>
                             <p class="varients-content m-0">
-                                Cobalt Blue, Olive Green, Urban Grey
+                                @php
+                                    $colors = json_decode($product->colors, true);
+                                    $colorNames = $colors ? implode(', ', array_map(fn($color) => '<span style="background-color: ' . htmlspecialchars($color) . '; display: inline-block; width: 20px; height: 20px; border: 1px solid #ddd; border-radius: 50%;"></span>', $colors)) : 'No colors available';
+                                @endphp
+                                {!! $colorNames !!}
                             </p>
                         </div>
 
-                        <div class="product-compare-variants my-2">
-                            <p class="varients-title m-0">
-                                Color
-                            </p>
-                            <p class="varients-content m-0">
-                                Cobalt Blue, Olive Green, Urban Grey
-                            </p>
-                        </div>
-
-                        <div class="product-compare-variants my-2">
-                            <p class="varients-title m-0">
-                                Color
-                            </p>
-                            <p class="varients-content m-0">
-                                Cobalt Blue, Olive Green, Urban Grey
-                            </p>
-                        </div>
-
-                        <div class="compare-buynow my-3">
-                            <button class="btn" type="button" data-update-text="Update cart"
-                                data-add-text="Add to cart">
+                        <form id="add-to-cart-form" class="mb-2">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            {{-- <div class="compare-buynow my-3">
+                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                <button type="submit" class="btn">
+                                    <i class="czi-cart text-white me-2"></i>
+                                    <span class="string-limit text-white">Add to cart</span>
+                                </button>
+                            </div> --}}
+                            <button type="button" class="btn add-to-cart" data-id="{{ $product->id }}" style="background-color: #007bff; color: white;">
                                 <i class="czi-cart text-white me-2"></i>
-                                <span class="string-limit text-white">Add to cart</span>
+                                <span class="string-limit">Add to cart</span>
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                <div class="product-compare-table">
-                    <div class="compare-product_item">
-                        <img src="https://rukminim2.flixcart.com/image/184/184/xif0q/mobile/n/l/u/-original-imah2fjd7wfd9ksh.jpeg?q=90"
-                            alt="">
-                        <div class="product-compart-title">
-                            <a href="#">
-                                vivo T3 Lite 5G (Majestic Black, 128 GB)
-                            </a>
-                        </div>
-                        <div class="compare-product-price d-flex flex-wrap align-items-center gap-8">
-                            <span class="text-accent text-dark">
-                                Rs.190.00
-                                <del class="compare-discount-product-price">
-                                    Rs.200.00
-                                </del>
-                            </span>
-                        </div>
-
-                    </div>
-                    <div class="product-compare-description">
-                        <div class="product-compare-rating my-3">
-                            <div class="compare-stars">
-                                4.4
-                                <i class="fa fa-star text-white" aria-hidden="true"></i>
-                            </div>
-                            <div class="compare-review-count">
-                                <a href="#" class="">1,200+ Reviews</a>
-                            </div>
-                        </div>
-
-                        <div class="product-compare-specification my-3">
-                            <span>
-                                8 GB RAM | 128 GB ROM
-                                16.94 cm (6.67 inch) Full HD+ Display
-                                50MP + 8MP | 32MP Front Camera
-                                5000 mAh Battery
-                                6s Gen 3 Processor
-                                Warranty: 1 Year on Handset and 6 Months on Accessories
-                                Returns: 7 Days Replacement Policy
-                            </span>
-                        </div>
-
-                        <div class="product-compare-variants my-2">
-                            <p class="varients-title m-0">
-                                Color
-                            </p>
-                            <p class="varients-content m-0">
-                                Cobalt Blue, Olive Green, Urban Grey
-                            </p>
-                        </div>
-
-                        <div class="product-compare-variants my-2">
-                            <p class="varients-title m-0">
-                                Color
-                            </p>
-                            <p class="varients-content m-0">
-                                Cobalt Blue, Olive Green, Urban Grey
-                            </p>
-                        </div>
-
-                        <div class="product-compare-variants my-2">
-                            <p class="varients-title m-0">
-                                Color
-                            </p>
-                            <p class="varients-content m-0">
-                                Cobalt Blue, Olive Green, Urban Grey
-                            </p>
-                        </div>
-
-                        <div class="compare-buynow my-3">
-                            <button class="btn" type="button" data-update-text="Update cart"
-                                data-add-text="Add to cart">
-                                <i class="czi-cart text-white me-2"></i>
-                                <span class="string-limit text-white">Add to cart</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>  
-
-            <div>
-                <div class="product-compare-table">
-                    <div class="compare-product_item">
-                        <img src="https://rukminim2.flixcart.com/image/184/184/xif0q/mobile/n/l/u/-original-imah2fjd7wfd9ksh.jpeg?q=90"
-                            alt="">
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div class="product-compare-table">
-                    <div class="compare-product_item">
-                        <img src="https://rukminim2.flixcart.com/image/184/184/xif0q/mobile/n/l/u/-original-imah2fjd7wfd9ksh.jpeg?q=90"
-                            alt="">
-                    </div>
-                </div>
-            </div>
-
+            @empty
+                <p>No products to compare.</p>
+            @endforelse
         </div>
     </section>
+   
 @endsection
 
 @push('script')
+<script>
+    $(document).ready(function() {
+        // Event listener for the Add to Cart button
+        $('.add-to-cart').on('click', function(e) {
+            e.preventDefault();
+                
+            // Get product ID dynamically from the form
+            var productId = $(this).closest('form').find('input[name="id"]').val();
+                 
+            // Set up the AJAX request
+            $.ajax({
+                // alert(productId);
+                url: "{{ route('cart.add') }}", // Add to cart route
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}', // Pass CSRF token
+                    id: productId,                 // Pass the product ID
+                    quantity: 1                    // You can change the quantity if needed
+                },
+                success: function(response) {
+                    if (response.status === 1) {
+                        // console.log(response.cart);
+                        toastr.success(response.message);
+                        // alert('Product added to cart successfully!'); // You can replace with Toast message or a cart update
+                        // You can update your cart UI here, for example, update cart counter, etc.
+                    }
+                     else {
+                        // alert('Failed to add product to cart!');
+                        toastr.error('Something went wrong, please try again.');
+                    }
+                },
+                error: function(response) {
+                    // alert('Error occurred while adding to cart!');
+                    toastr.error('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+  </script> 
+<!-- Add any custom scripts here -->
 @endpush
