@@ -9851,6 +9851,10 @@ button#dropdownMenuButton {
     background: unset;
 }
 
+.cash-on-delivery span.fs-12::after {
+    display: none;
+}
+
 @media (max-width: 991px) {
     .signup h6 {
         font-size: 16px;

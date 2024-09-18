@@ -42,9 +42,9 @@
                                                 <form action="{{route('checkout-complete')}}" method="get" class="needs-validation" id="cash_on_delivery_form">
                                                     <label class="m-0">
                                                         <input type="hidden" name="payment_method" value="cash_on_delivery">
-                                                        <span class="btn btn-block click-if-alone d-flex gap-2 align-items-center cursor-pointer">
+                                                        <span class="btn btn-block click-if-alone d-flex gap-2 align-items-center cursor-pointer cash-on-delivery">
                                                             <input type="radio" id="cash_on_delivery" class="custom-radio">
-                                                            <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/money.png') }}" alt="">
+                                                            {{-- <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/money.png') }}" alt=""> --}}
                                                             <span class="fs-12">{{ translate('cash_on_Delivery') }}</span>
                                                         </span>
                                                     </label>
@@ -59,7 +59,7 @@
                                                 <div class="card cursor-pointer">
                                                     <button class="btn btn-block click-if-alone d-flex gap-2 align-items-center" type="submit"
                                                         data-toggle="modal" data-target="#wallet_submit_button">
-                                                        <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/wallet-sm.png') }}" alt=""/>
+                                                        {{-- <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/wallet-sm.png') }}" alt=""/> --}}
                                                         <span class="fs-12">{{ translate('pay_via_Wallet') }}</span>
                                                     </button>
                                                 </div>
