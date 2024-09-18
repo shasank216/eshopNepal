@@ -621,7 +621,7 @@ span.badge-accent:hover {
     left: unset;
     right: 0;
     top: 0;
-    height: 100%;
+    height: 90%;
     border-radius: 8px;
     background: #1F3C74;
 }

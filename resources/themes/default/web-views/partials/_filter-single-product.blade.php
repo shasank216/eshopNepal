@@ -45,10 +45,24 @@
                             <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i>
                         </a>
 
-                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
+                        {{-- <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
                             data-product-id="{{ $product->id }}">
                             <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="" />
-                        </a>
+                        </a> --}}
+
+                        <div class="compare-container">
+                            <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
+                                data-product-id="{{ $product->id }}">
+                                <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                            </a>
+                            
+                            <div class="compare-checkbox mt-2 d-none" style="margin-left: 15px;"> 
+                                <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
+                                    value="{{ $product->id }}" data-product-id="{{ $product->id }}">
+                                <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
+                            </div>
+                        </div>
+                        
 
                         <a class="btn-circle stopPropagation action-product-wishlist" href="javascript:"
                             data-product-id="{{ $product->id }}">
@@ -156,10 +170,10 @@
     </div>
 
     <!-- Compare Checkbox Below Product -->
-    <div class="compare-checkbox mt-2" style="margin-left: 15px;">
+    {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
         <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
             value="{{ $product->id }}" data-product-id="{{ $product->id }}">
         <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
-    </div>
+    </div> --}}
 
 </div>

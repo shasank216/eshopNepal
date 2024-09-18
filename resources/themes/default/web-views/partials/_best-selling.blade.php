@@ -126,10 +126,22 @@
                                                         <div class="actions">
                                                             <button class="action-btn"><i
                                                                     class="fa fa-heart"></i></button>
-                                                            <a class="action-btn stopPropagation action-product-compare" href="javascript:"
+                                                            {{-- <a class="action-btn stopPropagation action-product-compare" href="javascript:"
                                                                 data-product-id="{{ $product->id }}">
                                                                 <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt=""/>
-                                                            </a>
+                                                            </a> --}}
+                                                            <div class="compare-container">
+                                                                <a class="action-btn stopPropagation action-product-compare" href="javascript:"
+                                                                    data-product-id="{{ $product->id }}">
+                                                                    <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                                                                </a>
+                                                                
+                                                                <div class="compare-checkbox mt-2 d-none" style="margin-left: 15px;"> 
+                                                                    <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
+                                                                        value="{{ $product->id }}" data-product-id="{{ $product->id }}">
+                                                                    <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
+                                                                </div>
+                                                            </div>
                                                             <button class="action-btn"><i
                                                                     class="fa fa-eye"></i></button>
                                                         </div>
@@ -216,11 +228,11 @@
                                                             Cart</span></button> --}}
 
                                                         <!-- Compare Checkbox Below Product -->
-                                                        <div class="compare-checkbox mt-2" style="margin-left: 15px;">
+                                                        {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
                                                             <input type="checkbox" id="compare-{{ $bestSell->product->id }}" class="compare-checkbox-input"
                                                                 value="{{ $bestSell->product->id }}" data-product-id="{{ $bestSell->product->id }}">
                                                             <label for="compare-{{ $bestSell->product->id }}">{{ translate('Add to Compare') }}</label>
-                                                        </div>
+                                                        </div> --}}
                                                     <form id="add-to-cart-form" class="mb-2">
                                                         @csrf
                                                         <input type="hidden" name="id"
