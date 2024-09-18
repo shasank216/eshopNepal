@@ -44,7 +44,7 @@
                                                         <input type="hidden" name="payment_method" value="cash_on_delivery">
                                                         <span class="btn btn-block click-if-alone d-flex gap-2 align-items-center cursor-pointer cash-on-delivery">
                                                             <input type="radio" id="cash_on_delivery" class="custom-radio">
-                                                            {{-- <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/money.png') }}" alt=""> --}}
+                                                            <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/money.png') }}" alt="">
                                                             <span class="fs-12">{{ translate('cash_on_Delivery') }}</span>
                                                         </span>
                                                     </label>
@@ -59,7 +59,7 @@
                                                 <div class="card cursor-pointer">
                                                     <button class="btn btn-block click-if-alone d-flex gap-2 align-items-center" type="submit"
                                                         data-toggle="modal" data-target="#wallet_submit_button">
-                                                        {{-- <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/wallet-sm.png') }}" alt=""/> --}}
+                                                        <img width="20" src="{{ theme_asset(path: 'public/assets/front-end/img/icons/wallet-sm.png') }}" alt=""/>
                                                         <span class="fs-12">{{ translate('pay_via_Wallet') }}</span>
                                                     </button>
                                                 </div>
@@ -72,6 +72,29 @@
                             <div class="d-flex flex-wrap gap-2 align-items-center mb-4 ">
                                 <h5 class="mb-0 text-capitalize">{{ translate('pay_via_online') }}</h5>
                                 <span class="fs-10 text-capitalize mt-1">({{ translate('faster_&_secure_way_to_pay') }})</span>
+                            </div>
+
+                            <div class="row gx-4 mb-4">
+                                <div class="col-sm-4">
+                                    <div>
+                                        <div class="card cursor-pointer">
+                                            <button class="btn btn-block click-if-alone d-flex gap-2 align-items-center justify-content-center" type="submit">
+                                                <img width="100" src="{{ asset('public/assets/front-end/img/esewa.png') }}" alt=""/>
+                                                {{-- <span class="fs-12">E-sewa</span> --}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div>
+                                        <div class="card cursor-pointer">
+                                            <button class="btn btn-block click-if-alone d-flex gap-2 align-items-center justify-content-center" type="submit" >
+                                                <img width="100" src="{{ asset( 'public/assets/front-end/img/khalti.png') }}" alt=""/>
+                                                {{-- <span class="fs-12">Khalti</span> --}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             @if ($digital_payment['status']==1)
