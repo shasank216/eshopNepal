@@ -544,7 +544,7 @@
                                 </div>
                             </a>
                             <div class="text-align-direction dropdown-menu __auth-dropdown dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
-                                 aria-labelledby="dropdownMenuButton" style="width: 130 px;">
+                                 aria-labelledby="dropdownMenuButton" style="width: 130px;">
                                 <a class="dropdown-item" href="{{route('customer.auth.login')}}">
                                     <i class="fa fa-sign-in mr-2"></i> {{ translate('sign_in')}}
                                 </a>
