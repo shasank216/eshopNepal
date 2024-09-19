@@ -9472,7 +9472,7 @@ input.form-control.fz-30 {
     text-transform: capitalize;
 }
 
-.bold-title {
+.bold-title, .product-single-hover .single-product-details a {
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
@@ -9489,7 +9489,7 @@ input.form-control.fz-30 {
     letter-spacing: 0.0015em;
 }
 
-.product-discount-price {
+.product-discount-price, .category-single-product-price {
     color: #303560;
     margin-left: 10px;
     font-weight: 500;
@@ -9934,7 +9934,7 @@ button#dropdownMenuButton {
         font-size: 25px;
     }
 
-    .view-all-text, .product-discount-price {
+    .view-all-text, .product-discount-price, .category-single-product-price {
         font-size: 12px;
     }
 
@@ -9953,6 +9953,10 @@ button#dropdownMenuButton {
     
     .product-price, .product-without-discount {
         font-size: 15px;
+    }
+    
+    .search-form-mobile {
+        width: 100% !important;
     }
 
 }
@@ -10052,11 +10056,11 @@ button#dropdownMenuButton {
         font-size: 20px;
     }
 
-    .bold-subtitle, .product-discount-price, .reliability-desc {
+    .bold-subtitle, .product-discount-price, .reliability-desc, .category-single-product-price {
         font-size: 12px;
     }
     
-    .bold-title {
+    .bold-title, .product-single-hover .single-product-details a {
         font-size: 16px;
     }
     

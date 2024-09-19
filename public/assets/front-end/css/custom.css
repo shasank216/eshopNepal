@@ -1288,10 +1288,33 @@ img, figure {
     color: #727272 !important;
 }
 
+.product-discount-price, .category-single-product-price {
+    color: #303560;
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.product-price .text-accent {
+    color: red !important;
+    font-weight: 600;
+    font-size: 16px !important;
+    line-height: 24px;
+    letter-spacing: 0.0015em;
+}
+
 @media (max-width: 991px) {
     [dir="ltr"] .navbar form .search_button {
         top: 30%;
         height: auto;
+    }
+
+    .category-single-product-price {
+        font-size: 12px;
+    }
+
+    .product-price .text-accent {
+        font-size: 15px !important;
     }
 }
 /* added css ends */
