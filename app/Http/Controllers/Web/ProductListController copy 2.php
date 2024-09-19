@@ -20,32 +20,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Color;
 use App\Enums\ViewPaths\Admin\Currency;
-use App\Repositories\WishlistRepository;
-use App\Models\Order;
-use App\Models\Seller;
-use App\Models\DealOfTheDay;
-use App\Models\Banner;
-use App\Models\MostDemanded;
 
 class ProductListController extends Controller
 {
-    public function __construct(
-        private Product      $product,
-        private Order        $order,
-        private OrderDetail  $order_details,
-        private Category     $category,
-        private Seller       $seller,
-        private Review       $review,
-        private DealOfTheDay $deal_of_the_day,
-        private Banner       $banner,
-        private MostDemanded $most_demanded, 
-        private readonly WishlistRepository  $wishlistRepo,
-    )
-    {
-    }
-
-
-
     public function products(Request $request)
     {
         $theme_name = theme_root_path();
@@ -239,12 +216,8 @@ class ProductListController extends Controller
      $business_settings_value=$business_settings->value;
      
      $defaultCurrencies = DB::table('currencies')->where('id',$business_settings_value)->first();
-     $product = Product::paginate(10);
-     $product=$this->product->active()->inRandomOrder()->first();
-     $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-     $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
     
-        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies','wishlistStatus','countWishlist'));
+        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies'));
     }
 
 

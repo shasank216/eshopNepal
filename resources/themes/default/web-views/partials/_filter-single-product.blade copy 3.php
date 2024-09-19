@@ -44,13 +44,6 @@
                             data-product-id="{{ $product->id }}">
                             <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i>
                         </a>
-                        {{-- <button type="button" data-product-id="{{ $product['id'] }}"
-                        class="btn __text-18px  d-none d-sm-block product-action-add-wishlist">
-                         <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
-                            aria-hidden="true"></i> 
-                            
-                        <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span>
-                    </button> --}}
 
                         {{-- <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
                             data-product-id="{{ $product->id }}">

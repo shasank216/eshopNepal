@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Poster;
+use App\Repositories\WishlistRepository;
 
 class HomeController extends Controller
 {
@@ -37,7 +38,8 @@ class HomeController extends Controller
         private Review       $review,
         private DealOfTheDay $deal_of_the_day,
         private Banner       $banner,
-        private MostDemanded $most_demanded,
+        private MostDemanded $most_demanded, 
+        private readonly WishlistRepository  $wishlistRepo,
     )
     {
     }
@@ -160,14 +162,16 @@ class HomeController extends Controller
 
 
          $blogs = Poster::latest()->take(4)->get();
-        //  dd( $blogs);
+         $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+         $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+        
         return view(VIEW_FILE_NAMES['home'],
             compact(
                 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands',
                 'deal_of_the_day', 'top_sellers', 'home_categories', 'brand_setting', 'main_banner', 'main_section_banner',
                 'current_date','product','footer_banner','products','sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
                 'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose','product_tags','blogs'
+                'inHouseTemporaryClose','product_tags','blogs','wishlistStatus','countWishlist'
             )
         );
     }

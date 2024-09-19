@@ -88,7 +88,25 @@
                     <div class="ribbon ribbon-new">New</div>
 
                     <div class="actions">
+<<<<<<< Updated upstream
                         <button class="action-btn"><i class="fa fa-heart"></i></button>
+=======
+                        {{-- <button class="btn __text-18px  d-none d-sm-block product-action-add-wishlist" type="button" data-product-id="{{ $product['id'] }}">
+                            <i class="fa fa-heart"></i>
+                            <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span>
+                        </button> --}}
+
+                        <button type="button" data-product-id="{{ $product['id'] }}"
+                        class="btn __text-18px  d-none d-sm-block product-action-add-wishlist">
+                         <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
+                            aria-hidden="true"></i> 
+                            
+                        <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span>
+                    </button>
+
+
+
+>>>>>>> Stashed changes
                         {{-- <a class="action-btn stopPropagation action-product-compare" href="javascript:"
                             data-product-id="{{ $product->id }}">
                             <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt=""/>
