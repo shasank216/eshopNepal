@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\Chatting;
 
 class ProductController extends Controller
 {
@@ -880,5 +881,79 @@ class ProductController extends Controller
             'color_image' => json_encode($color_image_arr),
         ]);
         return response()->json(translate('product_image_removed_successfully'), 200);
+    }
+
+
+    // bibek
+    public function messages_store(Request $request)
+    {
+       
+       
+         if ($request->has('admin_id'))
+        {
+            
+          
+            Chatting::create([
+                // 'user_id'          => auth('customer')->id(),
+                // 'message'          => $request->message,
+                // 'created_at'       => now(),
+                // 'admin_id'   => $request->admin_id,
+                // 'admin_send_to_customer'=>auth('customer')->id(),
+                
+                'user_id'          => $request->user_id,
+                'message'          => $request->message,
+                'created_at'       => now(),
+                'admin_id'   => $request->admin_id,
+                'admin_send_to_customer'=> $request->user_id
+            ]);
+         
+        }
+        return response()->json(['message'=>'Message send Successful']);
+        
+    }
+      public function messages_view($user_id)
+    {
+        
+      
+        
+    //      // Initialize user_id to null
+    //   $user_id = null;
+    
+    // // Check if the user is authenticated
+    //   if (auth('customer')->check()) {
+    //     // Retrieve authenticated user's data
+    //     $user = auth('customer')->user();
+    //     $user_id = $user->id;
+
+      
+    // } else {
+    //     // Return error code if user is not authenticated
+    //     return response("500", 500);
+    // }
+    
+
+    // Render the view
+          $datas=Chatting::where('user_id',$user_id)
+          ->where('softDeletes',1)
+          ->where('admin_id',1)
+          ->where('admin_send_to_customer',$user_id)
+          ->get(); 
+        //   dd($datas);
+          
+          if($datas){
+              
+          return response()->json([
+              'status'=>'true',
+              'datas'=>$datas
+              ]);
+          }else{
+              
+          return response()->json([
+              'status'=>'false',
+              'datas'=>'Data not Found'
+              ]);
+          }
+        
+        
     }
 }

@@ -76,17 +76,18 @@
                         <form id="add-to-cart-form" class="mb-2">
                             @csrf
                             <input type="hidden" name="id" value="{{ $product->id }}">
-                            {{-- <div class="compare-buynow my-3">
-                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                <div class="compare-buynow my-3">
+                                {{-- <input type="hidden" name="id" value="{{ $product->id }}">
                                 <button type="submit" class="btn">
                                     <i class="czi-cart text-white me-2"></i>
                                     <span class="string-limit text-white">Add to cart</span>
+                                </button> --}}
+                                <button type="button" class="btn add-to-cart" data-id="{{ $product->id }}" style="background-color: white; color: black;">
+                                    <i class="czi-cart text-black me-2"></i>
+                                    <span class="string-limit text-black">Add to cart</span>
                                 </button>
-                            </div> --}}
-                            <button type="button" class="btn add-to-cart" data-id="{{ $product->id }}" style="background-color: #007bff; color: white;">
-                                <i class="czi-cart text-white me-2"></i>
-                                <span class="string-limit">Add to cart</span>
-                            </button>
+                            </div> 
+
                         </form>
                     </div>
                 </div>
@@ -124,6 +125,9 @@
                         toastr.success(response.message);
                         // alert('Product added to cart successfully!'); // You can replace with Toast message or a cart update
                         // You can update your cart UI here, for example, update cart counter, etc.
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000); // 1000ms = 1 second delay before reload
                     }
                      else {
                         // alert('Failed to add product to cart!');

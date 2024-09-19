@@ -53,26 +53,7 @@
                                             <div class="details main-details">
                                                 <p class="bold-subtitle m-0"> {{ $bestSell->product->brand->name }}</p>
 
-                                                {{-- @dd($bestSell); --}}
-
-                                                {{-- @if ($overallRating[0] != 0)
-                                                    <div class="rating-show justify-content-between">
-                                                        <span class="d-inline-block font-size-sm text-body">
-                                                            @for ($inc = 1; $inc <= 5; $inc++)
-                                                                @if ($inc <= (int) $overallRating[0])
-                                                                    <i class="tio-star text-warning"></i>
-                                                                @elseif ($overallRating[0] != 0 && $inc <= (int) $overallRating[0] + 1.1 && $overallRating[0] > ((int) $overallRating[0]))
-                                                                    <i class="tio-star-half text-warning"></i>
-                                                                @else
-                                                                    <i class="tio-star-outlined text-warning"></i>
-                                                                @endif
-                                                            @endfor
-                                                            <label class="badge-style review-text-container"> {{ count($product->reviews) }}
-                                                                <span class="review-text">reviews</span>
-                                                            </label>
-                                                        </span>
-                                                    </div>
-                                                @endif --}}
+                                               
 
                                                 <span
                                                     class="bold-title">{{ Str::limit($bestSell->product['name'], 100) }}
@@ -124,40 +105,37 @@
                                                         <div class="ribbon ribbon-new">New</div>
 
                                                         <div class="actions">
-<<<<<<< Updated upstream
-                                                            <button class="action-btn"><i
-                                                                    class="fa fa-heart"></i></button>
-=======
                                                             {{-- <button class="action-btn"><i
                                                                     class="fa fa-heart"></i></button> --}}
-                                                                    <button type="button" data-product-id="{{ $product['id'] }}"
-                                                                    class="btn __text-18px  d-none d-sm-block product-action-add-wishlist">
-                                                                     <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
-                                                                        aria-hidden="true"></i> 
-                                                                        
-                                                                    <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span>
-                                                                   </button>
-                                                                    
+                                                            <button type="button"
+                                                                data-product-id="{{ $product['id'] }}"
+                                                                class="action-btn __text-18px   product-action-add-wishlist">
+                                                                <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
+                                                                    aria-hidden="true"></i>
 
+                                                                {{-- <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span> --}}
+                                                            </button>
 
-
-
->>>>>>> Stashed changes
-                                                            {{-- <a class="action-btn stopPropagation action-product-compare" href="javascript:"
-                                                                data-product-id="{{ $product->id }}">
-                                                                <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt=""/>
-                                                            </a> --}}
-                                                            <div class="compare-container">
-                                                                <a class="action-btn stopPropagation action-product-compare" href="javascript:"
+                                                            {{-- <div class="compare-container">
+                                                                <a class="action-btn stopPropagation action-product-compare"
+                                                                    href="javascript:"
                                                                     data-product-id="{{ $product->id }}">
+                                                                    <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}"
+                                                                        alt="Compare" />
+                                                                </a>
+
+
+                                                            </div> --}}
+                                                            <div class="compare-container">
+                                                                {{-- <a class="action-btn stopPropagation action-product-compare"
+                                                                    href="javascript:"
+                                                                    data-product-id="{{ $bestSell->product->id }}">
+                                                                    <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                                                                </a> --}}
+
+                                                                <a class="action-btn stopPropagation action-product-compare" href="javascript:" data-product-id="{{ $bestSell->product->id }}">
                                                                     <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
                                                                 </a>
-                                                                
-                                                                <div class="compare-checkbox mt-2 d-none" style="margin-left: 15px;"> 
-                                                                    <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
-                                                                        value="{{ $product->id }}" data-product-id="{{ $product->id }}">
-                                                                    <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
-                                                                </div>
                                                             </div>
                                                             <button class="action-btn"><i
                                                                     class="fa fa-eye"></i></button>
@@ -244,8 +222,8 @@
                                                             To
                                                             Cart</span></button> --}}
 
-                                                        <!-- Compare Checkbox Below Product -->
-                                                        {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
+                                                    <!-- Compare Checkbox Below Product -->
+                                                    {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
                                                             <input type="checkbox" id="compare-{{ $bestSell->product->id }}" class="compare-checkbox-input"
                                                                 value="{{ $bestSell->product->id }}" data-product-id="{{ $bestSell->product->id }}">
                                                             <label for="compare-{{ $bestSell->product->id }}">{{ translate('Add to Compare') }}</label>
@@ -253,7 +231,7 @@
                                                     <form id="add-to-cart-form" class="mb-2">
                                                         @csrf
                                                         <input type="hidden" name="id"
-                                                            value="{{$bestSell->product->id }}">
+                                                            value="{{ $bestSell->product->id }}">
                                                         <div>
                                                             <div class="d-none">
                                                                 <div
@@ -308,11 +286,12 @@
                                                                     {{ translate('add_to_cart') }}
                                                                 </button>
                                                             @else
-                                                               
-                                                            <button type="button" class="btn add-to-cart" data-id="{{ $bestSell->product->id }}">
-                                                                <i class="navbar-tool-icon czi-cart me-2"></i>
-                                                                <span class="string-limit">{{ translate('add_to_cart') }}</span>
-                                                            </button>
+                                                                <button type="button" class="btn add-to-cart"
+                                                                    data-id="{{ $bestSell->product->id }}">
+                                                                    <i class="navbar-tool-icon czi-cart me-2"></i>
+                                                                    <span
+                                                                        class="string-limit">{{ translate('add_to_cart') }}</span>
+                                                                </button>
                                                             @endif
 
                                                             @if (

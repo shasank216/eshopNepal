@@ -177,5 +177,8 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
         Route::get('{seller_id}/all-products', 'ProductController@get_seller_all_products');
     });
     Route::post('ls-lib-update', 'LsLibController@lib_update');
+
+    Route::post('messages_store', 'ProductController@messages_store');
+    Route::get('messages_view/{user_id}', 'ProductController@messages_view');
 });
 

@@ -42,39 +42,43 @@
                     <div class="quick-view">
                         <a class="btn-circle stopPropagation action-product-quick-view" href="javascript:"
                             data-product-id="{{ $product->id }}">
-                            <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i>
-                        </a>
-                        {{-- <button type="button" data-product-id="{{ $product['id'] }}"
-                        class="btn __text-18px  d-none d-sm-block product-action-add-wishlist">
-                         <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
-                            aria-hidden="true"></i> 
+                            <i class="czi-eye align-middle web-text-primary"></i>
                             
-                        <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span>
-                    </button> --}}
+                        </a>
+                       
 
                         {{-- <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
                             data-product-id="{{ $product->id }}">
                             <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="" />
                         </a> --}}
 
-                        <div class="compare-container">
-                            <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
-                                data-product-id="{{ $product->id }}">
-                                <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
-                            </a>
-                            
-                            <div class="compare-checkbox mt-2 d-none" style="margin-left: 15px;"> 
-                                <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
-                                    value="{{ $product->id }}" data-product-id="{{ $product->id }}">
-                                <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
-                            </div>
-                        </div>
+                        {{-- <a class="btn-circle stopPropagation action-product-compare" href="javascript:" data-product-id="{{ $product->id }}">
+                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="" />
+                        </a> --}}
+                        <!-- Example product entry -->
+                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:" data-product-id="{{ $product->id }}">
+                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                        </a>
+
                         
 
-                        <a class="btn-circle stopPropagation action-product-wishlist" href="javascript:"
+                        <a class="btn-circle stopPropagation product-action-add-wishlist" href="javascript:"
                             data-product-id="{{ $product->id }}">
-                            <i class="czi-eye align-middle web-text-primary"></i>
+                           
+                            {{-- <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i> --}}
+                            <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
+                            aria-hidden="true"></i> 
                         </a>
+
+                        {{-- <button type="button" data-product-id="{{ $product['id'] }}"
+                        class="action-btn __text-18px   product-action-add-wishlist">
+                         <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
+                            aria-hidden="true"></i> 
+                            
+                        <span class="fs-14 text-muted align-bottom countWishlist-{{ $product['id'] }}">{{ $countWishlist }}</span>
+                    </button> --}}
+                        
+                        
                     </div>
                     @if ($product->product_type == 'physical' && $product->current_stock <= 0)
                         <span class="out_fo_stock">{{ translate('out_of_stock') }}</span>
@@ -176,8 +180,8 @@
         </div>
     </div>
 
-    <!-- Compare Checkbox Below Product -->
-    {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
+    {{-- <!-- Compare Checkbox Below Product -->
+    <div class="compare-checkbox mt-2" style="margin-left: 15px;">
         <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
             value="{{ $product->id }}" data-product-id="{{ $product->id }}">
         <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>

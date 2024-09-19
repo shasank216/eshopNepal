@@ -1949,90 +1949,168 @@ $('.password-check').on('keyup keypress change click', function () {
 // });
 
 
-$(document).ready(function () {
-    var maxItems = 4;
-    var messageTimeout;
+// $(document).ready(function () {
+//     var maxItems = 4;
+//     var messageTimeout;
 
+//     function loadSelectedProducts() {
+//         var savedProducts = localStorage.getItem('selectedProducts');
+//         return savedProducts ? JSON.parse(savedProducts) : [];
+//     }
+
+//     function saveSelectedProducts() {
+//         localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+//     }
+
+//     var selectedProducts = loadSelectedProducts();
+
+
+//     function updateCompareCount() {
+//         if (selectedProducts.length > 0) {
+//             $('#compare-product-count').text(selectedProducts.length);
+//             $('.compare-count').css('display', 'block');
+//         } else {
+//             $('#compare-product-count').text('');
+//             $('.compare-count').css('display', 'none');
+//         }
+//     }
+
+//     updateCompareCount();
+
+//     $('.compare-checkbox-input').on('change', function (e) {
+//         var productId = $(this).val();
+//         var index = $.inArray(productId, selectedProducts);
+
+//         if ($(this).is(':checked')) {
+//             if (index === -1 && selectedProducts.length < maxItems) {
+//                 selectedProducts.push(productId);
+//             } else if (selectedProducts.length >= maxItems) {
+//                 $(this).prop('checked', false);
+//                 $('#compare-limit-message').css('display', 'block');
+//                 $('#compare-message-text').text('You have already selected 4 products.');
+
+//                 clearTimeout(messageTimeout);
+//                 messageTimeout = setTimeout(function () {
+//                     $('#compare-message-text').text('');
+//                 }, 10000);
+//             }
+//         } else {
+//             if (index !== -1) {
+//                 selectedProducts.splice(index, 1);
+//             }
+//         }
+
+//         updateCompareCount();
+//         saveSelectedProducts();
+//     });
+
+//     $('#clear-compare-items').on('click', function () {
+//         selectedProducts = [];
+//         updateCompareCount();
+//         $('#compare-message-text').text('');
+//         $('#compare-limit-message').css('display', 'none');
+//         clearTimeout(messageTimeout);
+//         localStorage.removeItem('selectedProducts');
+//     });
+
+//     // Handle the Compare button click
+//     $('.compare-count a').on('click', function (e) {
+//         e.preventDefault();
+//         if (selectedProducts.length > 0) {
+//             var compareUrl = $(this).attr('href') + '?ids=' + selectedProducts.join(',');
+//             window.location.href = compareUrl; // Redirect with the product IDs
+//         }
+//     });
+
+//     // JavaScript to handle icon click and toggle the checkbox
+//     document.querySelectorAll('.action-product-compare').forEach(function(element) {
+//         element.addEventListener('click', function() {
+//             const productId = this.getAttribute('data-product-id');
+//             const checkbox = document.getElementById('compare-' + productId);
+
+//             // Toggle the checkbox
+//             checkbox.checked = !checkbox.checked;
+
+//             // Trigger change event to ensure the checkbox logic works
+//             $(checkbox).trigger('change');
+//         });
+//     });
+// });
+
+
+
+// new 
+$(document).ready(function () {
+    const maxItems = 4;
+    let messageTimeout;
+
+    // Load selected products from localStorage
     function loadSelectedProducts() {
-        var savedProducts = localStorage.getItem('selectedProducts');
+        const savedProducts = localStorage.getItem('selectedProducts');
         return savedProducts ? JSON.parse(savedProducts) : [];
     }
 
+    // Save selected products to localStorage
     function saveSelectedProducts() {
         localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
     }
 
-    var selectedProducts = loadSelectedProducts();
+    let selectedProducts = loadSelectedProducts();
 
+    // Update the count of selected products displayed on the page
     function updateCompareCount() {
         if (selectedProducts.length > 0) {
             $('#compare-product-count').text(selectedProducts.length);
-            $('.compare-count').css('display', 'block');
+            $('.compare-count').show();
         } else {
             $('#compare-product-count').text('');
-            $('.compare-count').css('display', 'none');
+            $('.compare-count').hide();
         }
     }
 
     updateCompareCount();
 
-    $('.compare-checkbox-input').on('change', function (e) {
-        var productId = $(this).val();
-        var index = $.inArray(productId, selectedProducts);
+    // Handle click on comparison icon
+    $('.action-product-compare').on('click', function () {
+        const productId = $(this).data('product-id');
+        const index = selectedProducts.indexOf(productId);
 
-        if ($(this).is(':checked')) {
-            if (index === -1 && selectedProducts.length < maxItems) {
+        if (index === -1) {
+            if (selectedProducts.length < maxItems) {
                 selectedProducts.push(productId);
-            } else if (selectedProducts.length >= maxItems) {
-                $(this).prop('checked', false);
-                $('#compare-limit-message').css('display', 'block');
+            } else {
+                $('#compare-limit-message').show();
                 $('#compare-message-text').text('You have already selected 4 products.');
 
                 clearTimeout(messageTimeout);
-                messageTimeout = setTimeout(function () {
+                messageTimeout = setTimeout(() => {
                     $('#compare-message-text').text('');
                 }, 10000);
             }
         } else {
-            if (index !== -1) {
-                selectedProducts.splice(index, 1);
-            }
+            selectedProducts.splice(index, 1);
         }
 
         updateCompareCount();
         saveSelectedProducts();
     });
 
+    // Handle click on clear comparison button
     $('#clear-compare-items').on('click', function () {
         selectedProducts = [];
         updateCompareCount();
         $('#compare-message-text').text('');
-        $('#compare-limit-message').css('display', 'none');
+        $('#compare-limit-message').hide();
         clearTimeout(messageTimeout);
         localStorage.removeItem('selectedProducts');
     });
 
-    // Handle the Compare button click
+    // Handle click on compare button
     $('.compare-count a').on('click', function (e) {
         e.preventDefault();
         if (selectedProducts.length > 0) {
-            var compareUrl = $(this).attr('href') + '?ids=' + selectedProducts.join(',');
+            const compareUrl = $(this).attr('href') + '?ids=' + selectedProducts.join(',');
             window.location.href = compareUrl; // Redirect with the product IDs
         }
     });
-
-    // JavaScript to handle icon click and toggle the checkbox
-    document.querySelectorAll('.action-product-compare').forEach(function(element) {
-        element.addEventListener('click', function() {
-            const productId = this.getAttribute('data-product-id');
-            const checkbox = document.getElementById('compare-' + productId);
-
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-
-            // Trigger change event to ensure the checkbox logic works
-            $(checkbox).trigger('change');
-        });
-    });
 });
-

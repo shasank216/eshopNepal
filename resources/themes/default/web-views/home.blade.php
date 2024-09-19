@@ -1324,7 +1324,7 @@
                     
                 // Get product ID dynamically from the form
                 var productId = $(this).closest('form').find('input[name="id"]').val();
-                     
+                   
                 // Set up the AJAX request
                 $.ajax({
                     // alert(productId);
@@ -1341,6 +1341,11 @@
                             toastr.success(response.message);
                             // alert('Product added to cart successfully!'); // You can replace with Toast message or a cart update
                             // You can update your cart UI here, for example, update cart counter, etc.
+                            // Reload the page after 1 second
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000); // 1000ms = 1 second delay before reload
+
                         }
                          else {
                             // alert('Failed to add product to cart!');
