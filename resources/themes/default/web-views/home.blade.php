@@ -333,7 +333,7 @@
                         left: -10px; */
                 width: 246px;
                 width: 100%;
-                margin-right: 10px;
+                /* margin-right: 10px; */
             }
 
             .product-hover_details .carding img {
