@@ -81,7 +81,7 @@
     <div class="navbar-sticky bg-light mobile-head">
         <div class="navbar navbar-expand-md navbar-light pt-4 pb-3">
             <div class="d-flex justify-content-between w-100">
-                <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand d-none d-sm-block mr-3 flex-shrink-0 __min-w-7rem"
@@ -544,7 +544,7 @@
                                 </div>
                             </a>
                             <div class="text-align-direction dropdown-menu __auth-dropdown dropdown-menu-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}"
-                                 aria-labelledby="dropdownMenuButton" style="width: 130 px;">
+                                 aria-labelledby="dropdownMenuButton" style="width: 130px;">
                                 <a class="dropdown-item" href="{{route('customer.auth.login')}}">
                                     <i class="fa fa-sign-in mr-2"></i> {{ translate('sign_in')}}
                                 </a>

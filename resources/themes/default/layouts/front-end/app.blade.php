@@ -342,7 +342,6 @@
                 </div>
             </div>
         </div>
-    `;
         $(document).on('click', '#cookie-accept', function() {
             document.cookie = '6valley_cookie_consent=accepted; max-age=' + 60 * 60 * 24 * 30;
             $('#cookie-section').hide();

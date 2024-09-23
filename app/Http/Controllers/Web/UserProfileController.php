@@ -498,6 +498,7 @@ class UserProfileController extends Controller
 
     public function account_order_details_seller_info(Request $request)
     {
+        $categories = Category::all();
         $order = $this->order->with(['seller.shop'])->find($request->id);
         if(!$order) {
             Toastr::warning(translate('invalid_order'));
@@ -517,13 +518,14 @@ class UserProfileController extends Controller
 
         $rating_percentage = $rating_count != 0 ? ($vendorRattingStatusPositive*100)/ $rating_count:0;
 
-        return view(VIEW_FILE_NAMES['seller_info'], compact('avg_rating', 'product_count', 'rating_count', 'order', 'rating_percentage'));
+        return view(VIEW_FILE_NAMES['seller_info'], compact('avg_rating', 'product_count', 'rating_count', 'order', 'rating_percentage','categories'));
 
     }
 
     public function account_order_details_delivery_man_info(Request $request)
     {
 
+        $categories = Category::all();
         $order = $this->order->with(['verificationImages', 'details.product','deliveryMan.rating', 'deliveryManReview','deliveryMan'=>function($query){
                 return $query->withCount('review');
             }])->find($request->id);
@@ -548,11 +550,12 @@ class UserProfileController extends Controller
 
         $delivered_count = $this->order->where(['order_status' => 'delivered', 'delivery_man_id' => $order->delivery_man_id, 'delivery_type' => 'self_delivery'])->count();
 
-        return view(VIEW_FILE_NAMES['delivery_man_info'], compact('delivered_count', 'order'));
+        return view(VIEW_FILE_NAMES['delivery_man_info'], compact('delivered_count', 'order', 'categories'));
     }
 
     public function account_order_details_reviews(Request $request): View|RedirectResponse
     {
+        $categories = Category::all();
         $order = $this->order->with(['deliveryManReview', 'customer', 'offlinePayments', 'details'])
             ->where(['id' => $request['id'], 'customer_id' => auth('customer')->id(), 'is_guest' => '0'])
             ->first();
@@ -580,7 +583,7 @@ class UserProfileController extends Controller
                 return $order;
             });
 
-            return view(VIEW_FILE_NAMES['order_details_review'], compact('order'));
+            return view(VIEW_FILE_NAMES['order_details_review'], compact('order', 'categories'));
         }
         Toastr::warning(translate('invalid_order'));
         return redirect()->route('account-oder');
@@ -743,6 +746,7 @@ class UserProfileController extends Controller
     }
     public function track_order_wise_result(Request $request)
     {
+        $categories = Category::all();
         if (auth('customer')->check()) {
             $orderDetails = Order::with('orderDetails')->where('id', $request['order_id'])->whereHas('details', function ($query) {
                 $query->where('customer_id', (auth('customer')->id()));
@@ -754,7 +758,7 @@ class UserProfileController extends Controller
             }
 
             $isOrderOnlyDigital = self::getCheckIsOrderOnlyDigital($orderDetails);
-            return view(VIEW_FILE_NAMES['track_order_wise_result'], compact('orderDetails', 'isOrderOnlyDigital'));
+            return view(VIEW_FILE_NAMES['track_order_wise_result'], compact('orderDetails', 'isOrderOnlyDigital', 'categories'));
         }
         return back();
     }
