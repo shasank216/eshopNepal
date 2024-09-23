@@ -1336,14 +1336,58 @@
                 success: function(response) {
                     // Update the products display with the filtered products
                     $('#ajax-products').html(response.data);
-                    // console.log(response);
 
+                    // Reinitialize add to cart functionality
+                    reinitializeAddToCart();
+
+                    renderQuickViewFunction();
+
+                    renderCompareFunction();
+
+                    // Also, you can add other functionalities like quick view, compare, etc. here
                 },
                 error: function(xhr, status, error) {
-                    // console.error('Error filtering products:', xhr.responseText);
-                    // // Notify the user of an error
-                    // alert('An error occurred while filtering products. Please try again.');
+                    console.error('Error filtering products:', xhr.responseText);
                 }
+            });
+        }
+
+        function reinitializeAddToCart() {
+            $('.action-add-to-cart-form').on('submit', function (e) {
+                e.preventDefault();
+                let form_id = $(this).attr('id');
+                addToCart(form_id);
+            });
+        }
+
+        $(document).on('click', '.action-product-quick-view', function () {
+            let productId = $(this).data('product-id');
+            productQuickView(productId);
+        });
+
+        function renderCompareFunction() {
+            $('.action-product-compare').off('click').on('click', function () {
+                const productId = $(this).data('product-id');
+                const index = selectedProducts.indexOf(productId);
+
+                if (index === -1) {
+                    if (selectedProducts.length < maxItems) {
+                        selectedProducts.push(productId);
+                    } else {
+                        $('#compare-limit-message').show();
+                        $('#compare-message-text').text('You have already selected 4 products.');
+
+                        clearTimeout(messageTimeout);
+                        messageTimeout = setTimeout(() => {
+                            $('#compare-message-text').text('');
+                        }, 10000);
+                    }
+                } else {
+                    selectedProducts.splice(index, 1);
+                }
+
+                updateCompareCount();
+                saveSelectedProducts();
             });
         }
     </script>
