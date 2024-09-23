@@ -261,6 +261,10 @@ public function filterProducts(Request $request)
         
         $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
 
+        // dd( $products);
+        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+        
         // Return the rendered view for AJAX
         return response()->json([
             'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
