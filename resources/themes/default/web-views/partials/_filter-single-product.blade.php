@@ -42,28 +42,27 @@
                     </div>
 
                     <div class="quick-view">
-                        <a class="btn-circle stopPropagation action-product-quick-view" href="javascript:"
+                        <a class="btn-circle stopPropagation action-product-quick-view" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}">
-
+                          
                             <i class="czi-eye align-middle web-text-primary"></i>
                         </a>
 
-                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:"
-                            data-product-id="{{ $product->id }}">
+                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)" data-product-id="{{ $product->id }}">
                             <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
                         </a>
 
+                       
 
-
-                        <a class="btn-circle stopPropagation product-action-add-wishlist" href="javascript:"
+                        <a class="btn-circle stopPropagation product-action-add-wishlist" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}">
-
-                            {{-- <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i> --}}
-                            <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
-                                aria-hidden="true"></i>
+                           
+                            <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i>
+                            {{-- <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
+                            aria-hidden="true"></i>  --}}
                         </a>
 
-
+                        
                     </div>
                     @if ($product->product_type == 'physical' && $product->current_stock <= 0)
                         <span class="out_fo_stock">{{ translate('out_of_stock') }}</span>
@@ -100,10 +99,9 @@
                         <a href="{{ route('product', $product->slug) }}">
                             {{ Str::limit($product['name'], 23) }}
                         </a>
-                        <div class="m-0"
-                            style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; text-overflow: ellipsis;">
+                        <p class="m-0">
                             {!! $product->details !!}
-                        </div>
+                        </p>
                     </div>
 
                     <div>
