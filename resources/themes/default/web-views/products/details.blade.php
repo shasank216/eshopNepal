@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/product-details.css') }}" />
 @endpush
 
-@section('content') 
+@section('content')
     <div class="__inline-23">
         <!-- Bread Crumb -->
         <div class="braed-crumbs">
@@ -68,91 +68,44 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-4 col-12">
                             <div class="cz-product-gallery">
-
-                                <div class="d-flex cz-product-images">
-                                    <div class="cz col-lg-3 col-md-3 col-sm-12">
-                                        <div class="table-responsive __max-h-515px" data-simplebar>
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <div id="syncs2" class="product-thumb-slider">
-                                                    @if ($product->images != null && json_decode($product->images) > 0)
-                                                        @if (json_decode($product->colors) && $product->color_image)
-                                                            @foreach (json_decode($product->color_image) as $key => $photo)
-                                                                @if ($photo->color != null)
-                                                                    <div class="cz-images">
-                                                                        <a style="width: 100px;height:92px;" class="product-preview-thumb color-variants-preview-box-{{ $photo->color }} {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
-                                                                            id="preview-img{{ $photo->color }}"
-                                                                            href="#image{{ $photo->color }}">
-                                                                            <img alt="{{ translate('product') }}"
-                                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
-                                                                        </a>
-                                                                    </div>
-                                                                @else
-                                                                    <div class="">
-                                                                        <a style="width: 100px; height:92px;" class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
-                                                                            id="preview-img{{ $key }}"
-                                                                            href="#image{{ $key }}">
-                                                                            <img alt="{{ translate('product') }}"
-                                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
-                                                                        </a>
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach
-                                                        @else
-                                                            @foreach (json_decode($product->images) as $key => $photo)
-                                                                <div class="cz-images-responsive">
-                                                                    <a class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
-                                                                        id="preview-img{{ $key }}"
-                                                                        href="#image{{ $key }}">
-                                                                        <img alt="{{ translate('product') }}"
-                                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}">
-                                                                    </a>
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cz-preview col-lg-9 col-md-9 col-sm-12">
-                                        <div id="sync1" class="owl-carousel owl-theme product-thumbnail-slider">
-                                            @if ($product->images != null && json_decode($product->images) > 0)
-                                                @if (json_decode($product->colors) && $product->color_image)
-                                                    @foreach (json_decode($product->color_image) as $key => $photo)
-                                                        @if ($photo->color != null)
-                                                            <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
-                                                                id="image{{ $photo->color }}">
-                                                                <img class="cz-image-zoom img-responsive w-100"
-                                                                    src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    alt="{{ translate('product') }}" width="">
-                                                                <div class="cz-image-zoom-pane"></div>
-                                                            </div>
-                                                        @else
-                                                            <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
-                                                                id="image{{ $key }}">
-                                                                <img class="cz-image-zoom img-responsive w-100"
-                                                                    src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
-                                                                    alt="{{ translate('product') }}" width="">
-                                                                <div class="cz-image-zoom-pane"></div>
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    @foreach (json_decode($product->images) as $key => $photo)
+                                <div class="cz-preview">
+                                    <div id="sync1" class="owl-carousel owl-theme product-thumbnail-slider">
+                                        @if ($product->images != null && json_decode($product->images) > 0)
+                                            @if (json_decode($product->colors) && $product->color_image)
+                                                @foreach (json_decode($product->color_image) as $key => $photo)
+                                                    @if ($photo->color != null)
                                                         <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
-                                                            id="image{{ $key }}">
+                                                            id="image{{ $photo->color }}">
                                                             <img class="cz-image-zoom img-responsive w-100"
-                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
-                                                                data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
+                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
+                                                                data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
                                                                 alt="{{ translate('product') }}" width="">
                                                             <div class="cz-image-zoom-pane"></div>
                                                         </div>
-                                                    @endforeach
-                                                @endif
+                                                    @else
+                                                        <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
+                                                            id="image{{ $key }}">
+                                                            <img class="cz-image-zoom img-responsive w-100"
+                                                                src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
+                                                                data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}"
+                                                                alt="{{ translate('product') }}" width="">
+                                                            <div class="cz-image-zoom-pane"></div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @foreach (json_decode($product->images) as $key => $photo)
+                                                    <div class="product-preview-item d-flex align-items-center justify-content-center {{ $key == 0 ? 'active' : '' }}"
+                                                        id="image{{ $key }}">
+                                                        <img class="cz-image-zoom img-responsive w-100"
+                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
+                                                            data-zoom="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}"
+                                                            alt="{{ translate('product') }}" width="">
+                                                        <div class="cz-image-zoom-pane"></div>
+                                                    </div>
+                                                @endforeach
                                             @endif
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -167,7 +120,50 @@
                                     </div>
                                 </div>
 
-                                
+                                <div class="cz">
+                                    <div class="table-responsive __max-h-515px" data-simplebar>
+                                        <div class="d-flex">
+                                            <div id="sync2" class="owl-carousel owl-theme product-thumb-slider">
+                                                @if ($product->images != null && json_decode($product->images) > 0)
+                                                    @if (json_decode($product->colors) && $product->color_image)
+                                                        @foreach (json_decode($product->color_image) as $key => $photo)
+                                                            @if ($photo->color != null)
+                                                                <div class="">
+                                                                    <a class="product-preview-thumb color-variants-preview-box-{{ $photo->color }} {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
+                                                                        id="preview-img{{ $photo->color }}"
+                                                                        href="#image{{ $photo->color }}">
+                                                                        <img alt="{{ translate('product') }}"
+                                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
+                                                                    </a>
+                                                                </div>
+                                                            @else
+                                                                <div class="">
+                                                                    <a class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
+                                                                        id="preview-img{{ $key }}"
+                                                                        href="#image{{ $key }}">
+                                                                        <img alt="{{ translate('product') }}"
+                                                                            src="{{ getValidImage(path: 'storage/app/public/product/' . $photo->image_name, type: 'product') }}">
+                                                                    </a>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        @foreach (json_decode($product->images) as $key => $photo)
+                                                            <div class="">
+                                                                <a class="product-preview-thumb {{ $key == 0 ? 'active' : '' }} d-flex align-items-center justify-content-center"
+                                                                    id="preview-img{{ $key }}"
+                                                                    href="#image{{ $key }}">
+                                                                    <img alt="{{ translate('product') }}"
+                                                                        src="{{ getValidImage(path: 'storage/app/public/product/' . $photo, type: 'product') }}">
+                                                                </a>
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -307,7 +303,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="mt-3">
+                                    {{-- <div class="mt-3">
                                         <div class="details-static">
                                             <div class="row">
                                                 <div class="static-part">
@@ -332,7 +328,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     @php
                                         $percentage = min($product->current_stock, 100); // Cap the percentage at 100%
@@ -490,10 +486,191 @@
                                                 <a id="pinterest-share" class="share-btn" title="Share on Pinterest">
                                                     <i class="fa fa-pinterest"></i>
                                                 </a>
+                                                <a id="whatsapp-share" class="share-btn" title="Share on WhatsApp">
+                                                    <i class="fa fa-whatsapp"></i>
+                                                </a>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </form>
+
+                                @if (getWebConfig(name: 'business_mode') == 'multi')
+                                    <div class="__inline-31" style="border: 1px solid #e2e2e2; background: unset;">
+                                        @if ($product->added_by == 'seller')
+                                            @if (isset($product->seller->shop))
+                                                <div class="row position-relative">
+                                                    <div class="col-3 position-relative">
+                                                        <a href="{{ route('shopView', ['id' => $product->seller->id]) }}"
+                                                            class="d-block">
+                                                            <div class="d-flex __seller-author align-items-center">
+                                                                <div>
+                                                                    <img class="__img-60 img-circle" alt=""
+                                                                        src="{{ getValidImage(path: 'storage/app/public/shop/' . $product->seller->shop->image, type: 'shop') }}">
+                                                                </div>
+                                                                <div class="ms-2 w-0 flex-grow">
+                                                                    <h6>
+                                                                        {{ $product->seller->shop->name }}
+                                                                    </h6>
+                                                                    <span
+                                                                        class="text-capitalize">{{ translate('vendor_info') }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex align-items-center">
+
+                                                                @if ($sellerTemporaryClose || ($product->seller->shop->vacation_status && $currentDate >= $sellerVacationStartDate && $currentDate <= $sellerVacationEndDate))
+                                                                    <span class="chat-seller-info product-details-seller-info"
+                                                                        data-toggle="tooltip"
+                                                                        title="{{ translate('this_shop_is_temporary_closed_or_on_vacation') . ' ' . translate('You_cannot_add_product_to_cart_from_this_shop_for_now') }}">
+                                                                        <img src="{{ theme_asset(path: 'public/assets/front-end/img/info.png') }}"
+                                                                            alt="i">
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-5 mt-2">
+                                                        <div class="row d-flex justify-content-between">
+                                                            <div class="col-6 ">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center rounded __h-79px hr-right-before">
+                                                                    <div class="text-center">
+                                                                        <img src="{{ theme_asset(path: 'public/assets/front-end/img/rating.svg') }}"
+                                                                            class="mb-2" alt="">
+                                                                        <div class="__text-12px text-base">
+                                                                            <strong>{{ $totalReviews }}</strong>
+                                                                            {{ translate('reviews') }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center rounded __h-79px">
+                                                                    <div class="text-center">
+                                                                        <img src="{{ theme_asset(path: 'public/assets/front-end/img/products.svg') }}"
+                                                                            class="mb-2" alt="">
+                                                                        <div class="__text-12px text-base">
+                                                                            <strong>{{ $productsForReview->count() }}</strong>
+                                                                            {{ translate('products') }}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 position-static mt-3">
+                                                        <div class="chat_with_seller-buttons">
+                                                            @if (auth('customer')->id())
+                                                                <button
+                                                                    class="btn w-100 d-block text-center web--bg-primary text-white"
+                                                                    data-toggle="modal" data-target="#chatting_modal"
+                                                                    {{ $product->seller->shop->temporary_close || ($product->seller->shop->vacation_status && date('Y-m-d') >= date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) && date('Y-m-d') <= date('Y-m-d', strtotime($product->seller->shop->vacation_end_date))) ? 'disabled' : '' }}>
+                                                                    <img class="mb-1" alt=""
+                                                                        src="{{ theme_asset(path: 'public/assets/front-end/img/chat-16-filled-icon.png') }}">
+                                                                    <span class="d-none d-sm-inline-block text-capitalize">
+                                                                        {{ translate('chat_with_vendor') }}
+                                                                    </span>
+                                                                </button>
+                                                            @else
+                                                                <a href="{{ route('customer.auth.login') }}"
+                                                                    class="btn w-100 d-block text-center web--bg-primary text-white">
+                                                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/chat-16-filled-icon.png') }}"
+                                                                        class="mb-1" alt="">
+                                                                    <span
+                                                                        class="d-none d-sm-inline-block text-capitalize">{{ translate('chat_with_vendor') }}</span>
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <div class="row d-flex justify-content-between">
+                                                <div class="col-3 ">
+                                                    {{-- <a href="{{ route('shopView', [0]) }}" class="row d-flex align-items-center"> --}}
+                                                        <div>
+                                                            <img class="__inline-32" alt=""
+                                                                src="{{ getValidImage(path: 'storage/app/public/company/' . $web_config['fav_icon']->value, type: 'logo') }}">
+                                                        </div>
+                                                        <div class="{{ Session::get('direction') === 'rtl' ? 'right' : 'mt-3 ml-2' }} get-view-by-onclick"
+                                                            data-link="{{ route('shopView', [0]) }}">
+                                                            <span class="font-bold __text-16px">
+                                                                {{ $web_config['name']->value }}
+                                                            </span><br>
+                                                        </div>
+
+                                                        @if ($product->added_by == 'admin' && ($inHouseTemporaryClose || ($inHouseVacationStatus && $currentDate >= $inHouseVacationStartDate && $currentDate <= $inHouseVacationEndDate)))
+                                                            <div
+                                                                class="{{ Session::get('direction') === 'rtl' ? 'right' : 'ml-3' }}">
+                                                                <span class="chat-seller-info" data-toggle="tooltip"
+                                                                    title="{{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}">
+                                                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/info.png') }}"
+                                                                        alt="i">
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                    {{-- </a> --}}
+                                                </div>
+
+                                                <div class="col-5 mt-2">
+                                                    <div class="row d-flex justify-content-between">
+                                                        <div class="col-6 ">
+                                                            <div
+                                                                class="d-flex justify-content-center align-items-center rounded __h-79px hr-right-before">
+                                                                <div class="text-center">
+                                                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/rating.svg') }}"
+                                                                        class="mb-2" alt="">
+                                                                    <div class="__text-12px text-base">
+                                                                        <strong>{{ $totalReviews }}</strong>
+                                                                        {{ translate('reviews') }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div
+                                                                class="d-flex justify-content-center align-items-center rounded __h-79px">
+                                                                <div class="text-center">
+                                                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/products.svg') }}"
+                                                                        class="mb-2" alt="">
+                                                                    <div class="__text-12px text-base">
+                                                                        <strong>{{ $productsForReview->count() }}</strong>
+                                                                        {{ translate('products') }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 position-static mt-3">
+                                                    <div class="chat_with_seller-buttons">
+                                                        @if (auth('customer')->id())
+                                                            <button class="btn w-100 d-block text-center web--bg-primary text-white"
+                                                                data-toggle="modal" data-target="#chatting_modal"
+                                                                {{ $inHouseTemporaryClose || ($inHouseVacationStatus && $currentDate >= $inHouseVacationStartDate && $currentDate <= $inHouseVacationEndDate) ? 'disabled' : '' }}>
+                                                                <img class="mb-1" alt=""
+                                                                    src="{{ theme_asset(path: 'public/assets/front-end/img/chat-16-filled-icon.png') }}">
+                                                                <span class="d-none d-sm-inline-block text-capitalize">
+                                                                    {{ translate('chat_with_vendor') }}
+                                                                </span>
+                                                            </button>
+                                                        @else
+                                                            <a href="{{ route('shopView', [0]) }}"
+                                                                class="text-center d-block w-100">
+                                                                <button
+                                                                    class="btn text-center d-block w-100 text-white web--bg-primary">
+                                                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                                                    {{ translate('visit_Store') }}
+                                                                </button>
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
 
                             </div>
                         </div>
@@ -553,7 +730,8 @@
                                                                                         <span
                                                                                             class="title">{{ translate($value['title']) }}</span>
                                                                                         <span class="desc text-center">
-                                                                                            {{ translate($value['description']) }}
+                                                                                            Free shipping on all order over
+                                                                                            $250
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -1248,6 +1426,11 @@
             // Pinterest
             document.getElementById('pinterest-share').href =
                 `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(productUrl)}&media=${encodeURIComponent(productImageUrl)}&description=${encodeURIComponent(productDescription)}`;
+
+            // WhatsApp
+            document.getElementById('whatsapp-share').href =
+                `https://api.whatsapp.com/send?text=${encodeURIComponent(productDescription)}%20${encodeURIComponent(productUrl)}`;
         });
+
     </script>
 @endpush

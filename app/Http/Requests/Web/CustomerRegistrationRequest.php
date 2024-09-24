@@ -45,33 +45,35 @@ class CustomerRegistrationRequest extends FormRequest
     // }
 
 
-   public function rules(): array
-{
-    return [
-        'f_name' => 'required|string|max:255',
-        'email' => [
-            'required',
-            'email',
-            'unique:users,email', // Ensure email is unique in the users table
-            'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/', // Only accept emails from @example.com
-        ],
-        'phone' => [
-            'required',
-            'unique:users,phone',    // Ensure phone number is unique
-            'min:10',                // Minimum length of 10 characters (adjust as needed)
-            'max:15',                // Maximum length of 15 characters (adjust as needed)
-        ],      // Ensure phone number is unique
-        'password' => [
-            'required',
-            'confirmed',  // Matches password_confirmation field
-            Password::min(8) // Enforce password strength rules
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols(),
-        ],
-    ];
-}
+    public function rules(): array
+    {
+        return [
+            'f_name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email', // Ensure email is unique in the users table
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', // Accept all valid email formats
+            ],
+            'phone' => [
+                'required',
+                'unique:users,phone',    // Ensure phone number is unique
+                'regex:/^\+?[1-9]\d{0,2}(98|97)\d{8}$/', // Validate country code and number starting with 98 or 97
+            ],
+            'password' => [
+                'required',
+                'confirmed',  // Matches password_confirmation field
+                Password::min(8) // Enforce password strength rules
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+            ],
+        ];
+    }
+    
+    
+    
 
 public function messages(): array
 {

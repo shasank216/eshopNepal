@@ -31,7 +31,10 @@
                             <div class="d-flex align-items-start gap-2">
                                 <button type="button" class="btn btn-square d-none d-md-block get-view-by-onclick"
                                         data-link="{{route('generate-invoice',[$order->id])}}">
-                                    <img src="{{theme_asset(path: 'public/assets/front-end/img/icons/downloads.png')}}" alt="">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <h6 class="fs-13 font-bold text-capitalize m-0">Download Invoice</h6>
+                                            <img src="{{theme_asset(path: 'public/assets/front-end/img/icons/downloads.png')}}" alt="">
+                                        </div>
                                 </button>
                                 @if($order->order_status=='delivered')
                                     <button

@@ -332,6 +332,7 @@ class UserProfileController extends Controller
 
     public function address_edit(Request $request, $id)
     {
+        $categories = Category::all();
         $shippingAddress = ShippingAddress::where('customer_id', auth('customer')->id())->find($id);
         $country_restrict_status = getWebConfig(name: 'delivery_country_restriction');
         $zip_restrict_status = getWebConfig(name: 'delivery_zip_code_area_restriction');
@@ -347,7 +348,7 @@ class UserProfileController extends Controller
         }
 
         if (isset($shippingAddress)) {
-            return view(VIEW_FILE_NAMES['account_address_edit'], compact('shippingAddress', 'country_restrict_status', 'zip_restrict_status', 'delivery_countries', 'delivery_zipcodes', 'countriesName', 'countriesCode'));
+            return view(VIEW_FILE_NAMES['account_address_edit'], compact('categories','shippingAddress', 'country_restrict_status', 'zip_restrict_status', 'delivery_countries', 'delivery_zipcodes', 'countriesName', 'countriesCode'));
         } else {
             Toastr::warning(translate('access_denied'));
             return back();

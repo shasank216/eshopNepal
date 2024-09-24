@@ -4,6 +4,7 @@
 
 @push('css_or_js')
     <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/css/intlTelInput.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/assets/front-end/css/jquery-ui.css') }}">
 @endpush
 
 @section('content')
@@ -99,6 +100,24 @@
                                         <input type="email" class="form-control" id="account-email"
                                                value="{{$customerDetail['email']}}" disabled>
                                     </div>
+
+                                    <!-- added -->
+                                    <div class="form-group col-md-6 mb-0">
+                                        <label for="dob" class="mb-2 text-capitalize">D.O.B</label>
+                                        <input type="text" class="form-control" id="dob" name="dob" value="">
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6 mb-0">
+                                        <label for="gender" class="mb-2 text-capitalize">Gender</label>
+                                        <select class="form-control" id="gender" name="gender">
+                                            <option value="">Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                    </div>                                    
+                                    <!-- added ends -->
+
                                     {{-- <div class="form-group col-md-6 mb-0">
                                         <label for="si-password"
                                                class="mb-2 text-capitalize">{{translate('new_password')}}</label>
@@ -158,4 +177,17 @@
 @push('script')
     <script src="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/js/intlTelInput.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/country-picker-init.js') }}"></script>
+    <script src="{{ asset('public/assets/front-end/js/jquery-ui.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize datepicker
+            $("#dob").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0", // Allow selection of up to 100 years ago
+                dateFormat: 'yy-mm-dd' // Specify date format
+            });
+        });
+    </script>
 @endpush

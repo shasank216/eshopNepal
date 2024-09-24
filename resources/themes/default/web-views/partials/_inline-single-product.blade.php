@@ -68,7 +68,7 @@
 
     <!-- Hover Details -->
     <div class="latest_product_hover">
-        <div class="product-hover_details d-none">
+        <div class="product-hover_details d-none w-100">
             <div class="d-flex justify-content-between">
                 <div class="carding position-relative">
                     <img alt="{{ $product->name }}"
