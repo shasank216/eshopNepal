@@ -1325,146 +1325,71 @@
         });
 
         // Function to filter products
-        // function filterProducts(minPrice, maxPrice) {
-        //     $.ajax({
-        //         url: '{{ route('price.filter') }}', // Define this route in your routes/web.php
-        //         method: 'GET',
-        //         data: {
-        //             min_price: minPrice,
-        //             max_price: maxPrice
-        //         },
-        //         success: function(response) {
-        //             // Update the products display with the filtered products
-        //             $('#ajax-products').html(response.data);
-
-        //             // Reinitialize add to cart functionality
-        //             // reinitializeAddToCart();
-
-        //             // renderQuickViewFunction();
-
-        //             // renderCompareFunction();
-
-        //             // reinitializeWishlist();
-
-        //             reinitializeFunctionalities();
-
-        //             // Also, you can add other functionalities like quick view, compare, etc. here
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.error('Error filtering products:', xhr.responseText);
-        //         }
-        //     });
-        // }
-
-        //New Ajax for filter
-        function filterProducts(filterParams) {
+        function filterProducts(minPrice, maxPrice) {
             $.ajax({
-                url: '/filter-products', // Change to your actual filtering URL
+                url: '{{ route('price.filter') }}', // Define this route in your routes/web.php
                 method: 'GET',
-                data: filterParams,
-                success: function (response) {
-                    // Replace the product list with the filtered products
-                    $('#product-list-container').html(response);
-
-                    // Reinitialize functionality after filtering
-                    reinitializeFunctionalities();
+                data: {
+                    min_price: minPrice,
+                    max_price: maxPrice
                 },
-                error: function () {
-                    console.log('Error filtering products.');
+                success: function(response) {
+                    // Update the products display with the filtered products
+                    $('#ajax-products').html(response.data);
+
+                    // Reinitialize add to cart functionality
+                    reinitializeAddToCart();
+
+                    renderQuickViewFunction();
+
+                    renderCompareFunction();
+
+                    // Also, you can add other functionalities like quick view, compare, etc. here
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error filtering products:', xhr.responseText);
                 }
             });
         }
 
-        // function reinitializeAddToCart() {
-        //     $('.action-add-to-cart-form').on('submit', function (e) {
-        //         e.preventDefault();
-        //         let form_id = $(this).attr('id');
-        //         addToCart(form_id);
-        //     });
-        // }
+        function reinitializeAddToCart() {
+            $('.action-add-to-cart-form').on('submit', function (e) {
+                e.preventDefault();
+                let form_id = $(this).attr('id');
+                addToCart(form_id);
+            });
+        }
 
-        // function reinitializeWishlist() {
-        //     $('.product-action-add-wishlist').on('click', function () {
-        //         let id = $(this).data('product-id');
-        //         addWishlist(id);
-        //     });
-        // }
+        $(document).on('click', '.action-product-quick-view', function () {
+            let productId = $(this).data('product-id');
+            productQuickView(productId);
+        });
 
-        // function reinitializeCompare() {
-        //     $('.action-product-compare').on('click', function () {
-        //         let id = $(this).data('product-id');
-        //         addToCompare(id);
-        //     });
-        // }
+        function renderCompareFunction() {
+            $('.action-product-compare').off('click').on('click', function () {
+                const productId = $(this).data('product-id');
+                const index = selectedProducts.indexOf(productId);
 
-        // $(document).on('click', '.action-product-quick-view', function () {
-        //     let productId = $(this).data('product-id');
-        //     productQuickView(productId);
-        // });
+                if (index === -1) {
+                    if (selectedProducts.length < maxItems) {
+                        selectedProducts.push(productId);
+                    } else {
+                        $('#compare-limit-message').show();
+                        $('#compare-message-text').text('You have already selected 4 products.');
 
-        // function renderCompareFunction() {
-        //     $('.action-product-compare').off('click').on('click', function () {
-        //         const productId = $(this).data('product-id');
-        //         const index = selectedProducts.indexOf(productId);
+                        clearTimeout(messageTimeout);
+                        messageTimeout = setTimeout(() => {
+                            $('#compare-message-text').text('');
+                        }, 10000);
+                    }
+                } else {
+                    selectedProducts.splice(index, 1);
+                }
 
-        //         if (index === -1) {
-        //             if (selectedProducts.length < maxItems) {
-        //                 selectedProducts.push(productId);
-        //             } else {
-        //                 $('#compare-limit-message').show();
-        //                 $('#compare-message-text').text('You have already selected 4 products.');
-
-        //                 clearTimeout(messageTimeout);
-        //                 messageTimeout = setTimeout(() => {
-        //                     $('#compare-message-text').text('');
-        //                 }, 10000);
-        //             }
-        //         } else {
-        //             selectedProducts.splice(index, 1);
-        //         }
-
-        //         updateCompareCount();
-        //         saveSelectedProducts();
-        //     });
-        // }
-
-        // function reinitializeFunctionalities() {
-        //     // Clear previous event handlers to avoid duplication
-        //     $(document).off('click', '.action-add-to-cart-form');
-        //     $(document).off('click', '.product-action-add-wishlist');
-        //     $(document).off('click', '.action-product-compare');
-        //     $(document).off('click', '.action-product-quick-view');
-
-        //     // Attach add-to-cart event to dynamically loaded elements
-        //     $(document).on('click', '.action-add-to-cart-form', function (e) {
-        //         e.preventDefault();
-        //         let form_id = $(this).attr('id');
-        //         addToCart(form_id);
-        //     });
-
-        //     // Attach wishlist event to dynamically loaded elements
-        //     $(document).on('click', '.product-action-add-wishlist', function () {
-        //         let id = $(this).data('product-id');
-        //         addWishlist(id);
-        //     });
-
-        //     // Attach compare event to dynamically loaded elements
-        //     $(document).on('click', '.action-product-compare', function () {
-        //         let id = $(this).data('product-id');
-        //         handleCompareClick(id); // Reuse the comparison handling logic
-        //     });
-
-        //     // Attach quick view event to dynamically loaded elements
-        //     $(document).on('click', '.action-product-quick-view', function () {
-        //         let productId = $(this).data('product-id');
-        //         productQuickView(productId);
-        //     });
-        // }
-
-        // // Call this function initially after page load if needed
-        // $(document).ready(function() {
-        //     reinitializeFunctionalities();
-        // });
+                updateCompareCount();
+                saveSelectedProducts();
+            });
+        }
     </script>
     <script>
         $(document).ready(function() {
