@@ -30,7 +30,7 @@
                                 $productsFound = true;
                             @endphp
                             <div class="product col-lg-3 col-md-4 col-sm-6 col-12">
-                                <div class="position-relative">
+                                <div class="position-relative ">
                                     <a class="__best-selling" href="{{ route('product', $bestSell->product->slug) }}">
                                         <img class=""
                                             src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $bestSell->product['thumbnail'], type: 'product') }}"
@@ -79,11 +79,11 @@
 
                                         <!-- Hover Wala -->
                                         <div class="bestselling-hover-responsive">
-                                            <div class="product-hover_details hover-detail d-none">
+                                            <div class="product-hover_details hover-detail d-none w-100">
                                                 <div class="d-flex justify-content-between">
-                                                    <div class="carding position-relative card-border">
+                                                    <div class="carding position-relative">
 
-                                                        <a class="__best-selling"
+                                                        <a class="__best-selling w-100"
                                                             href="{{ route('product', $bestSell->product->slug) }}">
                                                             <img class=""
                                                                 src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $bestSell->product['thumbnail'], type: 'product') }}"
@@ -143,7 +143,7 @@
 
                                                     </div>
 
-                                                    <div class="">
+                                                    {{-- <div class="">
                                                         <div class="gallery">
                                                             @foreach (array_slice(json_decode($bestSell->product->images), 0, 4) as $key => $photo)
                                                                 <figure>
@@ -153,7 +153,7 @@
                                                                 </figure>
                                                             @endforeach
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
 
                                                 <div class="text-center">

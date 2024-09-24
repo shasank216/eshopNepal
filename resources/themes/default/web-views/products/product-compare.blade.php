@@ -58,7 +58,7 @@
 
                         <div class="product-compare-specification my-3">
                             <span>
-                                {{ $product->specifications ?: 'No specifications available.' }}
+                                {!! $product->details ?: 'No specifications available.' !!}
                             </span>
                         </div>
 

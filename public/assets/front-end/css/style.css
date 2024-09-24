@@ -7773,7 +7773,7 @@ span.badge-accent:hover {
 
     .__best-selling {
         border-radius: 5px;
-        border: 1px solid #e9f3ff;
+        /* border: 1px solid #e9f3ff; */
         background: #fff;
         padding: 10px;
     }
@@ -9756,8 +9756,8 @@ button#dropdownMenuButton {
 } */
 
 .compare-product_item img {
-    max-height: 184px;
-    max-width: 184px;
+    height: 184px;
+    width: 184px;
     padding: 16px;
     margin: auto;
 }

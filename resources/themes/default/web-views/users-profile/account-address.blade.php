@@ -89,7 +89,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="zip">
-                                                {{translate('zip_code')}}
+                                                Postal Code
                                                 <span class="text-danger">*</span>
                                             </label>
                                             @if($zip_restrict_status)
@@ -265,7 +265,7 @@
                                             <div>
                                                 <span class="font-nameA">
                                                     <span class="fw-semibold min-w-60px">
-                                                        {{translate('zip_code')}}
+                                                        Postal Code
                                                     </span>
                                                     <span class="px-1">:</span>
                                                     {{$shippingAddress['zip']}}
