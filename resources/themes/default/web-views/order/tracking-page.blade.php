@@ -40,10 +40,10 @@
                                 <input class="form-control form-control-sm prepended-form-control" type="number" value="{{ request('order_id') }}" name="order_id"
                                     placeholder="{{translate('order_id')}}" required>
                             </div>
-                            <div class="col-md-4 col-sm-6">
+                            {{-- <div class="col-md-4 col-sm-6">
                                 <input class="form-control form-control-sm prepended-form-control" name="phone_number" type="tel" value="{{ request('phone_number') }}"
                                     placeholder="{{translate('your_phone_number')}}" required>
-                            </div>
+                            </div> --}}
                             <div class="col-md-4">
                                 <button class="btn btn--primary btn-sm w-100 font-bold" type="submit" name="trackOrder">{{translate('track_order')}}</button>
                             </div>
