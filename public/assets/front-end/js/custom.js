@@ -2040,25 +2040,35 @@ $('.password-check').on('keyup keypress change click', function () {
 
 
 // new 
+// JavaScript/jQuery File
 $(document).ready(function () {
-    const maxItems = 4;
+    const maxItems = 4; // Maximum products that can be compared
+    let selectedProducts = loadSelectedProducts(); // Load initial selected products from local storage
     let messageTimeout;
 
-    // Load selected products from localStorage
-    window.loadSelectedProducts = function() { // Make this global
-        const savedProducts = localStorage.getItem('selectedProducts');
-        return savedProducts ? JSON.parse(savedProducts) : [];
-    };
+    // Function to load selected products from localStorage
+    function loadSelectedProducts() {
+        try {
+            const savedProducts = localStorage.getItem('selectedProducts');
+            return savedProducts ? JSON.parse(savedProducts) : [];
+        } catch (error) {
+            console.error('Error parsing saved products from local storage:', error);
+            return [];
+        }
+    }
 
-    // Save selected products to localStorage
-    window.saveSelectedProducts = function() { // Make this global
-        localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
-    };
-
-    let selectedProducts = loadSelectedProducts();
+    // Function to save selected products to localStorage
+    function saveSelectedProducts(selectedProducts) {
+        try {
+            localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
+            console.log('Saved Products to Local Storage:', selectedProducts);
+        } catch (error) {
+            console.error('Error saving products to local storage:', error);
+        }
+    }
 
     // Update the count of selected products displayed on the page
-    window.updateCompareCount = function() { // Make this global
+    function updateCompareCount() {
         if (selectedProducts.length > 0) {
             $('#compare-product-count').text(selectedProducts.length);
             $('.compare-count').show();
@@ -2068,137 +2078,105 @@ $(document).ready(function () {
         }
     }
 
-    updateCompareCount();
+    // Function to render selected products in the UI based on local storage
+    function renderSelectedProducts() {
+        // Remove compared class from all products
+        $('.action-product-compare').removeClass('compared');
 
-    // Handle click on comparison icon
-    $('.action-product-compare').on('click', function () {
-        const productId = $(this).data('product-id');
-        const index = selectedProducts.indexOf(productId);
+        // Mark the products that are in the comparison list
+        if (selectedProducts.length > 0) {
+            selectedProducts.forEach(product => {
+                const productElement = $(`[data-product-id="${product.id}"]`);
+                if (productElement.length) {
+                    productElement.addClass('compared');
+                }
+            });
+        }
+    }
+
+    // Function to handle adding/removing products from the comparison list
+    function handleCompareClick(productId, productCategoryId) {
+        // Check if the current product's category matches with the category of products already in the list
+        const currentCategory = selectedProducts.length > 0 ? selectedProducts[0].categoryId : null;
+
+        // If categories don't match, show message and return
+        if (currentCategory !== null && currentCategory !== productCategoryId) {
+            $('#compare-limit-message').show();
+            $('#compare-message-text').text('You can only compare products from the same category.');
+            clearTimeout(messageTimeout);
+            messageTimeout = setTimeout(() => {
+                $('#compare-message-text').text('');
+                $('#compare-limit-message').hide();
+            }, 10000);
+            return;
+        }
+
+        const index = selectedProducts.findIndex(product => product.id === productId);
 
         if (index === -1) {
+            // Add product if it's not already in the list and the maximum limit isn't reached
             if (selectedProducts.length < maxItems) {
-                selectedProducts.push(productId);
+                selectedProducts.push({ id: productId, categoryId: productCategoryId });
             } else {
                 $('#compare-limit-message').show();
                 $('#compare-message-text').text('You have already selected 4 products.');
-
                 clearTimeout(messageTimeout);
                 messageTimeout = setTimeout(() => {
                     $('#compare-message-text').text('');
                 }, 10000);
             }
         } else {
+            // Remove product if it is already in the list
             selectedProducts.splice(index, 1);
         }
 
+        // Update compare count, save to local storage, and render updated products
         updateCompareCount();
-        saveSelectedProducts();
-    });
+        saveSelectedProducts(selectedProducts);
+        renderSelectedProducts();
+    }
 
-    // Attach event handler for comparison icon clicks (for dynamically loaded content)
-    $(document).on('click', '.action-product-compare', function () {
+    // Event handler for clicking the compare button
+    $('body').on('click', '.action-product-compare', function () {
         const productId = $(this).data('product-id');
-        handleCompareClick(productId);
+        const productCategoryId = $(this).data('category-id');
+
+        // Check if product ID and category ID are present
+        if (!productId || !productCategoryId) {
+            console.error('Product ID or Category ID is missing!');
+            return;
+        }
+
+        handleCompareClick(productId, productCategoryId);
     });
 
-    // Handle click on clear comparison button
-    $('#clear-compare-items').on('click', function () {
+    // Event handler for clearing all compared items
+    $('body').on('click', '#clear-compare-items', function () {
         selectedProducts = [];
         updateCompareCount();
         $('#compare-message-text').text('');
         $('#compare-limit-message').hide();
         clearTimeout(messageTimeout);
         localStorage.removeItem('selectedProducts');
+        renderSelectedProducts();
     });
 
-    // Handle click on compare button
-    $('.compare-count a').on('click', function (e) {
+    // Event handler for navigating to the compare page with selected products
+    $('body').on('click', '.compare-count a', function (e) {
         e.preventDefault();
         if (selectedProducts.length > 0) {
-            const compareUrl = $(this).attr('href') + '?ids=' + selectedProducts.join(',');
-            window.location.href = compareUrl; // Redirect with the product IDs
+            const compareUrl = $(this).attr('href') + '?ids=' + selectedProducts.map(item => item.id).join(',');
+            window.location.href = compareUrl;
         }
     });
-});
 
-window.loadSelectedProducts = function() {
-    const savedProducts = localStorage.getItem('selectedProducts');
-    return savedProducts ? JSON.parse(savedProducts) : [];
-};
-
-window.saveSelectedProducts = function(selectedProducts) {
-    localStorage.setItem('selectedProducts', JSON.stringify(selectedProducts));
-};
-
-window.updateCompareCount = function() {
-    const selectedProducts = loadSelectedProducts();
-    if (selectedProducts.length > 0) {
-        $('#compare-product-count').text(selectedProducts.length);
-        $('.compare-count').show();
-    } else {
-        $('#compare-product-count').text('');
-        $('.compare-count').hide();
-    }
-};
-
-window.handleCompareClick = function(productId) {
-    const maxItems = 4;
-    let selectedProducts = loadSelectedProducts();
-    let messageTimeout;
-
-    const index = selectedProducts.indexOf(productId);
-    if (index === -1) {
-        if (selectedProducts.length < maxItems) {
-            selectedProducts.push(productId);
-        } else {
-            $('#compare-limit-message').show();
-            $('#compare-message-text').text('You have already selected 4 products.');
-            clearTimeout(messageTimeout);
-            messageTimeout = setTimeout(() => {
-                $('#compare-message-text').text('');
-            }, 10000);
-        }
-    } else {
-        selectedProducts.splice(index, 1);
-    }
-
+    // Call renderSelectedProducts and updateCompareCount when the document is ready
     updateCompareCount();
-    saveSelectedProducts(selectedProducts);
-};
+    renderSelectedProducts();
 
-window.reinitializeFunctionalities = function () {
-    // Clear previous event handlers to avoid duplication
-    $(document).off('click', '.action-add-to-cart-form');
-    $(document).off('click', '.product-action-add-wishlist');
-    $(document).off('click', '.action-product-compare');
-    $(document).off('click', '.action-product-quick-view');
-
-    // Attach add-to-cart event to dynamically loaded elements
-    $(document).on('click', '.action-add-to-cart-form', function (e) {
-        e.preventDefault();
-        let form_id = $(this).attr('id');
-        addToCart(form_id);
+    // Monitor AJAX completion and re-bind events for dynamically added products
+    $(document).ajaxComplete(function () {
+        renderSelectedProducts();
+        updateCompareCount();
     });
-
-    // Attach wishlist event to dynamically loaded elements
-    $(document).on('click', '.product-action-add-wishlist', function () {
-        let id = $(this).data('product-id');
-        addWishlist(id);
-    });
-
-    // Attach compare event to dynamically loaded elements
-    $(document).on('click', '.action-product-compare', function () {
-        let id = $(this).data('product-id');
-        handleCompareClick(id); // Reuse the comparison handling logic
-    });
-
-    // Attach quick view event to dynamically loaded elements
-    $(document).on('click', '.action-product-quick-view', function () {
-        let productId = $(this).data('product-id');
-        productQuickView(productId);
-    });
-};
-
-$(document).ready(function() {
-    reinitializeFunctionalities();
 });
