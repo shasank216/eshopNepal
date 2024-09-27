@@ -243,8 +243,21 @@ class ProductListController extends Controller
      $product=$this->product->active()->inRandomOrder()->first();
      $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
      $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+    $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+    $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+    $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+
+    $temporaryClose = getWebConfig('temporary_close');
+    $inHouseVacation = getWebConfig('vacation_add');
+    $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+    $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+    $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+    $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
     
-        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies','wishlistStatus','countWishlist'));
+    return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies','wishlistStatus','countWishlist', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
+                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
+                'inHouseTemporaryClose' ));
     }
 
 
@@ -255,20 +268,33 @@ public function filterProducts(Request $request)
 {
     $categories = $request->input('categories');
 
-        // Retrieve filtered products with pagination
-        $products = Product::whereIn('category_id', $categories)
-            ->paginate(10); // Adjust pagination per page if needed
-        
-        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+    // Retrieve filtered products with pagination
+    $products = Product::whereIn('category_id', $categories)
+        ->paginate(10); // Adjust pagination per page if needed
+    
+    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
 
-        // dd( $products);
-        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
-        
-        // Return the rendered view for AJAX
-        return response()->json([
-            'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings'))->render()
-        ]);
+    // dd( $products);
+    // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+    //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+    $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+    $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+    $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+
+    $temporaryClose = getWebConfig('temporary_close');
+    $inHouseVacation = getWebConfig('vacation_add');
+    $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+    $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+    $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+    $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+    
+    // Return the rendered view for AJAX
+    return response()->json([
+        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
+                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
+                'inHouseTemporaryClose'))->render()
+    ]);
 }
 
 public function filterBrand(Request $request)

@@ -41,15 +41,17 @@
                         </a>
                     </div>
 
-                    <div class="quick-view">
+                    <div class="quick-view" id="product-list-container">
                         <a class="btn-circle stopPropagation action-product-quick-view" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}">
                           
                             <i class="czi-eye align-middle web-text-primary"></i>
                         </a>
 
-                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)" data-product-id="{{ $product->id }}">
-                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)" 
+                            data-product-id="{{ $product->id }}" 
+                            data-category-id="{{ $product->category_id }}"> <!-- Ensure the category ID is included here -->
+                                <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
                         </a>
 
                        
@@ -142,7 +144,7 @@
                     </div>
 
                     <div class="__btn-grp search-page-buttons mt-2 mb-3">
-                        <form class="add-to-cart-form btn-grp-container">
+                        {{-- <form class="add-to-cart-form btn-grp-container">
                             <!-- Hidden input field for product ID -->
                             <input type="hidden" name="id" value="{{ $product->id }}">
 
@@ -153,10 +155,93 @@
                             </button>
 
                             <!-- Add to Cart Button -->
-                            <button type="submit" class="btn add-to-cart">
+                            <button type="submit" class="btn add-to-cart" data-id="{{ $product->id }}">
                                 <i class="navbar-tool-icon czi-cart me-2"></i>
                                 <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>
+                        </form> --}}
+                        <form id="add-to-cart-form" class="mb-2">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            {{-- <div class="d-flex justify-content-center align-items-center">
+                                <div>
+                                    <div
+                                        class="d-flex justify-content-center align-items-center quantity-box border rounded border-base web-text-primary">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-number __p-10 web-text-primary" type="button"
+                                                data-type="minus" data-field="quantity" disabled="disabled">
+                                                -
+                                            </button>
+                                        </span>
+                                        <input type="text" name="quantity"
+                                            class="form-control input-number text-center cart-qty-field __inline-29 border-0 "
+                                            placeholder="{{ translate('1') }}" value="{{ $product->minimum_order_qty ?? 1 }}"
+                                            data-producttype="{{ $product->product_type }}"
+                                            min="{{ $product->minimum_order_qty ?? 1 }}"
+                                            max="{{ $product['product_type'] == 'physical' ? $product->current_stock : 100 }}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-number __p-10 web-text-primary" type="button"
+                                                data-producttype="{{ $product->product_type }}" data-type="plus"
+                                                data-field="quantity">
+                                                +
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <input type="hidden" class="product-generated-variation-code" name="product_variation_code">
+                            <input type="hidden" value="" class="in_cart_key form-control w-50" name="key">
+        
+                            <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
+                                @if (
+                                    ($product->added_by == 'seller' &&
+                                        ($sellerTemporaryClose ||
+                                            (isset($product->seller->shop) &&
+                                                $product->seller->shop->vacation_status &&
+                                                $currentDate >= $sellerVacationStartDate &&
+                                                $currentDate <= $sellerVacationEndDate))) ||
+                                        ($product->added_by == 'admin' &&
+                                            ($inHouseTemporaryClose ||
+                                                ($inHouseVacationStatus &&
+                                                    $currentDate >= $inHouseVacationStartDate &&
+                                                    $currentDate <= $inHouseVacationEndDate))))
+                                    <button class="btn btn-secondary" type="button" disabled>
+                                        {{ translate('buy_now') }}
+                                    </button>
+                                    <button class="btn add-to-cart string-limit" type="button" disabled>
+                                        {{ translate('add_to_cart') }}
+                                    </button>
+                                @else
+                                    <button
+                                        class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-buy-now-this-product"
+                                        type="button">
+                                        <span class="string-limit">{{ translate('buy_now') }}</span>
+                                    </button>
+                                    <button
+                                        class="btn add-to-cart element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                        type="button" data-update-text="{{ translate('update_cart') }}"
+                                        data-add-text="{{ translate('add_to_cart') }}">
+                                        <span class="string-limit">{{ translate('add_to_cart') }}</span>
+                                    </button>
+                                @endif
+        
+                                @if (
+                                    ($product->added_by == 'seller' &&
+                                        ($sellerTemporaryClose ||
+                                            (isset($product->seller->shop) &&
+                                                $product->seller->shop->vacation_status &&
+                                                $currentDate >= $sellerVacationStartDate &&
+                                                $currentDate <= $sellerVacationEndDate))) ||
+                                        ($product->added_by == 'admin' &&
+                                            ($inHouseTemporaryClose ||
+                                                ($inHouseVacationStatus &&
+                                                    $currentDate >= $inHouseVacationStartDate &&
+                                                    $currentDate <= $inHouseVacationEndDate))))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}
+                                    </div>
+                                @endif
+                            </div>
                         </form>
                     </div>
                 </div>
