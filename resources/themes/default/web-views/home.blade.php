@@ -471,7 +471,7 @@
             .product-hover_details {
                 position: absolute;
                 top: -16px;
-                left: -16px;
+                /* left: -16px; */
                 padding: 1rem;
 
                 border-radius: 15px;
@@ -625,8 +625,8 @@
             }
 
             .ribbon-new {
-                top: 45px;
-                left: -6px;
+                top: 45px !important;
+                left: -6px !important;
                 width: 60px;
                 display: flex;
                 justify-content: center;

@@ -10,6 +10,32 @@
     .btn-grp-container .btn {
         flex: 1;
     }
+    
+    .ribbon-sale {
+        background-color:
+        color-mix(in srgb, #FF3B3B, #fff 20%);
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        width: 130px;
+        font-size: 11px;
+        font-weight: 400;
+        padding-left: 1rem;
+        height: 20px;
+    }
+
+    .ribbon {
+        position: absolute;
+        padding: 5px 10px 5px 15px;
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+        z-index: 3;
+        top: 20px;
+        left: -13px;
+        clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    }
 </style>
 
 <div class="product-single-hover style--card">
@@ -20,14 +46,14 @@
                     @if ($product->discount > 0)
                         {{-- <span class="for-discount-value p-1 pl-2 pr-2 font-bold fs-13"> --}}
                         <span class="ribbon ribbon-sale">
-                            <span class="direction-ltr d-block">
+                            {{-- <span class="direction-ltr d-block pl-2"> --}}
                                 On Sale
                                 @if ($product->discount_type == 'percent')
-                                    -{{ round($product->discount, !empty($decimal_point_settings) ? $decimal_point_settings : 0) }}%
+                                    {{ round($product->discount, !empty($decimal_point_settings) ? $decimal_point_settings : 0) }}%
                                 @elseif($product->discount_type == 'flat')
-                                    -{{ webCurrencyConverter(amount: $product->discount) }}
+                                    {{ webCurrencyConverter(amount: $product->discount) }}
                                 @endif
-                            </span>
+                            {{-- </span> --}}
                         </span>
                     @else
                         <div class="d-flex justify-content-end">
@@ -71,7 +97,7 @@
                     @endif
                 </div>
             </div>
-            <div class="search-product-details">
+            <div class="search-product-details d-flex align-items-center">
                 <div class="single-product-details">
                     <div>
                         <p class="m-0 brand-name">
@@ -101,9 +127,9 @@
                         <a href="{{ route('product', $product->slug) }}">
                             {{ Str::limit($product['name'], 23) }}
                         </a>
-                        <p class="m-0">
+                        {{-- <p class="m-0">
                             {!! $product->details !!}
-                        </p>
+                        </p> --}}
                     </div>
 
                     <div>
@@ -127,7 +153,7 @@
                         @endif
                     </div>
 
-                    <div class="justify-content-between">
+                    <div class="justify-content-between mt-1">
                         <div class="product-price d-flex flex-wrap align-items-center gap-8">
                             <span class="text-accent text-dark">
                                 {{ webCurrencyConverter(

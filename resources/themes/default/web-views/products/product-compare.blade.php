@@ -43,6 +43,7 @@
                                 @endif
                             </span>
                         </div>
+                        
 
                         <div class="product-compare-description">
                             <div class="product-compare-rating my-3">

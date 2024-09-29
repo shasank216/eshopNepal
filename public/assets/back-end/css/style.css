@@ -3,24 +3,25 @@
     --c1-rgb: 1, 119, 205;
     --c2: #ff6767;
     /* --title-color: #334257; */
-
-    --title-color: #8c98a4 !important;
-
     /* --text-color: #5b6777; */
-    --text-color: #fff;
     --border-color: rgba(180, 208, 224, 0.5);
     --font: "Inter", sans-serif;
+    --background-clr: #073b74;
+    --title-color: #8c98a4;
+    --text-color: #5b6777;
 }
 
 body {
     font-family: var(--font);
     font-family: 'Inter';
-
     color: var(--text-color);
-
     line-height: 1.4;
     background-color: #f9f9fb;
     -webkit-font-smoothing: antialiased;
+}
+
+.textWhite{
+    color: #e9f3ff;
 }
 
 .h1,
@@ -40,7 +41,7 @@ h6 {
 }
 #content.main {
     min-height: 100vh;
-    background: #252b45;
+    background: #f8f8fa;
 }
 
 .list-unstyled,
@@ -92,7 +93,7 @@ a:hover {
 }
 
 #navbarVerticalNavMenu .nav-link{
-    color: white;
+    /* color: ; */
 }
 
 .navbar-brand-wrapper {
@@ -112,7 +113,7 @@ a:hover {
 }
 
 .navbar-vertical-aside-mini-mode  aside{
-    background-color: #202741;
+    background-color: #073b74;
 }
 
 .navbar-vertical-aside-mini-mode  aside .nav-link-toggle::before{
@@ -120,7 +121,7 @@ a:hover {
 }
 
 .navbar-vertical-content {
-    background: #202741;
+    background: #073b74;
     padding: 10px 15px;
 }
 
@@ -368,7 +369,7 @@ thead.text-capitalize th {
 }
 
 .side-logo {
-    background-color: #202741;
+    background-color: white;
 }
 
 .grid-card-wrap {
@@ -750,9 +751,9 @@ label {
 
 /* Business Analytics */
 .business-analytics {
-    background-color: #fff;
+    background-color: #ffe895;
     border-radius: 10px;
-    padding: 40px 30px 20px;
+    padding: 30px 30px 20px;
     position: relative;
     border: 1px solid rgba(180, 208, 224, 0.5);
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
@@ -781,7 +782,7 @@ label {
 
 /* Order Stats */
 .order-stats {
-    background-color: rgba(110, 137, 175, 0.0509803922);
+    background-color: white;
     border-radius: 10px;
     padding: 20px;
     display: flex;
@@ -807,7 +808,7 @@ label {
 .order-stats__subtitle {
     font-weight: 600;
     font-size: 14px;
-    color: white;
+    color: #334257;
     margin-bottom: 0;
 }
 
@@ -927,7 +928,7 @@ label {
 }
 
 #header{
-background-color: #202741;
+background-color: white;
 }
 
 .card-header {
@@ -1102,13 +1103,13 @@ background-color: #202741;
 }
 
 .card {
-    background: #262c46;
+    background: white;
     border-color: #f4f4f4;
     box-shadow: 0px 5px 10px rgba(51, 66, 87, 0.05);
     transition: all 0.3s ease;
 }
 .card .card-header{
-    background-color: #202741;
+    background-color: #f8f8fa;
 }
 .card:hover {
     box-shadow: 0px 5px 24px rgba(7, 59, 116, 0.15);
@@ -1204,6 +1205,9 @@ h1 {
 .form-floating {
     position: relative;
 }
+.form-floating label{
+    color: #000;
+}
 
 .form-floating > .form-control:not(:-moz-placeholder-shown) {
     padding-top: 1rem;
@@ -1223,26 +1227,31 @@ h1 {
 .form-floating > .form-control-plaintext::-moz-placeholder,
 .form-floating > .form-control::-moz-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext:-ms-input-placeholder,
 .form-floating > .form-control:-ms-input-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext::-moz-placeholder,
 .form-floating > .form-control::-moz-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext:-ms-input-placeholder,
 .form-floating > .form-control:-ms-input-placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > .form-control-plaintext::placeholder,
 .form-floating > .form-control::placeholder {
     color: transparent !important;
+    color: #1e2022;
 }
 
 .form-floating > label,
@@ -1636,7 +1645,7 @@ img {
 
 .pos-product-item_price {
     font-weight: 700;
-    color: var(--c1);
+    /* color: var(--c1); */
 }
 
 .pos-product-item_hover-content {
@@ -1864,7 +1873,7 @@ ol li:not(:last-child) {
 .btn-secondary {
     /* background-color: #f4f5f7; */
     /* border-color: #f4f5f7; */
-    color: var(--title-color);
+    color: #fff;
 }
 
 .btn-secondary:focus,
@@ -2162,7 +2171,7 @@ select {
 
 .billing-section-wrap .bottom-sticky-buttons{
     padding: unset !important;
-    background-color: #252B45;
+    background-color: white;
     margin-bottom: 0.8rem;
 }
 
@@ -5399,7 +5408,7 @@ select {
     position: sticky;
     top: 0;
     z-index: 9;
-    background: #202741;
+    background: #073b74;
 }
 
 aside .navbar-vertical-content {
@@ -5749,7 +5758,7 @@ aside .navbar-vertical-content {
 
 
 .alert-danger {
-    color: #fff;
+    color: #677788;
     background-color: rgba(237, 76, 120, 0.1);
     border-color: rgba(237, 76, 120, 0.3);
 }
@@ -6229,7 +6238,7 @@ body *::-webkit-scrollbar-thumb {
 .refund-details-card--2 {
     border-radius: 5px;
     border: 1px solid rgba(20, 85, 172, 0.1);
-    background: #fff;
+    background: white;
 }
 .min-width--60px {
     --min-width: 60px;
@@ -6286,8 +6295,8 @@ body *::-webkit-scrollbar-thumb {
 .chat_ib.media-body {
     width: 0;
 }
-.media-body {
-    color: white;
+.media-body span {
+    color: #1e2022;
 }
 .chat_people {
     align-items: center;
@@ -6330,12 +6339,18 @@ body *::-webkit-scrollbar-thumb {
     color: #1e2022;
 }
 
-
 .modal-content {
-    background: #272d47;
+    background: #f8f8fa;
 }
 
-.card-title {
-    color: #fff;
+#printableArea dt{
+    color: #8c98a4 !important;
 }
 
+#myInput{
+    color: #1e2022;
+}
+
+#add-customer .input-label{
+    color: #1e2022 !important;
+}

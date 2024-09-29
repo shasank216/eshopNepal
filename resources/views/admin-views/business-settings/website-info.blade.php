@@ -164,7 +164,7 @@
                                 </label>
                                 <input class="form-control latitude" type="text" name="latitude" id="latitude"
                                        value="{{ !empty($default_location['lat'])?$default_location['lat']: '-33.8688' }}"
-                                       placeholder="{{translate('latitude')}}"  disabled>
+                                       placeholder="{{translate('latitude')}}"  >
                             </div>
                         </div>
                         <div class="col-sm-6 col-lg-4">
@@ -180,7 +180,7 @@
                                 </label>
                                 <input class="form-control longitude" type="text" name="longitude" id="longitude"
                                        value="{{ !empty($default_location['lng'])?$default_location['lng']:'151.2195' }}"
-                                       placeholder="{{translate('longitude')}}"   disabled>
+                                       placeholder="{{translate('longitude')}}"   >
 
                             </div>
                         </div>
