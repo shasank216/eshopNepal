@@ -334,9 +334,9 @@
 
 
             <!-- <div>
-                                                                                <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                                                                                <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                                                                            </div> -->
+                <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+            </div> -->
 
             <div class="d-flex align-items-center gap-3">
                 <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
@@ -1059,6 +1059,23 @@
         data-name="{{ $data['name'] }}" data-from="{{ $data['data_from'] }}" data-sort="{{ $data['sort_by'] }}"
         data-min-price="{{ $data['min_price'] }}" data-max-price="{{ $data['max_price'] }}"
         data-message="{{ translate('items_found') }}"></span>
+
+        
+
+        <!-- Compare Limit Message -->
+    <div id="compare-limit-message" style="display:none;">
+        <span id="compare-message-text">You have already selected 4 products.</span>
+        <button class="btn" id="clear-compare-items">Clear Compare Items</button>
+    </div>
+
+    <!-- Compare Count Display -->
+    <div class="compare-count" style="display:none;">
+        <a href="{{ url('compare/product') }}">
+            Compare <span id="compare-product-count">0</span>
+        </a>
+    </div>
+
+
 
 @endsection
 

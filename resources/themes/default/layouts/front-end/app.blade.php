@@ -227,35 +227,7 @@
         @endif
     </div>
 
-     <!-- Message Container for displaying limit warning -->
-   <!-- <div id="compare-limit-message" style="display:none;">
-        <span id="compare-message-text">
-            You have already selected 4 products.
-        </span>
-        <button class="btn" id="clear-compare-items">Clear Compare Items</button>
-    </div>
-
-    <div class="compare-count" style="display:none;">
-        <a href="{{ url('compare/product') }}">
-            Compare <span id="compare-product-count"></span>
-        </a>
-    </div> 
-    -->
-
-    <!-- Compare Limit Message -->
-<div id="compare-limit-message" style="display:none;">
-    <span id="compare-message-text">You have already selected 4 products.</span>
-    <button class="btn" id="clear-compare-items">Clear Compare Items</button>
-</div>
-
-<!-- Compare Count Display -->
-<div class="compare-count" style="display:none;">
-    <a href="{{ url('compare/product') }}">
-        Compare <span id="compare-product-count">0</span>
-    </a>
-</div>
-
-
+    
     <script src="{{ theme_asset(path: 'public/assets/front-end/vendor/jquery/dist/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}">
     </script>
