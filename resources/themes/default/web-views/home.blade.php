@@ -25,7 +25,11 @@
         <style>
             .latest-product-margin {
                 border-bottom: 2px solid #efefef;
-                margin-top: 5rem;
+                /* margin-top: 5rem; */
+            }
+
+            .margintop-5 {
+                margin-top: 5rem !important;
             }
 
             .brand-name {
@@ -227,7 +231,10 @@
             }
 
             .add-to-cart {
-                width: 100%;
+                /* width: 100%; */
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 padding: 10px;
                 background-color: #4759ff;
                 color: #ffffff;
@@ -472,7 +479,9 @@
                 position: absolute;
                 top: -16px;
                 /* left: -16px; */
+                left: -1px;
                 padding: 1rem;
+                width: 101% !important;
 
                 border-radius: 15px;
                 z-index: 4;
@@ -618,8 +627,8 @@
                 font-weight: bold;
                 color: white;
                 z-index: 3;
-                top: 20px;
-                left: -13px;
+                /* top: 20px;
+                left: -13px; */
                 clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
                 box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
             }
@@ -789,11 +798,6 @@
             </div>
         @endif
 
-
-        @if ($web_config['flash_deals'] && count($web_config['flash_deals']->products) > 0)
-            @include('web-views.partials._flash-deal', ['decimal_point_settings' => $decimalPointSettings])
-        @endif
-
         {{-- @if ($web_config['featured_deals'] && count($web_config['featured_deals']) > 0)
             <section class="featured_deal">
                 <div class="container">
@@ -928,6 +932,13 @@
                 @include('web-views.partials._best-selling')
             @endif
         </section>
+
+        
+
+        @if ($web_config['flash_deals'] && count($web_config['flash_deals']->products) > 0)
+            @include('web-views.partials._flash-deal', ['decimal_point_settings' => $decimalPointSettings])
+        @endif
+
 
 
         {{-- Advertise section --}}
