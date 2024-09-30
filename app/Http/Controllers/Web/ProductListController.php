@@ -31,6 +31,7 @@ class ProductListController extends Controller
 {
     public function __construct(
         private Product      $product,
+        private Wishlist $wishlist,
         private Order        $order,
         private OrderDetail  $order_details,
         private Category     $category,

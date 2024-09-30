@@ -68,7 +68,7 @@
 
     <!-- Hover Details -->
     <div class="latest_product_hover">
-        <div class="product-hover_details d-none w-100">
+        <div class="product-hover_details d-none">
             <div class="d-flex justify-content-between">
                 <div class="carding position-relative">
                     <img alt="{{ $product->name }}"
@@ -274,7 +274,7 @@
                                         ($inHouseVacationStatus &&
                                             $currentDate >= $inHouseVacationStartDate &&
                                             $currentDate <= $inHouseVacationEndDate))))
-                            <button class="btn add-to-cart string-limit" type="button" disabled>
+                            <button class="btn add-to-cart string-limit w-100" type="button" disabled>
                                 {{ translate('add_to_cart') }}
                             </button>
                         @else
@@ -286,7 +286,7 @@
                                 <i class="navbar-tool-icon czi-cart text-white me-2"></i>
                                 <span class="string-limit text-white">{{ translate('add_to_cart') }}</span>
                             </button> --}}
-                            <button type="button" class="btn add-to-cart" data-id="{{$product->id}}">
+                            <button type="button" class="btn add-to-cart w-100" data-id="{{$product->id}}">
                                 <i class="navbar-tool-icon czi-cart me-2"></i>
                                 <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>

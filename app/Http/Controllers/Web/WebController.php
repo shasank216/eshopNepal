@@ -54,6 +54,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use function App\Utils\payment_gateways;
+use App\Repositories\WishlistRepository;
 
 class WebController extends Controller
 {
@@ -69,6 +70,7 @@ class WebController extends Controller
         private Brand $brand,
         private Seller $seller,
         private ProductCompare $compare,
+        private readonly WishlistRepository  $wishlistRepo,
     ) {
 
     }
@@ -84,6 +86,12 @@ class WebController extends Controller
 
     public function flash_deals($id)
     {
+        $porduct_data = Product::active()->with(['reviews']);
+        $product_id = [];
+        $products = $porduct_data->get();
+        $categories = Category::all();
+        $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $products['id'], 'customer_id' => auth('customer')->id()]);
+
         $deal = FlashDeal::with(['products.product.reviews', 'products.product' => function($query){
                 $query->active();
             }])
@@ -105,7 +113,7 @@ class WebController extends Controller
 
 
         if (isset($deal)) {
-            return view(VIEW_FILE_NAMES['flash_deals'], compact('deal', 'discountPrice'));
+            return view(VIEW_FILE_NAMES['flash_deals'], compact('deal', 'discountPrice', 'categories', 'wishlistStatus'));
         }
         Toastr::warning(translate('not_found'));
         return back();
