@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/home.css') }}" />
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/owl.carousel.min.css') }}">
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/owl.theme.default.min.css') }}">
-      
+
         <style>
             .latest-product-margin {
                 border-bottom: 2px solid #efefef;
@@ -225,7 +225,7 @@
                 justify-content: flex-end;
                 height: 100%;
             }
-            
+
             .add-to-cart {
                 width: 100%;
                 padding: 10px;
@@ -330,7 +330,7 @@
 
             .product-hover_details .carding {
                 /* top: -25px;
-                        left: -10px; */
+                                left: -10px; */
                 width: 246px;
                 width: 100%;
                 /* margin-right: 10px; */
@@ -570,8 +570,8 @@
             }
 
             /* .product-card:hover {
-                        transform: scale(1.05);
-                    } */
+                                transform: scale(1.05);
+                            } */
 
             .product-category {
                 color: #727272;
@@ -734,7 +734,6 @@
             .latest-slider .owl-stage-outer .owl-stage .owl-item.active {
                 z-index: 1;
             }
-
         </style>
     @endpush
 
@@ -993,10 +992,10 @@
                         </span>
                     </div>
                     <div class="mr-1">
-                        <a class="text-capitalize view-all-text web-text-primary"
-                           href="{{route('products')}}">
-                            {{ translate('view_all')}}
-                            <i class="czi-arrow-{{Session::get('direction') === "rtl" ? 'left mr-1 ml-n1 mt-1 float-left' : 'right ml-1 mr-n1'}}"></i>
+                        <a class="text-capitalize view-all-text web-text-primary" href="{{ route('products') }}">
+                            {{ translate('view_all') }}
+                            <i
+                                class="czi-arrow-{{ Session::get('direction') === 'rtl' ? 'left mr-1 ml-n1 mt-1 float-left' : 'right ml-1 mr-n1' }}"></i>
                         </a>
                     </div>
                 </div>
@@ -1110,8 +1109,7 @@
                                     @if (!empty($product['product_id']))
                                         @php($product = $product->product)
                                     @endif
-                                    <div
-                                        class="p-2">
+                                    <div class="p-2">
                                         @if (!empty($product))
                                             @include('web-views.partials._filter-single-product', [
                                                 'product' => $product,
@@ -1165,7 +1163,7 @@
                 <p class="home-title">Latest Blogs</p>
                 <span class="form-inline ml-auto">
                     <a href="{{ url('blogs') }}" class="text-capitalize view-all-text web-text-primary">
-                            See All
+                        See All
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </span>
@@ -1192,9 +1190,9 @@
                                         {{-- <span class="badge badge-light category-badge">category</span> --}}
                                         <div class="card-text mt-auto">
                                             <h5 class="blog-title text-white m-0">{{ $blog->title }}</h5>
-                                                {{-- {{ strip_tags($blog->details) }} --}}
+                                            {{-- {{ strip_tags($blog->details) }} --}}
                                             <p class="blog-created-by text-white">
-                                                by 
+                                                by
                                                 <span class="blog-added-by">
                                                     {{ $blog->added_by }}
                                                 </span>
@@ -1208,12 +1206,12 @@
                     @endforeach
                 </div>
             </div>
-           
+
 
         </section>
 
 
-    {{-- @if ($web_config['brand_setting'] && $brands->count() > 0)
+        {{-- @if ($web_config['brand_setting'] && $brands->count() > 0)
             <section class="container rtl pt-4">
 
                 <div class="section-header">
@@ -1245,18 +1243,18 @@
             </section>
         @endif --}}
 
-    @if ($home_categories->count() > 0)
-        @foreach ($home_categories as $category)
-            @include('web-views.partials._category-wise-product', [
-                'decimal_point_settings' => $decimalPointSettings,
-            ])
-        @endforeach
-    @endif
+        @if ($home_categories->count() > 0)
+            @foreach ($home_categories as $category)
+                @include('web-views.partials._category-wise-product', [
+                    'decimal_point_settings' => $decimalPointSettings,
+                ])
+            @endforeach
+        @endif
 
-    @php($companyReliability = getWebConfig(name: 'company_reliability'))
-    @if ($companyReliability != null)
-        @include('web-views.partials._company-reliability')
-    @endif
+        @php($companyReliability = getWebConfig(name: 'company_reliability'))
+        @if ($companyReliability != null)
+            @include('web-views.partials._company-reliability')
+        @endif
     </div>
 
     <span id="direction-from-session" data-value="{{ session()->get('direction') }}"></span>
@@ -1316,15 +1314,15 @@
         }
     </script>
 
-     <script>
+    <script>
         $(document).ready(function() {
             // Event listener for the Add to Cart button
             $('.add-to-cart').on('click', function(e) {
                 e.preventDefault();
-                    
+
                 // Get product ID dynamically from the form
                 var productId = $(this).closest('form').find('input[name="id"]').val();
-                   
+
                 // Set up the AJAX request
                 $.ajax({
                     // alert(productId);
@@ -1332,8 +1330,8 @@
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}', // Pass CSRF token
-                        id: productId,                 // Pass the product ID
-                        quantity: 1                    // You can change the quantity if needed
+                        id: productId, // Pass the product ID
+                        quantity: 1 // You can change the quantity if needed
                     },
                     success: function(response) {
                         if (response.status === 1) {
@@ -1342,12 +1340,11 @@
                             // alert('Product added to cart successfully!'); // You can replace with Toast message or a cart update
                             // You can update your cart UI here, for example, update cart counter, etc.
                             // Reload the page after 1 second
-                        setTimeout(function() {
-                            location.reload();
-                        }, 1000); // 1000ms = 1 second delay before reload
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // 1000ms = 1 second delay before reload
 
-                        }
-                         else {
+                        } else {
                             // alert('Failed to add product to cart!');
                             toastr.error('Something went wrong, please try again.');
                         }
@@ -1359,7 +1356,5 @@
                 });
             });
         });
-    </script> 
-
-  
+    </script>
 @endpush
