@@ -113,7 +113,7 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-      
+    //   dd($request);
         $cart = CartManager::add_to_cart($request);
         // dd($cart['message']);
         session()->forget('coupon_code');
@@ -122,7 +122,7 @@ class CartController extends Controller
         session()->forget('coupon_discount');
         session()->forget('coupon_seller_id');
  
-        // dd($cart);
+       
         // return response()->json($cart);
         return response()->json([
             'status' => 1,
