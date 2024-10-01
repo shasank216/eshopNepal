@@ -506,7 +506,9 @@
                                 {{ translate('add_to_cart') }}
                             </button>
                         @else
+
                             <button type="button" class="btn add-to-cart w-100" data-id="{{ $product->id }}">
+
                                 <i class="navbar-tool-icon czi-cart me-2"></i>
                                 <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>

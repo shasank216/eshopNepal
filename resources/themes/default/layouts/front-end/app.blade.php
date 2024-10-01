@@ -330,6 +330,14 @@
                 $('#cookie-section').html(cookie_content).show();
             }
         });
+
+
+        $(document).ready(function() {
+            $('#navbarCollapse').collapse({
+                toggle: false
+            });
+        });
+
     </script>
 
     @stack('script')

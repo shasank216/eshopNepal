@@ -1,14 +1,14 @@
 <div class="container rtl pb-5 px-0 px-md-3">
     <div class="seller-card">
-        <div class="card __shadow h-100">
+        <div class="h-100">
             <div class="card-body">
-                <div class="row d-flex justify-content-between">
+                <div class="row d-flex justify-content-between product-head-border">
                     <div class="seller-list-title">
-                        <h5 class="font-bold m-0 text-capitalize">
+                        <h5 class="home-title text-capitalize">
                             {{ translate('top_sellers')}}
                         </h5>
                     </div>
-                    <div class="seller-list-view-all">
+                    <div class="form-inline ml-auto">
                         <a class="text-capitalize view-all-text web-text-primary"
                             href="{{route('vendors')}}">
                             {{ translate('view_all')}}
@@ -19,8 +19,8 @@
 
                 <div class="mt-3">
                     <div class="others-store-slider owl-theme owl-carousel">
-
                         @foreach ($top_sellers as $seller)
+                        {{-- @dd($seller); --}}
                         <a href="{{route('shopView',['id'=> $seller->shop['id']])}}" class="others-store-card text-capitalize">
                             <div class="overflow-hidden other-store-banner">
                                 <img class="w-100 h-100 object-cover" alt=""

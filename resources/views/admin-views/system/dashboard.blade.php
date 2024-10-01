@@ -21,7 +21,7 @@
                     <div class="row flex-between align-items-center g-2 mb-3">
                         <div class="col-sm-6">
                             <h4 class="d-flex align-items-center text-capitalize gap-10 mb-0">
-                                <img src="{{dynamicAsset(path: 'public/assets/back-end/img/business_analytics.png')}}"
+                                <img width="30" src="{{dynamicAsset(path: 'public/assets/back-end/img/business_analytics.png')}}"
                                      alt="">{{translate('business_analytics')}}</h4>
                         </div>
                         <div class="col-sm-6 d-flex justify-content-sm-end">
@@ -102,7 +102,7 @@
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-6">
                                     <h4 class="d-flex align-items-center text-capitalize gap-10 mb-0">
-                                        <img src="{{dynamicAsset(path: 'public/assets/back-end/img/earning_statictics.png')}}"
+                                        <img width="30" src="{{dynamicAsset(path: 'public/assets/back-end/img/earning_statictics.png')}}"
                                              alt="">
                                         {{translate('earning_statistics')}}
                                     </h4>
