@@ -28,6 +28,7 @@ class BrandManager
     }
 
     public static function get_active_brands(){
-        return Brand::active()->withCount('brandProducts')->latest()->get();
+        //return Brand::active()->withCount('brandProducts')->latest()->get();
+        return Brand::active()->withCount('brandProducts')->orderBy('name', 'asc')->get();
     }
 }
