@@ -199,7 +199,7 @@ class WebController extends Controller
 
         }
 
-        Toastr::warning(translate('not_found'));
+        Toastr::warning(translate('not_found'));git 
         return back();
     }
 
