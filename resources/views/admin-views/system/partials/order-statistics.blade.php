@@ -4,7 +4,7 @@
         <div class="row g-2 align-items-center">
             <div class="col-md-6">
                 <h4 class="d-flex align-items-center text-capitalize gap-10 mb-0">
-                    <img src="{{dynamicAsset(path: 'public/assets/back-end/img/order-statistics.png')}}"
+                    <img width="30" src="{{dynamicAsset(path: 'public/assets/back-end/img/order-statistics.png')}}"
                          alt="">
                     {{translate('order_statistics')}}
                 </h4>

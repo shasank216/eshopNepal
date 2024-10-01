@@ -1,5 +1,5 @@
 <section class="overflow-hidden">
-    <div class="container px-0 px-md-3">
+    <div class="px-0 px-md-3">
         <div class="flash-deals-wrapper">
             <div class="flash-deal-view-all-web row d-flex justify-content-end mb-3">
                 @if (count($web_config['flash_deals']->products)>0)
@@ -24,7 +24,7 @@
                 <div class="col-lg-4 px-max-md-0">
                     <div class="countdown-card bg-transparent">
                         <div class="flash-deal-text web-text-primary">
-                            <div>
+                            <div class="for-feature-title __text-22px font-bold text-center">
                                 <span>{{$web_config['flash_deals']->title}}</span>
                             </div>
                             <small>{{translate('hurry_Up')}} ! {{translate('the_offer_is_limited')}}. {{translate('grab_while_it_lasts')}}</small>

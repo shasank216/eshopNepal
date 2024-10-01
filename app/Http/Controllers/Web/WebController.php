@@ -71,7 +71,10 @@ class WebController extends Controller
         private Seller $seller,
         private ProductCompare $compare,
         private readonly WishlistRepository  $wishlistRepo,
-    ) {}
+
+    ) {
+
+    }
 
     public function maintenance_mode()
     {
@@ -84,7 +87,9 @@ class WebController extends Controller
 
     /*public function flash_deals($id)
     {
-        $porduct_data = Product::active()->with(['reviews', 'tags']);
+
+        $porduct_data = Product::active()->with(['reviews']);
+
         $product_id = [];
         $products = $porduct_data->get();
         $categories = Category::all();
@@ -112,6 +117,7 @@ class WebController extends Controller
 
         if (isset($deal)) {
             return view(VIEW_FILE_NAMES['flash_deals'], compact('deal', 'discountPrice', 'categories', 'wishlistStatus'));
+
         }
         Toastr::warning(translate('not_found'));
         return back();
@@ -190,6 +196,7 @@ class WebController extends Controller
             $product_tags = $products->pluck('tags')->flatten();
 
             return view(VIEW_FILE_NAMES['flash_deals'], compact('deal', 'discountPrice', 'categories', 'wishlistStatus', 'product_tags', 'inHouseVacationStatus', 'inHouseTemporaryClose', 'sellerTemporaryClose', 'shopClosed'));
+
         }
 
         Toastr::warning(translate('not_found'));
