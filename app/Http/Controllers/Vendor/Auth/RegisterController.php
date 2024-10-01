@@ -36,10 +36,12 @@ class RegisterController extends BaseController
 
     public function index(?Request $request, string $type = null): View|Collection|LengthAwarePaginator|null|callable|RedirectResponse
     {
+        
         return $this->getView();
     }
     public function getView():View|RedirectResponse
     {
+        
         $businessMode = getWebConfig(name:'business_mode');
         $vendorRegistration = getWebConfig(name:'seller_registration');
         if((isset($businessMode) && $businessMode=='single') || (isset($vendorRegistration) && $vendorRegistration==0))
