@@ -1,6 +1,6 @@
 <div class="card-header gap-10">
     <h4 class="d-flex align-items-center text-capitalize gap-10 mb-0">
-        <img src="{{dynamicAsset(path: 'public/assets/back-end/img/most-popular-store-icon.png')}}" alt="">
+        <img width="20" src="{{dynamicAsset(path: 'public/assets/back-end/img/most-popular-store-icon.png')}}" alt="">
         {{translate('most_Popular_Stores')}}
     </h4>
 </div>

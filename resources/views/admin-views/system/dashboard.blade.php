@@ -102,7 +102,7 @@
                             <div class="row g-2 align-items-center">
                                 <div class="col-md-6">
                                     <h4 class="d-flex align-items-center text-capitalize gap-10 mb-0">
-                                        <img src="{{dynamicAsset(path: 'public/assets/back-end/img/earning_statictics.png')}}"
+                                        <img width="30" src="{{dynamicAsset(path: 'public/assets/back-end/img/earning_statictics.png')}}"
                                              alt="">
                                         {{translate('earning_statistics')}}
                                     </h4>
