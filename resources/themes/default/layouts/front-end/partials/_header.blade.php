@@ -1,5 +1,4 @@
 @php($announcement=getWebConfig(name: 'announcement'))
-
 @if (isset($announcement) && $announcement['status']==1)
     <div class="text-center position-relative px-4 py-1" id="announcement"
          style="background-color: {{ $announcement['color'] }};color:{{$announcement['text_color']}}">
@@ -7,12 +6,9 @@
         <span class="__close-announcement web-announcement-slideUp">X</span>
     </div>
 @endif
-
-
 <header class="rtl __inline-10">
     <div class="topbar py-3">
         <div class="container">
-
             <div>
                 <div class="topbar-text dropdown d-md-none ms-auto">
                     <a class="topbar-link direction-ltr font-style-phone" href="tel: {{$web_config['phone']->value}}">
@@ -27,7 +23,6 @@
                     </a>
                 </div>
             </div>  
-
             <div>
                 @php($currency_model = getWebConfig(name: 'currency_model'))
                 @if($currency_model=='multi_currency')
@@ -45,7 +40,6 @@
                         </ul>
                     </div>
                 @endif
-
                 <div class="topbar-text dropdown disable-autohide  __language-bar text-capitalize">
                     <a class="topbar-link dropdown-toggle " href="#" data-toggle="dropdown">
                         @foreach(json_decode($language['value'],true) as $data)
@@ -76,8 +70,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="navbar-sticky bg-light mobile-head">
         <div class="navbar navbar-expand-md navbar-light pt-4 pb-3">
             <div class="d-flex justify-content-between w-100">
@@ -96,7 +88,6 @@
                          src="{{ getValidImage(path: 'storage/app/public/company/'.$web_config['mob_logo']->value, type: 'logo') }}"
                          alt="{{$web_config['name']->value}}"/>
                 </a>
-
                 <div class="input-group-overlay mx-lg-4 search-form-mobile text-align-direction" style="width: 45%;">
                     <form action="{{route('products')}}" type="submit" class="search_form">
                         <div class="d-flex border-shape">
@@ -105,7 +96,6 @@
                                     autocomplete="off"
                                     placeholder="{{ translate("search_for_items")}}..."
                                     name="name" value="{{ request('name') }}">
-
                                 <button class="input-group-append-overlay search_button d-md-block" type="submit">
                                         <span class="input-group-text text-white">
                                             <i class="czi-search text-white me-2"></i>
@@ -113,9 +103,7 @@
                                                 Search
                                             </span>
                                         </span>
-                                        
                                 </button>
-
                                 <div class="dropdown py-1">
                                     <button class="btn dropdown-toggle all-categories-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     All Categories
@@ -126,21 +114,16 @@
                                    <a <?php if ($category->childes->count() > 0) echo "" ?> 
                                     href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}" class="p-1 ps-3 header-categories_links">
                                      <span>{{$category['name']}}</span>
-    
                                     </a><br>
-                                   
                                     @endforeach
                                     </div>
                                 </div>
-
                             </div>
-                            
                             <span class="close-search-form-mobile fs-14 font-semibold text-muted d-md-block" type="submit">
                                 {{-- {{ translate('cancel') }} --}}
                                 <i class="fa fa-times fa-lg" aria-hidden="true"></i>
                             </span>
                         </div>
-
                         <input name="data_from" value="search" hidden>
                         <input name="page" value="1" hidden>
                         <diV class="card search-card mobile-search-card">
@@ -150,7 +133,6 @@
                         </diV>
                     </form>
                 </div>
-
                 <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
                     <a class="navbar-tool navbar-stuck-toggler" href="#">
                         <span class="navbar-tool-tooltip">{{ translate('expand_Menu') }}</span>
@@ -213,7 +195,6 @@
                                             <path d="M4.25 4.41675C4.25 6.48425 5.9325 8.16675 8 8.16675C10.0675 8.16675 11.75 6.48425 11.75 4.41675C11.75 2.34925 10.0675 0.666748 8 0.666748C5.9325 0.666748 4.25 2.34925 4.25 4.41675ZM14.6667 16.5001H15.5V15.6667C15.5 12.4509 12.8825 9.83341 9.66667 9.83341H6.33333C3.11667 9.83341 0.5 12.4509 0.5 15.6667V16.5001H14.6667Z"
                                                   fill="#1B7FED"/>
                                         </svg>
-
                                     </div>
                                 </div>
                             </a>
@@ -234,7 +215,6 @@
                             <div class="d-flex align-items-center">
                                 <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-dark" href="tel:{{$web_config['phone']->value}}"
                                     style="border-radius:10px; background: #f0f0f0 !important;">
-                                
                                     <i class="fa fa-headphones navbar-tool-icon "></i>
                                 </a>
                                 <a class="topbar-link d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">
@@ -251,7 +231,6 @@
                             <div class="d-flex align-items-center">
                             <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-dark" href="tel:{{$web_config['phone']->value}}"
                                 style="border-radius:10px; background: #f0f0f0 !important;">
-                            
                                 <i class="fa fa-headphones navbar-tool-icon " style="    font-size: 1.7rem !important;line-height: 2.875rem !important;"></i>
                             </a>
                             <a class="topbar-link d-none d-md-inline-block direction-ltr" href="tel:{{$web_config['phone']->value}}">
@@ -291,9 +270,7 @@
                 <p>Grocery</p>
               </div>
             </div> --}}
-    
         </div>
-
         {{-- asasdasd --}}
         <div class="collapse navbar-collapse text-align-direction" id="navbarCollapse">
             <div class="w-100 d-md-none text-align-direction">
@@ -305,7 +282,6 @@
             @php($categories=\App\Models\Category::with(['childes.childes'])->where('position', 0)->priority()->paginate(11))
             <ul class="navbar-nav mega-nav pr-lg-2 pl-lg-2 mr-2 d-none d-md-block __mega-nav">
                 <li class="nav-item {{!request()->is('/')?'dropdown':''}}">
-
                     <a class="nav-link dropdown-toggle category-menu-toggle-btn ps-0"
                        href="javascript:">
                         <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
@@ -320,7 +296,6 @@
                     </a>
                 </li>
             </ul>
-
             <ul class="navbar-nav mega-nav1 pr-md-2 pl-md-2 d-block d-xl-none">
                 <li class="nav-item dropdown d-md-none">
                     <a class="nav-link dropdown-toggle ps-0"
@@ -333,18 +308,15 @@
                     <ul class="dropdown-menu __dropdown-menu-2 text-align-direction">
                         @foreach($categories as $category)
                             <li class="dropdown">
-
                                 <a <?php if ($category->childes->count() > 0) echo "" ?>
                                    href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                                     <span>{{$category['name']}}</span>
-
                                 </a>
                                 @if ($category->childes->count() > 0)
                                     <a data-toggle='dropdown' class='__ml-50px'>
                                         <i class="czi-arrow-{{Session::get('direction') === "rtl" ? 'left' : 'right'}} __inline-16"></i>
                                     </a>
                                 @endif
-
                                 @if($category->childes->count()>0)
                                     <ul class="dropdown-menu text-align-direction">
                                         @foreach($category['childes'] as $subCategory)
@@ -352,7 +324,6 @@
                                                 <a href="{{route('products',['id'=> $subCategory['id'],'data_from'=>'category','page'=>1])}}">
                                                     <span>{{$subCategory['name']}}</span>
                                                 </a>
-
                                                 @if($subCategory->childes->count()>0)
                                                     <a class="header-subcategories-links"
                                                        data-toggle='dropdown'>
@@ -376,12 +347,10 @@
                     </ul>
                 </li>
             </ul>
-
             <ul class="navbar-nav">
                 <li class="nav-item dropdown {{request()->is('/')?'active':''}}">
                     <a class="nav-link" href="{{route('home')}}">{{ translate('home')}}</a>
                 </li>
-
                 @if(getWebConfig(name: 'product_brand'))
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
@@ -419,7 +388,6 @@
                            href="{{route('products',['data_from'=>'discounted','page'=>1])}}">{{ translate('discounted_products')}}</a>
                     </li>
                 @endif
-
                 @php($businessMode = getWebConfig(name: 'business_mode'))
                 @if ($businessMode == 'multi')
                     <li class="nav-item dropdown {{request()->is('/')?'active':''}}">
@@ -427,7 +395,6 @@
                            href="{{route('vendors')}}">{{ translate('all_vendors')}}</a>
                     </li>
                 @endif
-
                 @if(auth('customer')->check())
                     <li class="nav-item d-md-none">
                         <a href="{{route('user-account')}}" class="nav-link text-capitalize">
@@ -452,7 +419,6 @@
                         </a>
                     </li>
                 @endif
-
                 @if ($businessMode == 'multi')
                     @if(getWebConfig(name: 'seller_registration'))
                         <li class="nav-item">
@@ -487,7 +453,6 @@
             @endif
         </div>
         {{-- asasdasd --}}
-
         <div class="navbar navbar-expand-md navbar-stuck-menu">
             <div class="container px-10px">
                 <div class="collapse navbar-collapse text-align-direction" id="navbarCollapse">
@@ -500,7 +465,6 @@
                     @php($categories=\App\Models\Category::with(['childes.childes'])->where('position', 0)->priority()->paginate(11))
                     <ul class="navbar-nav mega-nav pr-lg-2 pl-lg-2 mr-2 d-none d-md-block __mega-nav">
                         <li class="nav-item {{!request()->is('/')?'dropdown':''}}">
-
                             <a class="nav-link dropdown-toggle category-menu-toggle-btn ps-0"
                                href="javascript:">
                                 <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
@@ -515,7 +479,6 @@
                             </a>
                         </li>
                     </ul>
-
                     <ul class="navbar-nav mega-nav1 pr-md-2 pl-md-2 d-block d-xl-none">
                         <li class="nav-item dropdown d-md-none">
                             <a class="nav-link dropdown-toggle ps-0"
@@ -528,18 +491,15 @@
                             <ul class="dropdown-menu __dropdown-menu-2 text-align-direction">
                                 @foreach($categories as $category)
                                     <li class="dropdown">
-
                                         <a <?php if ($category->childes->count() > 0) echo "" ?>
                                            href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                                             <span>{{$category['name']}}</span>
-
                                         </a>
                                         @if ($category->childes->count() > 0)
                                             <a data-toggle='dropdown' class='__ml-50px'>
                                                 <i class="czi-arrow-{{Session::get('direction') === "rtl" ? 'left' : 'right'}} __inline-16"></i>
                                             </a>
                                         @endif
-
                                         @if($category->childes->count()>0)
                                             <ul class="dropdown-menu text-align-direction">
                                                 @foreach($category['childes'] as $subCategory)
@@ -547,7 +507,6 @@
                                                         <a href="{{route('products',['id'=> $subCategory['id'],'data_from'=>'category','page'=>1])}}">
                                                             <span>{{$subCategory['name']}}</span>
                                                         </a>
-
                                                         @if($subCategory->childes->count()>0)
                                                             <a class="header-subcategories-links"
                                                                data-toggle='dropdown'>
@@ -571,12 +530,10 @@
                             </ul>
                         </li>
                     </ul>
-
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown {{request()->is('/')?'active':''}}">
                             <a class="nav-link" href="{{route('home')}}">{{ translate('home')}}</a>
                         </li>
-
                         @if(getWebConfig(name: 'product_brand'))
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#"
@@ -614,7 +571,6 @@
                                    href="{{route('products',['data_from'=>'discounted','page'=>1])}}">{{ translate('discounted_products')}}</a>
                             </li>
                         @endif
-
                         @php($businessMode = getWebConfig(name: 'business_mode'))
                         @if ($businessMode == 'multi')
                             <li class="nav-item dropdown {{request()->is('/')?'active':''}}">
@@ -622,7 +578,6 @@
                                    href="{{route('vendors')}}">{{ translate('all_vendors')}}</a>
                             </li>
                         @endif
-
                         @if(auth('customer')->check())
                             <li class="nav-item d-md-none">
                                 <a href="{{route('user-account')}}" class="nav-link text-capitalize">
@@ -647,7 +602,6 @@
                                 </a>
                             </li>
                         @endif
-
                         @if ($businessMode == 'multi')
                             @if(getWebConfig(name: 'seller_registration'))
                                 <li class="nav-item">
@@ -697,7 +651,6 @@
                             <i class="navbar-tool-icon czi-heart text-white"></i>
                         </a>
                     </div>
-
                     @if(auth('customer')->check())
                         <div class="dropdown">
                             <a class="navbar-tool ml-3" type="button" data-toggle="dropdown" aria-haspopup="true"
@@ -719,7 +672,6 @@
                                    href="{{route('account-oder')}}"> {{ translate('my_Order')}} </a>
                                 <a class="dropdown-item"
                                    href="{{route('user-account')}}"> {{ translate('my_Profile')}}</a>
-                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"
                                    href="{{route('customer.auth.logout')}}">{{ translate('logout')}}</a>
@@ -750,10 +702,8 @@
                             </div>
                         </div>
                     @endif
-
             </div>
         </div>
-
         <div class="megamenu-wrap">
             <div class="container">
                 <div class="category-menu-wrap">
@@ -790,19 +740,11 @@
                 </div>
             </div>
         </div>
-
-        
     </div>
-
-     
-    
-
 </header>
-
 @push('script')
     <script>
         "use strict";
-
         $(".category-menu").find(".mega_menu").parents("li")
             .addClass("has-sub-item").find("> a")
             .append("<i class='czi-arrow-{{Session::get('direction') === "rtl" ? 'left' : 'right'}}'></i>");
