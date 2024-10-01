@@ -279,7 +279,7 @@ class Product extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->BelongsToMany(Tag::class);
     }
 
     //old relation: flash_deal_product
