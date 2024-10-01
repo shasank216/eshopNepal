@@ -192,7 +192,7 @@ class WebController extends Controller
             return view(VIEW_FILE_NAMES['flash_deals'], compact('deal', 'discountPrice', 'categories', 'wishlistStatus', 'product_tags', 'inHouseVacationStatus', 'inHouseTemporaryClose', 'sellerTemporaryClose', 'shopClosed'));
         }
 
-        Toastr::warning(translate('not_found'));
+        Toastr::warning(translate('not_found'));git 
         return back();
     }
 
