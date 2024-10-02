@@ -2835,7 +2835,7 @@
 
             $(document).off('click', '.product-action-add-wishlist');
 
-            // $(document).off('click', '.action-product-compare');
+            $(document).off('click', '.action-product-compare');
 
             $(document).off('click', '.action-product-quick-view');
 
@@ -2915,13 +2915,13 @@
 
             // Attach compare event to dynamically loaded elements
 
-            // $(document).on('click', '.action-product-compare', function () {
+            $(document).on('click', '.action-product-compare', function () {
 
-            //     let id = $(this).data('product-id');
+                let id = $(this).data('product-id');
 
-            //     handleCompareClick(id); // Reuse the comparison handling logic
+                handleCompareClick(id); // Reuse the comparison handling logic
 
-            // });
+            });
 
 
 

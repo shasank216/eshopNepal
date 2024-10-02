@@ -322,6 +322,7 @@
 
 
                             <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
+
                                 @if (
                                     ($product->added_by == 'seller' &&
                                         ($sellerTemporaryClose ||
