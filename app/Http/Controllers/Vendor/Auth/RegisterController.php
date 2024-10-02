@@ -58,6 +58,7 @@ class RegisterController extends BaseController
     }
     public function add(VendorAddRequest $request):JsonResponse
     {
+        
         $recaptcha = getWebConfig('recaptcha');
         if (isset($recaptcha) && $recaptcha['status'] == 1) {
             try {

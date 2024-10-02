@@ -25,7 +25,7 @@
                 <div class="row justify-content-between align-items-center g-2 mb-3">
                     <div class="col-sm-6">
                         <h4 class="d-flex align-items-center text-capitalize gap-10 mb-0">
-                            <img src="{{dynamicAsset(path: 'public/assets/back-end/img/business_analytics.png')}}" alt="">
+                            <img src="{{dynamicAsset(path: 'public/assets/back-end/img/business_analytics.png')}}" alt="" width="38px" >
                             {{translate('order_analytics')}}
                         </h4>
                     </div>
