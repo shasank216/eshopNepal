@@ -31,7 +31,6 @@ class ProductListController extends Controller
 {
     public function __construct(
         private Product      $product,
-        private Wishlist $wishlist,
         private Order        $order,
         private OrderDetail  $order_details,
         private Category     $category,
@@ -60,7 +59,7 @@ class ProductListController extends Controller
     }
 
     public function default_theme(Request $request) {
-     
+        
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
         $porduct_data = Product::active()->with(['reviews']);
@@ -168,14 +167,24 @@ class ProductListController extends Controller
 
         if ($request['sort_by'] == 'latest') {
             $fetched = $query->latest();
+            
         } elseif ($request['sort_by'] == 'low-high') {
+            
             $fetched = $query->orderBy('unit_price', 'ASC');
+           
+
         } elseif ($request['sort_by'] == 'high-low') {
+          
             $fetched = $query->orderBy('unit_price', 'DESC');
+           
         } elseif ($request['sort_by'] == 'a-z') {
+           
             $fetched = $query->orderBy('name', 'ASC');
+           
         } elseif ($request['sort_by'] == 'z-a') {
+            
             $fetched = $query->orderBy('name', 'DESC');
+           
         } else {
             $fetched = $query->latest();
         }
@@ -195,6 +204,7 @@ class ProductListController extends Controller
         ];
 
         $products = $fetched->paginate(20)->appends($data);
+        
 
         if ($request->ajax()) {
            
@@ -255,7 +265,7 @@ class ProductListController extends Controller
     $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
     $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
     $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-    
+      
     return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies','wishlistStatus','countWishlist', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
                 'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
                 'inHouseTemporaryClose' ));
