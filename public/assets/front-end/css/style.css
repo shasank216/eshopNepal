@@ -7691,7 +7691,7 @@ span.badge-accent:hover {
         top: 0;
         right: 0;
         width: 100%;
-        height: 100vh;
+        /* height: 100vh; */
         background-color: #fff !important;
         z-index: 99999;
         padding: 20px;
@@ -7787,7 +7787,7 @@ span.badge-accent:hover {
     }
 
     .logout-btn {
-        position: fixed;
+        /* position: fixed; */
         bottom: 0;
         right: 0;
         width: 100%;
@@ -7795,6 +7795,7 @@ span.badge-accent:hover {
         background: #fff;
         margin: 0 !important;
         z-index: 99;
+        text-align: center;
     }
 
     .logout-btn a {
@@ -9528,11 +9529,18 @@ input.form-control.fz-30 {
     margin-bottom: 2px;
 }
 
+.header-category-slider {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
 .category-wise-products_header {
     overflow-x: scroll;
     overflow-y: hidden;
     flex-wrap: nowrap !important;
-    padding: 0 !important;
+    /* padding: 0 !important; */
 }
 
 .nav_product a {
@@ -9878,6 +9886,16 @@ button#dropdownMenuButton {
     background: unset !important;
 }
 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 @media (max-width: 991px) {
     .signup h6 {
         font-size: 16px;
@@ -9989,6 +10007,15 @@ button#dropdownMenuButton {
 
     .search-form-mobile {
         width: 100% !important;
+    }
+
+    .navbar-profile-text {
+        display: none !important;
+    }
+
+    .category-wise-products_header .nav_product a img {
+        width: 50px;
+        height: 50px;
     }
 
 }
@@ -10117,6 +10144,18 @@ button#dropdownMenuButton {
     .product-price,
     .reliability-title {
         font-size: 15px;
+    }
+
+    .deal_of_the_day {
+        flex-direction: column;
+    }
+
+    .deal_of_the_day .d-flex {
+        padding: 0 !important;
+    }
+
+    .for-feature-title  {
+        margin: 0 !important;
     }
 
 }

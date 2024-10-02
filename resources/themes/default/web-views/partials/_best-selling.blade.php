@@ -182,7 +182,7 @@
                                                         @endif
                                                     </div>
 
-                                                    <div class="product-tags">
+                                                    <div class="product-tags px-3">
                                                         @foreach ($product_tags as $product)
                                                             <div class="product">
                                                                 <div class="product-tags">
@@ -192,9 +192,6 @@
                                                                 </div>
                                                             </div>
                                                         @endforeach
-
-
-
                                                     </div>
 
                                                     <div class="product-colors d-flex justify-content-center">
@@ -228,7 +225,7 @@
                                                                 value="{{ $bestSell->product->id }}" data-product-id="{{ $bestSell->product->id }}">
                                                             <label for="compare-{{ $bestSell->product->id }}">{{ translate('Add to Compare') }}</label>
                                                         </div> --}}
-                                                    <form id="add-to-cart-form" class="mb-2">
+                                                    <form id="add-to-cart-form" class="mb-2 px-1">
                                                         @csrf
                                                         <input type="hidden" name="id"
                                                             value="{{ $bestSell->product->id }}">

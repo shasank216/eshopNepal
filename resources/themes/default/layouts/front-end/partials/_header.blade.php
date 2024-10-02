@@ -250,14 +250,14 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex flex-wrap pt-3 bg-white justify-content-between category-wise-products_header">
+        <div class="product_details px-5 d-flex flex-wrap pb-3 bg-white justify-content-between category-wise-products_header">
             @foreach($categories as $key => $category)
                 @if ($key<14)
                     <div class="nav_product">
                         <a href="{{route('products',['id'=> $category['id'],'data_from'=>'category','page'=>1])}}">
                             <img alt="{{ $category->name }}"
                                 src="{{ getValidImage(path: 'storage/app/public/category/'.$category->icon, type: 'category') }}">
-                            <div class="product_text">
+                            <div class="product_text header-category-slider">
                                 <p>{{Str::limit($category->name, 12)}}</p>
                             </div>
                         </a>
@@ -296,7 +296,7 @@
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav mega-nav1 pr-md-2 pl-md-2 d-block d-xl-none">
+            {{-- <ul class="navbar-nav mega-nav1 pr-md-2 pl-md-2 d-block d-xl-none text-center">
                 <li class="nav-item dropdown d-md-none">
                     <a class="nav-link dropdown-toggle ps-0"
                        href="javascript:" data-toggle="dropdown">
@@ -346,12 +346,15 @@
                         @endforeach
                     </ul>
                 </li>
-            </ul>
+            </ul> --}}
             <ul class="navbar-nav">
                 <li class="nav-item dropdown {{request()->is('/')?'active':''}}">
                     <a class="nav-link" href="{{route('home')}}">{{ translate('home')}}</a>
                 </li>
-                @if(getWebConfig(name: 'product_brand'))
+                <li class="nav-item dropdown ">
+                    <a class="nav-link" href="{{url('products')}}"> Categories </a>
+                </li>
+                {{-- @if(getWebConfig(name: 'product_brand'))
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
                            data-toggle="dropdown">{{ translate('brand') }}</a>
@@ -380,7 +383,7 @@
                             </li>
                         </ul>
                     </li>
-                @endif
+                @endif --}}
                 @php($discount_product = App\Models\Product::with(['reviews'])->active()->where('discount', '!=', 0)->count())
                 @if ($discount_product>0)
                     <li class="nav-item dropdown {{request()->is('/')?'active':''}}">
@@ -442,15 +445,18 @@
                         </li>
                     @endif
                 @endif
+
+                @if(auth('customer')->check())
+                    <div class="logout-btn mt-auto d-md-none">
+                        <hr>
+                        <a href="{{route('customer.auth.logout')}}" class="nav-link">
+                            <strong class="text-danger">{{ translate('logout')}}</strong>
+                        </a>
+                    </div>
+                @endif
+                
             </ul>
-            @if(auth('customer')->check())
-                <div class="logout-btn mt-auto d-md-none">
-                    <hr>
-                    <a href="{{route('customer.auth.logout')}}" class="nav-link">
-                        <strong class="text-base">{{ translate('logout')}}</strong>
-                    </a>
-                </div>
-            @endif
+            
         </div>
         {{-- asasdasd --}}
         <div class="navbar navbar-expand-md navbar-stuck-menu">
@@ -661,7 +667,7 @@
                                              src="{{ getValidImage(path: 'storage/app/public/profile/'.auth('customer')->user()->image, type: 'avatar') }}">
                                     </div>
                                 </div>
-                                <div class="navbar-tool-text">
+                                <div class="navbar-tool-text navbar-profile-text">
                                     <small>{{ translate('hello')}}, {{auth('customer')->user()->f_name}}</small>
                                     {{ translate('dashboard')}}
                                 </div>

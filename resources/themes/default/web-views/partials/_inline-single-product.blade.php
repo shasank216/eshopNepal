@@ -118,7 +118,9 @@
     <!-- Hover Details -->
 
     <div class="latest_product_hover">
-        <div class="product-hover_details d-none w-100">
+
+        <div class="product-hover_details d-none">
+
             <div class="d-flex justify-content-between">
 
                 <div class="carding position-relative">
@@ -327,7 +329,7 @@
 
 
 
-                <div class="product-tags">
+                <div class="product-tags px-3">
 
                     @if (isset($product_tags) && $product_tags->count() > 0)
                         @foreach ($product_tags as $product_tag)
@@ -504,9 +506,7 @@
                                 {{ translate('add_to_cart') }}
                             </button>
                         @else
-
                             <button type="button" class="btn add-to-cart w-100" data-id="{{ $product->id }}">
-
                                 <i class="navbar-tool-icon czi-cart me-2"></i>
                                 <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>

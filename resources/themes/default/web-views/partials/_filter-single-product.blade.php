@@ -72,58 +72,6 @@
         box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 
     }
-    
-    .ribbon-sale {
-        background-color:
-        color-mix(in srgb, #FF3B3B, #fff 20%);
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        width: 130px;
-        font-size: 11px;
-        font-weight: 400;
-        padding-left: 1rem;
-        height: 20px;
-    }
-
-    .ribbon {
-        position: absolute;
-        padding: 5px 10px 5px 15px;
-        font-size: 12px;
-        font-weight: bold;
-        color: white;
-        z-index: 3;
-        top: 20px;
-        left: -13px;
-        clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
-        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    }
-    
-    .ribbon-sale {
-        background-color:
-        color-mix(in srgb, #FF3B3B, #fff 20%);
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        width: 130px;
-        font-size: 11px;
-        font-weight: 400;
-        padding-left: 1rem;
-        height: 20px;
-    }
-
-    .ribbon {
-        position: absolute;
-        padding: 5px 10px 5px 15px;
-        font-size: 12px;
-        font-weight: bold;
-        color: white;
-        z-index: 3;
-        top: 20px;
-        left: -13px;
-        clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
-        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    }
 </style>
 
 
@@ -143,14 +91,19 @@
                         {{-- <span class="for-discount-value p-1 pl-2 pr-2 font-bold fs-13"> --}}
 
                         <span class="ribbon ribbon-sale">
+
                             {{-- <span class="direction-ltr d-block pl-2"> --}}
-                                On Sale
-                                @if ($product->discount_type == 'percent')
-                                    {{ round($product->discount, !empty($decimal_point_settings) ? $decimal_point_settings : 0) }}%
-                                @elseif($product->discount_type == 'flat')
-                                    {{ webCurrencyConverter(amount: $product->discount) }}
-                                @endif
+
+                            On Sale
+
+                            @if ($product->discount_type == 'percent')
+                                {{ round($product->discount, !empty($decimal_point_settings) ? $decimal_point_settings : 0) }}%
+                            @elseif($product->discount_type == 'flat')
+                                {{ webCurrencyConverter(amount: $product->discount) }}
+                            @endif
+
                             {{-- </span> --}}
+
                         </span>
                     @else
                         <div class="d-flex justify-content-end">
@@ -172,40 +125,52 @@
 
                     </div>
 
+
+
                     <div class="quick-view" id="product-list-container">
+
                         <a class="btn-circle stopPropagation action-product-quick-view" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}">
-                          
+
+
+
                             <i class="czi-eye align-middle web-text-primary"></i>
 
                         </a>
 
 
 
-                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)" 
-                            data-product-id="{{ $product->id }}" 
-                            data-category-id="{{ $product->category_id }}"> <!-- Ensure the category ID is included here -->
-                                <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)"
+                            data-product-id="{{ $product->id }}" data-category-id="{{ $product->category_id }}">
+                            <!-- Ensure the category ID is included here -->
+
+                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+
                         </a>
 
-                       
 
 
 
-                       
+
+
 
                         <a class="btn-circle stopPropagation product-action-add-wishlist" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}">
-                           
+
+
+
                             <i class="fa fa-heart-o wishlist_icon_12 web-text-primary" aria-hidden="true"></i>
+
                             {{-- <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
+
                             aria-hidden="true"></i>  --}}
+
                         </a>
 
 
 
 
-                        
+
                     </div>
 
                     @if ($product->product_type == 'physical' && $product->current_stock <= 0)
@@ -215,7 +180,9 @@
                 </div>
 
             </div>
+
             <div class="search-product-details d-flex align-items-center">
+
                 <div class="single-product-details">
 
                     <div>
@@ -265,9 +232,13 @@
                             {{ Str::limit($product['name'], 23) }}
 
                         </a>
+
                         {{-- <p class="m-0">
+
                             {!! $product->details !!}
+
                         </p> --}}
+
                     </div>
 
 
@@ -306,7 +277,10 @@
 
                     </div>
 
+
+
                     <div class="justify-content-between mt-1">
+
                         <div class="product-price d-flex flex-wrap align-items-center gap-8">
 
                             <span class="text-accent text-dark">
@@ -334,7 +308,7 @@
 
 
                     <div class="__btn-grp search-page-buttons mt-2 mb-3">
-                        <form id="add-to-cart-form" class="mb-2">
+                        <form id="add-to-cart-form" class="mb-2 px-2">
 
                             @csrf
 
@@ -348,7 +322,7 @@
 
 
                             <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
-                                  
+
                                 @if (
                                     ($product->added_by == 'seller' &&
                                         ($sellerTemporaryClose ||
@@ -356,29 +330,24 @@
                                                 $product->seller->shop->vacation_status &&
                                                 $currentDate >= $sellerVacationStartDate &&
                                                 $currentDate <= $sellerVacationEndDate))) ||
-                                        ($product->added_by == 'admin' &&
-                                            ($inHouseTemporaryClose ||
-                                                ($inHouseVacationStatus &&
-                                                    $currentDate >= $inHouseVacationStartDate &&
-                                                    $currentDate <= $inHouseVacationEndDate))))
+                                    ($product->added_by == 'admin' &&
+                                        ($inHouseTemporaryClose ||
+                                            ($inHouseVacationStatus &&
+                                                $currentDate >= $inHouseVacationStartDate &&
+                                                $currentDate <= $inHouseVacationEndDate)))
+                                )
                                     <button class="btn btn-secondary" type="button" disabled>
-
                                         {{ translate('buy_now') }}
-
                                     </button>
-
+                            
                                     <button class="btn add-to-cart string-limit" type="button" disabled>
-
                                         {{ translate('add_to_cart') }}
-
                                     </button>
                                 @else
                                     <button
                                         class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-buy-now-this-product"
                                         type="button">
-
                                         <span class="string-limit">{{ translate('buy_now') }}</span>
-
                                     </button>
                                     
                                     <button type="button" class="btn action-add-to-cart-form-re-init add-to-cart" data-product-id="{{ $product->id }}">
@@ -386,28 +355,24 @@
                                         <span class="string-limit">{{ translate('add_to_cart') }}</span>
                                     </button>
                                 @endif
-
-
-
-                                @if (
+                            
+                                {{-- @if (
                                     ($product->added_by == 'seller' &&
                                         ($sellerTemporaryClose ||
                                             (isset($product->seller->shop) &&
                                                 $product->seller->shop->vacation_status &&
                                                 $currentDate >= $sellerVacationStartDate &&
                                                 $currentDate <= $sellerVacationEndDate))) ||
-                                        ($product->added_by == 'admin' &&
-                                            ($inHouseTemporaryClose ||
-                                                ($inHouseVacationStatus &&
-                                                    $currentDate >= $inHouseVacationStartDate &&
-                                                    $currentDate <= $inHouseVacationEndDate))))
+                                    ($product->added_by == 'admin' &&
+                                        ($inHouseTemporaryClose ||
+                                            ($inHouseVacationStatus &&
+                                                $currentDate >= $inHouseVacationStartDate &&
+                                                $currentDate <= $inHouseVacationEndDate)))
+                                )
                                     <div class="alert alert-danger" role="alert">
-
                                         {{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}
-
                                     </div>
-                                @endif
-
+                                @endif --}}
                             </div>
 
                         </form>
