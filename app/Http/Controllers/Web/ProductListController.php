@@ -59,6 +59,7 @@ class ProductListController extends Controller
     }
 
     public function default_theme(Request $request) {
+       
         
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
@@ -171,6 +172,7 @@ class ProductListController extends Controller
         } elseif ($request['sort_by'] == 'low-high') {
             
             $fetched = $query->orderBy('unit_price', 'ASC');
+          
            
 
         } elseif ($request['sort_by'] == 'high-low') {
@@ -204,16 +206,31 @@ class ProductListController extends Controller
         ];
 
         $products = $fetched->paginate(20)->appends($data);
+
+
         
 
         if ($request->ajax()) {
-           
 
+            $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+            $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+            $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+        
+            $temporaryClose = getWebConfig('temporary_close');
+            $inHouseVacation = getWebConfig('vacation_add');
+            $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+            $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+            $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+            $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+          
             return response()->json([
                 'total_product'=>$products->total(),
-                'view' => view('web-views.products._ajax-products', compact('products'))->render()
+                'view' => view('web-views.products._ajax-products', compact('products','sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
+                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
+                'inHouseTemporaryClose'))->render()
             ], 200);
         }
+        
         if ($request['data_from'] == 'category') {
             $data['brand_name'] = Category::find((int)$request['id'])->name;
            
@@ -265,7 +282,9 @@ class ProductListController extends Controller
     $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
     $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
     $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-      
+
+
+    //   dd( $inHouseTemporaryClose);
     return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies','wishlistStatus','countWishlist', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
                 'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
                 'inHouseTemporaryClose' ));
