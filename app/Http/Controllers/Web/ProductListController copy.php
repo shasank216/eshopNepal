@@ -18,6 +18,14 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Color;
+use App\Enums\ViewPaths\Admin\Currency;
+use App\Repositories\WishlistRepository;
+use App\Models\Order;
+use App\Models\Seller;
+use App\Models\DealOfTheDay;
+use App\Models\Banner;
+use App\Models\MostDemanded;
 
 class ProductListController extends Controller
 {
