@@ -91,7 +91,7 @@
                     </p>
                 </div>
 
-                <div class="product-tags">
+                <div class="product-tags px-3">
                     @foreach ($product_tags as $product_tag)
                         <div class="product">
                             <div class="product-tags">

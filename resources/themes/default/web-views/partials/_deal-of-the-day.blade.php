@@ -47,12 +47,12 @@
             <div class="col-12">
                 <div class="deal_of_the_day h-100 py-4">
                     @if (isset($deal_of_the_day->product))
-                        <div class="d-flex justify-content-center align-items-center py-4 col-sm-3">
+                        <div class="d-flex justify-content-center align-items-center py-4 col-md-4">
                             <h4 class="for-feature-title __text-22px font-bold text-center">
                                 {{ translate('deal_of_the_day') }}
                             </h4>
                         </div>
-                        <div class="recommended-product-card mt-0 min-height-auto col-sm-9">
+                        <div class="recommended-product-card mt-0 min-height-auto col-md-8">
                             <div class="d-flex justify-content-center align-items-center __pt-20 __m-20-r">
                                 <div class="position-relative">
                                     <img class="__rounded-top aspect-1 h-auto" alt=""

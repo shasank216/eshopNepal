@@ -341,7 +341,7 @@
 
                         </form> --}}
 
-                        <form id="add-to-cart-form" class="mb-2">
+                        <form id="add-to-cart-form" class="mb-2 px-1">
 
                             @csrf
 

@@ -22,15 +22,9 @@
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/owl.carousel.min.css') }}">
         <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/css/owl.theme.default.min.css') }}">
 
-
         <style>
             .latest-product-margin {
                 border-bottom: 2px solid #efefef;
-                /* margin-top: 5rem; */
-            }
-
-            .margintop-5 {
-                margin-top: 5rem !important;
                 /* margin-top: 5rem; */
             }
 
@@ -236,12 +230,7 @@
                 height: 100%;
             }
 
-
             .add-to-cart {
-                /* width: 100%; */
-                display: flex;
-                align-items: center;
-                justify-content: center;
                 /* width: 100%; */
                 display: flex;
                 align-items: center;
@@ -349,10 +338,8 @@
             .product-hover_details .carding {
                 /* top: -25px;
                                 left: -10px; */
-                                left: -10px; */
-                width: 246px;
+                /* width: 246px; */
                 width: 100%;
-                /* margin-right: 10px; */
                 /* margin-right: 10px; */
             }
 
@@ -492,9 +479,8 @@
                 position: absolute;
                 top: -16px;
                 /* left: -16px; */
-                left: -1px;
-                padding: 1rem;
-                width: 101% !important;
+                padding: 1rem 0;
+                width: 100%;
 
                 border-radius: 15px;
                 z-index: 4;
@@ -594,8 +580,6 @@
             /* .product-card:hover {
                                 transform: scale(1.05);
                             } */
-                                transform: scale(1.05);
-                            } */
 
             .product-category {
                 color: #727272;
@@ -644,15 +628,11 @@
                 z-index: 3;
                 /* top: 20px;
                 left: -13px; */
-                /* top: 20px;
-                left: -13px; */
                 clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
                 box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
             }
 
             .ribbon-new {
-                top: 45px !important;
-                left: -6px !important;
                 top: 45px !important;
                 left: -6px !important;
                 width: 60px;
@@ -959,13 +939,6 @@
         @endif
 
 
-        
-
-        @if ($web_config['flash_deals'] && count($web_config['flash_deals']->products) > 0)
-            @include('web-views.partials._flash-deal', ['decimal_point_settings' => $decimalPointSettings])
-        @endif
-
-
 
         {{-- Advertise section --}}
 
@@ -1029,10 +1002,6 @@
                         </span>
                     </div>
                     <div class="mr-1">
-                        <a class="text-capitalize view-all-text web-text-primary" href="{{ route('products') }}">
-                            {{ translate('view_all') }}
-                            <i
-                                class="czi-arrow-{{ Session::get('direction') === 'rtl' ? 'left mr-1 ml-n1 mt-1 float-left' : 'right ml-1 mr-n1' }}"></i>
                         <a class="text-capitalize view-all-text web-text-primary" href="{{ route('products') }}">
                             {{ translate('view_all') }}
                             <i
@@ -1151,7 +1120,6 @@
                                         @php($product = $product->product)
                                     @endif
                                     <div class="p-2">
-                                    <div class="p-2">
                                         @if (!empty($product))
                                             @include('web-views.partials._filter-single-product', [
                                                 'product' => $product,
@@ -1206,7 +1174,6 @@
                 <span class="form-inline ml-auto">
                     <a href="{{ url('blogs') }}" class="text-capitalize view-all-text web-text-primary">
                         See All
-                        See All
                         <i class="fa fa-arrow-right"></i>
                     </a>
                 </span>
@@ -1234,9 +1201,7 @@
                                         <div class="card-text mt-auto">
                                             <h5 class="blog-title text-white m-0">{{ $blog->title }}</h5>
                                             {{-- {{ strip_tags($blog->details) }} --}}
-                                            {{-- {{ strip_tags($blog->details) }} --}}
                                             <p class="blog-created-by text-white">
-                                                by
                                                 by
                                                 <span class="blog-added-by">
                                                     {{ $blog->added_by }}
@@ -1253,11 +1218,9 @@
             </div>
 
 
-
         </section>
 
 
-        {{-- @if ($web_config['brand_setting'] && $brands->count() > 0)
         {{-- @if ($web_config['brand_setting'] && $brands->count() > 0)
             <section class="container rtl pt-4">
 
@@ -1297,18 +1260,7 @@
                 ])
             @endforeach
         @endif
-        @if ($home_categories->count() > 0)
-            @foreach ($home_categories as $category)
-                @include('web-views.partials._category-wise-product', [
-                    'decimal_point_settings' => $decimalPointSettings,
-                ])
-            @endforeach
-        @endif
 
-        @php($companyReliability = getWebConfig(name: 'company_reliability'))
-        @if ($companyReliability != null)
-            @include('web-views.partials._company-reliability')
-        @endif
         @php($companyReliability = getWebConfig(name: 'company_reliability'))
         @if ($companyReliability != null)
             @include('web-views.partials._company-reliability')
@@ -1373,17 +1325,14 @@
     </script>
 
     <script>
-    <script>
         $(document).ready(function() {
             // Event listener for the Add to Cart button
             $('.add-to-cart').on('click', function(e) {
                 e.preventDefault();
 
-
                 // Get product ID dynamically from the form
                 var productId = $(this).closest('form').find('input[name="id"]').val();
                 // alert(productId);
-
 
                 // Set up the AJAX request
                 $.ajax({
@@ -1391,8 +1340,6 @@
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}', // Pass CSRF token
-                        id: productId, // Pass the product ID
-                        quantity: 1 // You can change the quantity if needed
                         id: productId, // Pass the product ID
                         quantity: 1 // You can change the quantity if needed
                     },
@@ -1406,11 +1353,7 @@
                             setTimeout(function() {
                                 location.reload();
                             }, 1000); // 1000ms = 1 second delay before reload
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000); // 1000ms = 1 second delay before reload
 
-                        } else {
                         } else {
                             // alert('Failed to add product to cart!');
                             toastr.error('Something went wrong, please try again.');
@@ -1423,6 +1366,5 @@
                 });
             });
         });
-    </script>
     </script>
 @endpush
