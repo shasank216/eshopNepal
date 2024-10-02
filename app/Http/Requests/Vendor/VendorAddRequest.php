@@ -29,15 +29,23 @@ class VendorAddRequest extends FormRequest
         return [
             'f_name' => 'required',
             'l_name' => 'required',
-            'phone' => 'required|unique:sellers',
-            'email' => 'required|unique:sellers',
+            'phone' => [
+                'required',
+                'unique:sellers',
+                'regex:/^\+?[1-9]\d{0,2}(98|97)\d{8}$/', 
+            ],
+            'email' => [
+                'required',
+                'unique:sellers',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', 
+            ],
             'image' => 'required|mimes:jpg,jpeg,png,webp,gif,bmp,tif,tiff',
             'password' => 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)(?!.*\s).{8,}$/|same:confirm_password',
             'shop_name' => 'required',
             'shop_address' => 'required',
-            'logo'              => 'required|mimes: jpg,jpeg,png,webp,gif,bmp,tif,tiff',
-            'banner'            => 'required|mimes: jpg,jpeg,png,webp,gif,bmp,tif,tiff',
-            'bottom_banner'     => 'mimes: jpg,jpeg,png,webp,gif,bmp,tif,tiff',
+            'logo' => 'required|mimes:jpg,jpeg,png,webp,gif,bmp,tif,tiff',
+            'banner' => 'required|mimes:jpg,jpeg,png,webp,gif,bmp,tif,tiff',
+            'bottom_banner' => 'mimes:jpg,jpeg,png,webp,gif,bmp,tif,tiff',
         ];
     }
 
@@ -51,15 +59,15 @@ class VendorAddRequest extends FormRequest
             'email.required' => translate('The_email_field_is_required'),
             'email.unique' => translate('The_email_has_already_been_taken'),
             'image.required' => translate('The_image_field_is_required'),
-            'image.mimes' => translate('The_image_type_must_be').'.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
+            'image.mimes' => translate('The_image_type_must_be') . '.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
             'password.required' => translate('The_password_field_is_required'),
             'password.same' => translate('The_password_and_confirm_password_must_match'),
-            'password.regex' => translate('The_password_must_be_at_least_8_characters_long_and_contain_at_least_one_uppercase_letter').','.translate('_one_lowercase_letter').','.translate('_one_digit_').','.translate('_one_special_character').','.translate('_and_no_spaces').'.',
+            'password.regex' => translate('The_password_must_be_at_least_8_characters_long_and_contain_at_least_one_uppercase_letter') . ',' . translate('_one_lowercase_letter') . ',' . translate('_one_digit_') . ',' . translate('_one_special_character') . ',' . translate('_and_no_spaces') . '.',
             'shop_name.required' => translate('The_shop_name_field_is_required'),
             'shop_address.required' => translate('The_shop_address_field_is_required'),
-            'logo.mimes' => translate('The_logo_type_must_be').'.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
-            'banner.mimes' => translate('The_banner_type_must_be').'.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
-            'bottom_banner.mimes' => translate('The_bottom_banner_type_must_be').'.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
+            'logo.mimes' => translate('The_logo_type_must_be') . '.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
+            'banner.mimes' => translate('The_banner_type_must_be') . '.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
+            'bottom_banner.mimes' => translate('The_bottom_banner_type_must_be') . '.jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff,.webp',
         ];
     }
 
