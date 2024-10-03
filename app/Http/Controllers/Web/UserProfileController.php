@@ -46,10 +46,7 @@ class UserProfileController extends Controller
         private DeliveryMan $deliver_man,
         private ProductCompare $compare,
         private Wishlist $wishlist,
-    )
-    {
-
-    }
+    ) {}
 
     public function user_profile(Request $request)
     {
@@ -63,18 +60,17 @@ class UserProfileController extends Controller
         $addresses = ShippingAddress::where('customer_id', auth('customer')->id())->latest()->get();
         $customer_detail = User::where('id', auth('customer')->id())->first();
 
-        return view(VIEW_FILE_NAMES['user_profile'], compact('customer_detail', 'addresses', 'wishlists', 'total_order', 'total_loyalty_point', 'total_wallet_balance','categories'));
+        return view(VIEW_FILE_NAMES['user_profile'], compact('customer_detail', 'addresses', 'wishlists', 'total_order', 'total_loyalty_point', 'total_wallet_balance', 'categories'));
     }
 
     public function user_account(Request $request)
     {
-      
-      
+
+
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $customerDetail = User::where('id', auth('customer')->id())->first();
         $categories = Category::all();
         return view(VIEW_FILE_NAMES['user_account'], compact('customerDetail', 'categories'));
-
     }
 
     public function reset_password(Request $request)
@@ -82,7 +78,7 @@ class UserProfileController extends Controller
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $customerDetail = User::where('id', auth('customer')->id())->first();
         $categories = Category::all();
-    
+
         return view()->file(resource_path('themes/default/web-views/users-profile/reset_password.blade.php'), compact('customerDetail', 'categories', 'country_restrict_status'));
     }
 
@@ -93,9 +89,9 @@ class UserProfileController extends Controller
     //             'password' => 'required|min:8|same:confirm_password',
     //         ]);
     //     }
-        
 
-      
+
+
 
     //     if (User::where('id', '!=', auth('customer')->id())->where(['phone'=>$request['phone']])->first()) {
     //         Toastr::warning(translate('phone_already_taken'));
@@ -115,7 +111,7 @@ class UserProfileController extends Controller
     //     ]);
 
     //     $userDetails = [
-           
+
     //         'password' => strlen($request['password']) > 5 ? bcrypt($request['password']) : auth('customer')->user()->password,
     //     ];
     //     if (auth('customer')->check()) {
@@ -127,39 +123,39 @@ class UserProfileController extends Controller
     //     }
     // }
     public function user_password_update(Request $request)
-{
-    // Validate password with strong password requirements
-    $request->validate([
-        'password' => [
-            'required',
-            'string',
-            // 'confirmed',
-            Password::min(8) // Minimum 8 characters
-                ->mixedCase()  // Requires at least one uppercase and one lowercase letter
-                ->letters()    // Requires at least one letter
-                ->numbers()    // Requires at least one number
-                ->symbols()    // Requires at least one special character
-                ->uncompromised(), // Ensure the password hasn't appeared in data leaks
-           
-        ],
-    ]);
+    {
+        // Validate password with strong password requirements
+        $request->validate([
+            'password' => [
+                'required',
+                'string',
+                // 'confirmed',
+                Password::min(8) // Minimum 8 characters
+                    ->mixedCase()  // Requires at least one uppercase and one lowercase letter
+                    ->letters()    // Requires at least one letter
+                    ->numbers()    // Requires at least one number
+                    ->symbols()    // Requires at least one special character
+                    ->uncompromised(), // Ensure the password hasn't appeared in data leaks
 
-    // Only update the password if the user is authenticated
-    if (auth('customer')->check()) {
-        $userDetails = [
-            'password' => bcrypt($request['password']),
-        ];
+            ],
+        ]);
 
-        // Update the user's password
-        User::where('id', auth('customer')->id())->update($userDetails);
+        // Only update the password if the user is authenticated
+        if (auth('customer')->check()) {
+            $userDetails = [
+                'password' => bcrypt($request['password']),
+            ];
 
-        // Show success message
-        Toastr::info(translate('Password updated successfully'));
-        return redirect()->back();
-    } else {
-        return redirect()->back()->withErrors(['error' => 'User not authenticated']);
+            // Update the user's password
+            User::where('id', auth('customer')->id())->update($userDetails);
+
+            // Show success message
+            Toastr::info(translate('Password updated successfully'));
+            return redirect()->back();
+        } else {
+            return redirect()->back()->withErrors(['error' => 'User not authenticated']);
+        }
     }
-}
     public function user_update(Request $request)
     {
         $request->validate([
@@ -181,7 +177,7 @@ class UserProfileController extends Controller
             ]);
         }
 
-        if (User::where('id', '!=', auth('customer')->id())->where(['phone'=>$request['phone']])->first()) {
+        if (User::where('id', '!=', auth('customer')->id())->where(['phone' => $request['phone']])->first()) {
             Toastr::warning(translate('phone_already_taken'));
             return back();
         }
@@ -215,7 +211,7 @@ class UserProfileController extends Controller
 
     public function account_address_add()
     {
-     
+
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $zip_restrict_status = Helpers::get_business_settings('delivery_zip_code_area_restriction');
         $default_location = Helpers::get_business_settings('default_location');
@@ -225,7 +221,7 @@ class UserProfileController extends Controller
         $zip_codes = $zip_restrict_status ? DeliveryZipCode::all() : 0;
         $categories = Category::all();
 
-        return view(VIEW_FILE_NAMES['account_address_add'], compact('countries', 'zip_restrict_status', 'zip_codes', 'default_location','categories'));
+        return view(VIEW_FILE_NAMES['account_address_add'], compact('countries', 'zip_restrict_status', 'zip_codes', 'default_location', 'categories'));
     }
 
     public function account_delete($id)
@@ -233,9 +229,9 @@ class UserProfileController extends Controller
         if (auth('customer')->id() == $id) {
             $user = User::find($id);
 
-            $ongoing = ['out_for_delivery','processing','confirmed', 'pending'];
+            $ongoing = ['out_for_delivery', 'processing', 'confirmed', 'pending'];
             $order = Order::where('customer_id', $user->id)->whereIn('order_status', $ongoing)->count();
-            if($order>0){
+            if ($order > 0) {
                 Toastr::warning(translate('you_can`t_delete_account_due_ongoing_order'));
                 return redirect()->back();
             }
@@ -249,7 +245,7 @@ class UserProfileController extends Controller
             return redirect()->route('home');
         }
 
-        Toastr::warning(translate('access_denied').'!!');
+        Toastr::warning(translate('access_denied') . '!!');
         return back();
     }
 
@@ -323,9 +319,9 @@ class UserProfileController extends Controller
 
         Toastr::success(translate('address_added_successfully!'));
 
-        if(theme_root_path() == 'default'){
+        if (theme_root_path() == 'default') {
             return back();
-        }else{
+        } else {
             return redirect()->route('user-profile');
         }
     }
@@ -348,7 +344,7 @@ class UserProfileController extends Controller
         }
 
         if (isset($shippingAddress)) {
-            return view(VIEW_FILE_NAMES['account_address_edit'], compact('categories','shippingAddress', 'country_restrict_status', 'zip_restrict_status', 'delivery_countries', 'delivery_zipcodes', 'countriesName', 'countriesCode'));
+            return view(VIEW_FILE_NAMES['account_address_edit'], compact('categories', 'shippingAddress', 'country_restrict_status', 'zip_restrict_status', 'delivery_countries', 'delivery_zipcodes', 'countriesName', 'countriesCode'));
         } else {
             Toastr::warning(translate('access_denied'));
             return back();
@@ -421,35 +417,33 @@ class UserProfileController extends Controller
     {
         if (auth('customer')->check()) {
             return view('web-views.users-profile.account-payment');
-
         } else {
             return redirect()->route('home');
         }
-
     }
 
     public function account_order(Request $request)
     {
         $order_by = $request->order_by ?? 'desc';
         $categories = Category::all();
-        if(theme_root_path() == 'theme_fashion'){
+        if (theme_root_path() == 'theme_fashion') {
             $show_order = $request->show_order ?? 'ongoing';
 
-            $array = ['pending','confirmed','out_for_delivery','processing'];
+            $array = ['pending', 'confirmed', 'out_for_delivery', 'processing'];
             $orders = $this->order->withSum('orderDetails', 'qty')
-                ->where(['customer_id'=> auth('customer')->id(), 'is_guest'=>'0'])
-                ->when($show_order == 'ongoing', function($query) use($array){
-                    $query->whereIn('order_status',$array);
+                ->where(['customer_id' => auth('customer')->id(), 'is_guest' => '0'])
+                ->when($show_order == 'ongoing', function ($query) use ($array) {
+                    $query->whereIn('order_status', $array);
                 })
-                ->when($show_order == 'previous', function($query) use($array){
-                    $query->whereNotIn('order_status',$array);
+                ->when($show_order == 'previous', function ($query) use ($array) {
+                    $query->whereNotIn('order_status', $array);
                 })
-                ->when($request['search'], function($query) use($request){
-                        $query->where('id', 'like', "%{$request['search']}%");
+                ->when($request['search'], function ($query) use ($request) {
+                    $query->where('id', 'like', "%{$request['search']}%");
                 })
-                ->orderBy('id', $order_by)->paginate(10)->appends(['show_order'=>$show_order, 'search'=>$request->search]);
-        }else{
-            $orders = $this->order->withSum('orderDetails', 'qty')->where(['customer_id'=> auth('customer')->id(), 'is_guest'=>'0'])
+                ->orderBy('id', $order_by)->paginate(10)->appends(['show_order' => $show_order, 'search' => $request->search]);
+        } else {
+            $orders = $this->order->withSum('orderDetails', 'qty')->where(['customer_id' => auth('customer')->id(), 'is_guest' => '0'])
                 ->orderBy('id', $order_by)
                 ->paginate(10);
         }
@@ -468,17 +462,17 @@ class UserProfileController extends Controller
             $order?->details?->map(function ($detail) use ($order) {
                 $order['total_qty'] += $detail->qty;
 
-                $reviews = Review::where(['product_id'=>$detail['product_id'], 'customer_id'=>auth('customer')->id()])->whereNull('delivery_man_id')->get();
+                $reviews = Review::where(['product_id' => $detail['product_id'], 'customer_id' => auth('customer')->id()])->whereNull('delivery_man_id')->get();
                 $reviewData = null;
-                foreach($reviews as $review){
-                    if($review->order_id == $detail->order_id){
+                foreach ($reviews as $review) {
+                    if ($review->order_id == $detail->order_id) {
                         $reviewData = $review;
                     }
                 }
-                if(isset($reviews[0]) && !$reviewData){
+                if (isset($reviews[0]) && !$reviewData) {
                     $reviewData = ($reviews[0]['order_id'] == null) ? $reviews[0] : null;
                 }
-                if($reviewData){
+                if ($reviewData) {
                     $reviewData['attachment'] = $reviewData['attachment'] ? json_decode($reviewData['attachment']) : [];
                 }
                 $detail['reviewData'] = $reviewData;
@@ -501,7 +495,7 @@ class UserProfileController extends Controller
     {
         $categories = Category::all();
         $order = $this->order->with(['seller.shop'])->find($request->id);
-        if(!$order) {
+        if (!$order) {
             Toastr::warning(translate('invalid_order'));
             return redirect()->route('account-oder');
         }
@@ -513,36 +507,35 @@ class UserProfileController extends Controller
         $product_count = count($productIds);
 
         $vendorRattingStatusPositive = 0;
-        foreach($rating->pluck('rating') as $singleRating) {
-            ($singleRating >= 4?($vendorRattingStatusPositive++):'');
+        foreach ($rating->pluck('rating') as $singleRating) {
+            ($singleRating >= 4 ? ($vendorRattingStatusPositive++) : '');
         }
 
-        $rating_percentage = $rating_count != 0 ? ($vendorRattingStatusPositive*100)/ $rating_count:0;
+        $rating_percentage = $rating_count != 0 ? ($vendorRattingStatusPositive * 100) / $rating_count : 0;
 
-        return view(VIEW_FILE_NAMES['seller_info'], compact('avg_rating', 'product_count', 'rating_count', 'order', 'rating_percentage','categories'));
-
+        return view(VIEW_FILE_NAMES['seller_info'], compact('avg_rating', 'product_count', 'rating_count', 'order', 'rating_percentage', 'categories'));
     }
 
     public function account_order_details_delivery_man_info(Request $request)
     {
 
         $categories = Category::all();
-        $order = $this->order->with(['verificationImages', 'details.product','deliveryMan.rating', 'deliveryManReview','deliveryMan'=>function($query){
-                return $query->withCount('review');
-            }])->find($request->id);
+        $order = $this->order->with(['verificationImages', 'details.product', 'deliveryMan.rating', 'deliveryManReview', 'deliveryMan' => function ($query) {
+            return $query->withCount('review');
+        }])->find($request->id);
 
-        if(!$order) {
+        if (!$order) {
             Toastr::warning(translate('invalid_order'));
             return redirect()->route('account-oder');
         }
 
-        if(theme_root_path() == 'theme_fashion' || theme_root_path() == 'default') {
-            foreach($order->details as $details) {
-                if($details->product) {
-                    if($details->product->product_type == 'physical'){
+        if (theme_root_path() == 'theme_fashion' || theme_root_path() == 'default') {
+            foreach ($order->details as $details) {
+                if ($details->product) {
+                    if ($details->product->product_type == 'physical') {
                         $order['product_type_check'] = $details->product->product_type;
                         break;
-                    }else{
+                    } else {
                         $order['product_type_check'] = $details->product->product_type;
                     }
                 }
@@ -567,17 +560,17 @@ class UserProfileController extends Controller
             $order?->details?->map(function ($detail) use ($order) {
                 $order['total_qty'] += $detail->qty;
 
-                $reviews = Review::where(['product_id'=>$detail['product_id'], 'customer_id'=>auth('customer')->id()])->whereNull('delivery_man_id')->get();
+                $reviews = Review::where(['product_id' => $detail['product_id'], 'customer_id' => auth('customer')->id()])->whereNull('delivery_man_id')->get();
                 $reviewData = null;
-                foreach($reviews as $review){
-                    if($review->order_id == $detail->order_id){
+                foreach ($reviews as $review) {
+                    if ($review->order_id == $detail->order_id) {
                         $reviewData = $review;
                     }
                 }
-                if(isset($reviews[0]) && !$reviewData){
+                if (isset($reviews[0]) && !$reviewData) {
                     $reviewData = ($reviews[0]['order_id'] == null) ? $reviews[0] : null;
                 }
-                if($reviewData){
+                if ($reviewData) {
                     $reviewData['attachment'] = $reviewData['attachment'] ? json_decode($reviewData['attachment']) : [];
                 }
                 $detail['reviewData'] = $reviewData;
@@ -605,7 +598,7 @@ class UserProfileController extends Controller
     {
         $categories = Category::all();
         if (auth('customer')->check()) {
-                $supportTickets = SupportTicket::where('customer_id', auth('customer')->id())->latest()->paginate(10);
+            $supportTickets = SupportTicket::where('customer_id', auth('customer')->id())->latest()->paginate(10);
             return view(VIEW_FILE_NAMES['account_tickets'], compact('supportTickets', 'categories'));
         } else {
             return redirect()->route('home');
@@ -631,7 +624,7 @@ class UserProfileController extends Controller
             'image.*.max' => translate('The_image_must_not_exceed_6_MB'),
         ]);
 
-        $image = [] ;
+        $image = [];
         if ($request->file('image')) {
             foreach ($request['image'] as $key => $value) {
                 $image_name = ImageManager::upload('support-ticket/', 'webp', $value);
@@ -655,8 +648,8 @@ class UserProfileController extends Controller
 
     public function single_ticket(Request $request)
     {
-        $ticket = SupportTicket::with(['conversations'=>function($query){
-            $query->when(theme_root_path() == 'default' ,function($sub_query){
+        $ticket = SupportTicket::with(['conversations' => function ($query) {
+            $query->when(theme_root_path() == 'default', function ($sub_query) {
                 $sub_query->orderBy('id', 'desc');
             });
         }])->where('id', $request->id)->first();
@@ -665,8 +658,8 @@ class UserProfileController extends Controller
 
     public function comment_submit(Request $request, $id)
     {
-        if( $request->file('image') == null && empty($request['comment'])) {
-            Toastr::error(translate('type_something').'!');
+        if ($request->file('image') == null && empty($request['comment'])) {
+            Toastr::error(translate('type_something') . '!');
             return back();
         }
 
@@ -680,20 +673,20 @@ class UserProfileController extends Controller
             $validator =  $request->validate([
                 'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:6000'
             ]);
-            foreach ($request->image as $key=>$value) {
+            foreach ($request->image as $key => $value) {
                 $image_name = ImageManager::upload('support-ticket/', 'webp', $value);
                 $image[] = $image_name;
             }
         }
         DB::table('support_ticket_convs')->insert([
             'customer_message' => $request->comment,
-            'attachment' =>json_encode($image),
+            'attachment' => json_encode($image),
             'support_ticket_id' => $id,
             'position' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        Toastr::success(translate('message_send_successfully').'!');
+        Toastr::success(translate('message_send_successfully') . '!');
         return back();
     }
 
@@ -703,7 +696,7 @@ class UserProfileController extends Controller
             'status' => 'close',
             'updated_at' => now(),
         ]);
-        Toastr::success(translate('ticket_closed').'!');
+        Toastr::success(translate('ticket_closed') . '!');
         return redirect('/account-tickets');
     }
 
@@ -720,8 +713,7 @@ class UserProfileController extends Controller
                 }
             }
 
-            foreach ($support->conversations as $conversation)
-            {
+            foreach ($support->conversations as $conversation) {
                 if ($conversation->attachment && count(json_decode($conversation->attachment)) > 0) {
                     foreach (json_decode($conversation->attachment, true) as $image) {
                         ImageManager::delete('/support-ticket/' . $image);
@@ -735,7 +727,6 @@ class UserProfileController extends Controller
         } else {
             return redirect()->back();
         }
-
     }
 
     public function track_order()
@@ -753,7 +744,7 @@ class UserProfileController extends Controller
                 $query->where('customer_id', (auth('customer')->id()));
             })->first();
 
-            if(!$orderDetails) {
+            if (!$orderDetails) {
                 Toastr::warning(translate('invalid_order'));
                 return redirect()->route('account-oder');
             }
@@ -767,7 +758,7 @@ class UserProfileController extends Controller
     public function getCheckIsOrderOnlyDigital($order): bool
     {
         $isOrderOnlyDigital = true;
-        if($order->orderDetails) {
+        if ($order->orderDetails) {
             foreach ($order->orderDetails as $detail) {
                 $product = json_decode($detail->product_details);
                 if ($product->product_type == 'physical') {
@@ -810,14 +801,12 @@ class UserProfileController extends Controller
                 Toastr::error(translate('invalid_Order_Id_or_phone_Number'));
                 return redirect()->route('track-order.index', ['order_id' => $request['order_id'], 'phone_number' => $request['phone_number']]);
             }
-
         } else {
             $order = Order::where('id', $request['order_id'])->first();
             if ($order && $order->is_guest) {
                 $orderDetails = Order::where('id', $request['order_id'])->whereHas('shippingAddress', function ($query) use ($request) {
                     $query->where('phone', $request['phone_number']);
                 })->first();
-
             } elseif ($user->phone == $request['phone_number']) {
                 $orderDetails = Order::where('id', $request['order_id'])->whereHas('details', function ($query) {
                     $query->where('customer_id', auth('customer')->id());
@@ -834,8 +823,8 @@ class UserProfileController extends Controller
         $order_verification_status = getWebConfig(name: 'order_verification');
 
         if (isset($orderDetails)) {
-            if($orderDetails['order_type'] == 'POS'){
-                Toastr::error(translate('this_order_is_created_by_').($orderDetails['seller_is'] == 'seller' ? 'vendor' : 'admin').translate('_from POS').','.translate('please_contact_with_').($orderDetails['seller_is'] == 'seller' ? 'vendor' : 'admin').translate('_to_know_more_details').'.');
+            if ($orderDetails['order_type'] == 'POS') {
+                Toastr::error(translate('this_order_is_created_by_') . ($orderDetails['seller_is'] == 'seller' ? 'vendor' : 'admin') . translate('_from POS') . ',' . translate('please_contact_with_') . ($orderDetails['seller_is'] == 'seller' ? 'vendor' : 'admin') . translate('_to_know_more_details') . '.');
                 return redirect()->back();
             }
             $isOrderOnlyDigital = self::getCheckIsOrderOnlyDigital($orderDetails);
@@ -855,7 +844,6 @@ class UserProfileController extends Controller
         } else {
             return redirect()->route('track-order.index')->with('Error', translate('invalid_Order_Id_or_phone_Number'));
         }
-
     }
 
     public function order_cancel($id)
@@ -867,9 +855,9 @@ class UserProfileController extends Controller
                 'order_status' => 'canceled'
             ]);
             Toastr::success(translate('successfully_canceled'));
-        }elseif ($order['payment_method'] == 'offline_payment') {
+        } elseif ($order['payment_method'] == 'offline_payment') {
             Toastr::error(translate('The_order_status_cannot_be_updated_as_it_is_an_offline_payment'));
-        }else{
+        } else {
             Toastr::error(translate('status_not_changable_now'));
         }
         return back();
@@ -886,7 +874,7 @@ class UserProfileController extends Controller
             $loyalty_point = CustomerManager::count_loyalty_point_for_amount($id);
 
             if ($user->loyalty_point < $loyalty_point) {
-                Toastr::warning(translate('you_have_not_sufficient_loyalty_point_to_refund_this_order').'!!');
+                Toastr::warning(translate('you_have_not_sufficient_loyalty_point_to_refund_this_order') . '!!');
                 return back();
             }
         }
@@ -911,7 +899,7 @@ class UserProfileController extends Controller
             $loyalty_point = CustomerManager::count_loyalty_point_for_amount($request->order_details_id);
 
             if ($user->loyalty_point < $loyalty_point) {
-                Toastr::warning(translate('you_have_not_sufficient_loyalty_point_to_refund_this_order').'!!');
+                Toastr::warning(translate('you_have_not_sufficient_loyalty_point_to_refund_this_order') . '!!');
                 return back();
             }
         }
@@ -956,12 +944,12 @@ class UserProfileController extends Controller
     public function refund_details($id)
     {
         $order_details = OrderDetail::find($id);
-        $refund = RefundRequest::with(['product','order'])->where('customer_id', auth('customer')->id())
+        $refund = RefundRequest::with(['product', 'order'])->where('customer_id', auth('customer')->id())
             ->where('order_details_id', $order_details->id)->first();
         $product = $this->product->find($order_details->product_id);
         $order = $this->order->find($order_details->order_id);
 
-        if($product) {
+        if ($product) {
             return view(VIEW_FILE_NAMES['refund_details'], compact('order_details', 'refund', 'product', 'order'));
         }
 
@@ -981,13 +969,12 @@ class UserProfileController extends Controller
         }
 
         return view('web-views.users-profile.submit-review', compact('order_details'));
-
     }
 
     public function refer_earn(Request $request)
     {
         $ref_earning_status = Helpers::get_business_settings('ref_earning_status') ?? 0;
-        if(!$ref_earning_status){
+        if (!$ref_earning_status) {
             Toastr::error(translate('you_have_no_permission'));
             return redirect('/');
         }
@@ -1003,12 +990,12 @@ class UserProfileController extends Controller
         $categories = Category::all();
 
         $coupons = Coupon::with('seller')
-                    ->where(['status' => 1])
-                    ->whereIn('customer_id',[auth('customer')->id(), '0'])
-                    ->whereIn('customer_id',[auth('customer')->id(), '0'])
-                    ->whereDate('start_date', '<=', date('Y-m-d'))
-                    ->whereDate('expire_date', '>=', date('Y-m-d'))
-                    ->paginate(8);
+            ->where(['status' => 1])
+            ->whereIn('customer_id', [auth('customer')->id(), '0'])
+            ->whereIn('customer_id', [auth('customer')->id(), '0'])
+            ->whereDate('start_date', '<=', date('Y-m-d'))
+            ->whereDate('expire_date', '>=', date('Y-m-d'))
+            ->paginate(8);
 
         return view(VIEW_FILE_NAMES['user_coupons'], compact('coupons', 'categories'));
     }

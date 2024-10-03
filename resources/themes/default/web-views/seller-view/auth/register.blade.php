@@ -243,62 +243,99 @@
                             </div>
                         </div>
 
-                        @php($recaptcha = getWebConfig(name: 'recaptcha'))
-                        @if (isset($recaptcha) && $recaptcha['status'] == 1)
-                            <div id="recaptcha_element" class="w-100" data-type="image"></div>
-                            <br />
-                        @else
-                            <div class="col-12">
-                                <div class="row py-2">
-                                    <div class="col-6 pr-0">
-                                        <input type="text" class="form-control __h-40"
-                                            name="default_recaptcha_id_seller_regi" value=""
-                                            placeholder="{{ translate('enter_captcha_value') }}" autocomplete="off"
-                                            required>
-                                    </div>
-                                    <div class="col-6 input-icons mb-2 w-100 rounded bg-white">
-                                        <span
-                                            class="d-flex align-items-center align-items-center get-vendor-regi-recaptcha-verify"
-                                            data-link="{{ route('vendor.auth.recaptcha', ['tmp' => ':dummy-id']) }}">
-                                            <img src="{{ route('vendor.auth.recaptcha', ['tmp' => 1]) . '?captcha_session_id=sellerRecaptchaSessionKey' }}"
-                                                alt="" class="rounded __h-40" id="default_recaptcha_id">
-                                            <i class="tio-refresh position-relative cursor-pointer p-2"></i>
-                                        </span>
-                                    </div>
+                        <div class="form-row col-lg-12">
+                            <div class="col-md-12">
+                                <div class="form-group mb-1">
+                                    <label for="address">
+                                        {{ translate('address') }}
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <textarea class="form-control" id="address" type="text" name="address" required></textarea>
+
+                                    <span class="fs-14 text-danger font-semi-bold opacity-0 map-address-alert">
+                                        {{ translate('note') }}:
+                                        {{ translate('you_need_to_select_address_from_your_selected_country') }}
+                                    </span>
                                 </div>
                             </div>
-                        @endif
-                        <div class="col-sm-12">
-                            <div class="form-group mb-0 d-flex flex-wrap justify-content-between">
-                                <label
-                                    class="form-group mb-3 d-flex align-items-center flex-grow-1 cursor-pointer user-select-none">
-                                    <strong>
-                                        <input type="checkbox" class="mr-1" name="remember"
-                                            id="vendor-remember-input-checked">
-                                    </strong>
-                                    <span class="mb-4px d-block w-0 flex-grow pl-1">
-                                        <span>{{ translate('i_agree_to_Your_terms') }}</span>
-                                        <a class="font-size-sm text-force-underline text-primary" target="_blank"
-                                            href="{{ route('terms') }}">
-                                            {{ translate('terms_and_condition') }}
-                                        </a>
-                                    </span>
-                                </label>
+
+                            @php($default_location = getWebConfig(name: 'default_location'))
+                            <div class="col-md-12">
+                                <div class="form-group map-area-alert-border location-map-address-canvas-area">
+                                    <input id="pac-input" class="controls rounded __inline-46 location-search-input-field"
+                                        title="{{ translate('search_your_location_here') }}" type="text"
+                                        placeholder="{{ translate('search_here') }}" />
+                                    <div class="__h-200px" id="location_map_canvas"></div>
+                                </div>
                             </div>
-                            <input type="hidden" name="from_submit" value="seller">
-                            <button type="button" class="btn btn--primary btn-user btn-block font-semi-bold form-submit"
-                                id="apply" data-form-id="vendor-registration-form" disabled>
-                                {{ translate('apply_Shop') }}
-                            </button>
-                            <div class="text-center">
-                                <a class="small" href="{{ route('vendor.auth.login') }}">
-                                    {{ translate('already_have_an_account') }} ? {{ translate('sign_in') }}
-                                </a>
+
+                        </div>
+                        <input type="hidden" id="latitude" name="latitude" class="form-control d-inline"
+                            placeholder="{{ translate('ex') }} : -94.22213"
+                            value="{{ $default_location ? $default_location['lat'] : 0 }}" required readonly>
+                        <input type="hidden" name="longitude" class="form-control"
+                            placeholder="{{ translate('ex') }} : 103.344322" id="longitude"
+                            value="{{ $default_location ? $default_location['lng'] : 0 }}" required readonly>
+                        <div class="modal-footer">
+
+                            @php($recaptcha = getWebConfig(name: 'recaptcha'))
+                            @if (isset($recaptcha) && $recaptcha['status'] == 1)
+                                <div id="recaptcha_element" class="w-100" data-type="image"></div>
+                                <br />
+                            @else
+                                <div class="col-12">
+                                    <div class="row py-2">
+                                        <div class="col-6 pr-0">
+                                            <input type="text" class="form-control __h-40"
+                                                name="default_recaptcha_id_seller_regi" value=""
+                                                placeholder="{{ translate('enter_captcha_value') }}" autocomplete="off"
+                                                required>
+                                        </div>
+                                        <div class="col-6 input-icons mb-2 w-100 rounded bg-white">
+                                            <span
+                                                class="d-flex align-items-center align-items-center get-vendor-regi-recaptcha-verify"
+                                                data-link="{{ route('vendor.auth.recaptcha', ['tmp' => ':dummy-id']) }}">
+                                                <img src="{{ route('vendor.auth.recaptcha', ['tmp' => 1]) . '?captcha_session_id=sellerRecaptchaSessionKey' }}"
+                                                    alt="" class="rounded __h-40" id="default_recaptcha_id">
+                                                <i class="tio-refresh position-relative cursor-pointer p-2"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="col-sm-12">
+                                <div class="form-group mb-0 d-flex flex-wrap justify-content-between">
+                                    <label
+                                        class="form-group mb-3 d-flex align-items-center flex-grow-1 cursor-pointer user-select-none">
+                                        <strong>
+                                            <input type="checkbox" class="mr-1" name="remember"
+                                                id="vendor-remember-input-checked">
+                                        </strong>
+                                        <span class="mb-4px d-block w-0 flex-grow pl-1">
+                                            <span>{{ translate('i_agree_to_Your_terms') }}</span>
+                                            <a class="font-size-sm text-force-underline text-primary" target="_blank"
+                                                href="{{ route('terms') }}">
+                                                {{ translate('terms_and_condition') }}
+                                            </a>
+                                        </span>
+                                    </label>
+                                </div>
+                                <input type="hidden" name="from_submit" value="seller">
+                                <button type="button"
+                                    class="btn btn--primary btn-user btn-block font-semi-bold form-submit" id="apply"
+                                    data-form-id="vendor-registration-form" disabled>
+                                    {{ translate('apply_Shop') }}
+                                </button>
+                                <div class="text-center">
+                                    <a class="small" href="{{ route('vendor.auth.login') }}">
+                                        {{ translate('already_have_an_account') }} ? {{ translate('sign_in') }}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </form>
     </div>
     <div class="modal fade registration-success-modal" tabindex="-1" aria-labelledby="toggle-modal" aria-hidden="true">
@@ -327,6 +364,8 @@
 @endsection
 
 @push('script')
+
+
     @if (isset($recaptcha) && $recaptcha['status'] == 1)
         <script type="text/javascript">
             "use strict";
@@ -342,6 +381,134 @@
     <script src="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/js/intlTelInput.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/country-picker-init.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/vendor-registration.js') }}"></script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ getWebConfig(name: 'map_api_key') }}&libraries=places&v=3.49">
+    </script>
+
+    <script>
+        "use strict";
+
+        function initAutocomplete() {
+            var myLatLng = {
+                lat: {{ $default_location ? $default_location['lat'] : '-33.8688' }},
+                lng: {{ $default_location ? $default_location['lng'] : '151.2195' }}
+            };
+
+            const map = new google.maps.Map(document.getElementById("location_map_canvas"), {
+                center: {
+                    lat: {{ $default_location ? $default_location['lat'] : '-33.8688' }},
+                    lng: {{ $default_location ? $default_location['lng'] : '151.2195' }}
+                },
+                zoom: 13,
+                mapTypeId: "roadmap",
+            });
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+            });
+
+            marker.setMap(map);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            google.maps.event.addListener(map, 'click', function(mapsMouseEvent) {
+                var coordinates = JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2);
+                var coordinates = JSON.parse(coordinates);
+                var latlng = new google.maps.LatLng(coordinates['lat'], coordinates['lng']);
+                marker.setPosition(latlng);
+                map.panTo(latlng);
+
+                document.getElementById('latitude').value = coordinates['lat'];
+                document.getElementById('longitude').value = coordinates['lng'];
+
+                geocoder.geocode({
+                    'latLng': latlng
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            document.getElementById('address').value = results[1].formatted_address;
+
+                            let systemCountryRestrictStatus = $('#system-country-restrict-status').data(
+                                'value');
+                            if (systemCountryRestrictStatus) {
+                                const countryObject = findCountryObject(results[1].address_components);
+                                deliveryRestrictedCountriesCheck(countryObject.long_name,
+                                    '.location-map-address-canvas-area', '#address')
+                            }
+                        }
+                    }
+                });
+            });
+
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
+            let markers = [];
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+                markers.forEach((marker) => {
+                    marker.setMap(null);
+                });
+                markers = [];
+                const bounds = new google.maps.LatLngBounds();
+                places.forEach((place) => {
+                    if (!place.geometry || !place.geometry.location) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+                    var mrkr = new google.maps.Marker({
+                        map,
+                        title: place.name,
+                        position: place.geometry.location,
+                    });
+
+                    google.maps.event.addListener(mrkr, "click", function(event) {
+                        document.getElementById('latitude').value = this.position.lat();
+                        document.getElementById('longitude').value = this.position.lng();
+                    });
+
+                    markers.push(mrkr);
+
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+        }
+
+        $(document).on('ready', function() {
+            initAutocomplete();
+        });
+
+        $(document).on("keydown", "input", function(e) {
+            if (e.which == 13) e.preventDefault();
+        });
+
+        const deliveryRestrictedCountries = @json($countriesName);
+
+        function deliveryRestrictedCountriesCheck(countryOrCode, elementSelector, inputElement) {
+            const foundIndex = deliveryRestrictedCountries.findIndex(country => country.toLowerCase() === countryOrCode
+                .toLowerCase());
+            if (foundIndex !== -1) {
+                $(elementSelector).removeClass('map-area-alert-danger');
+                $(inputElement).parent().find('.map-address-alert').removeClass('opacity-100').addClass('opacity-0')
+            } else {
+                $(elementSelector).addClass('map-area-alert-danger');
+                $(inputElement).val('')
+                $(inputElement).parent().find('.map-address-alert').removeClass('opacity-0').addClass('opacity-100')
+            }
+        }
+    </script>
 
     <script>
         function readImage(input, previewId, errorId) {
