@@ -113,4 +113,9 @@ class OrderDetail extends Model
     {
         return $this->hasMany(OrderStatusHistory::class,'order_id','order_id');
     }
+
+     public function has_product()
+     {
+     return $this->belongsTo(Product::class, 'product_id'); // Adjust 'product_id' if it's named differently
+     }
 }
