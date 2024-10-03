@@ -41,7 +41,7 @@ class RegisterController extends BaseController
     }
     /*public function getView():View|RedirectResponse
     {
-        
+
         $businessMode = getWebConfig(name:'business_mode');
         $vendorRegistration = getWebConfig(name:'seller_registration');
         if((isset($businessMode) && $businessMode=='single') || (isset($vendorRegistration) && $vendorRegistration==0))
@@ -98,6 +98,7 @@ class RegisterController extends BaseController
 
     public function add(VendorAddRequest $request): JsonResponse
     {
+
         $recaptcha = getWebConfig('recaptcha');
         if (isset($recaptcha) && $recaptcha['status'] == 1) {
             try {
@@ -124,6 +125,7 @@ class RegisterController extends BaseController
                 return response()->json(['error' => translate('Captcha_Failed')]);
             }
         }
+
         $vendor = $this->vendorRepo->add(data: $this->vendorService->getAddData($request));
         $this->shopRepo->add($this->shopService->getAddShopDataForRegistration(request: $request, vendorId: $vendor['id']));
         $this->vendorWalletRepo->add($this->vendorService->getInitialWalletData(vendorId: $vendor['id']));
