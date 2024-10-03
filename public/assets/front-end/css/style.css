@@ -801,7 +801,7 @@ a {
 
 @media (max-width: 767px) {
     .deal_of_the_day {
-        max-width: 350px;
+        /* max-width: 350px; */
         margin: 0 auto;
     }
 
@@ -2667,6 +2667,7 @@ a {
 @media screen and (max-width: 575px) {
     .__inline-12 {
         max-width: 70px;
+        max-width: 90px;
         -o-object-fit: contain;
         object-fit: contain;
     }
@@ -5313,7 +5314,7 @@ a {
 
 @media (max-width: 767px) {
     .navbar-light .navbar-brand {
-        margin-inline-end: auto !important;
+        /* margin-inline-end: auto !important; */
         margin-inline-start: 16px;
     }
 
@@ -9871,9 +9872,9 @@ button#dropdownMenuButton {
 }
 
 .deal_of_the_day {
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     background-color: unset !important;
     border: unset;
     box-shadow: none;
@@ -9881,6 +9882,7 @@ button#dropdownMenuButton {
 
 .__inline-61 .recommended-product-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: unset !important;
@@ -10154,8 +10156,8 @@ button#dropdownMenuButton {
         padding: 0 !important;
     }
 
-    .for-feature-title  {
-        margin: 0 !important;
+    .__inline-61 .recommended-product-card {
+        flex-direction: row !important;
     }
 
 }
@@ -10302,6 +10304,10 @@ button#dropdownMenuButton {
 
     .home-shop-category button {
         display: none;
+    }
+
+    .__inline-61 .recommended-product-card {
+        flex-direction: column !important;
     }
 
 }

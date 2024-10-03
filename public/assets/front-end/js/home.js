@@ -258,16 +258,16 @@ $(document).ready(function () {
                 items: 2,
             },
             768: {
-                items: 3,
+                items: 2,
             },
             992: {
-                items: 3,
+                items: 2,
             },
             1200: {
-                items: 4,
+                items: 3,
             },
             1400: {
-                items: 4,
+                items: 3,
             }
         },
     });
