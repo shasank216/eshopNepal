@@ -167,7 +167,8 @@ class OrderController extends BaseController
             'seller_is' => $vendorIs,
         ];
 
-        $orders = $this->orderRepo->getListWhere(orderBy: ['id' => 'desc'], searchValue: $request['searchValue'], filters: $filters, relations: ['customer','seller.shop'], dataLimit: 'all');
+        $orders = $this->orderRepo->getListWhere(orderBy: ['id' => 'desc'], searchValue: $request['searchValue'],
+        filters: $filters, relations: ['customer','seller.shop','orderDetails.has_product'], dataLimit: 'all');
 
         /** order status count  */
         $status_array = [
@@ -189,6 +190,7 @@ class OrderController extends BaseController
                 $order['total_price'] += $details->qty * $details->price + ($details->tax_model == 'include' ? $details->qty * $details->tax : 0);
                 $order['total_discount'] += $details->discount;
                 $order['total_tax'] += $details->tax_model == 'exclude' ? $details->tax : 0;
+                $order['productName'] = $details->product ? $details->product->name : 'Unknown Product';
             });
 
         });
@@ -231,11 +233,13 @@ class OrderController extends BaseController
             'date_type' => $date_type,
             'defaultCurrencyCode'=>getCurrencyCode(),
         ];
+
         return Excel::download(new OrderExport($data), 'Orders.xlsx');
     }
 
     public function getView(string|int $id, DeliveryCountryCodeService $service): View
     {
+
         $countryRestrictStatus = getWebConfig(name: 'delivery_country_restriction');
         $zipRestrictStatus = getWebConfig(name: 'delivery_zip_code_area_restriction');
         $deliveryCountry = $this->deliveryCountryCodeRepo->getList(dataLimit: 'all');
@@ -273,6 +277,7 @@ class OrderController extends BaseController
         $deliveryMen = $this->deliveryManRepo->getListWhere(filters: $filters, dataLimit: 'all');
         if ($order['order_type'] == 'default_type') {
             $orderCount = $this->orderRepo->getListWhereCount(filters: ['customer_id' => $order['customer_id']]);
+          
             return view(Order::VIEW[VIEW], compact('order', 'linkedOrders',
                 'deliveryMen', 'totalDelivered', 'companyName', 'companyWebLogo', 'physicalProduct',
                 'countryRestrictStatus', 'zipRestrictStatus', 'countries', 'zipCodes', 'orderCount'));

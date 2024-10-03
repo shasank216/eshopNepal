@@ -49,6 +49,7 @@ class CouponController extends BaseController
 
     public function getAddListView(Request $request): View
     {
+      
         $coupons = $this->couponRepo->getListWhere(searchValue: $request['searchValue'],filters: ['added_by'=>'admin'] ,dataLimit: getWebConfig(name: 'pagination_limit'));
         $customers = $this->customerRepo->getListWhereNotIn([0]);
         return view(Coupon::ADD[VIEW], compact('coupons', 'customers'));
