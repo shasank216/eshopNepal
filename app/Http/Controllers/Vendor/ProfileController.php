@@ -57,6 +57,7 @@ class ProfileController extends BaseController
      */
     public function getUpdateView(string|int $id):View|RedirectResponse
     {
+
         if (auth('seller')->id() != $id) {
             Toastr::warning(translate('you_can_not_change_others_profile'));
             return redirect()->back();
@@ -73,7 +74,6 @@ class ProfileController extends BaseController
      */
     public function update(VendorRequest $request, string|int $id):JsonResponse
     {
-
         $vendor = $this->vendorRepo->getFirstWhere(['id'=>$id]);
         $this->vendorRepo->update(id:$id,data: $this->vendorService->getVendorDataForUpdate(request:$request,vendor:$vendor));
         return response()->json(['message'=>translate('profile_updated_successfully')]);

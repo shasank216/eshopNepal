@@ -58,6 +58,10 @@ class Seller extends Authenticatable
         'minimum_order_amount',
         'free_delivery_status',
         'app_language',
+        'vat_pan_img',
+        'registration_cert_img',
+        'citizenship_img',
+        'address'
     ];
 
     protected $casts = [

@@ -76,17 +76,23 @@ class VendorService
     public function getVendorDataForUpdate(object $request, object $vendor):array
     {
         $image = $request['image'] ? $this->update(dir: 'seller/', oldImage: $vendor['image'], format: 'webp', image: $request->file('image')) : $vendor['image'];
+        $vat_pan_img = $request['vat_pan_img'] ? $this->update(dir: 'vat_pan_img/', oldImage: $vendor['vat_pan_img'], format:
+        'webp', image: $request->file('vat_pan_img')) : $vendor['vat_pan_img'];
+        $registration_cert_img = $request['registration_cert_img'] ? $this->update(dir: 'registration_cert_img/', oldImage: $vendor['registration_cert_img'], format:'webp', image: $request->file('registration_cert_img')) : $vendor['registration_cert_img'];
+        $citizenship_img = $request['citizenship_img'] ? $this->update(dir: 'citizenship_img/', oldImage: $vendor['citizenship_img'], format:'webp', image: $request->file('citizenship_img')) : $vendor['citizenship_img'];
+
         return [
             'f_name' => $request['f_name'],
             'l_name' => $request['l_name'],
             'phone' => $request['phone'],
             'image' => $image,
+            'vat_pan_img' => $vat_pan_img,
+            'registration_cert_img' => $registration_cert_img,
+            'citizenship_img' => $citizenship_img
         ];
     }
 
-    /**
-     * @return array[password: string]
-     */
+
     public function getVendorPasswordData(object $request):array
     {
         return [
@@ -94,10 +100,6 @@ class VendorService
         ];
     }
 
-    /**
-     * @param object $request
-     * @return array
-     */
     public function getVendorBankInfoData(object $request):array
     {
         return [
@@ -114,7 +116,14 @@ class VendorService
             'l_name' => $request['l_name'],
             'phone' => $request['phone'],
             'email' => $request['email'],
+            'address' => $request['address'],
             'image' => $this->upload(dir: 'seller/', format: 'webp', image: $request->file('image')),
+            'vat_pan_img' => $this->upload(dir: 'vat_pan_img/', format: 'webp', image: $request->file('vat_pan_img')),
+            'registration_cert_img' => $this->upload(dir: 'registration_cert_img/', format: 'webp', image:
+            $request->file('registration_cert_img')),
+            'citizenship_img' => $this->upload(dir: 'citizenship_img/', format: 'webp', image:
+            $request->file('citizenship_img')),
+
             'password' => bcrypt($request['password']),
             'status' => $request['status'] == 'approved' ? 'approved' : 'pending',
         ];
