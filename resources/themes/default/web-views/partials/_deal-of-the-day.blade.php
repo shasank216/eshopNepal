@@ -2,57 +2,15 @@
     <div class="container rtl">
         <div class="row g-4 pt-2 mt-0 pb-2 __deal-of align-items-start">
 
-            <div class="col-xl-12 col-md-12">
-                <div class="latest-product-margin">
-                    <div class="d-flex justify-content-between align-items-center mb-14px">
-                        <div class="text-center">
-                            <span class="for-feature-title __text-22px font-bold text-center">
-                                {{ translate('latest_products') }}
-                            </span>
-                        </div>
-                        <div class="mr-1">
-                            <a class="text-capitalize view-all-text web-text-primary"
-                                href="{{ route('products', ['data_from' => 'latest']) }}">
-                                {{ translate('view_all') }}
-                                <i
-                                    class="czi-arrow-{{ Session::get('direction') === 'rtl' ? 'left mr-1 ml-n1 mt-1 float-left' : 'right ml-1 mr-n1' }}"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    {{-- <div class="row mt-0 g-2">
-                        @foreach ($latest_products as $product)
-                            <div class="col-xl-3 col-sm-4 col-md-6 col-lg-4 col-6">
-                                <div>
-                                    @include('web-views.partials._inline-single-product',['product'=>$product,'decimal_point_settings'=>$decimal_point_settings])
-                                </div>
-                            </div>
-                        @endforeach
-                    </div> --}}
-                </div>
-            </div>
-
-            <div class="owl-theme owl-carousel latest-slider">
-                @foreach ($latest_products as $product)
-                    <div>
-                        @include('web-views.partials._inline-single-product', [
-                            'product' => $product,
-                            'decimal_point_settings' => $decimal_point_settings,
-                        ])
-                    </div>
-                @endforeach
-            </div>
-
-
-            <div class="col-12">
-                <div class="deal_of_the_day h-100 py-4">
+            <div class="col-md-4 col-sm-12">
+                <div class="deal_of_the_day h-100">
                     @if (isset($deal_of_the_day->product))
-                        <div class="d-flex justify-content-center align-items-center py-4 col-md-4">
-                            <h4 class="for-feature-title __text-22px font-bold text-center">
+                        <div class="d-flex justify-content-center align-items-center product-head-border">
+                            <h4 class="for-feature-title __text-22px font-bold text-center m-0">
                                 {{ translate('deal_of_the_day') }}
                             </h4>
                         </div>
-                        <div class="recommended-product-card mt-0 min-height-auto col-md-8">
+                        <div class="recommended-product-card mt-0 min-height-auto">
                             <div class="d-flex justify-content-center align-items-center __pt-20 __m-20-r">
                                 <div class="position-relative">
                                     <img class="__rounded-top aspect-1 h-auto" alt=""
@@ -71,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="__i-1 bg-transparent text-center mb-0">
-                                <div class="px-0">
+                                <div class="px-0 d-flex flex-column">
                                     <p class="bold-subtitle m-0"> {{ $product->brand->name }}</p>
 
                                     @php($overallRating = getOverallRating($deal_of_the_day->product['reviews']))
@@ -87,8 +45,10 @@
                                                         <i class="tio-star-outlined text-warning"></i>
                                                     @endif
                                                 @endfor
-                                                <label class="badge-style">(
-                                                    {{ count($deal_of_the_day->product['reviews']) }} )</label>
+                                                <label class="badge-style review-text-container">
+                                                    {{ count($deal_of_the_day->product['reviews']) }} 
+                                                    <span class="review-text">reviews</span>
+                                                </label>
                                             </span>
                                         </div>
                                     @endif
@@ -98,7 +58,7 @@
                                         </span>
                                     </a>
                                     <div
-                                        class="mb-4 pt-1 d-flex flex-wrap justify-content-center align-items-center text-center gap-8">
+                                        class="mb-3 pt-1 d-flex flex-wrap justify-content-center align-items-center text-center gap-8">
 
                                         @if ($product->discount > 0)
                                             <p class="product-price m-0">
@@ -156,7 +116,7 @@
                                     </div>
                                 </div>
                                 <div class="__i-1 bg-transparent text-center mb-0 min-height-auto">
-                                    <div class="px-0 pb-0">
+                                    <div class="px-0 pb-0 d-flex flex-column">
                                         @php($overallRating = getOverallRating($product['reviews']))
                                         @if ($overallRating[0] != 0)
                                             <div class="rating-show">
@@ -170,8 +130,10 @@
                                                             <i class="tio-star-outlined text-warning"></i>
                                                         @endif
                                                     @endfor
-                                                    <label class="badge-style">( {{ count($product->reviews) }}
-                                                        )</label>
+                                                    <label class="badge-style review-text-container"> 
+                                                        {{ count($product->reviews) }}
+                                                        <span class="review-text">reviews</span>
+                                                    </label>
                                                 </span>
 
                                             </div>
@@ -193,7 +155,7 @@
                                             </span>
                                         </div>
                                         <button
-                                            class="btn btn--primary font-bold px-4 rounded-10 text-uppercase get-view-by-onclick"
+                                            class="btn btn--primary font-bold px-4 rounded-10 text-uppercase get-view-by-onclick w-100"
                                             data-link="{{ route('product', $product->slug) }}">
                                             {{ translate('buy_now') }}
                                         </button>
@@ -202,6 +164,48 @@
                             </div>
                         @endif
                     @endif
+                </div>
+            </div>
+
+            <div class="col-md-8 col-sm-12">
+                <div class="">
+                    <div class="d-flex justify-content-between align-items-center mb-4 product-head-border">
+                        <div class="text-center">
+                            <span class="for-feature-title __text-22px font-bold text-center">
+                                {{ translate('latest_products') }}
+                            </span>
+                        </div>
+                        <div class="mr-1">
+                            <a class="text-capitalize view-all-text web-text-primary"
+                                href="{{ route('products', ['data_from' => 'latest']) }}">
+                                {{ translate('view_all') }}
+                                <i
+                                    class="czi-arrow-{{ Session::get('direction') === 'rtl' ? 'left mr-1 ml-n1 mt-1 float-left' : 'right ml-1 mr-n1' }}"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- <div class="row mt-0 g-2">
+                        @foreach ($latest_products as $product)
+                            <div class="col-xl-3 col-sm-4 col-md-6 col-lg-4 col-6">
+                                <div>
+                                    @include('web-views.partials._inline-single-product',['product'=>$product,'decimal_point_settings'=>$decimal_point_settings])
+                                </div>
+                            </div>
+                        @endforeach
+                    </div> --}}
+                </div>
+            
+
+                <div class="owl-theme owl-carousel latest-slider">
+                    @foreach ($latest_products as $product)
+                        <div>
+                            @include('web-views.partials._inline-single-product', [
+                                'product' => $product,
+                                'decimal_point_settings' => $decimal_point_settings,
+                            ])
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
