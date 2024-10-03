@@ -23,7 +23,31 @@
 
         @endif
 
-        <div class="ribbon ribbon-new">New</div>
+        <div class="ribbon ribbon-new"
+            style="position: absolute;
+                padding: 5px 10px 5px 15px;
+                font-size: 12px;
+                font-weight: bold;
+                color: white;
+                z-index: 3;
+                top: 20px;
+                left: -13px;
+                clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
+                box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+                top: 45px !important;
+                left: -6px !important;
+                width: 60px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #1F3C74;
+                z-index: 1;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 20px;
+                letter-spacing: 0.0025em;
+                height: 20px;">
+            New</div>
 
     </div>
 
@@ -506,7 +530,7 @@
                                 {{ translate('add_to_cart') }}
                             </button>
                         @else
-                            <button type="button" class="btn add-to-cart w-100" data-id="{{ $product->id }}">
+                            <button type="button" class="btn add-to-cart w-100 mx-3" data-id="{{ $product->id }}">
                                 <i class="navbar-tool-icon czi-cart me-2"></i>
                                 <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </button>
