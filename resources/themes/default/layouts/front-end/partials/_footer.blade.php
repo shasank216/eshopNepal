@@ -1,7 +1,5 @@
 <div class="__inline-9 rtl">
-
     <div class="background_class page-footer font-small mdb-color rtl" style="background-color: #1f3c74;">
-
         <div class="container">
             <div class="row mt-5 align-items-center subscribe-container">
                 <div class="col-md-4 col-sm-6 mt-1">
@@ -28,16 +26,13 @@
             </div>
         </div>
     </div>
-
     <footer class="page-footer font-small mdb-color rtl">
         <div class="pt-4 custom-light-primary-color-20">
             <div class="container text-center __pb-13px px-0 pb-0">
-
                 <div class="row mt-3">
                     <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start px-5">
                         <p class="m-0 footer-brand_desc text-def">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                            tincidunt ut laoreet dolore magna aliquam erat volutpat.
+                            Your eshopNepal is the best place to find high-quality products, exceptional customer service, and fast shipping. Shop with confidence and explore our wide range of categories!
                         </p>
                         <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction footer-social_media">
                             @if ($web_config['social_media'])
@@ -81,7 +76,6 @@
                             @endif
                         </div>
                     </div>
-                    
                     {{-- <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start p-5">
                         <h6 class="text-uppercase font-semi-bold footer-header text-def footer-head">
                             Shortcut Links
@@ -130,10 +124,8 @@
                                     </a>
                                 @endif
                             </li>
-
                         </ul>
                     </div> --}}
-
                     <div class="col-lg-9 col-md-7">
                         <div class="row footer-company-content_container">
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
@@ -174,7 +166,6 @@
                                             {{ translate('top_rated_product') }}
                                         </a>
                                     </li>
-
                                 </ul>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
@@ -191,13 +182,11 @@
                                                 {{ translate('privacy_policy') }}
                                             </a>
                                         </li>
-
                                         <li class="widget-list-item">
                                             <a class="widget-list-link"
                                                 href="{{ route('terms') }}">{{ translate('terms_&_conditions') }}
                                             </a>
                                         </li>
-
                                         @if (isset($refund_policy['status']) && $refund_policy['status'] == 1)
                                             <li class="widget-list-item">
                                                 <a class="widget-list-link" href="{{ route('refund-policy') }}">
@@ -205,7 +194,6 @@
                                                 </a>
                                             </li>
                                         @endif
-
                                         @if (isset($return_policy['status']) && $return_policy['status'] == 1)
                                             <li class="widget-list-item">
                                                 <a class="widget-list-link" href="{{ route('return-policy') }}">
@@ -213,7 +201,6 @@
                                                 </a>
                                             </li>
                                         @endif
-
                                         @if (isset($cancellation_policy['status']) && $cancellation_policy['status'] == 1)
                                             <li class="widget-list-item">
                                                 <a class="widget-list-link" href="{{ route('cancellation-policy') }}">
@@ -221,7 +208,6 @@
                                                 </a>
                                             </li>
                                         @endif
-
                                     </ul>
                                 @else
                                     <ul class="widget-list __pb-10px">
@@ -229,31 +215,26 @@
                                             <a class="widget-list-link"
                                                 href="{{ route('customer.auth.login') }}">{{ translate('profile_info') }}</a>
                                         </li>
-                                      
                                         <li class="widget-list-item">
                                             <a class="widget-list-link"
                                                 href="{{ route('customer.auth.login') }}">{{ translate('wish_list') }}</a>
                                         </li>
-
                                         <li class="widget-list-item">
                                             <a class="widget-list-link"
                                                 href="{{ route('track-order.index') }}">{{ translate('track_order') }}</a>
                                         </li>
-
                                         @if (isset($refund_policy['status']) && $refund_policy['status'] == 1)
                                             <li class="widget-list-item">
                                                 <a class="widget-list-link"
                                                     href="{{ route('refund-policy') }}">{{ translate('refund_policy') }}</a>
                                             </li>
                                         @endif
-
                                         @if (isset($return_policy['status']) && $return_policy['status'] == 1)
                                             <li class="widget-list-item">
                                                 <a class="widget-list-link"
                                                     href="{{ route('return-policy') }}">{{ translate('return_policy') }}</a>
                                             </li>
                                         @endif
-
                                         @if (isset($cancellation_policy['status']) && $cancellation_policy['status'] == 1)
                                             <li class="widget-list-item">
                                                 <a class="widget-list-link"
@@ -271,7 +252,6 @@
                                     Save $3 with app & new user only
                                 </p>
                                 <ul class="widget-list __pb-10px">
-
                                     @if ($web_config['android']['status'])
                                         <li class="widget-list-item">
                                             <a class="widget-list-link" href="{{ $web_config['android']['link'] }}">
@@ -288,7 +268,6 @@
                                             </a>
                                         </li>
                                     @endif
-
                                 </ul>
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
@@ -302,14 +281,12 @@
                                                 {{ getWebConfig(name: 'shop_address') }}
                                             </a>
                                         </li>
-
                                         <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'tel:' . $web_config['phone']->value }}">
                                                 <i class="fa fa-phone  me-2 mt-2 mb-2 fa-lg"></i>
                                                 {{ getWebConfig(name: 'company_phone') }}
                                             </a>
                                         </li>
-
                                         <li class="widget-list-item mb-0">
                                             <a class="widget-list-link d-flex align-items-center" href="{{ 'mailto:' . getWebConfig(name: 'company_email') }}"
                                                 style="text-transform: none;">
@@ -318,7 +295,6 @@
                                             </a>
                                         </li>
                                     </ul>
-
                             </div>
                             {{-- <div class="col-sm-5 footer-padding-bottom offset-max-sm--1 pb-3 pb-sm-0">
                                 <div class="mb-2">
@@ -339,8 +315,6 @@
                             </div> --}}
                         </div>
                     </div>
-
-                    
                 <ul class="widget-list widget-list-bottom-footer  __pb-10px">
                     <li class="widget-list-item">
                         <a class="widget-list-link" href="{{ url('/') }}">
@@ -385,11 +359,8 @@
                             </a>
                         @endif
                     </li>
-
                 </ul>
-                    
                     <div class="hr"></div>
-
                     <div class="footer-additional w-100">
                         <div class="footer-additional-content">
                             <div class="foot-bottom-head text-def">
@@ -424,9 +395,7 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="hr"></div>
-
                     <div class="footer-bottom w-100">
                         <div class="footer-bottom-content">
                             <div class="foot-bottom-payment">
@@ -442,7 +411,6 @@
                                 <img src="{{asset('public/assets/front-end/img/amax.png')}}">
                             </div>
                         </div>
-
                         <div class="footer-additional-content">
                             <div class="foot-bottom-copyright text-def">
                                 {{ $web_config['copyright_text']->value }}
@@ -450,10 +418,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
         @php($cookie = $web_config['cookie_setting'] ? json_decode($web_config['cookie_setting']['value'], true) : null)
         @if ($cookie && $cookie['status'] == 1)
             <section id="cookie-section"></section>
