@@ -210,7 +210,7 @@
                                 <div class="key-val-list-item d-flex gap-3">
                                     <span class="text-capitalize">{{translate('email_address')}}</span>:
                                     <span>
-                                        <a class="text-dark"
+                                        <a class=""
                                               href="mailto:{{ $order->seller->email }}">{{$order->seller?->email ?? translate('no_data_found') }}
                                         </a>
                                     </span>
@@ -218,7 +218,7 @@
                                 <div class="key-val-list-item d-flex gap-3">
                                     <span class="text-capitalize">{{translate('phone_number')}} </span>:
                                     <span>
-                                        <a class="text-dark"
+                                        <a class=""
                                            href="tel:{{ $order->seller->phone }}">{{$order->seller?->phone ?? translate('no_data_found') }}
                                         </a>
                                     </span>
@@ -241,7 +241,7 @@
                                 <div class="key-val-list-item d-flex gap-3">
                                     <span class="text-capitalize">{{translate('email_address')}}</span>:
                                     <span>
-                                        <a class="text-dark"
+                                        <a class=""
                                            href="mailto:{{ $order->deliveryMan->email }}">{{$order->deliveryMan?->email }}
                                         </a>
                                     </span>
@@ -249,7 +249,7 @@
                                 <div class="key-val-list-item d-flex gap-3">
                                     <span class="text-capitalize">{{translate('phone_number')}} </span>:
                                     <span>
-                                        <a class="text-dark"
+                                        <a class=""
                                            href="tel:{{ $order->deliveryMan->phone }}">{{$order->deliveryMan?->phone }}
                                         </a>
                                     </span>

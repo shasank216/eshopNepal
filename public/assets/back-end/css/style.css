@@ -3,11 +3,12 @@
     --c1-rgb: 1, 119, 205;
     --c2: #ff6767;
     /* --title-color: #334257; */
-    --title-color: #8c98a4;
     /* --text-color: #5b6777; */
-    --text-color: #fff;
     --border-color: rgba(180, 208, 224, 0.5);
     --font: "Inter", sans-serif;
+    --background-clr: #073b74;
+    --title-color: #8c98a4;
+    --text-color: #5b6777;
 }
 
 body {
@@ -40,7 +41,7 @@ h6 {
 }
 #content.main {
     min-height: 100vh;
-    background: #252b45;
+    background: #f8f8fa;
 }
 
 .list-unstyled,
@@ -92,7 +93,7 @@ a:hover {
 }
 
 #navbarVerticalNavMenu .nav-link{
-    color: white;
+    /* color: ; */
 }
 
 .navbar-brand-wrapper {
@@ -112,7 +113,7 @@ a:hover {
 }
 
 .navbar-vertical-aside-mini-mode  aside{
-    background-color: #202741;
+    background-color: #073b74;
 }
 
 .navbar-vertical-aside-mini-mode  aside .nav-link-toggle::before{
@@ -120,7 +121,7 @@ a:hover {
 }
 
 .navbar-vertical-content {
-    background: #202741;
+    background: #073b74;
     padding: 10px 15px;
 }
 
@@ -368,7 +369,7 @@ thead.text-capitalize th {
 }
 
 .side-logo {
-    background-color: #202741;
+    background-color: white;
 }
 
 .grid-card-wrap {
@@ -752,7 +753,7 @@ label {
 .business-analytics {
     background-color: #fff;
     border-radius: 10px;
-    padding: 40px 30px 20px;
+    padding: 30px 30px 20px;
     position: relative;
     border: 1px solid rgba(180, 208, 224, 0.5);
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
@@ -781,7 +782,7 @@ label {
 
 /* Order Stats */
 .order-stats {
-    background-color: rgba(110, 137, 175, 0.0509803922);
+    background-color: white;
     border-radius: 10px;
     padding: 20px;
     display: flex;
@@ -807,7 +808,7 @@ label {
 .order-stats__subtitle {
     font-weight: 600;
     font-size: 14px;
-    color: white;
+    color: #334257;
     margin-bottom: 0;
 }
 
@@ -927,7 +928,7 @@ label {
 }
 
 #header{
-background-color: #202741;
+background-color: white;
 }
 
 .card-header {
@@ -1102,13 +1103,13 @@ background-color: #202741;
 }
 
 .card {
-    background: #262c46;
+    background: white;
     border-color: #f4f4f4;
     box-shadow: 0px 5px 10px rgba(51, 66, 87, 0.05);
     transition: all 0.3s ease;
 }
 .card .card-header{
-    background-color: #202741;
+    background-color: #f8f8fa;
 }
 .card:hover {
     box-shadow: 0px 5px 24px rgba(7, 59, 116, 0.15);
@@ -2170,7 +2171,7 @@ select {
 
 .billing-section-wrap .bottom-sticky-buttons{
     padding: unset !important;
-    background-color: #252B45;
+    background-color: white;
     margin-bottom: 0.8rem;
 }
 
@@ -5407,7 +5408,7 @@ select {
     position: sticky;
     top: 0;
     z-index: 9;
-    background: #202741;
+    background: #073b74;
 }
 
 aside .navbar-vertical-content {
@@ -5757,7 +5758,7 @@ aside .navbar-vertical-content {
 
 
 .alert-danger {
-    color: #fff;
+    color: #677788;
     background-color: rgba(237, 76, 120, 0.1);
     border-color: rgba(237, 76, 120, 0.3);
 }
@@ -6237,7 +6238,7 @@ body *::-webkit-scrollbar-thumb {
 .refund-details-card--2 {
     border-radius: 5px;
     border: 1px solid rgba(20, 85, 172, 0.1);
-    background: #fff;
+    background: white;
 }
 .min-width--60px {
     --min-width: 60px;
@@ -6295,7 +6296,7 @@ body *::-webkit-scrollbar-thumb {
     width: 0;
 }
 .media-body span {
-    color: #e9f3ff;
+    color: #1e2022;
 }
 .chat_people {
     align-items: center;
@@ -6339,11 +6340,7 @@ body *::-webkit-scrollbar-thumb {
 }
 
 .modal-content {
-    background: #272d47;
-}
-
-.card-title {
-    color: #fff;
+    background: #f8f8fa;
 }
 
 #printableArea dt{
@@ -6351,9 +6348,9 @@ body *::-webkit-scrollbar-thumb {
 }
 
 #myInput{
-    color: #e9f3ff;
+    color: #1e2022;
 }
 
 #add-customer .input-label{
-    color: #e9f3ff !important;
+    color: #1e2022 !important;
 }
