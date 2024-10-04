@@ -4193,11 +4193,11 @@ $(document).ready(function () {
     // Function to handle adding/removing products from the comparison list
 
     function handleCompareClick(productId, productCategoryId) {
-        
+
         // Check if the current product's category matches with the category of products already in the list
 
         const currentCategory = selectedProducts.length > 0 ? selectedProducts[0].categoryId : null;
-       
+           
 
 
         // If categories don't match, show message and return
@@ -4222,18 +4222,18 @@ $(document).ready(function () {
 
         }
 
-        
+
 
         const index = selectedProducts.findIndex(product => product.id === productId);
 
 
-
+        
         if (index === -1) {
 
             // Add product if it's not already in the list and the maximum limit isn't reached
 
             if (selectedProducts.length < maxItems) {
-
+              
                 selectedProducts.push({ id: productId, categoryId: productCategoryId });
 
             } else {
@@ -4281,7 +4281,7 @@ $(document).ready(function () {
         const productId = $(this).data('product-id');
 
         const productCategoryId = $(this).data('category-id');
-        
+
 
 
         // Check if product ID and category ID are present
@@ -4295,12 +4295,10 @@ $(document).ready(function () {
         }
 
 
-        
+
         handleCompareClick(productId, productCategoryId);
 
     });
-   
-
 
 
 

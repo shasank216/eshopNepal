@@ -7,9 +7,7 @@
 
 
 @push('css_or_js')
-
     <meta property="og:image"
-
         content="{{ dynamicStorage(path: 'storage/app/public/company') }}/{{ $web_config['web_logo'] }}" />
 
     <meta property="og:title" content="Products of {{ $web_config['name'] }} " />
@@ -17,13 +15,11 @@
     <meta property="og:url" content="{{ env('APP_URL') }}">
 
     <meta property="og:description"
-
         content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)), 0, 160) }}">
 
 
 
     <meta property="twitter:card"
-
         content="{{ dynamicStorage(path: 'storage/app/public/company') }}/{{ $web_config['web_logo'] }}" />
 
     <meta property="twitter:title" content="Products of {{ $web_config['name'] }}" />
@@ -31,7 +27,6 @@
     <meta property="twitter:url" content="{{ env('APP_URL') }}">
 
     <meta property="twitter:description"
-
         content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)), 0, 160) }}">
 
 
@@ -43,7 +38,6 @@
 
 
     <style>
-
         .for-count-value {
 
             {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0.6875 rem;
@@ -200,9 +194,9 @@
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
 
-                                                                    border-radius: 0.25em;
+                                                                        border-radius: 0.25em;
 
-                                                                }*/
+                                                                    }*/
 
 
 
@@ -623,9 +617,7 @@
 
 
         /* Sorting Products Ends */
-
     </style>
-
 @endpush
 
 
@@ -669,9 +661,9 @@
 
 
             <!-- <div>
-                <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-            </div> -->
+                    <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                    <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                </div> -->
 
 
 
@@ -684,27 +676,20 @@
                     <div class="sorting-item">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21"
-
                             fill="none">
 
                             <path d="M11.6667 7.80078L14.1667 5.30078L16.6667 7.80078" stroke="#D9D9D9" stroke-width="2"
-
                                 stroke-linecap="round" stroke-linejoin="round" />
 
                             <path
-
                                 d="M7.91675 4.46875H4.58341C4.3533 4.46875 4.16675 4.6553 4.16675 4.88542V8.21875C4.16675 8.44887 4.3533 8.63542 4.58341 8.63542H7.91675C8.14687 8.63542 8.33341 8.44887 8.33341 8.21875V4.88542C8.33341 4.6553 8.14687 4.46875 7.91675 4.46875Z"
-
                                 stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
                             <path
-
                                 d="M7.91675 11.9688H4.58341C4.3533 11.9688 4.16675 12.1553 4.16675 12.3854V15.7188C4.16675 15.9489 4.3533 16.1354 4.58341 16.1354H7.91675C8.14687 16.1354 8.33341 15.9489 8.33341 15.7188V12.3854C8.33341 12.1553 8.14687 11.9688 7.91675 11.9688Z"
-
                                 stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 
                             <path d="M14.1667 5.30078V15.3008" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round"
-
                                 stroke-linejoin="round" />
 
                         </svg>
@@ -802,9 +787,7 @@
         <div class="row">
 
             <aside
-
                 class="col-lg-3 hidden-xs col-md-3 col-sm-4 SearchParameters __search-sidebar {{ Session::get('direction') === 'rtl' ? 'pl-2' : 'pr-2' }}"
-
                 id="SearchParameters">
 
                 <div class="cz-sidebar __inline-35" id="shop-sidebar">
@@ -830,7 +813,6 @@
                         <div class="d-flex justify-content-between align-items-center">
 
                             <button class="btn" type="button" data-toggle="collapse" data-target="#checkboxCollapse"
-
                                 aria-expanded="true" aria-controls="checkboxCollapse">
 
                                 <h4 class="header_categories">{{ translate('categories') }}</h4>
@@ -852,13 +834,11 @@
                             <div class="card card-body border-0 py-0">
 
                                 @foreach ($categories as $category)
-
                                     <div class="checkbox-wrapper-48">
 
                                         <label class="d-flex align-items-center">
 
                                             <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
-
                                                 value="{{ $category['id'] }}">
 
                                             <p class="m-0 categories_text">{{ $category['name'] }}
@@ -870,7 +850,6 @@
 
 
                                                     ({{ $category->products_count }})
-
                                                     <!-- Display parent category product count -->
 
 
@@ -882,7 +861,6 @@
                                         </label>
 
                                     </div>
-
                                 @endforeach
 
                             </div>
@@ -906,7 +884,6 @@
                         <div class="d-flex justify-content-between align-items-center">
 
                             <button class="btn" type="button" data-toggle="collapse" data-target="#sliderCollapse"
-
                                 aria-expanded="true" aria-controls="sliderCollapse">
 
                                 <h4 class="header_categories">Budget</h4>
@@ -926,11 +903,9 @@
                                     <div class="slider-labels d-flex justify-content-between">
 
                                         <span class="slider-price-range">Min: {{ $defaultCurrencies->symbol }}<span
-
                                                 id="minPrice">10</span></span>
 
                                         <span class="slider-price-range">Max: {{ $defaultCurrencies->symbol }}<span
-
                                                 id="maxPrice">10000</span></span>
 
                                     </div>
@@ -996,7 +971,6 @@
                         <div class="d-flex justify-content-between align-items-center">
 
                             <button class="btn" type="button" data-toggle="collapse" data-target="#brandCollapse"
-
                                 aria-expanded="false" aria-controls="brandCollapse">
 
                                 <h4 class="header_categories">Brand</h4>
@@ -1014,7 +988,6 @@
                                 <!-- Initial set of brands -->
 
                                 @foreach (\App\Utils\BrandManager::get_active_brands()->take(4) as $brand)
-
                                     <div class="checkbox-wrapper-48">
 
                                         <label class="d-flex align-items-center">
@@ -1022,7 +995,6 @@
                                             <!-- Checkbox for each brand -->
 
                                             <input type="checkbox" class="mr-2 brand-checkbox"
-
                                                 value="{{ $brand['id'] }}" name="buy_phone">
 
                                             <p class="m-0 categories_text">
@@ -1032,7 +1004,6 @@
                                                 <span class="categories_span">
 
                                                     ({{ $brand['brand_products_count'] }})
-
                                                 </span>
 
                                             </p>
@@ -1040,7 +1011,6 @@
                                         </label>
 
                                     </div>
-
                                 @endforeach
 
 
@@ -1052,9 +1022,7 @@
                                     <div class="d-flex align-items-center">
 
                                         <a class="show-more-link" style="text-decoration: underline; color: #1F3C74;"
-
                                             type="button" data-toggle="collapse" data-target="#moreCollapse"
-
                                             aria-expanded="false" aria-controls="moreCollapse">
 
                                             Show More
@@ -1070,13 +1038,11 @@
                                             <!-- All remaining brands -->
 
                                             @foreach (\App\Utils\BrandManager::get_active_brands()->skip(4) as $brand)
-
                                                 <div class="checkbox-wrapper-48">
 
                                                     <label class="d-flex align-items-center">
 
                                                         <input type="checkbox" class="mr-2 brand-checkbox"
-
                                                             value="{{ $brand['id'] }}" name="buy_phone">
 
                                                         <p class="m-0 categories_text">
@@ -1086,7 +1052,6 @@
                                                             <span class="categories_span">
 
                                                                 ({{ $brand['brand_products_count'] }})
-
                                                             </span>
 
                                                         </p>
@@ -1094,7 +1059,6 @@
                                                     </label>
 
                                                 </div>
-
                                             @endforeach
 
                                         </div>
@@ -1126,7 +1090,6 @@
                         <div class="d-flex justify-content-between align-items-center">
 
                             <button class="btn" type="button" data-toggle="collapse" data-target="#colorCollapse"
-
                                 aria-expanded="false" aria-controls="colorCollapse">
 
                                 <h4 class="header_categories">Color</h4>
@@ -1144,23 +1107,18 @@
                                 <!-- Initial 10 colors -->
 
                                 @foreach ($colors as $color)
-
                                     <div class="form-check color-item">
 
                                         <input class="form-check-input custom-checkbox" type="checkbox"
-
                                             value="{{ ucfirst($color) }}" id="{{ ucfirst($color) }}"
-
                                             name="colorFilter">
 
                                         <label class="form-check-label" for="{{ ucfirst($color) }}"
-
                                             style="background-color:{{ $color }};">
 
                                         </label>
 
                                     </div>
-
                                 @endforeach
 
                             </div>
@@ -1630,7 +1588,6 @@
                         <div class="d-flex justify-content-between align-items-center">
 
                             <button class="btn" type="button" data-toggle="collapse" data-target="#rating"
-
                                 aria-expanded="false" aria-controls="rating">
 
                                 <h4 class="header_categories">Rating</h4>
@@ -1654,21 +1611,17 @@
                                         <label class="d-flex align-items-center">
 
                                             <input type="checkbox" class="mr-2 rating-filter" name="rating"
-
                                                 value="{{ $i }}">
 
                                             <div class="rating_star">
 
                                                 @for ($j = 1; $j <= 5; $j++)
-
                                                     <span>
 
                                                         <img src="{{ asset($j <= $i ? 'public/images/yellowStar.jpg' : 'public/images/whiteStar.jpg') }}"
-
                                                             alt="Star">
 
                                                     </span>
-
                                                 @endfor
 
                                             </div>
@@ -2090,11 +2043,9 @@
 
 
                     @include('web-views.products._ajax-products', [
-
                         'products' => $products,
-
+                    
                         'decimal_point_settings' => $decimal_point_settings,
-
                     ])
 
                 </div>
@@ -2110,11 +2061,8 @@
 
 
     <span id="products-search-data-backup" data-url="{{ url('/products') }}" data-id="{{ $data['id'] }}"
-
         data-name="{{ $data['name'] }}" data-from="{{ $data['data_from'] }}" data-sort="{{ $data['sort_by'] }}"
-
         data-min-price="{{ $data['min_price'] }}" data-max-price="{{ $data['max_price'] }}"
-
         data-message="{{ translate('items_found') }}"></span>
 
 @endsection
@@ -2122,7 +2070,6 @@
 
 
 @push('script')
-
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/product-view.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
@@ -2130,7 +2077,6 @@
 
 
     <script>
-
         $(document).ready(function() {
 
             // Toggle icons for the first collapsible section
@@ -2432,13 +2378,11 @@
         }
 
         // Sorting items Ends
-
     </script>
 
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
     <script>
-
         $(document).ready(function() {
 
             $('.category-checkbox').on('change', function() {
@@ -2496,13 +2440,11 @@
 
 
         });
-
     </script>
 
     {{-- brand --}}
 
     <script>
-
         $(document).ready(function() {
 
             // Event listener for any change in checkboxes
@@ -2570,7 +2512,6 @@
             });
 
         });
-
     </script>
 
 
@@ -2578,7 +2519,6 @@
     {{-- product filter by  price range --}}
 
     <script>
-
         // Initialize the noUiSlider
 
         var priceSlider = document.getElementById('priceSlider');
@@ -2843,28 +2783,28 @@
 
             // Attach add-to-cart event to dynamically loaded elements
 
-            $(document).on('click', '.action-add-to-cart-form-re-init', function (e) {
+            $(document).on('click', '.action-add-to-cart-form-re-init', function(e) {
 
                 e.preventDefault();
 
-                 // Correct way to get the product id from data-product-id attribute
-                 let productId = $(this).data('product-id');
-                    
-                    // Alert the correct product ID
-                    // alert(form_id);
+                // Correct way to get the product id from data-product-id attribute
+                let productId = $(this).data('product-id');
 
-                    addToCart(productId);
+                // Alert the correct product ID
+                //    alert("hello");
+
+                addToCart(productId);
 
             });
 
             // bibek added
             function addToCart(productId) {
                 // alert(productId);
-       
 
-        // Set up the AJAX request
-        $.ajax({
-            url: "{{ route('cart.add') }}", // Add to cart route
+
+                // Set up the AJAX request
+                $.ajax({
+                    url: "{{ route('cart.add') }}", // Add to cart route
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}', // Pass CSRF token
@@ -2891,8 +2831,8 @@
                         // alert('Error occurred while adding to cart!');
                         toastr.error('An error occurred. Please try again.');
                     }
-        });
-    }
+                });
+            }
 
 
 
@@ -2903,7 +2843,7 @@
 
             // Attach wishlist event to dynamically loaded elements
 
-            $(document).on('click', '.product-action-add-wishlist', function () {
+            $(document).on('click', '.product-action-add-wishlist', function() {
 
                 let id = $(this).data('product-id');
 
@@ -2915,19 +2855,26 @@
 
             // Attach compare event to dynamically loaded elements
 
-            $(document).on('click', '.action-product-compare', function () {
+            // $(document).on('click', '.action-product-compare', function () {
 
-                let id = $(this).data('product-id');
+            //     let id = $(this).data('product-id');
 
-                handleCompareClick(id); // Reuse the comparison handling logic
 
-            });
+            //     handleCompareClick(id); // Reuse the comparison handling logic
+
+            // });
+
+
+
+
+
+
 
 
 
             // Attach quick view event to dynamically loaded elements
 
-            $(document).on('click', '.action-product-quick-view', function () {
+            $(document).on('click', '.action-product-quick-view', function() {
 
                 let productId = $(this).data('product-id');
 
@@ -2946,11 +2893,9 @@
             reinitializeFunctionalities();
 
         });
-
     </script>
 
     <script>
-
         $(document).ready(function() {
 
             // Function to handle checkbox changes
@@ -3012,7 +2957,6 @@
             });
 
         });
-
     </script>
 
 
@@ -3020,7 +2964,6 @@
 
 
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
 
             const showMoreBtn = document.getElementById('showMoreBtn');
@@ -3048,13 +2991,11 @@
             });
 
         });
-
     </script>
 
 
 
     <script>
-
         $(document).ready(function() {
 
             function getSelectedColors() {
@@ -3134,8 +3075,5 @@
             });
 
         });
-
     </script>
-
 @endpush
-
