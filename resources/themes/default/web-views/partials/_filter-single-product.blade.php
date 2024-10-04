@@ -356,23 +356,7 @@
                                     </button>
                                 @endif
                             
-                                {{-- @if (
-                                    ($product->added_by == 'seller' &&
-                                        ($sellerTemporaryClose ||
-                                            (isset($product->seller->shop) &&
-                                                $product->seller->shop->vacation_status &&
-                                                $currentDate >= $sellerVacationStartDate &&
-                                                $currentDate <= $sellerVacationEndDate))) ||
-                                    ($product->added_by == 'admin' &&
-                                        ($inHouseTemporaryClose ||
-                                            ($inHouseVacationStatus &&
-                                                $currentDate >= $inHouseVacationStartDate &&
-                                                $currentDate <= $inHouseVacationEndDate)))
-                                )
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}
-                                    </div>
-                                @endif --}}
+                              
                             </div>
 
                         </form>
