@@ -59,7 +59,6 @@ class ProductListController extends Controller
     }
 
     public function default_theme(Request $request) {
-       
         
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
