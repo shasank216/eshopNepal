@@ -113,7 +113,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('/price/filter', 'ProductListController@filterPrice')->name('price.filter');
     Route::get('/filter-ratings', 'ProductListController@filterRatings')->name('filter.ratings');
     Route::get('/filter-colorProduct', 'ProductListController@filtercolorProduct')->name('filter.ColorWise');
-   
+
     // compare product
     Route::get('/compare/product', 'ProductListController@compare_product_list')->name('compare.product');
 
@@ -150,7 +150,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
 
     Route::get('reset_password', 'UserProfileController@reset_password')->name('reset_password')->middleware('customer');
 
-   
+
     Route::post('user-password-update', 'UserProfileController@user_password_update')->name('user-password-update');
     Route::post('user-account-update', 'UserProfileController@user_update')->name('user-update');
     Route::post('user-account-picture', 'UserProfileController@user_picture')->name('user-picture');
@@ -229,7 +229,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
 Route::group(['prefix' => 'cart', 'as' => 'cart.', 'namespace' => 'Web'], function () {
     Route::post('variant_price', 'CartController@variant_price')->name('variant_price');
     Route::post('add', 'CartController@addToCart')->name('add');
-   
+
     Route::post('update-variation', 'CartController@update_variation')->name('update-variation');//theme fashion
     Route::post('remove', 'CartController@removeFromCart')->name('remove');
     Route::get('remove-all', 'CartController@remove_all_cart')->name('remove-all');//theme fashion

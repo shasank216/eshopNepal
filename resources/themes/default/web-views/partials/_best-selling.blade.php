@@ -8,6 +8,8 @@
                 <div class="text-black home-title">
                     <span> {{ translate('best_sellings') }}</span>
                 </div>
+
+
                 {{-- <span class="font-bold pl-1">{{ translate('best_sellings')}}</span> --}}
                 {{-- </div> --}}
                 <div>
@@ -21,9 +23,11 @@
             <div class="row g-3">
                 @php
                     $productsFound = false;
+
                 @endphp
 
                 @foreach ($bestSellProduct as $key => $bestSell)
+
                     @if ($bestSell->product != null)
                         @if ($bestSell->product && $key < 6)
                             @php
@@ -53,7 +57,7 @@
                                             <div class="details main-details">
                                                 <p class="bold-subtitle m-0"> {{ $bestSell->product->brand->name }}</p>
 
-                                               
+
 
                                                 <span
                                                     class="bold-title">{{ Str::limit($bestSell->product['name'], 100) }}
@@ -133,8 +137,11 @@
                                                                     <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
                                                                 </a> --}}
 
-                                                                <a class="action-btn stopPropagation action-product-compare" href="javascript:" data-product-id="{{ $bestSell->product->id }}">
-                                                                    <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                                                                <a class="action-btn stopPropagation action-product-compare"
+                                                                    href="javascript:"
+                                                                    data-product-id="{{ $bestSell->product->id }}">
+                                                                    <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}"
+                                                                        alt="Compare" />
                                                                 </a>
                                                             </div>
                                                             <button class="action-btn"><i
@@ -183,155 +190,141 @@
                                                     </div>
 
                                                     <div class="product-tags px-3">
-                                                        @foreach ($product_tags as $product)
-                                                            <div class="product">
-                                                                <div class="product-tags">
-                                                                    @foreach ($product->tags as $tag)
-                                                                        <span class="tag">{{ $tag->tag }}</span>
-                                                                    @endforeach
-                                                                </div>
+                                                        <div class="product">
+                                                            <div class="product-tags">
+                                                                @foreach ($bestSell->product->tags as $tag)
+                                                                    <span class="tag">{{ $tag->tag }}</span>
+                                                                @endforeach
                                                             </div>
-                                                        @endforeach
-                                                    </div>
+                                                        </div>
+                       
+            </div>
 
-                                                    <div class="product-colors d-flex justify-content-center">
+            <div class="product-colors d-flex justify-content-center">
 
 
-                                                        @foreach (json_decode($bestSell->product->colors) as $key => $color)
-                                                            <li style="list-style-type: none; padding :0;margin: 0;">
-                                                                {{-- <input type="radio"
+                @foreach (json_decode($bestSell->product->colors) as $key => $color)
+                    <li style="list-style-type: none; padding :0;margin: 0;">
+                        {{-- <input type="radio"
                                                         id="{{ $product->id }}-color-{{ str_replace('#', '', $color) }}"
                                                         name="color" value="{{ $color }}"
                                                         @if ($key == 0) checked @endif> --}}
-                                                                <label style="background: {{ $color }};"
-                                                                    class="color-box"
-                                                                    for="{{ $bestSell->product->id }}-color-{{ str_replace('#', '', $color) }}"
-                                                                    data-toggle="tooltip"
-                                                                    data-key="{{ str_replace('#', '', $color) }}"
-                                                                    data-colorid="preview-box-{{ str_replace('#', '', $color) }}">
-                                                                    <span class="outline"></span></label>
-                                                            </li>
-                                                        @endforeach
-                                                    </div>
+                        <label style="background: {{ $color }};" class="color-box"
+                            for="{{ $bestSell->product->id }}-color-{{ str_replace('#', '', $color) }}"
+                            data-toggle="tooltip" data-key="{{ str_replace('#', '', $color) }}"
+                            data-colorid="preview-box-{{ str_replace('#', '', $color) }}">
+                            <span class="outline"></span></label>
+                    </li>
+                @endforeach
+            </div>
 
-                                                    {{-- <button class="add-to-cart"><span class="btn-text"><i
+            {{-- <button class="add-to-cart"><span class="btn-text"><i
                                                                 class="fa-solid fa-cart-shopping"></i> Add
                                                             To
                                                             Cart</span></button> --}}
 
-                                                    <!-- Compare Checkbox Below Product -->
-                                                    {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
+            <!-- Compare Checkbox Below Product -->
+            {{-- <div class="compare-checkbox mt-2" style="margin-left: 15px;">
                                                             <input type="checkbox" id="compare-{{ $bestSell->product->id }}" class="compare-checkbox-input"
                                                                 value="{{ $bestSell->product->id }}" data-product-id="{{ $bestSell->product->id }}">
                                                             <label for="compare-{{ $bestSell->product->id }}">{{ translate('Add to Compare') }}</label>
                                                         </div> --}}
-                                                    <form id="add-to-cart-form" class="mb-2 px-1">
-                                                        @csrf
-                                                        <input type="hidden" name="id"
-                                                            value="{{ $bestSell->product->id }}">
-                                                        <div>
-                                                            <div class="d-none">
-                                                                <div
-                                                                    class="d-flex justify-content-center align-items-center quantity-box border rounded border-base web-text-primary">
-                                                                    <span class="input-group-btn">
-                                                                        <button
-                                                                            class="btn btn-number __p-10 web-text-primary"
-                                                                            type="button" data-type="minus"
-                                                                            data-field="quantity" disabled="disabled">
-                                                                            -
-                                                                        </button>
-                                                                    </span>
-                                                                    <input type="text" name="quantity"
-                                                                        class="form-control input-number text-center cart-qty-field __inline-29 border-0 "
-                                                                        placeholder="{{ translate('1') }}"
-                                                                        value="{{ $product->minimum_order_qty ?? 1 }}"
-                                                                        data-producttype="{{ $product->product_type }}"
-                                                                        min="{{ $product->minimum_order_qty ?? 1 }}"
-                                                                        max="{{ $product['product_type'] == 'physical' ? $product->current_stock : 100 }}">
-                                                                    <span class="input-group-btn">
-                                                                        <button
-                                                                            class="btn btn-number __p-10 web-text-primary"
-                                                                            type="button"
-                                                                            data-producttype="{{ $product->product_type }}"
-                                                                            data-type="plus" data-field="quantity">
-                                                                            +
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" class="product-generated-variation-code"
-                                                            name="product_variation_code">
-                                                        <input type="hidden" value=""
-                                                            class="in_cart_key form-control w-50" name="key">
-
-                                                        <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
-                                                            @if (
-                                                                ($product->added_by == 'seller' &&
-                                                                    ($sellerTemporaryClose ||
-                                                                        (isset($product->seller->shop) &&
-                                                                            $product->seller->shop->vacation_status &&
-                                                                            $currentDate >= $sellerVacationStartDate &&
-                                                                            $currentDate <= $sellerVacationEndDate))) ||
-                                                                    ($product->added_by == 'admin' &&
-                                                                        ($inHouseTemporaryClose ||
-                                                                            ($inHouseVacationStatus &&
-                                                                                $currentDate >= $inHouseVacationStartDate &&
-                                                                                $currentDate <= $inHouseVacationEndDate))))
-                                                                <button class="btn add-to-cart string-limit"
-                                                                    type="button" disabled>
-                                                                    {{ translate('add_to_cart') }}
-                                                                </button>
-                                                            @else
-                                                                <button type="button" class="btn add-to-cart w-100"
-                                                                    data-id="{{ $bestSell->product->id }}">
-                                                                    <i class="navbar-tool-icon czi-cart me-2"></i>
-                                                                    <span
-                                                                        class="string-limit">{{ translate('add_to_cart') }}</span>
-                                                                </button>
-                                                            @endif
-
-                                                            @if (
-                                                                ($product->added_by == 'seller' &&
-                                                                    ($sellerTemporaryClose ||
-                                                                        (isset($product->seller->shop) &&
-                                                                            $product->seller->shop->vacation_status &&
-                                                                            $currentDate >= $sellerVacationStartDate &&
-                                                                            $currentDate <= $sellerVacationEndDate))) ||
-                                                                    ($product->added_by == 'admin' &&
-                                                                        ($inHouseTemporaryClose ||
-                                                                            ($inHouseVacationStatus &&
-                                                                                $currentDate >= $inHouseVacationStartDate &&
-                                                                                $currentDate <= $inHouseVacationEndDate))))
-                                                                <div class="alert alert-danger" role="alert">
-                                                                    {{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    </form>
-
-
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    @endif
-                @endforeach
-
-                @if (!$productsFound)
-                    <div class="row align-items-center justify-content-center bg-white w-100 p-4">
-                        <p>No Products Found.</p>
+            <form id="add-to-cart-form" class="mb-2 px-1">
+                @csrf
+                <input type="hidden" name="id" value="{{ $bestSell->product->id }}">
+                <div>
+                    <div class="d-none">
+                        <div
+                            class="d-flex justify-content-center align-items-center quantity-box border rounded border-base web-text-primary">
+                            <span class="input-group-btn">
+                                <button class="btn btn-number __p-10 web-text-primary" type="button" data-type="minus"
+                                    data-field="quantity" disabled="disabled">
+                                    -
+                                </button>
+                            </span>
+                            <input type="text" name="quantity"
+                                class="form-control input-number text-center cart-qty-field __inline-29 border-0 "
+                                placeholder="{{ translate('1') }}" value="{{ $product->minimum_order_qty ?? 1 }}"
+                                data-producttype="{{ $product->product_type }}"
+                                min="{{ $product->minimum_order_qty ?? 1 }}"
+                                max="{{ $product['product_type'] == 'physical' ? $product->current_stock : 100 }}">
+                            <span class="input-group-btn">
+                                <button class="btn btn-number __p-10 web-text-primary" type="button"
+                                    data-producttype="{{ $product->product_type }}" data-type="plus"
+                                    data-field="quantity">
+                                    +
+                                </button>
+                            </span>
+                        </div>
                     </div>
-                @endif
+                </div>
+                <input type="hidden" class="product-generated-variation-code" name="product_variation_code">
+                <input type="hidden" value="" class="in_cart_key form-control w-50" name="key">
 
-            </div>
+                <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
+                    @if (
+                        ($product->added_by == 'seller' &&
+                            ($sellerTemporaryClose ||
+                                (isset($product->seller->shop) &&
+                                    $product->seller->shop->vacation_status &&
+                                    $currentDate >= $sellerVacationStartDate &&
+                                    $currentDate <= $sellerVacationEndDate))) ||
+                            ($product->added_by == 'admin' &&
+                                ($inHouseTemporaryClose ||
+                                    ($inHouseVacationStatus &&
+                                        $currentDate >= $inHouseVacationStartDate &&
+                                        $currentDate <= $inHouseVacationEndDate))))
+                        <button class="btn add-to-cart string-limit" type="button" disabled>
+                            {{ translate('add_to_cart') }}
+                        </button>
+                    @else
+                        <button type="button" class="btn add-to-cart w-100" data-id="{{ $bestSell->product->id }}">
+                            <i class="navbar-tool-icon czi-cart me-2"></i>
+                            <span class="string-limit">{{ translate('add_to_cart') }}</span>
+                        </button>
+                    @endif
+
+                    @if (
+                        ($product->added_by == 'seller' &&
+                            ($sellerTemporaryClose ||
+                                (isset($product->seller->shop) &&
+                                    $product->seller->shop->vacation_status &&
+                                    $currentDate >= $sellerVacationStartDate &&
+                                    $currentDate <= $sellerVacationEndDate))) ||
+                            ($product->added_by == 'admin' &&
+                                ($inHouseTemporaryClose ||
+                                    ($inHouseVacationStatus &&
+                                        $currentDate >= $inHouseVacationStartDate &&
+                                        $currentDate <= $inHouseVacationEndDate))))
+                        <div class="alert alert-danger" role="alert">
+                            {{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}
+                        </div>
+                    @endif
+                </div>
+            </form>
+
+
+
         </div>
+
     </div>
+</div>
+
+
+</div>
+</div>
+</div>
+@endif
+@endif
+@endforeach
+
+@if (!$productsFound)
+    <div class="row align-items-center justify-content-center bg-white w-100 p-4">
+        <p>No Products Found.</p>
+    </div>
+@endif
+
+</div>
+</div>
+</div>
 </div>
