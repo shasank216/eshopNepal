@@ -9830,8 +9830,8 @@ button#dropdownMenuButton {
 }
 
 .compare-buynow button {
-    background: #1f3c74;
-    padding: 18px 8px;
+    /* background: #1f3c74;
+    padding: 18px 8px; */
     width: 98%;
 }
 
