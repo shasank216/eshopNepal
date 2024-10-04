@@ -211,7 +211,7 @@
                         </div>
                     @endif--}}
                     <div>
-                        <div class="topbar-text dropdown d-md-none ms-auto">
+                        <div class="topbar-text dropdown d-md-none ms-auto header-contact-tag">
                             <div class="d-flex align-items-center">
                                 <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-dark" href="tel:{{$web_config['phone']->value}}"
                                     style="border-radius:10px; background: #f0f0f0 !important;">

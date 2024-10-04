@@ -10310,6 +10310,10 @@ button#dropdownMenuButton {
         flex-direction: column !important;
     }
 
+    .header-contact-tag {
+        display: none !important;
+    }
+
 }
 
 @media (max-width: 411px) {
