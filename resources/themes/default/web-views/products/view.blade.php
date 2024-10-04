@@ -2065,6 +2065,30 @@
         data-min-price="{{ $data['min_price'] }}" data-max-price="{{ $data['max_price'] }}"
         data-message="{{ translate('items_found') }}"></span>
 
+       <!-- Compare Limit Message -->
+
+    <div id="compare-limit-message" style="display:none;">
+
+        <span id="compare-message-text">You have already selected 4 products.</span>
+
+        <button class="btn" id="clear-compare-items">Clear Compare Items</button>
+
+    </div>
+
+
+
+    <!-- Compare Count Display -->
+
+    <div class="compare-count" style="display:none;">
+
+        <a href="{{ url('compare/product') }}">
+
+            Compare <span id="compare-product-count">0</span>
+
+        </a>
+
+    </div>
+
 @endsection
 
 
