@@ -4161,22 +4161,22 @@ $(document).ready(function () {
     // Function to render selected products in the UI based on local storage
 
     function renderSelectedProducts() {
-        // Remove compared class from all products
-        $('.action-product-compare').removeClass('compared');
-    
-        console.log('Rendering selected products:', selectedProducts);
-    
-        // Mark the products that are in the comparison list
-        if (selectedProducts.length > 0) {
-            selectedProducts.forEach(product => {
-                const productElement = $(`[data-product-id="${product.id}"]`);
-                if (productElement.length) {
-                    productElement.addClass('compared');
-                    console.log('Product marked as compared:', product.id); // Check if products are marked correctly
-                }
-            });
-        }
+    // Remove compared class from all products
+    $('.action-product-compare').removeClass('compared');
+
+    console.log('Rendering selected products:', selectedProducts);
+
+    // Mark the products that are in the comparison list
+    if (selectedProducts.length > 0) {
+        selectedProducts.forEach(product => {
+            const productElement = $(`[data-product-id="${product.id}"]`);
+            if (productElement.length) {
+                productElement.addClass('compared');
+                console.log('Product marked as compared:', product.id); // Check if products are marked correctly
+            }
+        });
     }
+}
 
 
 
@@ -4339,4 +4339,47 @@ $(document).ready(function () {
         updateCompareCount();     // Update the compare count display
     });
 
+});
+
+
+$(document).ready(function () {
+    // Function to load products from local storage
+    function loadProductsFromLocalStorage() {
+        var storedProducts = localStorage.getItem('selectedProducts');
+        return storedProducts ? JSON.parse(storedProducts) : [];
+    }
+
+    // Function to save updated products to local storage
+    function saveProductsToLocalStorage(products) {
+        localStorage.setItem('selectedProducts', JSON.stringify(products));
+    }
+
+    // Function to render products based on local storage
+    function renderProducts() {
+        var storedProducts = loadProductsFromLocalStorage();
+        $('.compare-product_item').each(function () {
+            var productId = parseInt($(this).data('product-id'));
+            if (!storedProducts.some(function(product) { return product.id === productId; })) {
+                $(this).remove(); // Or use $(this).hide() to just hide it
+            }
+        });
+    }
+
+    // Function to remove product from local storage
+    function removeProductFromLocalStorage(productId) {
+        var storedProducts = loadProductsFromLocalStorage();
+        storedProducts = storedProducts.filter(function(product) { return product.id !== productId; });
+        saveProductsToLocalStorage(storedProducts);
+    }
+
+    // Handle remove button click
+    $('body').on('click', '.remove-from-compare', function () {
+        var productId = parseInt($(this).data('id'));
+        removeProductFromLocalStorage(productId);
+        $(this).closest('.compare-product_item').remove();
+        console.log('Product with ID: ' + productId + ' has been removed from comparison.');
+    });
+
+    // Initial rendering of products based on local storage
+    renderProducts();
 });
