@@ -4161,31 +4161,21 @@ $(document).ready(function () {
     // Function to render selected products in the UI based on local storage
 
     function renderSelectedProducts() {
-
         // Remove compared class from all products
-
         $('.action-product-compare').removeClass('compared');
-
-
-
+    
+        console.log('Rendering selected products:', selectedProducts);
+    
         // Mark the products that are in the comparison list
-
         if (selectedProducts.length > 0) {
-
             selectedProducts.forEach(product => {
-
                 const productElement = $(`[data-product-id="${product.id}"]`);
-
                 if (productElement.length) {
-
                     productElement.addClass('compared');
-
+                    console.log('Product marked as compared:', product.id); // Check if products are marked correctly
                 }
-
             });
-
         }
-
     }
 
 
@@ -4277,27 +4267,17 @@ $(document).ready(function () {
     // Event handler for clicking the compare button
 
     $('body').on('click', '.action-product-compare', function () {
-
         const productId = $(this).data('product-id');
-
         const productCategoryId = $(this).data('category-id');
-        
-
-
-        // Check if product ID and category ID are present
-
+    
+        console.log('Clicked Product ID:', productId, 'Category ID:', productCategoryId); // Check if IDs are correct
+    
         if (!productId || !productCategoryId) {
-
             console.error('Product ID or Category ID is missing!');
-
             return;
-
         }
-
-
-        
+    
         handleCompareClick(productId, productCategoryId);
-
     });
    
 
@@ -4355,12 +4335,8 @@ $(document).ready(function () {
     // Monitor AJAX completion and re-bind events for dynamically added products
 
     $(document).ajaxComplete(function () {
-
-        renderSelectedProducts();
-
-        updateCompareCount();
-
+        renderSelectedProducts(); // Re-render the selected products' UI
+        updateCompareCount();     // Update the compare count display
     });
 
 });
-
