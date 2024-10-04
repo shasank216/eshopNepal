@@ -38,7 +38,7 @@ class HomeController extends Controller
         private Review       $review,
         private DealOfTheDay $deal_of_the_day,
         private Banner       $banner,
-        private MostDemanded $most_demanded, 
+        private MostDemanded $most_demanded,
         private readonly WishlistRepository  $wishlistRepo,
     )
     {
@@ -47,6 +47,7 @@ class HomeController extends Controller
 
     public function index()
     {
+
         $theme_name = theme_root_path();
 
         return match ($theme_name) {
@@ -89,7 +90,7 @@ class HomeController extends Controller
                 $seller['average_rating'] = $seller['total_rating'] / ($seller['review_count'] == 0 ? 1 : $seller['review_count']);
             });
 
-            
+
 
         //end
 
@@ -100,7 +101,7 @@ class HomeController extends Controller
             ->take(12)
             ->get();
         //end
-        
+
 
         $latest_products = $this->product->with(['reviews'])->active()->orderBy('id', 'desc')->take(8)->get();
         $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
@@ -115,7 +116,7 @@ class HomeController extends Controller
             ->orderBy("count", 'desc')
             ->take(6)
             ->get();
-            
+
         //Top-rated
         $topRated = Review::with('product')
             ->whereHas('product', function ($query) {
@@ -158,13 +159,13 @@ class HomeController extends Controller
 
         // dd($product_tags);
          // Retrieves a collection of tags associated with this product
-        
+
 
 
          $blogs = Poster::latest()->take(4)->get();
          $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
          $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
-        
+
         return view(VIEW_FILE_NAMES['home'],
             compact(
                 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands',
@@ -1121,7 +1122,7 @@ class HomeController extends Controller
         $blogs = Poster::latest()->take(10)->get();
         $blogs_details = Poster::where('id',$id)->get()->first();
 
-        
+
         return view(VIEW_FILE_NAMES['blogdetails'],
             compact(
                 'featured_products', 'topRated', 'bestSellProduct', 'latest_products', 'categories', 'brands',
@@ -1130,7 +1131,7 @@ class HomeController extends Controller
                 'inHouseVacationEndDate', 'inHouseVacationStatus','blogs','blogs_details'
             )
         );
-       
+
         // return view(VIEW_FILE_NAMES['blogdetails'], compact('id'));
     }
     public function bloglist()
