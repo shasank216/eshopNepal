@@ -250,7 +250,7 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex flex-wrap pb-3 bg-white justify-content-between category-wise-products_header">
+        <div class="product_details d-flex flex-wrap pb-3 bg-white justify-content-between category-wise-products_header">
             @foreach($categories as $key => $category)
                 @if ($key<14)
                     <div class="nav_product">
