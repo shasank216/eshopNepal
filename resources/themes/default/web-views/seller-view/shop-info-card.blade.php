@@ -5,12 +5,12 @@
                 <div class="">
                     @if($shop['id'] != 0)
                         <div class="position-relative">
-                            @if($seller_temporary_close || $inhouse_temporary_close)
+                            @if($sellerTemporaryClose || $inHouseTemporaryClose)
                                 <span class="temporary-closed-details p-1">
                                                     <span>{{translate('closed_now')}}</span>
                                                 </span>
                             @elseif(($seller_id==0 && $inHouseVacationStatus && $current_date >= $inhouse_vacation_start_date && $current_date <= $inhouse_vacation_end_date) ||
-                            $seller_id!=0 && $seller_vacation_status && $current_date >= $seller_vacation_start_date && $current_date <= $seller_vacation_end_date)
+                            $seller_id!=0 && $sellerVacationStatus && $current_date >= $seller_vacation_start_date && $current_date <= $seller_vacation_end_date)
                                 <span class="temporary-closed-details p-1">
                                                     <span>{{translate('closed_now')}}</span>
                                                 </span>
