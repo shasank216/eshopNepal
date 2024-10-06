@@ -213,6 +213,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('ajax-shop-vacation-check', 'ShopViewController@ajax_shop_vacation_check')->name('ajax-shop-vacation-check');//theme fashion
     Route::post('shopView/{id}', 'WebController@seller_shop_product');
     // Route::post('shop-follow', 'ShopFollowerController@shop_follow')->name('shop_follow');
+    Route::get('/products-seller/filter', 'ShopViewController@filterProducts')->name('products-seller.filter');
 
     //top Rated
     Route::get('top-rated', 'WebController@top_rated')->name('topRated');

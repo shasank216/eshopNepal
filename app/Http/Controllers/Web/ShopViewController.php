@@ -913,6 +913,44 @@ class ShopViewController extends Controller
         ]);
     }
 
+    public function filterProducts(Request $request)
+    {
+        $categories = $request->input('categories', []); // Ensure it's an array
+    $sellerId = $request->input('shop_id');
+
+    // Validate the input
+    if (empty($categories) || empty($sellerId)) {
+        return response()->json(['data' => 'No categories or seller ID provided'], 400);
+    }
+
+    // Retrieve filtered products with pagination
+    $products = Product::whereIn('category_id', $categories)
+                ->where('shop_id', $sellerId) // Filter by seller ID
+                ->get();
+
+    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+
+    // Check each product's added_by field and retrieve vacation settings
+    foreach ($products as $product) {
+        if (isset($product['added_by'])) {
+            if ($product['added_by'] == 'seller') {
+                $sellerVacationStartDate = isset($product->seller->shop->vacation_start_date) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+                $sellerVacationEndDate = isset($product->seller->shop->vacation_end_date) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+                $sellerTemporaryClose = isset($product->seller->shop->temporary_close) ? $product->seller->shop->temporary_close : false;
+            }
+            // Add logic for admin products if needed
+            if ($product['added_by'] == 'admin') {
+                // Admin specific logic can be added here
+            }
+        }
+    }
+
+    // Return the rendered view for AJAX
+    return response()->json([
+        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate', 'sellerVacationEndDate', 'sellerTemporaryClose'))->render()
+    ]);
+    }
+
     public function theme_all_purpose($request, $id){
        
         $business_mode = getWebConfig(name: 'business_mode');

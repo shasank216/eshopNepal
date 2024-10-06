@@ -109,56 +109,70 @@
                         <div class="accordion __cate-side-arrordion">
                             @foreach($categories as $category)
                                 <div class="menu--caret-accordion">
-
+                                    <!-- Parent Category -->
                                     <div class="card-header flex-between">
                                         <div>
-                                            <label class="for-hover-label cursor-pointer get-view-by-onclick"
-                                                   data-link="{{route('shopView',['id'=> $seller_id,'category_id'=>$category['id']])}}">
+                                            <label class="for-hover-label cursor-pointer"
+                                                data-link="{{route('shopView',['id'=> $seller_id,'category_id'=>$category['id']])}}">
+                                                <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
+                                                    value="{{ $category['id'] }}" {{ in_array($category['id'], request('categories', [])) ? 'checked' : '' }}>
                                                 {{$category['name']}}
                                             </label>
                                         </div>
                                         <div class="px-2 cursor-pointer menu--caret">
                                             <strong class="pull-right for-brand-hover">
-                                                @if($category->childes->count()>0)
+                                                @if($category->childes->count() > 0)
                                                     <i class="tio-next-ui fs-13"></i>
                                                 @endif
                                             </strong>
                                         </div>
                                     </div>
-                                    <div class="card-body p-0 ms-2 d--none"
-                                         id="collapse-{{$category['id']}}">
-                                        @foreach($category->childes as $child)
-                                            <div class="menu--caret-accordion">
-                                                <div class="for-hover-label card-header flex-between">
-                                                    <div>
-                                                        <label class="cursor-pointer get-view-by-onclick" data-link="{{ route('shopView',['id'=> $seller_id,'sub_category_id'=>$child['id']]) }}">
-                                                            {{$child['name']}}
-                                                        </label>
-                                                    </div>
-                                                    <div class="px-2 cursor-pointer menu--caret">
-                                                        <strong class="pull-right">
-                                                            @if($child->childes->count()>0)
-                                                                <i class="tio-next-ui fs-13"></i>
-                                                            @endif
-                                                        </strong>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body p-0 ms-2 d--none"
-                                                     id="collapse-{{$child['id']}}">
-                                                    @foreach($child->childes as $ch)
-                                                        <div class="card-header">
-                                                            <label class="for-hover-label d-block cursor-pointer text-left get-view-by-onclick"
-                                                                   data-link="{{ route('shopView',['id'=> $seller_id,'sub_sub_category_id'=>$ch['id']])}}">
-                                                                {{$ch['name']}}
+
+                                    <!-- Display child categories of the parent category -->
+                                    @if($category->childes->count() > 0)
+                                        <div class="card-body p-0 ms-2 d--none" id="collapse-{{$category['id']}}">
+                                            @foreach($category->childes as $child)
+                                                <div class="menu--caret-accordion">
+                                                    <div class="for-hover-label card-header flex-between">
+                                                        <div>
+                                                            <label class="cursor-pointer get-view-by-onclick" data-link="{{ route('shopView',['id'=> $seller_id,'sub_category_id'=>$child['id']]) }}">
+                                                                <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
+                                                                    value="{{ $child['id'] }}" {{ in_array($child['id'], request('categories', [])) ? 'checked' : '' }}>
+                                                                {{$child['name']}}
                                                             </label>
                                                         </div>
-                                                    @endforeach
+                                                        <div class="px-2 cursor-pointer menu--caret">
+                                                            <strong class="pull-right">
+                                                                @if($child->childes->count() > 0)
+                                                                    <i class="tio-next-ui fs-13"></i>
+                                                                @endif
+                                                            </strong>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Display sub-subcategories of the child category -->
+                                                    @if($child->childes->count() > 0)
+                                                        <div class="card-body p-0 ms-2 d--none" id="collapse-{{$child['id']}}">
+                                                            @foreach($child->childes as $ch)
+                                                                <div class="card-header">
+                                                                    <label class="for-hover-label d-block cursor-pointer text-left get-view-by-onclick"
+                                                                        data-link="{{ route('shopView',['id'=> $seller_id,'sub_sub_category_id'=>$ch['id']])}}">
+                                                                        <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
+                                                                            value="{{ $ch['id'] }}" {{ in_array($ch['id'], request('categories', [])) ? 'checked' : '' }}>
+                                                                        {{$ch['name']}}
+                                                                    </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
+
+
                         </div>
                     </div>
                 </aside>
@@ -250,3 +264,68 @@
     <span id="store-request-data-sub-sub-category-id" data-value="{{ request('sub_sub_category_id') }}"></span>
 
 @endsection
+@push('script')
+
+<script>
+    $(document).ready(function() {
+
+$('.category-checkbox').on('change', function() {
+
+    // Collect all selected category IDs
+
+    let selectedCategories = [];
+
+
+
+    $('.category-checkbox:checked').each(function() {
+
+        selectedCategories.push($(this).val());
+
+    });
+
+
+
+    // Make AJAX request to filter products
+
+    $.ajax({
+
+        url: "{{ route('products.filter') }}", // Ensure this route is correct
+
+        type: 'GET',
+
+        data: {
+
+            categories: selectedCategories
+
+        },
+
+        success: function(response) {
+
+            // Replace the content of the items-container with the response HTML
+
+            $('#ajax-products').html(response.data);
+
+        },
+
+        error: function(xhr, status, error) {
+
+            // console.error('Error filtering products:', xhr.responseText);
+
+            // // Display a user-friendly error message
+
+            // alert('An error occurred while filtering products. Please try again.');
+
+        }
+
+    });
+
+});
+
+
+
+});
+</script>
+
+
+@endpush
+
