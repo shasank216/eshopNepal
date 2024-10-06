@@ -38,7 +38,7 @@ class ShopViewController extends Controller
     }
 
     public function default_theme($request, $id) {
-        
+        dd("hello");
         $business_mode = getWebConfig(name: 'business_mode');
 
         if($id!=0 && $business_mode == 'single') {
@@ -171,28 +171,25 @@ class ShopViewController extends Controller
             $shop = Shop::where('seller_id', $id)->first();
         }
 
-        $currentDate = date('Y-m-d');
-        $sellerVacationStartDate = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_start_date)) : null;
-        $sellerVacationEndDate = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_end_date)) : null;
-        $sellerTemporaryClose = $id != 0 ? $shop->temporary_close : false;
-        $sellerVacationStatus = $id != 0 ? $shop->vacation_status : false;
+        $current_date = date('Y-m-d');
+        $seller_vacation_start_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_start_date)) : null;
+        $seller_vacation_end_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_end_date)) : null;
+        $seller_temporary_close = $id != 0 ? $shop->temporary_close : false;
+        $seller_vacation_status = $id != 0 ? $shop->vacation_status : false;
 
-        $temporaryClose = Helpers::get_business_settings('temporary_close');
-        $inhouseVacation = Helpers::get_business_settings('vacation_add');
-        $inHouseVacationStartDate = $id == 0 ? $inhouseVacation['vacation_start_date'] : null;
-        $inHouseVacationEndDate = $id == 0 ? $inhouseVacation['vacation_end_date'] : null;
-        $inHouseVacationStatus = $id == 0 ? $inhouseVacation['status'] : false;
-        $inHouseTemporaryClose = $id == 0 ? $inhouseVacation['status'] : false;
-        
+        $temporary_close = Helpers::get_business_settings('temporary_close');
+        $inhouse_vacation = Helpers::get_business_settings('vacation_add');
+        $inhouse_vacation_start_date = $id == 0 ? $inhouse_vacation['vacation_start_date'] : null;
+        $inhouse_vacation_end_date = $id == 0 ? $inhouse_vacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $id == 0 ? $inhouse_vacation['status'] : false;
+        $inhouse_temporary_close = $id == 0 ? $temporary_close['status'] : false;
         if ($request->ajax()) {
-           
             return response()->json([
                 'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','categories'))->render(),
             ], 200);
         }
-        // dd($inHouseTemporaryClose);
-        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','currentDate','sellerVacationStartDate','sellerVacationStatus',
-            'sellerVacationEndDate','sellerTemporaryClose','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus','inHouseTemporaryClose'))
+        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','current_date','seller_vacation_start_date','seller_vacation_status',
+            'seller_vacation_end_date','seller_temporary_close','inhouse_vacation_start_date','inhouse_vacation_end_date','inHouseVacationStatus','inhouse_temporary_close'))
             ->with('seller_id', $id)
             ->with('total_review', $total_review)
             ->with('avg_rating', $avg_rating)
@@ -914,7 +911,6 @@ class ShopViewController extends Controller
     }
 
     public function theme_all_purpose($request, $id){
-       
         $business_mode = getWebConfig(name: 'business_mode');
 
         if($id!=0 && $business_mode == 'single') {
