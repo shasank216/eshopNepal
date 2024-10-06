@@ -500,7 +500,7 @@
                                         @if ($product->added_by == 'seller')
                                             @if (isset($product->seller->shop))
                                                 <div class="row position-relative">
-                                                    <div class="col-3 position-relative">
+                                                    <div class="col-lg-3 col-md-3 col-sm-12 position-relative">
                                                         <a href="{{ route('shopView', ['id' => $product->seller->id]) }}"
                                                             class="d-block">
                                                             <div class="d-flex __seller-author align-items-center">
@@ -529,7 +529,7 @@
                                                             </div>
                                                         </a>
                                                     </div>
-                                                    <div class="col-5 mt-2">
+                                                    <div class="col-lg-5 col-md-5 col-sm-10 mt-2">
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col-6 ">
                                                                 <div
@@ -559,7 +559,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 position-static mt-3">
+                                                    <div class="col-lg-4 col-md-4 col-sm-2 position-static mt-3">
                                                         <div class="chat_with_seller-buttons">
                                                             @if (auth('customer')->id())
                                                                 <button
@@ -643,7 +643,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-4 position-static mt-3">
+                                                {{-- <div class="col-4 position-static mt-3">
                                                     <div class="chat_with_seller-buttons">
                                                         @if (auth('customer')->id())
                                                             <button class="btn w-100 d-block text-center web--bg-primary text-white"
@@ -666,7 +666,7 @@
                                                             </a>
                                                         @endif
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         @endif
                                     </div>

@@ -10363,3 +10363,7 @@ button#dropdownMenuButton {
         gap: 1em;
     }
 }
+
+::-webkit-scrollbar {
+    width: 0 !important;
+}
