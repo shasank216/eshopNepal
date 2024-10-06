@@ -20,7 +20,7 @@
                         </div>
                     @else
                         <div class="position-relative">
-                            @if($seller_temporary_close || $inhouse_temporary_close)
+                            @if($sellerTemporaryClose || $inHouseTemporaryClose)
                                 <span class="temporary-closed-details">
                                                     <span>{{translate('closed_now')}}</span>
                                                 </span>

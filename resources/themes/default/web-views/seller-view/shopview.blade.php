@@ -220,6 +220,30 @@
         </div>
     </div>
 
+    <!-- Compare Limit Message -->
+
+    <div id="compare-limit-message" style="display:none;">
+
+        <span id="compare-message-text">You have already selected 4 products.</span>
+
+        <button class="btn" id="clear-compare-items">Clear Compare Items</button>
+
+    </div>
+
+
+
+    <!-- Compare Count Display -->
+
+    <div class="compare-count" style="display:none;">
+
+        <a href="{{ url('compare/product') }}">
+
+            Compare <span id="compare-product-count">0</span>
+
+        </a>
+
+    </div>
+
     <span id="store-request-data-product-name" data-value="{{ request('product_name') }}"></span>
     <span id="store-request-data-category-id" data-value="{{ request('category_id') }}"></span>
     <span id="store-request-data-sub-category-id" data-value="{{ request('sub_category_id') }}"></span>
