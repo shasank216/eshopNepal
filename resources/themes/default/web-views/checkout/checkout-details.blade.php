@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="container pb-5 mb-2 mb-md-4 rtl __inline-54 text-align-direction checkout-details-page">
+    <div class="container-fluid pb-5 mb-2 mb-md-4 rtl __inline-54 text-align-direction checkout-details-page">
         <div class="row">
             <div class="col-md-12 mb-5 pt-5">
                 <div class="feature_header __feature_header">

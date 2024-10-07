@@ -8,7 +8,7 @@
 @endif
 <header class="rtl __inline-10">
     <div class="topbar py-3">
-        <div class="container">
+        <div class="container-fluid">
             <div>
                 <div class="topbar-text dropdown d-md-none ms-auto">
                     <a class="topbar-link direction-ltr font-style-phone" href="tel: {{$web_config['phone']->value}}">
@@ -460,7 +460,7 @@
         </div>
         {{-- asasdasd --}}
         <div class="navbar navbar-expand-md navbar-stuck-menu">
-            <div class="container px-10px">
+            <div class="container-fluid px-10px">
                 <div class="collapse navbar-collapse text-align-direction" id="navbarCollapse">
                     <div class="w-100 d-md-none text-align-direction">
                         <button class="navbar-toggler p-0" type="button" data-toggle="collapse"

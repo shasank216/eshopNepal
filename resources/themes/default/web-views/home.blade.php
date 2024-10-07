@@ -758,7 +758,7 @@
         {{-- @include('web-views.partials._category-section-home') --}}
 
         @if ($featured_products->count() > 0)
-            <div class="container py-4 rtl px-0 px-md-3">
+            <div class="container-fluid py-4 rtl px-0 px-md-3">
                 <div class="__inline-62 pt-3">
                     <div class="feature-product-title mt-0 web-text-primary">
                         {{ translate('featured_products') }}
@@ -832,7 +832,7 @@
         @endif --}}
 
         @if (isset($main_section_banner))
-            <div class="container rtl pt-4 px-0 px-md-3">
+            <div class="container-fluid rtl pt-4 px-0 px-md-3">
                 <a href="{{ $main_section_banner->url }}" target="_blank" class="cursor-pointer d-block">
                     <img class="d-block footer_banner_img __inline-63" alt=""
                         src="{{ getValidImage(path: 'storage/app/public/banner/' . $main_section_banner['photo'], type: 'wide-banner') }}">
@@ -847,7 +847,7 @@
         @if ($footer_banner->count() > 0)
             @foreach ($footer_banner as $key => $banner)
                 @if ($key == 0)
-                    <div class="container rtl d-sm-none">
+                    <div class="container-fluid rtl d-sm-none">
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <a href="{{ $banner->url }}" class="d-block" target="_blank">
@@ -867,7 +867,7 @@
         @if ($footer_banner->count() > 0)
             @foreach ($footer_banner as $key => $banner)
                 @if ($key == 1)
-                    <div class="container rtl pt-4 d-sm-none">
+                    <div class="container-fluid rtl pt-4 d-sm-none">
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <a href="{{ $banner->url }}" class="d-block" target="_blank">
@@ -882,7 +882,7 @@
         @endif
 
         @if (count($footer_banner) > 0)
-            <div class="container rtl d-md-block d-none">
+            <div class="container-fluid rtl d-md-block d-none">
                 <div class="row g-3 mt-3">
 
                     @if (count($footer_banner) <= 2)
@@ -926,7 +926,7 @@
             </div>
         @endif
 
-        <section class="container rtl pt-4 bestSelling-section mb-5">
+        <section class="container-fluid rtl pt-4 bestSelling-section mb-5">
             @if ($bestSellProduct->count() > 0)
                 @include('web-views.partials._best-selling')
             @endif
@@ -943,7 +943,7 @@
         {{-- Advertise section --}}
 
         @if (count($footer_banner) > 0)
-            <div class="container rtl d-md-block d-none mt-3">
+            <div class="container-fluid rtl d-md-block d-none mt-3">
                 <div class="row g-3 mt-3">
 
                     @if (count($footer_banner) <= 2)
@@ -991,10 +991,10 @@
 
 
         {{-- search by category --}}
-        <section class="container">
+        <section class="container-fluid">
             @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
 
-            <div class="container pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
+            <div class="container-fluid pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
                 <div class="d-flex justify-content-between align-items-center mb-14px product-head-border">
                     <div class="text-center mb-2">
                         <span class="for-feature-title __text-22px font-bold text-center">
@@ -1168,7 +1168,7 @@
         @endif
         <!-- Seller List Ends -->
 
-        <section class="container">
+        <section class="container-fluid">
             <div class="d-flex">
                 <p class="home-title">Latest Blogs</p>
                 <span class="form-inline ml-auto">
@@ -1180,7 +1180,7 @@
             </div>
             <hr>
 
-            <div class="container" style="margin-top: 40px;">
+            <div class="container-fluid" style="margin-top: 40px;">
                 <div class="row">
                     <!-- First Row -->
                     @foreach ($blogs as $blog)

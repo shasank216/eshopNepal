@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="container py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
+    <div class="container-fluid py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
         <div class="row">
 
             @include('web-views.partials._profile-aside')

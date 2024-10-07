@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    <div class="container pb-5 mb-2 mb-md-4 rtl px-0 px-md-3 text-align-direction">
+    <div class="container-fluid pb-5 mb-2 mb-md-4 rtl px-0 px-md-3 text-align-direction">
         <div class="row mx-max-md-0">
             <div class="col-md-12 mb-3 pt-3 px-max-md-0">
                 <div class="feature_header px-3 px-md-0">

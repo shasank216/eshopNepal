@@ -202,7 +202,7 @@
         </div>
     </div>
 
-    <div class="container pt-4 pb-5 rtl">
+    <div class="container-fluid pt-4 pb-5 rtl">
 
         <div class="card border-0 box-shadow-lg">
             <div class="card-body py-5">

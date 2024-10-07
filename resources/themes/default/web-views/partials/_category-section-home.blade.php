@@ -1,6 +1,6 @@
 @if ($categories->count() > 0 )
     <section class="pb-4 rtl">
-        <div class="container">
+        <div class="container-fluid">
             <div>
                 <div class="card __shadow h-100 max-md-shadow-0">
                     <div class="card-body">

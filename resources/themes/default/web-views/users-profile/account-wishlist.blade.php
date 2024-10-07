@@ -3,7 +3,7 @@
 @section('title', translate('my_Wishlists'))
 
 @section('content')
-    <div class="container py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
+    <div class="container-fluid py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
         <div class="row">
             @include('web-views.partials._profile-aside')
             <section class="col-lg-9 __customer-profile customer-profile-wishlist px-0">

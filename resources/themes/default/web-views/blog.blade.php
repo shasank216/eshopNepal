@@ -235,7 +235,7 @@
     </style>
 
     <div class="bg-white text-dark">
-        <div class="container mt-2 padding-rl">
+        <div class="container-fluid mt-2 padding-rl">
 
             <div class="breadcrumb mb-4">
                 <a href="{{ url('/') }}">

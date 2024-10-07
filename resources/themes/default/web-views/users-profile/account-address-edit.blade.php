@@ -10,7 +10,7 @@
 @endpush
 
 @section('content')
-<div class="container py-4 rtl __account-address text-align-direction">
+<div class="container-fluid py-4 rtl __account-address text-align-direction">
 
     <div class="row g-3">
         @include('web-views.partials._profile-aside')

@@ -7,7 +7,7 @@
 @section('content')
 <div class="__chat-seller">
 
-    <div class="container py-4 rtl text-align-direction">
+    <div class="container-fluid py-4 rtl text-align-direction">
         <div class="row">
             @include('web-views.partials._profile-aside')
 

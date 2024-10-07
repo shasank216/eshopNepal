@@ -31,7 +31,7 @@
 
     @php($decimalPointSettings = getWebConfig(name: 'decimal_point_settings'))
 
-    <div class="container py-4 __inline-67">
+    <div class="container-fluid py-4 __inline-67">
         <div class="rtl">
             <div class="bg-white __shop-banner-main">
                 @if($shop['id'] != 0)
