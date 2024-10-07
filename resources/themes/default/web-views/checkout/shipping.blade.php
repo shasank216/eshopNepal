@@ -9,7 +9,7 @@
 
 @section('content')
 @php($billingInputByCustomer=getWebConfig(name: 'billing_input_by_customer'))
-    <div class="container py-4 rtl __inline-56 px-0 px-md-3 text-align-direction">
+    <div class="container-fluid py-4 rtl __inline-56 px-0 px-md-3 text-align-direction">
         <div class="row mx-max-md-0">
             <div class="col-md-12 mb-3">
                 <h3 class="font-weight-bold text-center text-lg-left">{{translate('checkout')}}</h3>

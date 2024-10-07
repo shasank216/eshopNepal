@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="tab-content">
-                                <div id="home" class="container tab-pane active"><br>
+                                <div id="home" class="container-fluid tab-pane active"><br>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="name">
@@ -171,7 +171,7 @@
             </div>
         </div>
 
-        <div class="container py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
+        <div class="container-fluid py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
             <div class="row ">
                 @include('web-views.partials._profile-aside')
                 <section class="col-lg-9 __customer-profile px-0">

@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-    <div class="container rtl text-align-direction">
+    <div class="container-fluid rtl text-align-direction">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-9 sidebar_heading">
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="container pb-5 mb-2 mb-md-4 mt-3 rtl text-align-direction">
+    <div class="container-fluid pb-5 mb-2 mb-md-4 mt-3 rtl text-align-direction">
         <div class="row g-3">
 
             @include('web-views.partials._profile-aside')

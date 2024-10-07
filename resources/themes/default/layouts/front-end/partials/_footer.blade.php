@@ -1,6 +1,6 @@
 <div class="__inline-9 rtl">
     <div class="background_class page-footer font-small mdb-color rtl" style="background-color: #1f3c74;">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row mt-5 align-items-center subscribe-container">
                 <div class="col-md-4 col-sm-6 mt-1">
                     <div class="signup">
@@ -28,11 +28,11 @@
     </div>
     <footer class="page-footer font-small mdb-color rtl">
         <div class="pt-4 custom-light-primary-color-20">
-            <div class="container text-center __pb-13px px-0 pb-0">
+            <div class="container-fluid text-center __pb-13px px-0 pb-0">
                 <div class="row mt-3">
                     <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start px-5">
                         <p class="m-0 footer-brand_desc text-def">
-                            Your eshopNepal is the best place to find high-quality products, exceptional customer service, and fast shipping. Shop with confidence and explore our wide range of categories!
+                            Your enepalshop is the best place to find high-quality products, exceptional customer service, and fast shipping. Shop with confidence and explore our wide range of categories!
                         </p>
                         <div class="max-sm-100 justify-content-start d-flex flex-wrap mt-md-3 mt-0 mb-md-3 text-align-direction footer-social_media">
                             @if ($web_config['social_media'])
@@ -248,9 +248,9 @@
                                 <h6
                                     class="text-uppercase font-semi-bold footer-header text-def footer-head">
                                     Download App</h6>
-                                <p class="m-0 footer-offer text-def">
+                                {{-- <p class="m-0 footer-offer text-def">
                                     Save $3 with app & new user only
-                                </p>
+                                </p> --}}
                                 <ul class="widget-list __pb-10px">
                                     @if ($web_config['android']['status'])
                                         <li class="widget-list-item">
@@ -361,7 +361,7 @@
                     </li>
                 </ul>
                     <div class="hr"></div>
-                    <div class="footer-additional w-100">
+                    <div class="container-fluid footer-additional w-100">
                         <div class="footer-additional-content">
                             <div class="foot-bottom-head text-def">
                                 Information:
@@ -382,21 +382,21 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="footer-additional-content">
+                        {{-- <div class="footer-additional-content">
                             <div class="foot-bottom-head text-def">
                                 Products:
                             </div>
                             <div class="foot-bottom-content text-def">
-                                {{-- @foreach($latest_products as $key => $product)
+                                <!-- @foreach($latest_products as $key => $product)
                                 <a href="{{route('product',$product->slug)}}" class="text-def">
                                     {{ $product->name }} /
                                 </a>
-                                @endforeach --}}
+                                @endforeach -->
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="hr"></div>
-                    <div class="footer-bottom w-100">
+                    <div class="container-fluid footer-bottom w-100">
                         <div class="footer-bottom-content">
                             <div class="foot-bottom-payment">
                                 <img src="{{asset('public/assets/front-end/img/paypal.png')}}">

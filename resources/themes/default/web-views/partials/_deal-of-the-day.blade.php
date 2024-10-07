@@ -1,5 +1,5 @@
 @if (isset($product))
-    <div class="container rtl">
+    <div class="container-fluid rtl">
         <div class="row g-4 pt-2 mt-0 pb-2 __deal-of align-items-start">
 
             <div class="col-md-4 col-sm-12">

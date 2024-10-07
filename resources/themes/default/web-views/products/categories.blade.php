@@ -16,7 +16,7 @@
 @endpush
 
 @section('content')
-    <div class="container p-3 rtl __inline-52 text-align-direction">
+    <div class="container-fluid p-3 rtl __inline-52 text-align-direction">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-9 text-center">
