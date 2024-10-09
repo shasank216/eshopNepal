@@ -261,13 +261,50 @@ $(document).ready(function () {
                 items: 2,
             },
             992: {
-                items: 2,
+                items: 3,
             },
             1200: {
-                items: 3,
+                items: 4,
             },
             1400: {
+                items: 4,
+            }
+        },
+    });
+
+    $('.best-selling-slider').owlCarousel({
+        loop: true,
+        autoplay: true,
+        margin: 20,
+        nav: false,
+        navText: directionFromSession === 'rtl' ? ["<i class='czi-arrow-right'></i>", "<i class='czi-arrow-left'></i>"] : ["<i class='czi-arrow-left'></i>", "<i class='czi-arrow-right'></i>"],
+        dots: false,
+        autoplayHoverPause: true,
+        autoplaySpeed: 1500,
+        // slideTransition: 'linear',
+        // rtl: directionFromSession === 'rtl',
+        // ltr: directionFromSession === 'ltr',
+        responsive: {
+            0: {
+                items: 1,
+            },
+            360: {
+                items: 2,
+            },
+            576: {
+                items: 2,
+            },
+            768: {
                 items: 3,
+            },
+            992: {
+                items: 4,
+            },
+            1200: {
+                items: 5,
+            },
+            1400: {
+                items: 5,
             }
         },
     });

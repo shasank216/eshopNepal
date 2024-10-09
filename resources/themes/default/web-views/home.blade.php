@@ -319,8 +319,9 @@
             }
 
             .carding {
-                /* width: 247px; */
-                height: 300px;
+                 /*width: 247px; */
+                 height: 230px;
+                /*height: 300px;*/
                 /* background-color: color-mix(in srgb, #606BBF, #fff 90%); */
                 border-radius: 15px;
                 display: flex;
@@ -344,7 +345,7 @@
             }
 
             .product-hover_details .carding img {
-                border-radius: 15px;
+                /*border-radius: 15px;*/
             }
 
             .category-badge {
@@ -994,7 +995,7 @@
         <section class="container-fluid">
             @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
 
-            <div class="container-fluid pt-5 pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
+            <div class="container-fluid pt-5 pb-5 mb-2 px-0 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
                 <div class="d-flex justify-content-between align-items-center mb-14px product-head-border">
                     <div class="text-center mb-2">
                         <span class="for-feature-title __text-22px font-bold text-center">
@@ -1180,7 +1181,7 @@
             </div>
             <hr>
 
-            <div class="container-fluid" style="margin-top: 40px;">
+            <div class="container-fluid px-0" style="margin-top: 40px;">
                 <div class="row">
                     <!-- First Row -->
                     @foreach ($blogs as $blog)

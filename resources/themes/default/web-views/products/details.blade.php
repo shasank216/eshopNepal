@@ -500,7 +500,7 @@
                                         @if ($product->added_by == 'seller')
                                             @if (isset($product->seller->shop))
                                                 <div class="row position-relative">
-                                                    <div class="col-3 position-relative">
+                                                    <div class="col-lg-3 position-relative">
                                                         <a href="{{ route('shopView', ['id' => $product->seller->id]) }}"
                                                             class="d-block">
                                                             <div class="d-flex __seller-author align-items-center">
@@ -529,7 +529,7 @@
                                                             </div>
                                                         </a>
                                                     </div>
-                                                    <div class="col-5 mt-2">
+                                                    <div class="col-lg-5 mt-2">
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col-6 ">
                                                                 <div
@@ -559,7 +559,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 position-static mt-3">
+                                                    <div class="col-lg-4 position-static mt-3">
                                                         <div class="chat_with_seller-buttons">
                                                             @if (auth('customer')->id())
                                                                 <button
@@ -1311,9 +1311,11 @@
                             </div> --}}
                         </div>
 
-                        <div class="row g-3 mt-1">
+                        {{-- <div class="row g-3 mt-1"> --}}
+                        <div class="best-selling-grid mt-1">
                             @foreach ($relatedProducts as $key => $relatedProduct)
-                                <div class="col-xl-2 col-sm-3 col-6">
+                                {{-- <div class="col-xl-2 col-sm-3 col-6"> --}}
+                                <div class="">
                                     @include('web-views.partials._inline-single-product-without-eye', [
                                         'product' => $relatedProduct,
                                         'decimal_point_settings' => $decimalPointSettings,
