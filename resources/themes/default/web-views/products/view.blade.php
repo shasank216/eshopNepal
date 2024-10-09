@@ -187,6 +187,8 @@
             border: 0.1em solid var(--light-gray);
 
             margin-bottom: -0.125em;
+            display: none;
+            cursor: pointer;
 
         }
 
@@ -233,6 +235,7 @@
             letter-spacing: 0.005em;
 
             text-align: left;
+            cursor: pointer;
 
         }
 
@@ -2087,7 +2090,7 @@
 
         </a>
 
-    </div>
+   </div>
 
 @endsection
 
