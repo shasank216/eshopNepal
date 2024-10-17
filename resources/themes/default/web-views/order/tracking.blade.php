@@ -299,7 +299,7 @@
                                         </div>
                                         <div class="media-body">
                                             <div class="text-sm-center">
-                                                <h6 class="media-tab-title text-nowrap mb-0 text-capitalize fs-14">{{ translate('preparing_shipment')}}</h6>
+                                                <h6 class="media-tab-title text-nowrap mb-0 text-capitalize fs-14">Packaging</h6>
                                             </div>
                                             @if( ($orderDetails['order_status']=='processing') || ($orderDetails['order_status']=='processed') || ($orderDetails['order_status']=='out_for_delivery') || ($orderDetails['order_status']=='delivered')  && \App\Utils\order_status_history($orderDetails['id'],'processing'))
                                                 <div class="d-flex align-items-center justify-content-sm-center mt-2 gap-2">
@@ -323,7 +323,7 @@
                                         </div>
                                         <div class="media-body">
                                             <div class="text-sm-center">
-                                                <h6 class="media-tab-title text-nowrap mb-0 fs-14">{{ translate('order_is_on_the_way')}}</h6>
+                                                <h6 class="media-tab-title text-nowrap mb-0 fs-14">Out for Delivery</h6>
                                             </div>
 
                                             @if( ($orderDetails['order_status']=='out_for_delivery') || ($orderDetails['order_status']=='delivered'))
@@ -375,7 +375,7 @@
                                     </div>
                                     <div class="media-body">
                                         <div class="text-sm-center">
-                                            <h6 class="media-tab-title text-nowrap mb-0 fs-14">{{ translate('order_Shipped')}}</h6>
+                                            <h6 class="media-tab-title text-nowrap mb-0 fs-14">Delivered</h6>
                                         </div>
                                         @if(($orderDetails['order_status']=='delivered') && \App\Utils\order_status_history($orderDetails['id'],'delivered'))
                                             <div class="d-flex align-items-center justify-content-sm-center mt-2 gap-2">
