@@ -51,7 +51,7 @@
 
     <div class="owl-carousel" id="home-hero-slider">
         @foreach ($main_banner as $key => $banner)
-            <a href="{{ $banner['url'] }}" target="_blank">
+            <a href="{{ $banner['url'] }}" target="_blank" class="w-100">
                 <img src="{{ getValidImage(path: 'storage/app/public/banner/' . $banner['photo'], type: 'banner') }}"
                     alt="">
             </a>
