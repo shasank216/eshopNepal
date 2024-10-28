@@ -423,17 +423,31 @@
                                                 {{ translate('add_to_cart') }}
                                             </button>
                                         @else
-                                            <button
-                                                class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-buy-now-this-product"
-                                                type="button">
-                                                <span class="string-limit">{{ translate('buy_now') }}</span>
-                                            </button>
-                                            <button
-                                                class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
-                                                type="button" data-update-text="{{ translate('update_cart') }}"
-                                                data-add-text="{{ translate('add_to_cart') }}">
-                                                <span class="string-limit">{{ translate('add_to_cart') }}</span>
-                                            </button>
+                                            @if (auth('customer')->check())
+                                                <button
+                                                    class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-buy-now-this-product"
+                                                    type="button">
+                                                    <span class="string-limit">{{ translate('buy_now') }}</span>
+                                                </button>
+                                                <button
+                                                    class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                                    type="button" data-update-text="{{ translate('update_cart') }}"
+                                                    data-add-text="{{ translate('add_to_cart') }}">
+                                                    <span class="string-limit">{{ translate('add_to_cart') }}</span>
+                                                </button>
+                                            @else
+                                                <a href="{{ route('customer.auth.login') }}"
+                                                    class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} "
+                                                    type="button">
+                                                    <span class="string-limit">{{ translate('buy_now') }}</span>
+                                                </a>
+                                                <button
+                                                    class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                                    type="button" data-update-text="{{ translate('update_cart') }}"
+                                                    data-add-text="{{ translate('add_to_cart') }}">
+                                                    <span class="string-limit">{{ translate('add_to_cart') }}</span>
+                                                </button>
+                                            @endif
                                         @endif
                                         <button type="button" data-product-id="{{ $product['id'] }}"
                                             class="btn __text-18px border d-none d-sm-block product-action-add-wishlist">

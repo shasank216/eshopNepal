@@ -747,7 +747,7 @@
     @endpush
 
 @section('content')
-    <div class="__inline-61">
+    <div class="__inline-61 container">
         @php($decimalPointSettings = !empty(getWebConfig(name: 'decimal_point_settings')) ? getWebConfig(name: 'decimal_point_settings') : 0)
         <section class="bg-transparent">
             <div class="position-relative">
@@ -1101,10 +1101,10 @@
                             <button class="btn p-0 mr-2" onclick="changeItemsPerRow(1, this)">
                                 <i class="fa fa-th-list fa-lg" aria-hidden="true"></i>
                             </button>
-                            <button class="btn p-0 mr-2" onclick="changeItemsPerRow(2, this)">
+                            <button class="btn p-0 mr-2" onclick="changeItemsPerRow(3, this)">
                                 <i class="fa fa-th-large fa-lg" aria-hidden="true"></i>
                             </button>
-                            <button class="btn p-0 mr-2 active" onclick="changeItemsPerRow(3, this)">
+                            <button class="btn p-0 mr-2 active" onclick="changeItemsPerRow(4, this)">
                                 <i class="fa fa-th fa-lg" aria-hidden="true"></i>
                             </button>
                             {{-- <button class="btn p-0" onclick="changeItemsPerRow(4)">
@@ -1151,15 +1151,16 @@
             </div>
 
             {{-- <span id="products-search-data-backup"
-            data-url="{{ url('/products') }}"
-            data-id="{{ $data['id'] }}"
-            data-name="{{ $data['name'] }}"
-            data-from="{{ $data['data_from'] }}"
-            data-sort="{{ $data['sort_by'] }}"
-            data-min-price="{{ $data['min_price'] }}"
-            data-max-price="{{ $data['max_price'] }}"
-            data-message="{{ translate('items_found') }}"
-            ></span> --}}
+                data-url="{{ url('/products') }}"
+                data-id="{{ $data['id'] }}"
+                data-name="{{ $data['name'] }}"
+                data-from="{{ $data['data_from'] }}"
+                data-sort="{{ $data['sort_by'] }}"
+                data-min-price="{{ $data['min_price'] }}"
+                data-max-price="{{ $data['max_price'] }}"
+                data-message="{{ translate('items_found') }}"
+                >
+            </span> --}}
         </section>
 
         <!-- Seller List -->
