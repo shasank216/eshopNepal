@@ -751,13 +751,13 @@
 
                     </button>
 
-                    <button class="btn p-0 mr-2" onclick="changeItemsPerRow(2, this)">
+                    <button class="btn p-0 mr-2" onclick="changeItemsPerRow(3, this)">
 
                         <i class="fa fa-th-large fa-lg" aria-hidden="true"></i>
 
                     </button>
 
-                    <button class="btn p-0 mr-2" onclick="changeItemsPerRow(3, this)">
+                    <button class="btn p-0 mr-2" onclick="changeItemsPerRow(4, this)">
 
                         <i class="fa fa-th fa-lg" aria-hidden="true"></i>
 

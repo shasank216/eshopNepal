@@ -1,6 +1,6 @@
 <div class="__inline-9 rtl">
     <div class="background_class page-footer font-small mdb-color rtl" style="background-color: #1f3c74;">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row mt-5 align-items-center subscribe-container">
                 <div class="col-md-4 col-sm-6 mt-1">
                     <div class="signup">
@@ -28,7 +28,7 @@
     </div>
     <footer class="page-footer font-small mdb-color rtl">
         <div class="pt-4 custom-light-primary-color-20">
-            <div class="container-fluid text-center __pb-13px px-0 pb-0">
+            <div class="container text-center __pb-13px px-0 pb-0">
                 <div class="row mt-3">
                     <div class="col-lg-3 col-md-5 footer-web-logo text-center text-md-start px-5">
                         <p class="m-0 footer-brand_desc text-def">
@@ -245,9 +245,9 @@
                                 @endif
                             </div>
                             <div class="col-lg-3 col-md-4 col-sm-6 col-12 footer-padding-bottom text-start">
-                                <h6
+                                {{--<h6
                                     class="text-uppercase font-semi-bold footer-header text-def footer-head">
-                                    Download App</h6>
+                                    Download App</h6>--}}
                                 {{-- <p class="m-0 footer-offer text-def">
                                     Save $3 with app & new user only
                                 </p> --}}
@@ -397,6 +397,11 @@
                     </div>
                     <div class="hr"></div>
                     <div class="container-fluid footer-bottom w-100">
+                        <div class="footer-additional-content">
+                            <div class="foot-bottom-copyright text-def">
+                                {{ $web_config['copyright_text']->value }}
+                            </div>
+                        </div>
                         <div class="footer-bottom-content">
                             <div class="foot-bottom-payment">
                                 <img src="{{asset('public/assets/front-end/img/paypal.png')}}">
@@ -409,11 +414,6 @@
                             </div>
                             <div class="foot-bottom-payment">
                                 <img src="{{asset('public/assets/front-end/img/amax.png')}}">
-                            </div>
-                        </div>
-                        <div class="footer-additional-content">
-                            <div class="foot-bottom-copyright text-def">
-                                {{ $web_config['copyright_text']->value }}
                             </div>
                         </div>
                     </div>

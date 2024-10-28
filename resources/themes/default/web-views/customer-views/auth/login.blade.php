@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="form-label font-semibold">{{ translate('password') }}</label>
                         <div class="password-toggle rtl">
-                            <input class="form-control text-align-direction" name="password" type="password" id="si-password" placeholder="{{ translate('password_must_be_7+_Character')}}" required>
+                            <input class="form-control text-align-direction" name="password" type="password" id="si-password" placeholder="{{ translate('password_must_be_8+_Character')}}" required>
                             <label class="password-toggle-btn">
                                 <input class="custom-control-input" type="checkbox">
                                     <i class="tio-hidden password-toggle-indicator"></i>

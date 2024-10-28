@@ -1,4 +1,4 @@
-<section class="overflow-hidden">
+<section class="container overflow-hidden">
     <div class="px-0 px-md-3">
         <div class="flash-deals-wrapper">
             <div class="flash-deal-view-all-web row d-flex justify-content-end mb-3">
