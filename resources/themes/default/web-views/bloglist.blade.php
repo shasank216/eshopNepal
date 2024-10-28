@@ -74,7 +74,7 @@
         }
     </style>
 
-    <section class="container">
+    <section class="container-fluid">
 
         <div class="breadcrumb mb-4 mt-2">
             <a href="{{ url('/') }}">
@@ -95,7 +95,7 @@
         </nav>
         <hr>
 
-        <div class="container" style="margin-top: 40px;">
+        <div class="container-fluid" style="margin-top: 40px;">
             <div class="row">
                 <!-- First Row -->
                 @if ($blogs->isEmpty())

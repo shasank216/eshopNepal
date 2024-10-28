@@ -3,7 +3,7 @@
 @section('title', translate('order_Complete'))
 
 @section('content')
-    <div class="container mt-5 mb-5 rtl __inline-53 text-align-direction">
+    <div class="container-fluid mt-5 mb-5 rtl __inline-53 text-align-direction">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 col-lg-10">
                 <div class="card">

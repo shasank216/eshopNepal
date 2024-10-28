@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="container pb-5 mb-2 mb-md-4 mt-3 rtl __inline-47 text-align-direction">
+    <div class="container-fluid pb-5 mb-2 mb-md-4 mt-3 rtl __inline-47 text-align-direction">
         <div class="row g-3">
             @include('web-views.partials._profile-aside')
 

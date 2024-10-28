@@ -48,7 +48,7 @@
         @else
             @php($deal_banner = theme_asset(path: 'public/assets/front-end/img/flash-deals.png'))
         @endif
-        <div class="container md-4 mt-3 rtl text-align-direction">
+        <div class="container-fluid md-4 mt-3 rtl text-align-direction">
             <div class="__flash-deals-bg rounded" style="background: url({{$deal_banner}}) no-repeat center center / cover">
                 <div class="row g-3 justify-content-end align-items-center">
                     @php($flash_deals=\App\Models\FlashDeal::with(['products.product.reviews'])->where(['status'=>1])->where(['deal_type'=>'flash_deal'])->whereDate('start_date','<=',date('Y-m-d'))->whereDate('end_date','>=',date('Y-m-d'))->first())
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="container pb-5 mb-2 mb-md-4 mt-3 rtl text-align-direction">
+        <div class="container-fluid pb-5 mb-2 mb-md-4 mt-3 rtl text-align-direction">
             <div class="row">
                 <div class="col-lg-4 col-md-6 my-2 text-center {{Session::get('direction') === "rtl" ? 'text-sm-right' : 'text-sm-left'}}">
                     <div class="flash_deal_title">

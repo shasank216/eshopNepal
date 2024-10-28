@@ -8,7 +8,7 @@
 @endif
 <header class="rtl __inline-10">
     <div class="topbar py-3">
-        <div class="container">
+        <div class="container-fluid">
             <div>
                 <div class="topbar-text dropdown d-md-none ms-auto">
                     <a class="topbar-link direction-ltr font-style-phone" href="tel: {{$web_config['phone']->value}}">
@@ -250,7 +250,7 @@
                 </div>
             </div>
         </div>
-        <div class="product_details px-5 d-flex flex-wrap pb-3 bg-white justify-content-between category-wise-products_header">
+        <div class="product_details d-flex flex-wrap pb-3 bg-white justify-content-between category-wise-products_header">
             @foreach($categories as $key => $category)
                 @if ($key<14)
                     <div class="nav_product">
@@ -460,7 +460,7 @@
         </div>
         {{-- asasdasd --}}
         <div class="navbar navbar-expand-md navbar-stuck-menu">
-            <div class="container px-10px">
+            <div class="container-fluid px-10px">
                 <div class="collapse navbar-collapse text-align-direction" id="navbarCollapse">
                     <div class="w-100 d-md-none text-align-direction">
                         <button class="navbar-toggler p-0" type="button" data-toggle="collapse"

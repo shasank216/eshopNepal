@@ -187,6 +187,8 @@
             border: 0.1em solid var(--light-gray);
 
             margin-bottom: -0.125em;
+            display: none;
+            cursor: pointer;
 
         }
 
@@ -233,6 +235,7 @@
             letter-spacing: 0.005em;
 
             text-align: left;
+            cursor: pointer;
 
         }
 
@@ -630,7 +633,7 @@
 
 
 
-    <div class="container py-3" dir="{{ Session::get('direction') }}">
+    <div class="container-fluid py-3" dir="{{ Session::get('direction') }}">
 
         <div class="search-page-header">
 
@@ -782,7 +785,7 @@
 
 
 
-    <div class="container pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
+    <div class="container-fluid pb-5 mb-2 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
 
         <div class="row">
 
@@ -898,7 +901,7 @@
 
                             <div class="card card-body border-0 p-0">
 
-                                <div class="container slider-container">
+                                <div class="container-fluid slider-container">
 
                                     <div class="slider-labels d-flex justify-content-between">
 
@@ -2087,7 +2090,7 @@
 
         </a>
 
-    </div>
+   </div>
 
 @endsection
 
