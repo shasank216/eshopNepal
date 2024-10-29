@@ -24,6 +24,14 @@ use Illuminate\Support\Facades\DB;
 
 class ShopViewController extends Controller
 {
+    public function __construct(
+        private Product      $product,
+        
+        private Category     $category,
+       
+    )
+    {
+    }
     //for seller Shop
     public function seller_shop(Request $request, $id)
     {
@@ -106,7 +114,9 @@ class ShopViewController extends Controller
                 array_push($categories, $category);
             }
         }
-        $categories = array_unique($categories);
+         $categories_product = array_unique($categories);
+        $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
+        // dd($categoriess);
 
         $products = Product::active()
             ->withCount('reviews')
@@ -191,7 +201,7 @@ class ShopViewController extends Controller
             ], 200);
         }
         // dd($inHouseTemporaryClose);
-        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','currentDate','sellerVacationStartDate','sellerVacationStatus',
+        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop','categories_product', 'categories','currentDate','sellerVacationStartDate','sellerVacationStatus',
             'sellerVacationEndDate','sellerTemporaryClose','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus','inHouseTemporaryClose'))
             ->with('seller_id', $id)
             ->with('total_review', $total_review)
