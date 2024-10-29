@@ -841,7 +841,7 @@
 
                                         <label class="d-flex align-items-center">
 
-                                            <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
+                                            <input type="radio" class="mr-2 category-checkbox" name="categories"
                                                 value="{{ $category['id'] }}"  {{ request('id') == $category['id'] ? 'checked' : '' }}>
 
                                             <p class="m-0 categories_text">{{ $category['name'] }}
