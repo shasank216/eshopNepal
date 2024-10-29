@@ -138,7 +138,7 @@
                                                             <label class="cursor-pointer get-view-by-onclick" data-link="{{ route('shopView',['id'=> $seller_id,'sub_category_id'=>$child['id']]) }}">
                                                                 <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
                                                                     value="{{ $child['id'] }}" {{ in_array($child['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                                {{$child['name']}}
+                                                                {{-- {{$child['name']}} --}}
                                                             </label>
                                                         </div>
                                                         <div class="px-2 cursor-pointer menu--caret">
@@ -159,7 +159,7 @@
                                                                         data-link="{{ route('shopView',['id'=> $seller_id,'sub_sub_category_id'=>$ch['id']])}}">
                                                                         <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
                                                                             value="{{ $ch['id'] }}" {{ in_array($ch['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                                        {{$ch['name']}}
+                                                                        {{-- {{$ch['name']}} --}}
                                                                     </label>
                                                                 </div>
                                                             @endforeach
