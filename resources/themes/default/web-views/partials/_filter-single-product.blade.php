@@ -265,9 +265,11 @@
                             {{ Str::limit($product['name'], 23) }}
 
                         </a>
-                        {{-- <p class="m-0">
-                            {!! $product->details !!}
-                        </p> --}}
+                        <p class="m-0">
+                            {{ Str::limit(strip_tags($product['details']), 150) }}
+                            {{-- {!! $product->details !!} --}}
+                        </p>
+                        
                     </div>
 
 
@@ -347,9 +349,10 @@
 
 
 
-                    <!-- <div class="mt-2 mb-0 d-none d-sm-flex" style="display: flex; gap: 10px; align-items: center;"> -->
-                        <div class="mt-2 mb-0 d-none d-sm-flex align-items-center gap-1">
-                            <!--  <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">  original  -->                                  
+                          <!-- <div class="mt-2 mb-0 d-none d-sm-flex" style="display: flex; gap: 10px; align-items: center;"> -->
+                            <div class="mt-2 mb-0 d-none d-sm-flex align-items-center gap-1">
+                            <!--  <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">  original  -->
+                                  
                                 @if (
                                     ($product->added_by == 'seller' &&
                                         ($sellerTemporaryClose ||
