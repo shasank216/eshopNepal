@@ -347,8 +347,9 @@
 
 
 
-                            <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">
-                                  
+                    <!-- <div class="mt-2 mb-0 d-none d-sm-flex" style="display: flex; gap: 10px; align-items: center;"> -->
+                        <div class="mt-2 mb-0 d-none d-sm-flex align-items-center gap-1">
+                            <!--  <div class="__btn-grp mt-2 mb-3 d-none d-sm-flex">  original  -->                                  
                                 @if (
                                     ($product->added_by == 'seller' &&
                                         ($sellerTemporaryClose ||
