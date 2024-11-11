@@ -16,7 +16,7 @@
                     </a>
                 </div>
                 <div class="d-none d-md-block mr-2 text-nowrap">
-                    <a class="topbar-link d-flex align-items-center  direction-ltr" href="https://flipkart.questal.in/track-order">
+                    <a class="topbar-link d-flex align-items-center  direction-ltr" href="{{ url('/track-order') }}">
                         {{-- <i class="fa fa-truck fa-flip-horizontal m-0"></i>  --}}
                         <img class="track-order-img" src="{{ asset('public/assets/front-end/img/icons/track-order.png') }}" alt="">
                         <span class="ms-1 track-order">Track Your Order</span>
@@ -460,7 +460,7 @@
         </div>
         {{-- asasdasd --}}
         <div class="navbar navbar-expand-md navbar-stuck-menu">
-            <div class="container-fluid px-10px">
+            <div class="container-fluid px-10px py-1">
                 <div class="collapse navbar-collapse text-align-direction" id="navbarCollapse">
                     <div class="w-100 d-md-none text-align-direction">
                         <button class="navbar-toggler p-0" type="button" data-toggle="collapse"

@@ -751,7 +751,7 @@
     @endpush
 
 @section('content')
-    <div class="__inline-61 home-page-xl-container">
+    <div class="__inline-61">
         @php($decimalPointSettings = !empty(getWebConfig(name: 'decimal_point_settings')) ? getWebConfig(name: 'decimal_point_settings') : 0)
         <section class="bg-transparent">
             <div class="position-relative">

@@ -1,5 +1,5 @@
 @if (isset($product))
-    <div class="container rtl">
+    <div class="rtl">
         <div class="row g-4 pt-2 mt-0 pb-2 __deal-of align-items-start">
 
             <div class="col-md-3 col-sm-12">
@@ -204,10 +204,12 @@
                 <div class="owl-theme owl-carousel latest-slider">
                     @foreach ($latest_products as $product)
                         <div>
-                            @include('web-views.partials._inline-single-product', [
-                                'product' => $product,
-                                'decimal_point_settings' => $decimal_point_settings,
-                            ])
+                            <a href="{{ route('product', $product->slug) }}">
+                                @include('web-views.partials._inline-single-product', [
+                                    'product' => $product,
+                                    'decimal_point_settings' => $decimal_point_settings,
+                                ])
+                            </a>
                         </div>
                     @endforeach
                 </div>
