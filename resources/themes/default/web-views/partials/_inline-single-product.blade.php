@@ -6,8 +6,10 @@
 
     <div class="carding position-relative">
 
-        <img alt="{{ $product->name }}"
-            src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $product['thumbnail'], type: 'product') }}">
+        <a href="{{ route('product', $product->slug) }}">
+            <img alt="{{ $product->name }}"
+                src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $product['thumbnail'], type: 'product') }}">
+        </a>
 
         @if ($product->discount > 0)
 
@@ -50,8 +52,6 @@
             New</div>
 
     </div>
-
-
 
     <div class="text-center">
 
@@ -149,8 +149,10 @@
 
                 <div class="carding position-relative">
 
-                    <img alt="{{ $product->name }}"
-                        src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $product['thumbnail'], type: 'product') }}">
+                    <a href="{{ route('product', $product->slug) }}">
+                        <img alt="{{ $product->name }}"
+                            src="{{ getValidImage(path: 'storage/app/public/product/thumbnail/' . $product['thumbnail'], type: 'product') }}">
+                    </a>
 
 
 
