@@ -2,26 +2,33 @@
 
 namespace App\Http\Controllers\Customer\Auth;
 
-use App\Events\PasswordResetMailEvent;
-use App\Http\Controllers\Controller;
-use App\Models\PasswordReset;
 use App\User;
-use App\Utils\Helpers;
-use App\Utils\SMS_module;
-use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Modules\Gateways\Traits\SmsGateway;
+use App\Models\Otp;
+use App\Utils\Helpers;
 use App\Models\Category;
+use App\Utils\SMS_module;
+use Carbon\CarbonInterval;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\PasswordReset;
+use App\Services\AlphaSmsService;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Events\PasswordResetMailEvent;
+use Illuminate\Support\Facades\Session;
+use Modules\Gateways\Traits\SmsGateway;
+use Illuminate\Support\Facades\Validator;
 
 class ForgotPasswordController extends Controller
 {
-    public function __construct()
+    private $smsService;
+    public function __construct(AlphaSmsService $smsService)
     {
+        $this->smsService = $smsService;
         $this->middleware('guest:customer', ['except' => ['logout']]);
     }
 
@@ -38,6 +45,20 @@ class ForgotPasswordController extends Controller
         $request->validate([
             'identity' => 'required',
         ]);
+
+        if($request->recover_type == 'phone'){
+            $user = User::where('phone',$request->identity)->orWhere('phone','+977'.$request->identity)->first();
+            if(!$user){
+                return redirect()->back()->with('Please enter valid phone number');
+            }
+            $otp = new Otp();
+            $otp->phone = $request['identity'];
+            $otp->code = rand(100000, 999999);
+            $otp->save();
+            $categories = Category::all();
+            $this->smsService->sendSms($request['identity'], 'Your verification code is ' . $otp->code);
+            return view(VIEW_FILE_NAMES['reset_password'], compact('otp','categories'));
+        }
 
         session()->put('forgot_password_identity', $request['identity']);
         $verification_by = Helpers::get_business_settings('forgot_password_verification');
@@ -287,6 +308,19 @@ class ForgotPasswordController extends Controller
             'password' => 'required|same:confirm_password',
         ]);
 
+        if($request->otp){
+            $otpExists = Otp::where('phone', $request->identify)->where('code', $request->otp)->orWhere('phone','+977'.$request->identify)->first();
+            if (!$otpExists) {
+                return redirect()->route('customer.auth.login')->with('message', 'Verification failed');
+            }
+            $otpExists->used = 1;
+            $otpExists->save();
+            $user = User::where('phone', $request->identify)->orWhere('phone','+977'.$request->identify)->first();
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return redirect()->intended('/')->with('message', 'Password reset successfully');
+        }
+
         $token = $request['reset_token'];
         if ($validator->fails()) {
             Toastr::error(translate('password_mismatch'));
@@ -311,5 +345,29 @@ class ForgotPasswordController extends Controller
         }
         Toastr::error(translate('Invalid_data'));
         return back();
+    }
+
+    public function showVerifyPhone(Request $request)
+    {
+        $categories = Category::all();
+        return view('web-views.customer-views.auth.verify_phone',compact('categories'));
+    }
+
+    public function verifyPhone(Request $request)
+    {
+        $phone = Session::get('phone');
+        $otp = Otp::where('phone', $phone)->where('code', $request->code )->where('used',0)->first();
+
+        if ($otp) {
+            $otp->used = 1;
+            $otp->save();
+            $user = User::where('phone', $phone)->first();
+            $user->phone_verified_at = now()->format('Y-m-d H:i:s');
+            $user->is_phone_verified = 1;
+            $user->save();
+            Auth::guard('customer')->login($user);
+            return redirect()->intended('/')->with('message', 'Phone number verified successfully');
+        }
+        return redirect()->route('customer.auth.login')->with('message', 'Verification failed');
     }
 }

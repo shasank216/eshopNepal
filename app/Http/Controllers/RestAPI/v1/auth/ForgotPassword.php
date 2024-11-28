@@ -79,52 +79,30 @@ class ForgotPassword extends Controller
                 }
             }
         } elseif ($verification_by == 'phone') {
-            $customer = User::where('phone', 'like', "%{$request['identity']}%")->first();
-            $otp_resend_time = Helpers::get_business_settings('otp_resend_time') > 0 ? Helpers::get_business_settings('otp_resend_time') : 0;
-            if (isset($customer)) {
-                if(isset($password_verification_data) &&  Carbon::parse($password_verification_data->created_at)->diffInSeconds() < $otp_interval_time){
-                    $time= $otp_interval_time - Carbon::parse($password_verification_data->created_at)->diffInSeconds();
-
-                    return response()->json(['message' => translate('please_try_again_after').' '.CarbonInterval::seconds($time)->cascade()->forHumans()], 200);
-                }else {
-                    $token = rand(1000, 9999);
-                    $reset_data = PasswordReset::where(['identity' => $customer['phone']])->latest()->first();
-                    if($reset_data){
-                        $reset_data->token = $token;
-                        $reset_data->created_at = now();
-                        $reset_data->updated_at = now();
-                        $reset_data->save();
-                    }else{
-                        $reset_data = new PasswordReset();
-                        $reset_data->identity = $customer['phone'];
-                        $reset_data->token = $token;
-                        $reset_data->user_type = 'customer';
-                        $reset_data->created_at = now();
-                        $reset_data->updated_at = now();
-                        $reset_data->save();
-                    }
-
-                    $published_status = 0;
-                    $payment_published_status = config('get_payment_publish_status');
-                    if (isset($payment_published_status[0]['is_published'])) {
-                        $published_status = $payment_published_status[0]['is_published'];
-                    }
-
-                    if($published_status == 1){
-                        SmsGateway::send($customer->phone, $token);
-                    }else{
-                        SMS_module::send($customer->phone, $token);
-                    }
-
-                    return response()->json([
-                        'message' => translate('otp_sent_successfully'),
-                        'resend_time'=> $otp_resend_time,
-                    ], 200);
-                }
+            $user = User::where('phone', $request['identity'])
+                ->orWhere('phone', '+977' . $request['identity'])
+                ->first();
+        
+            if (!$user) {
+                return response()->json([
+                    'message' => translate('Please enter a valid phone number')
+                ], 404);
             }
+        
+            // Generate OTP
+            $otp = Otp::create([
+                'phone' => $request['identity'],
+                'code' => rand(100000, 999999), // 6-digit random OTP
+                'expires_at' => now()->addMinutes(5) // Set OTP expiry time
+            ]);
+        
+            return response()->json([
+                'message' => translate('OTP sent successfully'),
+                'resend_time' => $otp_interval_time,
+            ], 200);
         }
         return response()->json(['errors' => [
-            ['code' => 'not-found', 'message' => translate('user not found').'!']
+            ['code' => 'not-found', 'message' => translate('User not found!')]
         ]], 403);
     }
 
