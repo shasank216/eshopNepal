@@ -165,7 +165,7 @@ Route::group(['namespace' => 'RestAPI\v1', 'prefix' => 'v1', 'middleware' => ['a
 
         Route::group(['prefix' => 'address'], function () {
             Route::get('get/{id}', 'CustomerController@get_address');
-            Route::post('update', 'CustomerController@update_address');
+            Route::post('update/{id}', 'CustomerController@update_address');
         });
 
         Route::group(['prefix' => 'support-ticket'], function () {
