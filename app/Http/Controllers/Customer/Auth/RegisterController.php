@@ -9,6 +9,8 @@ use App\Models\BusinessSetting;
 use App\Models\PhoneOrEmailVerification;
 use App\Models\Wishlist;
 use App\Models\Category;
+use App\Models\Otp;
+use App\Services\AlphaSmsService;
 use App\User;
 use App\Utils\CartManager;
 use App\Utils\Helpers;
@@ -26,9 +28,11 @@ use Modules\Gateways\Traits\SmsGateway;
 class RegisterController extends Controller
 {
     private $user;
-    public function __construct(User $user)
+    private $smsService;
+    public function __construct(User $user,AlphaSmsService $smsService)
     {
         $this->user = $user;
+        $this->smsService = $smsService;
         $this->middleware('guest:customer', ['except' => ['logout']]);
     }
 
@@ -57,6 +61,14 @@ class RegisterController extends Controller
             'referred_by' => (isset($referUser) && $referUser) ? $referUser->id : null,
         ]);
 
+        $otp = new Otp();
+        $otp->code = rand(100000, 999999);
+        $otp->expiry = Carbon::now()->addMinutes(15);
+        $otp->phone = $user->phone;
+        $otp->save();
+
+        $this->smsService->sendSms($user->phone, 'Your verification code is ' . $otp->code);
+
         $phoneVerification = getWebConfig(name: 'phone_verification');
         $emailVerification = getWebConfig(name: 'email_verification');
 
@@ -74,10 +86,13 @@ class RegisterController extends Controller
                 ]);
             }
             self::getCustomerVerificationCheck($user->id);
+            session()->put('phone', $user->phone);
+            // return redirect(route('verify.phone.show'));
             return response()->json([
                 'status' => 1,
                 'message' => translate('registration_successful'),
-                'redirect_url' => theme_root_path() == 'default' ? route('customer.auth.login') : '',
+                // 'redirect_url' => theme_root_path() == 'default' ? route('customer.auth.login') : '',
+                'redirect_url' => route('verify.phone.show'),
             ]);
         } else {
             if ($phoneVerification && !$user->is_phone_verified) {
@@ -90,7 +105,9 @@ class RegisterController extends Controller
             }
             self::getCustomerVerificationCheck($user->id);
             Toastr::success(translate('registration_success_login_now'));
-            return redirect(route('customer.auth.login'));
+
+            session()->put('phone', $user->phone);
+            return redirect(route('verify.phone.show'));
         }
     }
 
