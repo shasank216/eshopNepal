@@ -21,6 +21,7 @@ Route::group(['namespace' => 'RestAPI\v1', 'prefix' => 'v1', 'middleware' => ['a
         Route::post('register', 'PassportAuthController@register');
         Route::post('login', 'PassportAuthController@login');
         Route::get('logout', 'PassportAuthController@logout')->middleware('auth:api');
+        Route::post('verify-phone-otp', 'PassportAuthController@verifyOtp');
 
         Route::post('check-phone', 'PhoneVerificationController@check_phone');
         Route::post('resend-otp-check-phone', 'PhoneVerificationController@resend_otp_check_phone');
