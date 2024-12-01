@@ -282,7 +282,7 @@ class CustomerController extends Controller
         return response()->json(['message' => translate('successfully added!')], 200);
     }
 
-    public function update_address(Request $request)
+    public function update_address(Request $request, $id)
     {
 
         $shipping_address = ShippingAddress::where(['customer_id' => $request->user()->id, 'id' => $request->id])->first();
@@ -463,6 +463,8 @@ class CustomerController extends Controller
             'f_name' => $request->f_name,
             'l_name' => $request->l_name,
             'phone' => $request->phone,
+            'gender' => $request->gender,
+            'date_of_birth' => $request->date_of_birth,
             'image' => $imageName,
             'password' => $pass,
             'updated_at' => now(),
