@@ -123,6 +123,38 @@ class PassportAuthController extends Controller
         return response()->json(['message' => 'User not found'], 404);
     }
 
+    public function completeRegistration(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+            'email' => 'required|unique:users',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        // Find user by phone
+        $user = User::where('phone', $request->phone)->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Update user details
+        $user->email = $request->email;
+        $user->gender = $request->gender;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->is_active = 1;
+        $user->is_phone_verified = 1;  // Mark as phone verified
+        $user->save();
+
+        // Generate token
+        $token = $user->createToken('LaravelAuthApp')->accessToken;
+
+        return response()->json(['token' => $token, 'message' => 'Registration completed successfully.'], 200);
+    }
+
+
 
     public function login(Request $request)
     {
