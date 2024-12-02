@@ -18,10 +18,11 @@ use App\Http\Controllers\AdminProductData;
 Route::group(['namespace' => 'RestAPI\v1', 'prefix' => 'v1', 'middleware' => ['api_lang']], function () {
 
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
-        Route::post('register', 'PassportAuthController@register');
+        Route::put('register', 'PassportAuthController@register');
         Route::post('login', 'PassportAuthController@login');
         Route::get('logout', 'PassportAuthController@logout')->middleware('auth:api');
         Route::post('verify-phone-otp', 'PassportAuthController@verifyOtp');
+        Route::post('complete-register', 'PassportAuthController@completeRegistration');
 
         Route::post('check-phone', 'PhoneVerificationController@check_phone');
         Route::post('resend-otp-check-phone', 'PhoneVerificationController@resend_otp_check_phone');
