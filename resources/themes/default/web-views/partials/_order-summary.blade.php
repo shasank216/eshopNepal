@@ -137,7 +137,10 @@
         @endif
 
         <div class="mt-4">
-            <a class="btn btn--primary btn-block proceed_to_next_button {{$cart->count() <= 0 ? 'disabled' : ''}} action-checkout-function">{{translate('proceed_to_Checkout')}}</a>
+            <a class="btn btn--primary btn-block proceed_to_next_button {{$cart->count() <= 0 ? 'disabled' : ''}} action-checkout-function">
+                {{-- {{translate('proceed_to_Checkout')}} --}}
+                Place Order
+            </a>
         </div>
 
         @if( $cart->count() != 0)
