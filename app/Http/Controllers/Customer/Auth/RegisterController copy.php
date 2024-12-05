@@ -38,7 +38,6 @@ class RegisterController extends Controller
 
     public function register(): View
     {
-    //    dd("hello");
         session()->put('keep_return_url', url()->previous());
         $categories = Category::all();
         return view('web-views.customer-views.auth.register', compact('categories'));
@@ -46,7 +45,6 @@ class RegisterController extends Controller
 
     public function submit(CustomerRegistrationRequest $request)
     {
-        // dd($request['phone']);
         if ($request['referral_code']) {
             $referUser = User::where(['referral_code' => $request['referral_code']])->first();
         }
