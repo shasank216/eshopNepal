@@ -165,7 +165,8 @@ class LoginController extends Controller
             }
         }
 
-        if (isset($user) && auth('customer')->attempt(['email' => $user['email'], 'password' => $request['password']], $remember)) {
+        if (isset($user) && (auth('customer')->attempt(['email' => $user['email'], 'password' => $request['password']], $remember) || 
+            auth('customer')->attempt(['phone' => $user['phone'], 'password' => $request['password']], $remember))) {
 
             if (!$user->is_active) {
                 auth()->guard('customer')->logout();
