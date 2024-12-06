@@ -107,8 +107,8 @@ class LoginController extends Controller
         $remember = ($request['remember']) ? true : false;
 
         //login attempt check start
-        $max_login_hit = Helpers::get_business_settings('maximum_login_hit') ?? 5;
-        $temp_block_time = Helpers::get_business_settings('temporary_login_block_time') ?? 5; //seconds
+        // $max_login_hit = Helpers::get_business_settings('maximum_login_hit') ?? 5;
+        // $temp_block_time = Helpers::get_business_settings('temporary_login_block_time') ?? 5; //seconds
         if (isset($user) == false) {
             if($request->ajax()) {
                 return response()->json([
@@ -124,46 +124,46 @@ class LoginController extends Controller
         //login attempt check end
 
         //phone or email verification check start
-        $phone_verification = Helpers::get_business_settings('phone_verification');
-        $email_verification = Helpers::get_business_settings('email_verification');
-        if ($phone_verification && !$user->is_phone_verified) {
-            if($request->ajax()) {
-                return response()->json([
-                    'status'=>'error',
-                    'message'=>translate('account_phone_not_verified'),
-                    'redirect_url'=>route('customer.auth.check', [$user->id]),
-                ]);
-            }else{
-                return redirect(route('customer.auth.check', [$user->id]));
-            }
-        }
-        if ($email_verification && !$user->is_email_verified) {
-            if($request->ajax()) {
-                return response()->json([
-                    'status'=>'error',
-                    'message'=>translate('account_email_not_verified'),
-                    'redirect_url'=>route('customer.auth.check', [$user->id]),
-                ]);
-            }else{
-                return redirect(route('customer.auth.check', [$user->id]));
-            }
-        }
+        // $phone_verification = Helpers::get_business_settings('phone_verification');
+        // $email_verification = Helpers::get_business_settings('email_verification');
+        // if ($phone_verification && !$user->is_phone_verified) {
+        //     if($request->ajax()) {
+        //         return response()->json([
+        //             'status'=>'error',
+        //             'message'=>translate('account_phone_not_verified'),
+        //             'redirect_url'=>route('customer.auth.check', [$user->id]),
+        //         ]);
+        //     }else{
+        //         return redirect(route('customer.auth.check', [$user->id]));
+        //     }
+        // }
+        // if ($email_verification && !$user->is_email_verified) {
+        //     if($request->ajax()) {
+        //         return response()->json([
+        //             'status'=>'error',
+        //             'message'=>translate('account_email_not_verified'),
+        //             'redirect_url'=>route('customer.auth.check', [$user->id]),
+        //         ]);
+        //     }else{
+        //         return redirect(route('customer.auth.check', [$user->id]));
+        //     }
+        // }
         //phone or email verification check end
 
-        if(isset($user->temp_block_time ) && Carbon::parse($user->temp_block_time)->DiffInSeconds() <= $temp_block_time){
-            $time = $temp_block_time - Carbon::parse($user->temp_block_time)->DiffInSeconds();
+        // if(isset($user->temp_block_time ) && Carbon::parse($user->temp_block_time)->DiffInSeconds() <= $temp_block_time){
+        //     $time = $temp_block_time - Carbon::parse($user->temp_block_time)->DiffInSeconds();
 
-            if($request->ajax()) {
-                return response()->json([
-                    'status'=>'error',
-                    'message'=>translate('please_try_again_after_') . CarbonInterval::seconds($time)->cascade()->forHumans(),
-                    'redirect_url'=>''
-                ]);
-            }else{
-                Toastr::error(translate('please_try_again_after_') . CarbonInterval::seconds($time)->cascade()->forHumans());
-                return back()->withInput();
-            }
-        }
+        //     if($request->ajax()) {
+        //         return response()->json([
+        //             'status'=>'error',
+        //             'message'=>translate('please_try_again_after_') . CarbonInterval::seconds($time)->cascade()->forHumans(),
+        //             'redirect_url'=>''
+        //         ]);
+        //     }else{
+        //         Toastr::error(translate('please_try_again_after_') . CarbonInterval::seconds($time)->cascade()->forHumans());
+        //         return back()->withInput();
+        //     }
+        // }
 
         if (isset($user) && (auth('customer')->attempt(['email' => $user['email'], 'password' => $request['password']], $remember) || 
             auth('customer')->attempt(['phone' => $user['phone'], 'password' => $request['password']], $remember))) {
