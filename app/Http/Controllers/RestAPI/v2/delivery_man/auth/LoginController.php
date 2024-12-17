@@ -42,18 +42,19 @@ class LoginController extends Controller
             ], 403);
         }
 
-        if (isset($d_man) && $d_man['is_active'] == 1 && Hash::check($request->password, $d_man->password)) {
-            $token = Str::random(50);
-            $d_man->auth_token = $token;
-            $d_man->save();
-            return response()->json(['token' => $token], 200);
+        if (isset($d_man) && $d_man['is_active'] === 1) {
+            if (Hash::check($request->password, $d_man->password)) {
+                $token = Str::random(50);
+                $d_man->auth_token = $token;
+                $d_man->save();
+                return response()->json(['token' => $token], 200);
+            } else {
+                return response()->json(['errors' => [['code' => 'auth-002', 'message' => 'Incorrect password']]], 401);
+            }
         } else {
-            $errors = [];
-            array_push($errors, ['code' => 'auth-001', 'message' => 'Invalid credential or account suspended']);
-            return response()->json([
-                'errors' => $errors
-            ], 401);
+            return response()->json(['errors' => [['code' => 'auth-003', 'message' => 'Account suspended or not found']]], 401);
         }
+        
     }
 
     public function reset_password_request(Request $request)
