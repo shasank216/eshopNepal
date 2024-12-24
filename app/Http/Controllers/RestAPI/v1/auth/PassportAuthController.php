@@ -26,7 +26,7 @@ class PassportAuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'f_name' => 'required',
+            'name' => 'required',
             // 'l_name' => 'required',
             // 'email' => 'required|unique:users',
             'phone' => 'required|unique:users',
@@ -43,8 +43,9 @@ class PassportAuthController extends Controller
 
         $temporary_token = Str::random(40);
         $user = User::create([
-            'f_name' => $request->f_name,
-            'l_name' => $request->l_name,
+            // 'f_name' => $request->f_name,
+            // 'l_name' => $request->l_name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'gender' => $request->gender,
@@ -159,7 +160,7 @@ class PassportAuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'phone' => 'required',
+            'identifier' => 'required', // Can be phone or email
             'password' => 'required|min:6',
             'guest_id' => 'required'
         ]);
@@ -168,11 +169,12 @@ class PassportAuthController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
-        $user_id = $request->phone;
-        $medium = 'phone'; // Assuming login is via phone
+        $identifier = $request->identifier; // Input can be phone or email
+        $isEmail = filter_var($identifier, FILTER_VALIDATE_EMAIL); // Check if the identifier is an email
+        $medium = $isEmail ? 'email' : 'phone'; // Determine the medium
 
-        // Check if the user exists with the provided phone
-        $user = User::where($medium, $user_id)->first();
+        // Check if the user exists with the provided phone or email
+        $user = User::where($medium, $identifier)->first();
 
         if (!$user) {
             return response()->json([
@@ -199,7 +201,7 @@ class PassportAuthController extends Controller
         }
 
         // Authentication attempt
-        if (auth()->attempt([$medium => $user_id, 'password' => $request->password])) {
+        if (auth()->attempt([$medium => $identifier, 'password' => $request->password])) {
             $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
 
             // Reset login attempt counters
@@ -228,6 +230,7 @@ class PassportAuthController extends Controller
             ], 401);
         }
     }
+
 
 
     public function logout(Request $request)
