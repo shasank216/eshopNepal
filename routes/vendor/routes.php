@@ -78,6 +78,8 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
             Route::controller(RegisterController::class)->group(function () {
                 Route::get(Auth::VENDOR_REGISTRATION[URI],'index')->name('index');
                 Route::post(Auth::VENDOR_REGISTRATION[URI],'add');
+                Route::get(Auth::VENDOR_VERIFY[URI],'verifyVendorOtp');
+                Route::post(Auth::VENDOR_VERIFY[URI],'verifyOtp')->name('verifyOtp');
             });
         });
     });
