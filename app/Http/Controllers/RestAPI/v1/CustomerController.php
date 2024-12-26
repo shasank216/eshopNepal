@@ -354,6 +354,10 @@ class CustomerController extends Controller
             'ongoing' => ['out_for_delivery', 'processing', 'confirmed', 'pending'],
             'canceled' => ['canceled', 'failed', 'returned'],
             'delivered' => ['delivered'],
+            'out_for_delivery' => ['out_for_delivery'],
+            'processing' => ['processing'],
+            'confirmed' => ['confirmed'],
+            'pending' => ['pending'],
         );
 
         $orders = Order::with('details.product', 'deliveryMan', 'seller.shop')

@@ -29,20 +29,24 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <input type="text" class="form-control form-control-user" id="exampleFirstName"
                                 name="f_name" value="{{ old('f_name') }}" placeholder="{{ translate('first_name') }}"
                                 required>
                         </div>
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <input type="text" class="form-control form-control-user" id="exampleLastName" name="l_name"
                                 value="{{ old('l_name') }}" placeholder="{{ translate('last_name') }}" required>
                         </div>
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <input type="email" class="form-control form-control-user" id="exampleInputEmail"
                                 name="email" value="{{ old('email') }}" placeholder="{{ translate('email_address') }}"
                                 required>
                         </div>
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <input class="form-control form-control-user phone-input-with-country-picker" type="tel"
                                 value="{{ old('phone') }}" id="exampleInputPhone"
                                 placeholder="{{ translate('enter_phone_number') }}" required>
@@ -53,6 +57,7 @@
                         </div>
 
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <div class="form-group">
                                 <div class="password-toggle rtl">
                                     <input class="form-control text-align-direction password-check" name="password"
@@ -68,6 +73,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <div class="form-group mb-0">
                                 <div class="password-toggle rtl">
                                     <input class="form-control text-align-direction" name="confirm_password" type="password"
@@ -84,11 +90,13 @@
                         </div>
 
                         <div class="col-sm-12">
+                            
                             <div class="text-center">
                                 <img class="__img-125px object-cover" id="viewer"
                                     src="{{ getValidImage(path: 'public/assets/front-end/img/placeholder/user.png', type: 'avatar') }}"
                                     alt="banner image" />
                             </div>
+                            <span class="text-danger">*</span>
                             <div class="custom-file mt-3">
                                 <input type="file" name="image" id="custom-file-upload"
                                     class="custom-file-input image-preview-before-upload" data-preview="#viewer"
@@ -99,13 +107,14 @@
                         </div>
 
                         <div class="col-lg-4 col-sm-12">
+                            <span class="text-danger">*</span>
                             <div class="custom-file mt-3">
                                 <input type="file" name="vat_pan_img" id="vat_pan_img"
                                     class="custom-file-input image-preview-before-upload"
                                     accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
                                     data-preview="#vat_pan_preview" required>
                                 <label class="custom-file-label overflow-hidden text-truncate"
-                                    for="vat_pan_img">VAT/PAN</label>
+                                    for="vat_pan_img">PAN</label>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <img id="vat_pan_preview" src="#" alt="VAT/PAN Image"
@@ -116,14 +125,15 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-sm-12">
+                        <div class="col-lg-8 col-sm-12">
+                            <span class="text-danger">*</span>
                             <div class="custom-file mt-3">
-                                <input type="file" name="registration_cert_img" id="registration_cert_img"
+                                <input type="file" name="company_cheque_book" id="registration_cert_img"
                                     class="custom-file-input image-preview-before-upload"
                                     accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
                                     data-preview="#registration_cert_preview" required>
                                 <label class="custom-file-label overflow-hidden text-truncate"
-                                    for="registration_cert_img">Registration Certificate</label>
+                                    for="registration_cert_img">Company Cheque book</label>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <img id="registration_cert_preview" src="#" alt="Registration Certificate Image"
@@ -133,7 +143,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-sm-12">
+                        {{-- <div class="col-lg-4 col-sm-12">
                             <div class="custom-file mt-3">
                                 <input type="file" name="citizenship_img" id="citizenship_img"
                                     class="custom-file-input image-preview-before-upload"
@@ -148,7 +158,7 @@
                                 <p id="citizenship_error" style="color:red; display:none;">Unsupported file format! Please
                                     upload a valid image.</p>
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
@@ -195,16 +205,20 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
+                       
                         <div class="col-sm-6 ">
+                            <span class="text-danger">*</span>
                             <input type="text" class="form-control form-control-user" id="shop_name" name="shop_name"
                                 placeholder="{{ translate('shop_name') }}" value="{{ old('shop_name') }}" required>
                         </div>
                         <div class="col-sm-6">
+                            <span class="text-danger">*</span>
                             <textarea name="shop_address" class="form-control" id="shop_address" rows="1"
                                 placeholder="{{ translate('shop_address') }}">{{ old('shop_address') }}</textarea>
                         </div>
                         <div class="col-sm-6">
                             <div class="pb-3">
+                                
                                 <div class="text-center">
                                     <img class="__img-125px object-cover" id="viewerLogo"
                                         src="{{ getValidImage(path: 'public/assets/front-end/img/placeholder/placeholder-1-1.png', type: 'logo') }}"
@@ -213,6 +227,7 @@
                             </div>
 
                             <div class="form-group mb-0">
+                                <span class="text-danger">*</span>
                                 <div class="custom-file">
                                     <input type="file" name="logo" id="Logo-upload"
                                         class="custom-file-input image-preview-before-upload" data-preview="#viewerLogo"
@@ -232,6 +247,7 @@
                             </div>
 
                             <div class="form-group">
+                                <span class="text-danger">*</span>
                                 <div class="custom-file">
                                     <input type="file" name="banner" id="banner-upload"
                                         class="custom-file-input overflow-hidden __p-2p image-preview-before-upload"
@@ -336,6 +352,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
     </div>
     <div class="modal fade registration-success-modal" tabindex="-1" aria-labelledby="toggle-modal" aria-hidden="true">
@@ -425,9 +442,11 @@
                     'latLng': latlng
                 }, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
+                      
                         if (results[1]) {
-                            document.getElementById('address').value = results[1].formatted_address;
 
+                            document.getElementById('address').value = results[1].formatted_address;
+                                // console.log(results[1].formatted_address);
                             let systemCountryRestrictStatus = $('#system-country-restrict-status').data(
                                 'value');
                             if (systemCountryRestrictStatus) {

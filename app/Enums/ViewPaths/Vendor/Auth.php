@@ -20,6 +20,10 @@ enum Auth
         URI => 'index',
         VIEW => 'seller_registration'
     ];
+    const VENDOR_VERIFY = [
+        URI => 'verifyVendorOtp',
+        VIEW => 'web-views.seller-view.auth.verify'
+    ];
 
 
 }
