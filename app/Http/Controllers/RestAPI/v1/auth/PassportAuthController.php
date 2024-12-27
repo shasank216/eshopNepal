@@ -128,7 +128,7 @@ class PassportAuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'phone' => 'required',
-            'email' => 'required|unique:users',
+            // 'email' => 'required|unique:users',
         ]);
 
         if ($validator->fails()) {

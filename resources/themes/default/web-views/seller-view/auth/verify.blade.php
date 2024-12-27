@@ -12,7 +12,15 @@
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/theme.minc619.css?v=1.0')}}">
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/toastr.css')}}">
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/style.css')}}">
-
+    <style>
+        .__inline-20 #partitioned{
+            width: 100% !important;
+            padding: 15px !important;
+        }
+        .__inline-20 #divOuter{
+            width: 287px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -77,8 +85,8 @@
     obj.addEventListener('keyup', stopCarret);
 
     function stopCarret() {
-        if (obj.value.length > 3) {
-            setCaretPosition(obj, 3);
+        if (obj.value.length > 6) {
+            setCaretPosition(obj, 6);
         }
     }
 
