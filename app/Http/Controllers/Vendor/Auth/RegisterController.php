@@ -108,57 +108,66 @@ class RegisterController extends BaseController
         ]);
     }
 
-    public function add(VendorAddRequest $request): JsonResponse
+    public function add(VendorAddRequest $request)
     {
-        $recaptcha = getWebConfig('recaptcha');
-        if (isset($recaptcha) && $recaptcha['status'] == 1) {
-            try {
-                $request->validate([
-                    'g-recaptcha-response' => [
-                        function ($attribute, $value, $fail) {
-                            $secret_key = getWebConfig('recaptcha')['secret_key'];
-                            $response = $value;
-                            $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $response;
-                            $response = \file_get_contents($url);
-                            $response = json_decode($response);
-                            if (!$response->success) {
-                                $fail(translate('ReCAPTCHA_Failed'));
-                            }
-                        },
-                    ],
-                ]);
-            } catch (\Exception $exception) {
-                return response()->json(['error' => translate('Captcha_Failed')]);
-            }
+        // Extract vendor data but exclude files
+        $vendorData = $request->except(['image', 'vat_pan_img', 'company_cheque_book', 'logo', 'banner']);  // Exclude file fields
+
+        // If vendorData is an array, convert it to an object
+        $vendorData = (object) $vendorData;
+
+        // Handle the files separately and store their paths
+        $filePaths = [];
+
+        // Handle image file upload
+        if ($request->hasFile('image')) {
+            $filePaths['image'] = $request->file('image')->store('vendor_images');
         }
 
-        // Assuming $vendor is obtained from the request data
-        $vendorData = $request->validated();
-        $vendorPhone = $vendorData['phone'] ?? null;
-
-        if (!$vendorPhone) {
-            return response()->json(['error' => translate('Phone_number_is_required')], 422);
+        // Handle vat_pan_img file upload
+        if ($request->hasFile('vat_pan_img')) {
+            $filePaths['vat_pan_img'] = $request->file('vat_pan_img')->store('vendor_vat_images');
         }
 
-        // Generate OTP and save it
-        $otp = new Otp();
-        $otp->code = rand(100000, 999999);
-        $otp->expiry = now()->addMinutes(15);
-        $otp->phone = $vendorPhone;
-        $otp->save();
+        // Handle company_cheque_book file upload
+        if ($request->hasFile('company_cheque_book')) {
+            $filePaths['company_cheque_book'] = $request->file('company_cheque_book')->store('vendor_cheque_images');
+        }
 
-        // Send OTP via AlphaSmsService
+        // Handle logo file upload
+        if ($request->hasFile('logo')) {
+            $filePaths['logo'] = $request->file('logo')->store('vendor_logos');
+        }
+
+        // Handle banner file upload
+        if ($request->hasFile('banner')) {
+            $filePaths['banner'] = $request->file('banner')->store('vendor_banners');
+        }
+
+        // Merge file paths with vendor data
+        $vendorData = (object) array_merge((array) $vendorData, $filePaths);
+
+        // Generate OTP
+        $otpCode = rand(100000, 999999);
         try {
-            $this->smsService->sendSms($vendorPhone, 'Your verification code is ' . $otp->code);
-        } catch (\Exception $e) {
-            return response()->json(['error' => translate('Failed_to_send_OTP')], 500);
-        }
+            $otp = Otp::create([
+                'phone' => $vendorData->phone,  // Access using -> since it's now an object
+                'code' => $otpCode,
+                'expiry' => now()->addMinutes(15),
+            ]);
 
-        return response()->json([
-            'redirectRoute' => route('vendor.auth.registration.otp-verify'),
-            'message' => translate('OTP_sent_to_phone'),
-        ]);
+            $this->smsService->sendSms($vendorData->phone, 'Your verification code is ' . $otpCode);
+
+            // Store sanitized data in session
+            Session::put('vendor_registration_data', $vendorData);
+
+            session()->flash('success', translate('OTP sent to phone'));
+            return redirect()->route('vendor.auth.registration.verifyVendorOtp');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['otp' => translate('Failed to send OTP')]);
+        }
     }
+
 
     public function verifyVendorOtp()
     {
@@ -166,44 +175,42 @@ class RegisterController extends BaseController
     }
 
 
-    public function verifyOtp(Request $request): JsonResponse
+    public function verifyOtp(Request $request)
     {
         $request->validate([
             'otp' => 'required|digits:6',
         ]);
 
-        // Retrieve OTP and data from the session
-        $sessionOtp = Session::get('vendor_otp');
-        $registrationData = Session::get('vendor_registration_data');
-
-        if (!$sessionOtp || !$registrationData) {
-            return response()->json(['error' => translate('Session_expired_or_invalid')]);
+        $vendorData = Session::get('vendor_registration_data');
+        if (!$vendorData) {
+            session()->flash('error', translate('Session expired or invalid'));
+            return redirect()->route('vendor.auth.registration.index');
         }
 
-        if ($request->otp != $sessionOtp) {
-            return response()->json(['error' => translate('Invalid_OTP')]);
+        $otpRecord = Otp::where('phone', $vendorData['phone'])
+            ->where('code', $request->otp)
+            ->where('expiry', '>', now())
+            ->first();
+        // dd($otpRecord);
+        if (!$otpRecord) {
+            session()->flash('error', translate('Invalid or expired OTP'));
+            return redirect()->back();
         }
 
-        // Finalize vendor registration
-        $vendor = $this->vendorRepo->add(data: $registrationData);
-        $this->shopRepo->add($this->shopService->getAddShopDataForRegistration(request: (object)$registrationData, vendorId: $vendor['id']));
-        $this->vendorWalletRepo->add($this->vendorService->getInitialWalletData(vendorId: $vendor['id']));
+        try {
+            $vendor = $this->vendorRepo->add($vendorData);
+            $this->shopRepo->add($this->shopService->getAddShopDataForRegistration((object)$vendorData, $vendor->id));
+            $this->vendorWalletRepo->add($this->vendorService->getInitialWalletData($vendor->id));
 
-        $data = [
-            'name' => $registrationData['f_name'],
-            'status' => 'pending',
-            'subject' => translate('Vendor_Registration_Successfully_Completed'),
-            'title' => translate('registration_Complete') . '!',
-            'message' => translate('congratulation') . '!' . translate('Your_registration_request_has_been_send_to_admin_successfully') . '!' . translate('Please_wait_until_admin_reviewal') . '.',
-        ];
-        event(new VendorRegistrationMailEvent($registrationData['email'], $data));
+            $otpRecord->delete();
+            Session::forget('vendor_registration_data');
 
-        // Clear session data
-        Session::forget(['vendor_registration_data', 'vendor_otp']);
-
-        return response()->json([
-            'redirectRoute' => route('vendor.auth.login'),
-            'message' => translate('Registration_successful'),
-        ]);
+            // Show success message only after successful OTP verification
+            session()->flash('success', translate('Registration successful'));
+            return redirect()->route('vendor.auth.login');
+        } catch (\Exception $e) {
+            session()->flash('error', translate('Failed to complete registration'));
+            return redirect()->route('vendor.auth.registration.index');
+        }
     }
 }
