@@ -12,10 +12,17 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Services\AlphaSmsService;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
-
+    private $smsService;
+    public function __construct(AlphaSmsService $smsService)
+    {
+        $this->smsService = $smsService;
+        // $this->middleware('guest:customer', ['except' => ['logout']]);
+    }
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -45,7 +52,7 @@ class RegisterController extends Controller
             $seller->email = $request->email;
             $seller->image = ImageManager::upload('seller/', 'webp', $request->file('image'));
             $seller->password = bcrypt($request->password);
-            $seller->status =  $request->status == 'approved'?'approved': "pending";
+            $seller->status =  $request->status == 'approved' ? 'approved' : "pending";
             $seller->save();
 
             $shop = new Shop();
@@ -74,16 +81,61 @@ class RegisterController extends Controller
                 'name' => $request['f_name'],
                 'status' => 'pending',
                 'subject' => translate('Vendor_Registration_Successfully_Completed'),
-                'title' => translate('registration_Complete').'!',
-                'message' => translate('congratulation').'!'.translate('Your_registration_request_has_been_send_to_admin_successfully').'!'.translate('Please_wait_until_admin_reviewal').'.',
+                'title' => translate('registration_Complete') . '!',
+                'message' => translate('congratulation') . '!' . translate('Your_registration_request_has_been_send_to_admin_successfully') . '!' . translate('Please_wait_until_admin_reviewal') . '.',
             ];
-            event(new VendorRegistrationMailEvent($request['email'],$data));
-            return response()->json(['message' => 'Shop apply successfully!'], 200);
+            event(new VendorRegistrationMailEvent($request['email'], $data));
+            // Generate OTP
+            $otpCode = rand(100000, 999999);
+            DB::table('otps')->insert([
+                'phone' => $request->phone,
+                'code' => $otpCode,
+                'expiry' => now()->addMinutes(15),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
+            // Send OTP via Alpha SMS
+            $this->smsService->sendSms($request->phone, 'Your verification code is: ' . $otpCode);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'pending_verification',
+                'message' => 'OTP sent to your phone for verification.',
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['message' => 'Shop apply fail!'], 403);
+            return response()->json(['message' => 'Shop registration failed!', 'error' => $e->getMessage()], 500);
         }
-
     }
+
+    public function verifyOtp(Request $request): JsonResponse
+{
+    $validator = Validator::make($request->all(), [
+        'phone' => 'required|regex:/^\+?[0-9]{10,15}$/',
+        'otp' => 'required|digits:6',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['message' => Helpers::error_processor($validator)], 403);
+    }
+
+    $otpRecord = DB::table('otps')
+        ->where('phone', $request->phone)
+        ->where('code', $request->otp)
+        ->where('expiry', '>', now())
+        ->first();
+
+    if ($otpRecord) {
+        // Mark phone as verified
+        Seller::where('phone', $request->phone)->update(['phone_verified_at' => now()]);
+        DB::table('otps')->where('id', $otpRecord->id)->delete();
+
+        return response()->json(['message' => 'Phone number verified successfully.'], 200);
+    } else {
+        return response()->json(['message' => 'Invalid or expired OTP.'], 403);
+    }
+}
+
 }

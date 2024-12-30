@@ -19,6 +19,7 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
 
     Route::group(['prefix' => 'registration', 'namespace' => 'auth'], function () {
         Route::post('/', 'RegisterController@store');
+    	Route::post('verify-otp', 'RegisterController@verifyOtp');
     });
     Route::group(['middleware' => ['seller_api_auth']], function () {
         Route::put('language-change', 'SellerController@language_change');
