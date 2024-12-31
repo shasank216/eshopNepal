@@ -25,7 +25,7 @@ use App\Http\Controllers\Payment_Methods\SenangPayController;
 use App\Http\Controllers\Payment_Methods\MercadoPagoController;
 use App\Http\Controllers\Payment_Methods\BkashPaymentController;
 use App\Http\Controllers\Payment_Methods\PaystackController;
-
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,8 @@ use App\Http\Controllers\Payment_Methods\PaystackController;
 */
 Route::get('maintenance-mode', 'Web\WebController@maintenance_mode')->name('maintenance-mode');
 Route::get('recover-password', 'ForgotPasswordController@reset_password')->name('reset-password');
+Route::get('verify-phone', 'Customer\Auth\ForgotPasswordController@showVerifyPhone')->name('verify.phone.show');
+Route::post('verify-phone', 'Customer\Auth\ForgotPasswordController@verifyPhone')->name('customer.verify.phone.verify');
 
 Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck']], function () {
     Route::group(['prefix' => 'product-compare', 'as' => 'product-compare.'], function () {
@@ -426,4 +428,13 @@ Route::get('payment-fail', 'Customer\PaymentController@fail')->name('payment-fai
 
 Route::get('/test', function (){
     return view('welcome');
+});
+
+Route::get('/clear', function () {
+	Artisan::call('cache:clear');
+	Artisan::call('view:clear');
+	Artisan::call('config:clear');
+	Artisan::call('route:clear');
+	Artisan::call('optimize:clear');
+	return "Cache is cleared";
 });

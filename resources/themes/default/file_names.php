@@ -35,6 +35,7 @@ return [
     'account_compare_list'=>'',
     'account_wishlist_partials' => 'web-views.partials._wish-list-data',
     'seller_registration'=>'web-views.seller-view.auth.register',
+    'vendor_verify'=>'web-views.seller-view.auth.verify',
     'all_stores_page'=>'web-views.seller-view.sellers',
     'customer_auth_verify'=>'web-views.customer-views.auth.verify',
     'products_details'=>'web-views.products.details',

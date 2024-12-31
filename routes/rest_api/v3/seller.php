@@ -14,7 +14,7 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
 
         Route::post('forgot-password', 'ForgotPasswordController@reset_password_request');
         Route::post('verify-otp', 'ForgotPasswordController@otp_verification_submit');
-        Route::put('reset-password', 'ForgotPasswordController@reset_password_submit');
+        Route::post('reset-password', 'ForgotPasswordController@reset_password_submit');
     });
 
     Route::group(['prefix' => 'registration', 'namespace' => 'auth'], function () {

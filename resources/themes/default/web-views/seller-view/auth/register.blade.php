@@ -14,7 +14,11 @@
 @section('content')
 
     <div class="container py-5 rtl text-start">
-
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <h3 class="mb-3 text-center fs-24 font-semi-bold text-capitalize"> {{ translate('shop_application') }}</h3>
         <form class="__shop-apply" action="{{ route('vendor.auth.registration.index') }}" id="vendor-registration-form"
             method="post" enctype="multipart/form-data">
@@ -355,7 +359,7 @@
             </div>
         </form>
     </div>
-    <div class="modal fade registration-success-modal" tabindex="-1" aria-labelledby="toggle-modal" aria-hidden="true">
+    {{-- <div class="modal fade registration-success-modal" tabindex="-1" aria-labelledby="toggle-modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow-lg">
                 <div class="modal-header border-0 pb-0 d-flex justify-content-end">
@@ -368,13 +372,13 @@
                             width="70" class="mb-3 mb-20" alt="">
                         <h5 class="modal-title">{{ translate('congratulations') }}</h5>
                         <div class="text-center">
-                            {{ translate('your_registration_is_successful') . ', ' . translate('please-wait_for_admin_approval') . '.' . translate(' you’ll_get_a_mail_soon') }}
+                            {{ translate('otp_send_to_your_phone_number') }} {{ translate('your_registration_is_successful') }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <span id="get-confirm-and-cancel-button-text" data-sure ="{{ translate('are_you_sure') . '?' }}"
         data-message="{{ translate('want_to_apply_as_a_vendor') . '?' }}" data-confirm="{{ translate('yes') }}"
         data-cancel="{{ translate('no') }}"></span>

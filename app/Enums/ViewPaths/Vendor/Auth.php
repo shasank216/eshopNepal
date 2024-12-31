@@ -21,8 +21,8 @@ enum Auth
         VIEW => 'seller_registration'
     ];
     const VENDOR_VERIFY = [
-        URI => 'verifyVendorOtp',
-        VIEW => 'web-views.seller-view.auth.verify'
+        URI => 'verifyVendor-Otp',
+        VIEW => 'vendor_verify'
     ];
 
 
