@@ -163,6 +163,7 @@ class ForgotPasswordController extends Controller
 
     public function reset_password_submit(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'identity' => 'required',
             'otp' => 'required',
@@ -173,31 +174,33 @@ class ForgotPasswordController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
+        // Verify OTP
         $otpExists = Otp::where('phone', $request->identity)
             ->where('code', $request->otp)
-            ->orWhere('phone' . $request->identity)
             ->first();
         if (!$otpExists) {
             return response()->json(['message' => 'Invalid OTP'], 400);
+        }
+
+        if ($otpExists->used) {
+            return response()->json(['message' => 'OTP has already been used'], 400);
         }
 
         // Mark OTP as used
         $otpExists->used = 1;
         $otpExists->save();
 
-        // Find the user by phone number
-        $seller = Seller::where('phone', $request->identity)
-            ->orWhere('phone' . $request->identity)
-            ->first();
+        // Find seller
+        $seller = Seller::where('phone', $request->identity)->first();
         if (!$seller) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        // Reset the password for the user
+        // Reset password
         $seller->password = Hash::make($request->password);
         $seller->save();
 
-        // Optionally, delete OTP after password reset to prevent reuse
+        // Optionally delete OTP
         $otpExists->delete();
 
         return response()->json(['message' => 'Password reset successfully'], 200);

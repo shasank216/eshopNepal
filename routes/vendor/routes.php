@@ -55,6 +55,12 @@ use App\Http\Controllers\Vendor\TransactionReportController;
 use App\Http\Controllers\Vendor\ProductReportController;
 use App\Http\Controllers\Vendor\OrderReportController;
 
+Route::get('/vendor-verify', function()
+{
+    return view('web-views.seller-view.auth.verify');
+})->name('vendor-verify');
+Route::get('registration/verifyVendorotp', 'Vendor\Auth\RegisterController@getOTPVerificationView')->name('registration.verifyVendor-Otp');
+Route::post('registration/verifyVendorotp', 'Vendor\Auth\RegisterController@verifyOtp')->name('registration.verifyOtp');
 Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
     /* authentication */
     Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
@@ -78,10 +84,21 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
             Route::controller(RegisterController::class)->group(function () {
                 Route::get(Auth::VENDOR_REGISTRATION[URI],'index')->name('index');
                 Route::post(Auth::VENDOR_REGISTRATION[URI],'add');
-                Route::get(Auth::VENDOR_VERIFY[URI],'verifyVendorOtp');
-                Route::post(Auth::VENDOR_VERIFY[URI],'verifyOtp')->name('verifyOtp');
+                // Route::get(Auth::VENDOR_VERIFY[URI],'verifyVendorOtp')->name('verifyVendorOtp');
+                // Route::get(Auth::VENDOR_VERIFY[URI],'getOTPVerificationView')->name('verifyVendor-Otp');
+                // Route::get('/verifyVendorOtp', 'RegisterController@getOTPVerificationView')->name('verifyVendor-Otp');
+                // Route::post(Auth::VENDOR_VERIFY[URI],'verifyOtp')->name('verifyOtp');
             });
         });
+        // Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+        //     Route::controller(RegisterController::class)->group(function () {
+        //         Route::get('/registration/verifyVendorOtp', 'getOTPVerificationView')->name('registration.verifyVendor-Otp');
+        //         Route::post('/registration/verifyVendorOtp', 'verifyOtp')->name('registration.verifyOtp');
+        //     });
+        // });
+
+        // Route::get('registration/verifyVendorotp', 'Vendor\Auth\RegisterController@getOTPVerificationView')->name('registration.verifyVendor-Otp');
+        // Route::post('registration/verifyVendorotp', 'Vendor\Auth\RegisterController@verifyOtp')->name('registration.verifyOtp');
     });
     /* end authentication */
     Route::group(['middleware' => ['seller']], function () {

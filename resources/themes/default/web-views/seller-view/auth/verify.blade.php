@@ -42,7 +42,7 @@
                 <div class="col-lg-4 col-md-6">
                     <h2 class="h3 mb-4">{{translate('provide_your_otp_and_proceed').'?'}}</h2>
                     <div class="card py-2 mt-4">
-                        <form class="card-body needs-validation" action="{{route('vendor.auth.registration.verifyOtp')}}"
+                        <form class="card-body needs-validation" action="{{route('registration.verifyOtp')}}"
                               method="post">
                             @csrf
                             <div class="form-group">
@@ -53,6 +53,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <button class="btn btn--primary" type="submit">{{translate('proceed')}}</button>
                         </form>
                     </div>
