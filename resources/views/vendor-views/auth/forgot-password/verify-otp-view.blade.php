@@ -12,7 +12,23 @@
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/theme.minc619.css?v=1.0')}}">
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/toastr.css')}}">
     <link rel="stylesheet" href="{{dynamicAsset(path: 'public/assets/back-end/css/style.css')}}">
-
+    <style>
+        .__inline-20 #partitioned {
+            padding-left: 15px !important;
+            letter-spacing: 42px;
+            border: 0;
+            background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 50px 1px;
+            background-repeat: repeat-x;
+            background-position-x: 35px;
+            width: 100% !important;
+            max-width: 80% !important;
+        }
+        .__inline-20 #divOuter{
+            width: 100% !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -41,7 +57,7 @@
                                 <label>{{translate('enter_your_OTP')}}</label>
                                 <div id="divOuter">
                                     <div id="divInner">
-                                        <input id="partitioned" class="form-control" name="otp" type="text" maxlength="4"/>
+                                        <input id="partitioned" class="form-control" name="otp" type="text" maxlength="6"/>
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +93,8 @@
     obj.addEventListener('keyup', stopCarret);
 
     function stopCarret() {
-        if (obj.value.length > 3) {
-            setCaretPosition(obj, 3);
+        if (obj.value.length > 6) {
+            setCaretPosition(obj, 6);
         }
     }
 

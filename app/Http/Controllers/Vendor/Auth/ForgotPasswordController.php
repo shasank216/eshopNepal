@@ -25,6 +25,9 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Services\AlphaSmsService;
 use Modules\Gateways\Traits\SmsGateway as AddonSmsGateway;
 
 class ForgotPasswordController extends BaseController
@@ -40,8 +43,8 @@ class ForgotPasswordController extends BaseController
         private readonly VendorRepositoryInterface $vendorRepo,
         private readonly PasswordResetRepositoryInterface $passwordResetRepo,
         private readonly PasswordResetService $passwordResetService,
-    )
-    {
+        private readonly AlphaSmsService $smsService
+    ) {
         $this->middleware('guest:seller', ['except' => ['logout']]);
     }
 
@@ -52,13 +55,13 @@ class ForgotPasswordController extends BaseController
      */
     public function index(?Request $request, string $type = null): View|Collection|LengthAwarePaginator|null|callable|RedirectResponse
     {
-       return $this->getForgotPasswordView();
+        return $this->getForgotPasswordView();
     }
 
     /**
      * @return View
      */
-    public function getForgotPasswordView():View
+    public function getForgotPasswordView(): View
     {
         return view(ForgotPassword::INDEX[VIEW]);
     }
@@ -67,64 +70,48 @@ class ForgotPasswordController extends BaseController
      * @param PasswordResetRequest $request
      * @return JsonResponse
      */
-    public function getPasswordResetRequest(PasswordResetRequest $request):JsonResponse
+    public function getPasswordResetRequest(PasswordResetRequest $request): JsonResponse
     {
-        session()->put(SessionKey::FORGOT_PASSWORD_IDENTIFY, $request['identity']);
-        $verificationBy = getWebConfig('forgot_password_verification');
-        if($verificationBy == 'email')
-        {
-            $vendor = $this->vendorRepo->getFirstWhere(['identity' => $request['identity']]);
-            if (isset($vendor)) {
-                $token = Str::random(120);
-                $this->passwordResetRepo->add($this->passwordResetService->getAddData(identity:$request['identity'],token: $token,userType:'seller'));
-                $resetUrl = url('/') . '/'.ForgotPassword::RESET_PASSWORD[URL].'?token=' . $token;
-                try {
-                    Mail::to($vendor['email'])->send(new \App\Mail\PasswordResetMail($resetUrl));
-                }catch (\Exception $exception){
-                    return response()->json(['error'=>translate('email_send_fail').'!!']);
-                }
-                return response()->json([
-                    'verificationBy' => 'mail',
-                    'success'=>translate('mail_send_successfully'),
-                ]);
-            }
-        }elseif ($verificationBy == 'phone') {
-            $vendor = $this->vendorRepo->getFirstWhere(['identity'=>$request['identity']]);
-            if (isset($vendor)) {
-                $token = rand(1000, 9999);
-                $this->passwordResetRepo->add($this->passwordResetService->getAddData(identity:$request['identity'],token: $token,userType:'seller'));
-                $publishedStatus = 0;
-                $paymentPublishedStatus = config('get_payment_publish_status');
-                if (isset($payment_published_status[0]['is_published'])) {
-                    $publishedStatus = $paymentPublishedStatus[0]['is_published'];
-                }
-                if($publishedStatus == 1){
-                    $response = AddonSmsGateway::send($vendor['phone'], $token);
-                }else{
-                    $response = $this->send($vendor['phone'], $token);
-                }
-                if ($response === "not_found") {
-                    return response()->json([
-                        'error'=>translate('SMS_configuration_missing'),
-                    ]);
-                }else{
-                    return response()->json([
-                        'verificationBy' => 'phone',
-                        'redirectRoute' => route('vendor.auth.forgot-password.otp-verification'),
-                        'success'=>translate('Check_your_phone').', '.translate('password_reset_otp_sent'),
-                    ]);
-                }
-            }
+        $identity = $request['identity'];
+        session()->put(SessionKey::FORGOT_PASSWORD_IDENTIFY, $identity);
+
+        // Check if the user exists
+        $vendor = Seller::whereRaw("REPLACE(phone, '+', '') = ?", [str_replace('+', '', $identity)])
+            ->orWhere('email', $identity)
+            ->first();
+        // dd($vendor);
+        if (!$vendor) {
+            return response()->json(['error' => translate('No user found with this identity') . '!!']);
         }
+
+        // Generate and store OTP
+        $otpCode = rand(100000, 999999);
+        DB::table('otps')->insert([
+            'phone' => $vendor['phone'],
+            'code' => $otpCode,
+            'expiry' => now()->addMinutes(15),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Send OTP via Alpha SMS
+        try {
+            $this->smsService->sendSms($vendor['phone'], 'Your OTP for password reset is: ' . $otpCode);
+        } catch (\Exception $e) {
+            return response()->json(['error' => translate('SMS sending failed') . '!!']);
+        }
+
         return response()->json([
-            'error'=>translate('no_such_user_found').'!!',
+            'verificationBy' => 'phone',
+            'redirectRoute' => route('vendor.auth.forgot-password.otp-verification'),
+            'success' => translate('Check your phone for the OTP'),
         ]);
     }
 
     /**
      * @return View
      */
-    public function getOTPVerificationView():View
+    public function getOTPVerificationView(): View
     {
         return view(ForgotPassword::OTP_VERIFICATION[VIEW]);
     }
@@ -133,24 +120,47 @@ class ForgotPasswordController extends BaseController
      * @param Request $request
      * @return RedirectResponse
      */
-    public function submitOTPVerificationCode(Request $request):RedirectResponse
+    public function submitOTPVerificationCode(Request $request): RedirectResponse
     {
-        $id = session(SessionKey::FORGOT_PASSWORD_IDENTIFY);
-        $passwordResetData = $this->passwordResetRepo->getFirstWhere(params: ['user_type' => 'seller', 'token' => $request['otp'], 'identity' => $id]);
-        if (isset($passwordResetData)) {
-            $token = $request['otp'];
-            return redirect()->route('vendor.auth.forgot-password.reset-password', ['token' => $token]);
+        $validator = Validator::make($request->all(), [
+            'otp' => 'required|digits:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        Toastr::error(translate('invalid_otp'));
-        return redirect()->back();
+
+        $identity = preg_replace('/\D/', '', session(SessionKey::FORGOT_PASSWORD_IDENTIFY));
+        // dd($identity);
+        $otpRecord = DB::table('otps')
+            ->where('code', $request['otp'])
+            ->where('phone', $identity)
+            ->where('expiry', '>', now())
+            ->first();
+        //  dd($otpRecord);
+
+        if (!$otpRecord) {
+            // Use Toastr to display an error message on the frontend
+            Toastr::error(translate('Invalid OTP') . '!!');
+            return redirect()->back(); // Redirect back to the form
+        }
+
+        // Delete OTP after successful verification
+        DB::table('otps')->where('id', $otpRecord->id)->delete();
+
+        // Redirect to reset password view with token
+        // return redirect()->route('vendor.auth.forgot-password.reset-password', ['identity' => $identity]);
+        return redirect()->route('vendor.auth.forgot-password.reset-password', ['identity' => $identity])
+                 ->with('success', 'OTP verified successfully!');
+
     }
     /**
      * @param Request $request
      * @return View|RedirectResponse
      */
-    public function getPasswordResetView(Request $request):View|RedirectResponse
+    public function getPasswordResetView(Request $request): View|RedirectResponse
     {
-        $passwordResetData = $this->passwordResetRepo->getFirstWhere(params: ['user_type'=>'seller','token' => $request['token']]);
+        $passwordResetData = $this->passwordResetRepo->getFirstWhere(params: ['user_type' => 'seller', 'token' => $request['token']]);
         if (isset($passwordResetData)) {
             $token = $request['token'];
             return view(ForgotPassword::RESET_PASSWORD[VIEW], compact('token'));
@@ -171,11 +181,11 @@ class ForgotPasswordController extends BaseController
             $this->passwordResetRepo->delete(params: ['id' => $passwordResetData['id']]);
             return response()->json([
                 'passwordUpdate' => 1,
-                'success'=>translate('Password_reset_successfully'),
+                'success' => translate('Password_reset_successfully'),
                 'redirectRoute' => route(Auth::VENDOR_LOGOUT[URI])
             ]);
         } else {
-            return response()->json(['error'=>translate('invalid_URL')]);
+            return response()->json(['error' => translate('invalid_URL')]);
         }
     }
 }
