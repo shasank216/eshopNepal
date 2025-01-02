@@ -38,10 +38,10 @@
                 </ol>
                 <div class="card py-2 mt-4">
                     <form class="card-body needs-validation" novalidate method="POST"
-                          action="{{ route('vendor.auth.forgot-password.reset-password') }}">
+                          action="{{ route('vendor.auth.forgot-password.reset-password', ['identity' => $identity, 'reset_token' => $resetToken]) }}">
                         @csrf
                         <div class="form-group d-none">
-                            <input type="text" name="reset_token" value="{{$token}}" required>
+                            <input type="hidden" name="reset_token" value="{{$resetToken }}" required>
                         </div>
                         <div class="form-group">
                             <label for="si-password" class="d-flex align-items-center">

@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Modules\Gateways\Traits\SmsGateway;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
+
+
 
 class ForgotPassword extends Controller
 {
@@ -219,19 +223,22 @@ class ForgotPassword extends Controller
 
         // Find the user by phone number
         $user = User::where('phone', $request->identity)
-            ->orWhere('phone', '+977' . $request->identity)
+            ->orWhere('phone', $request->identity)
             ->first();
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        // Reset the password for the user
-        $user->password = Hash::make($request->password);
-        $user->save();
+        // Hash the new password
+        $newPasswordHash = Hash::make($request->password);
 
-        // Optionally, delete OTP after password reset to prevent reuse
-        $otpExists->delete();
+        // Directly update the password in the database
+        $updated = User::where('id', $user->id)->update(['password' => $newPasswordHash]);
+
+        if (!$updated) {
+            return response()->json(['message' => 'Failed to update password'], 500);
+        }
 
         return response()->json(['message' => 'Password reset successfully'], 200);
     }
