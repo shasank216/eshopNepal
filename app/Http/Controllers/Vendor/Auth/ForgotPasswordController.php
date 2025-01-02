@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Services\AlphaSmsService;
@@ -148,11 +149,19 @@ class ForgotPasswordController extends BaseController
         // Delete OTP after successful verification
         DB::table('otps')->where('id', $otpRecord->id)->delete();
 
+        $resetToken = Str::random(60); // You can use a more secure method to generate a token
+        DB::table('password_resets')->insert([
+            'user_type' => 'seller',
+            'identity' => $identity,
+            'token' => bcrypt($resetToken), // store hashed token
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         // Redirect to reset password view with token
         // return redirect()->route('vendor.auth.forgot-password.reset-password', ['identity' => $identity]);
-        return redirect()->route('vendor.auth.forgot-password.reset-password', ['identity' => $identity])
-                 ->with('success', 'OTP verified successfully!');
-
+        return redirect()->route('vendor.auth.forgot-password.reset-password', ['identity' => $identity, 'reset_token' => $resetToken])
+            ->with('success', 'OTP verified successfully!');
     }
     /**
      * @param Request $request
@@ -160,32 +169,74 @@ class ForgotPasswordController extends BaseController
      */
     public function getPasswordResetView(Request $request): View|RedirectResponse
     {
-        $passwordResetData = $this->passwordResetRepo->getFirstWhere(params: ['user_type' => 'seller', 'token' => $request['token']]);
-        if (isset($passwordResetData)) {
-            $token = $request['token'];
-            return view(ForgotPassword::RESET_PASSWORD[VIEW], compact('token'));
+        $identity = $request->query('identity');
+        $resetToken = $request->query('reset_token');
+
+        // Debugging the received parameters
+        // dd($identity, $resetToken);
+
+        $passwordResetData = $this->passwordResetRepo->getFirstWhere(params: [
+            'user_type' => 'seller',
+            'identity' => $identity, 
+        ]);
+        // dd($passwordResetData);
+
+        if ($passwordResetData && $passwordResetData['identity'] === $identity) {
+            return view(ForgotPassword::RESET_PASSWORD[VIEW], compact('identity', 'resetToken'));
         }
-        Toastr::error(translate('Invalid_URL'));
+
+        Toastr::error(translate('Invalid URL'));
         return redirect()->route(Auth::VENDOR_LOGOUT[URI]);
     }
+
     /**
      * @param VendorPasswordRequest $request
      * @return JsonResponse
      */
     public function resetPassword(VendorPasswordRequest $request): JsonResponse
     {
-        $passwordResetData = $this->passwordResetRepo->getFirstWhere(params: ['user_type' => 'seller', 'token' => $request['reset_token']]);
-        if ($passwordResetData) {
-            $vendor = $this->vendorRepo->getFirstWhere(params: ['identity' => $passwordResetData['identity']]);
-            $this->vendorRepo->update(id: $vendor['id'], data: ['password' => bcrypt($request['password'])]);
-            $this->passwordResetRepo->delete(params: ['id' => $passwordResetData['id']]);
-            return response()->json([
-                'passwordUpdate' => 1,
-                'success' => translate('Password_reset_successfully'),
-                'redirectRoute' => route(Auth::VENDOR_LOGOUT[URI])
-            ]);
-        } else {
+        // $vendor = $this->vendorRepo->getFirstWhere(params: ['identity' => $passwordResetData['identity']]);
+        // if ($passwordResetData) {
+        //     $vendor = $this->vendorRepo->getFirstWhere(params: ['identity' => $passwordResetData['identity']]);
+        //     $this->vendorRepo->update(id: $vendor['id'], data: ['password' => bcrypt($request['password'])]);
+        //     $this->passwordResetRepo->delete(params: ['id' => $passwordResetData['id']]);
+        //     return response()->json([
+        //         'passwordUpdate' => 1,
+        //         'success' => translate('Password_reset_successfully'),
+        //         'redirectRoute' => route(Auth::VENDOR_LOGOUT[URI])
+        //     ]);
+        // } else {
+        //     return response()->json(['error' => translate('invalid_URL')]);
+        // }
+        // dd($request->all());
+
+        // Get the reset token and identity from the form
+        $resetToken = $request->input('reset_token');
+        $identity = $request->input('identity');
+
+        // Validate reset token
+        $passwordResetData = DB::table('password_resets')
+            ->where('identity', $identity)
+            ->first();
+        // dd($passwordResetData);
+        // Check if token matches
+        if (!$passwordResetData || !Hash::check($resetToken, $passwordResetData->token)) {
             return response()->json(['error' => translate('invalid_URL')]);
         }
+
+        // Fetch vendor and update password
+        $vendor = $this->vendorRepo->getFirstWhere(params: ['identity' => $identity]);
+
+        // Update password
+        $this->vendorRepo->update(id: $vendor['id'], data: ['password' => bcrypt($request['password'])]);
+
+        // Delete the reset token
+        DB::table('password_resets')->where('id', $passwordResetData->id)->delete();
+
+        return response()->json([
+            'passwordUpdate' => 1,
+            'success' => translate('Password_reset_successfully'),
+            'redirectRoute' => route(Auth::VENDOR_LOGOUT[URI]),
+        ]);
     }
 }

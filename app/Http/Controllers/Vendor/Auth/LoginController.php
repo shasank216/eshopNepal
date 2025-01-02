@@ -75,7 +75,16 @@ class LoginController extends Controller
                 return response()->json(['error'=>translate('captcha_failed').'!']);
             }
         }
-        $vendor = $this->vendorRepo->getFirstWhere(['identity' => $request['email']]);
+        // $vendor = $this->vendorRepo->getFirstWhere(['identity' => $request['identity']]);
+        $identity = $request['identity'];
+        if (filter_var($identity, FILTER_VALIDATE_EMAIL)) {
+            // It's an email
+            $vendor = $this->vendorRepo->getFirstWhere(['email' => $identity]);
+        } else {
+            // Assume it's a phone number, sanitize it if necessary
+            $phoneNumber = preg_replace('/\D/', '', $identity); // Remove non-numeric characters
+            $vendor = $this->vendorRepo->getFirstWhere(['phone' => $phoneNumber]);
+        }
         $passwordCheck = Hash::check($request['password'],$vendor['password']);
         if (!$vendor){
             return response()->json(['error'=>translate('credentials_doesnt_match').'!']);
@@ -83,7 +92,7 @@ class LoginController extends Controller
         if ($passwordCheck && $vendor['status'] !== 'approved') {
             return response()->json(['status' => $vendor['status']]);
         }
-        if ($this->vendorService->isLoginSuccessful($request->email, $request->password, $request->remember)) {
+        if ($this->vendorService->isLoginSuccessful($request->identity, $request->password, $request->remember)) {
             if ($this->vendorWalletRepo->getFirstWhere(params:['id'=>auth('seller')->id()]) === false) {
                 $this->vendorWalletRepo->add($this->vendorService->getInitialWalletData(vendorId:auth('seller')->id()));
             }

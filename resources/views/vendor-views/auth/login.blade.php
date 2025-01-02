@@ -63,13 +63,12 @@
                                 <div class="js-form-message form-group">
                                     <label class="input-label"
                                         for="signingVendorEmail">{{ translate('your_email') }}</label>
-                                    <input type="email" class="form-control form-control-lg" name="email"
-                                        id="signingVendorEmail" tabindex="1" placeholder="email@address.com"
-                                        aria-label="email@address.com" required
-                                        data-msg="Please enter a valid email address.">
-                                    @if ($errors->has('email'))
-                                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                                    @endif
+                                        <input type="text" class="form-control form-control-lg" name="identity" id="signingVendorEmail"
+                                        tabindex="1" placeholder="email@address.com or 1234567890" aria-label="email@address.com or 1234567890" required
+                                        data-msg="{{ translate('please_enter_a_valid_email_or_phone') }}">
+                                        @if ($errors->has('identity'))
+                                            <span class="text-danger">{{ $errors->first('identity') }}</span>
+                                        @endif
                                 </div>
                                 <div class="js-form-message form-group">
                                     <label class="input-label" for="signingVendorPassword" tabindex="0">
