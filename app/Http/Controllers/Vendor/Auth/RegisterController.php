@@ -246,19 +246,28 @@ class RegisterController extends BaseController
         //     )->with('success', 'Phone number verified successfully.');
         // }
 
+        // if ($otpRecord) {
+        //     // Update the seller's phone verification
+        //     Seller::where('phone', $otpRecord->phone)->update(['phone_verified_at' => now()]);
+        //     DB::table('otps')->where('id', $otpRecord->id)->delete();
+    
+        //     // Return a JSON response
+        //     return response()->json(
+        //         [
+        //             'redirectRoute' => route('vendor.auth.login')
+        //         ]
+        //     );
+        
+        // }
         if ($otpRecord) {
             // Update the seller's phone verification
             Seller::where('phone', $otpRecord->phone)->update(['phone_verified_at' => now()]);
             DB::table('otps')->where('id', $otpRecord->id)->delete();
-    
-            // Return a JSON response
-            return response()->json(
-                [
-                    'redirectRoute' => route('vendor.auth.login')
-                ]
-            );
         
+            // Redirect to vendor login page
+            return redirect()->route('vendor.auth.login')->with('success', 'Phone number verified successfully.');
         }
+        
         // Show an error message using Toastr
         Toastr::error(translate('invalid_otp'));
         return redirect()->back();

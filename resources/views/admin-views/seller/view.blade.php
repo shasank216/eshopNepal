@@ -138,7 +138,7 @@
                                         class="textWhite">{{ $seller->rating_count }} {{ translate('reviews') }}</a>
                                 </div>
                                 @if ($seller['status'] != 'pending' && $seller['status'] != 'suspended' && $seller['status'] != 'rejected')
-                                    <a href="{{ route('shopView', ['id' => $seller['id']]) }}"
+                                    <a href="{{ route('shopView', ['id' => $seller->shop->id]) }}"
                                         class="btn btn-outline--primary px-4 textWhite" target="_blank"><i
                                             class="tio-globe"></i> {{ translate('view_live') }}
                                 @endif
@@ -327,7 +327,7 @@
                                             </a>
                                         </div>
 
-                                        <div>
+                                        {{-- <div>
                                             <span class="key text-nowrap">{{ translate('Registration ') }}</span>
                                             <span class="px-2">:</span>
                                             <a href="{{ asset('storage/app/public/registration_cert_img/' . $seller?->registration_cert_img) }}"
@@ -336,16 +336,16 @@
                                                     src="{{ getValidImage(path: 'storage/app/public/registration_cert_img/' . $seller?->registration_cert_img, type: 'backend-basic') }}"
                                                     alt="{{ translate('image') }}">
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="pair-list">
                                         <div>
-                                            <span class="key text-nowrap">{{ translate('Citizenship') }}</span>
+                                            <span class="key text-nowrap">{{ translate('company cheque book') }}</span>
                                             <span class="px-2">:</span>
-                                            <a href="{{ asset('storage/app/public/citizenship_img/' . $seller?->citizenship_img) }}"
+                                            <a href="{{ asset('storage/app/public/company_cheque_book/' . $seller?->company_cheque_book) }}"
                                                 download>
                                                 <img class="avatar rounded-0" style="width: 170px"
-                                                    src="{{ getValidImage(path: 'storage/app/public/citizenship_img/' . $seller?->citizenship_img, type: 'backend-basic') }}"
+                                                    src="{{ getValidImage(path: 'storage/app/public/company_cheque_book/' . $seller?->company_cheque_book, type: 'backend-basic') }}"
                                                     alt="{{ translate('image') }}">
                                             </a>
                                         </div>
