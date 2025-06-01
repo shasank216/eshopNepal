@@ -58,7 +58,7 @@ class CustomerRegistrationRequest extends FormRequest
             'phone' => [
                 'required',
                 'unique:users,phone',    // Ensure phone number is unique
-                'regex:/^\+?[1-9]\d{0,2}(98|97)\d{8}$/', // Validate country code and number starting with 98 or 97
+                // 'regex:/^\+?[1-9]\d{0,2}(98|97)\d{8}$/', // Validate country code and number starting with 98 or 97
             ],
             'password' => [
                 'required',

@@ -32,9 +32,19 @@
                         <form class="card-body needs-validation" action="{{route('customer.auth.forgot-password')}}"
                               method="post">
                             @csrf
+
+                            <div class="form-check">
+                                <label for="">Recover Type</label>
+                                <div class="form-check form-check-inline">
+                                    <select name="recover_type" id="recover_type">
+                                        <option value="email">Email</option>
+                                        <option value="phone">Phone</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
-                                <label for="recover-email">{{ translate('email_address')}}</label>
-                                <input class="form-control" type="email" name="identity" id="recover-email" required placeholder="{{ translate('ex') }}: {{ ('demo@example.com') }} ">
+                                <label for="recover-email">{{ translate('email_address or phone number')}}</label>
+                                <input class="form-control" type="text" name="identity" id="recover-email" required placeholder="{{ translate('ex') }}: {{ ('demo@example.com') }} ">
                                 <div class="invalid-feedback">
                                     {{ translate('please_provide_valid_email_address.')}}
                                 </div>

@@ -556,7 +556,7 @@
                                                                                             {{ translate($value['description']) }}
                                                                                         </span>
                                                                                     </div>
-                                                                                </div>
+                                                                                </div> 
                                                                             @endif
                                                                         @endforeach
                                                                     </div>

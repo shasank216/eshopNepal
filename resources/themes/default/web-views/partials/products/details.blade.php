@@ -526,7 +526,7 @@
                                                         Delivery & Return
                                                     </a>
                                                 </li>
-                                            </ul>
+                                            </ul> 
                                             <div class="tab-content px-lg-3">
                                                 <!-- Overview -->
                                                 <div class="tab-pane fade show active text-justify" id="overview"

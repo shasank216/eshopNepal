@@ -107,8 +107,8 @@ class LoginController extends Controller
         $remember = ($request['remember']) ? true : false;
 
         //login attempt check start
-        // $max_login_hit = Helpers::get_business_settings('maximum_login_hit') ?? 5;
-        // $temp_block_time = Helpers::get_business_settings('temporary_login_block_time') ?? 5; //seconds
+        $max_login_hit = Helpers::get_business_settings('maximum_login_hit') ?? 5;
+        $temp_block_time = Helpers::get_business_settings('temporary_login_block_time') ?? 5; //seconds
         if (isset($user) == false) {
             if($request->ajax()) {
                 return response()->json([

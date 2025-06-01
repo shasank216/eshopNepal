@@ -1,11 +1,8 @@
 @extends('layouts.front-end.app')
-
 @section('title',  translate('register'))
-
 @push('css_or_js')
     <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/css/intlTelInput.css') }}">
 @endpush
-
 @section('content')
     <div class="container py-4 __inline-7 text-align-direction">
         <div class="login-card">
@@ -41,16 +38,14 @@
                                 <div class="invalid-feedback">{{ translate('please_enter_valid_email_address') }}!</div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6"> 
                             <div class="form-group">
                                 <label class="form-label font-semibold">{{ translate('phone_number') }}
-                                    <small class="text-primary">( * {{ translate('country_code_is_must_like_for_BD') }} 880 )</small></label>
-                                <input class="form-control text-align-direction phone-input-with-country-picker"
+                                    {{-- <small class="text-primary">( * {{ translate('country_code_is_must_like_for_BD') }} 880 )</small></label> --}}
+                                <input class="form-control text-align-direction" style="width: 375px;" name="phone"
                                        type="tel"  value="{{ old('phone') }}"
                                        placeholder="{{ translate('enter_phone_number') }}" required>
-
-                                <input type="hidden" class="country-picker-phone-number w-50" name="phone" readonly>
-
+                                {{-- <input type="hidden" class="country-picker-phone-number w-50" name="phone" readonly> --}}
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -66,7 +61,6 @@
                                     </label>
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -82,9 +76,7 @@
                                     </label>
                                 </div>
                             </div>
-
                         </div>
-
                         @if ($web_config['ref_earning_status'])
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -94,7 +86,6 @@
                             </div>
                         </div>
                         @endif
-
                     </div>
                     <div class="col-12">
                         <div class="row g-3">
@@ -135,7 +126,17 @@
                                 {{ translate('sign_up') }}
                             </button>
                         </div>
-
+                        <div class="d-flex justify-content-center my-3 gap-2">
+                        @foreach (getWebConfig(name: 'social_login') as $socialLoginService)
+                            @if (isset($socialLoginService) && $socialLoginService['status'])
+                                <div>
+                                    <a class="d-block" href="{{ route('customer.auth.service-login', $socialLoginService['login_medium']) }}">
+                                        <img src="{{theme_asset(path: 'public/assets/front-end/img/icons/'.$socialLoginService['login_medium'].'.png') }}" alt="">
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
+                        </div>
                         <div class="text-black-50 mt-3 text-center">
                             <small>
                                 {{  translate('Already_have_account ') }}?
@@ -150,7 +151,6 @@
         </div>
     </div>
 @endsection
-
 @push('script')
     @if(isset($recaptcha) && $recaptcha['status'] == 1)
         <script type="text/javascript">
@@ -163,7 +163,6 @@
         </script>
         <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     @endif
-
     <script src="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/js/intlTelInput.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/country-picker-init.js') }}"></script>
 @endpush

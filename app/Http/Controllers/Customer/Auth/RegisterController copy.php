@@ -27,7 +27,7 @@ use Modules\Gateways\Traits\SmsGateway;
 
 class RegisterController extends Controller
 {
-    private $user;
+    private $user; 
     private $smsService;
     public function __construct(User $user,AlphaSmsService $smsService)
     {

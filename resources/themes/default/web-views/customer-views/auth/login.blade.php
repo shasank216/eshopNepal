@@ -1,7 +1,5 @@
 @extends('layouts.front-end.app')
-
 @section('title', translate('sign_in'))
-
 @section('content')
     <div class="container py-4 py-lg-5 my-4 text-align-direction">
          <div class="login-card">
@@ -89,9 +87,7 @@
             </div>
         </div>
     </div>
-
 @endsection
-
 @push('script')
     @if(isset($recaptcha) && $recaptcha['status'] == 1)
         <script type="text/javascript">

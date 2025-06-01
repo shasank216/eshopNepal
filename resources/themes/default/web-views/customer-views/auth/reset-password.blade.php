@@ -14,12 +14,58 @@
                     </li>
                 </ol>
                 <div class="card py-2 mt-4">
+                    
+                    @if(isset($otp) && $otp->phone)
                     <form class="card-body needs-validation" novalidate method="POST"
+                          action="{{url('customer/auth/reset-password')}}">
+                        @csrf
+                        <div class="form-group d-none">
+                            <input type="text" name="identify" value="{{$otp->phone}}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="si-otp">{{ translate('Otp')}}</label>
+                            <input class="form-control" name="otp" type="text" id="si-otp" required
+                                   placeholder="{{ translate('enter_otp') }}">
+                            <div class="invalid-feedback">{{ translate('please_provide_valid_otp.')}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="si-password">{{ translate('new_password')}}</label>
+                            <div class="password-toggle">
+                                <input class="form-control rtl" name="password" type="password" id="si-password"
+                                       required placeholder="{{ translate('enter_new_password') }}">
+                                <label class="password-toggle-btn">
+                                    <input class="custom-control-input" type="checkbox"><i
+                                        class="czi-eye password-toggle-indicator"></i><span
+                                        class="sr-only">{{ translate('show_password')}} </span>
+                                </label>
+                                <div class="invalid-feedback">{{ translate('please_provide_valid_password.')}}</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="si-password">{{ translate('confirm_password')}}</label>
+                            <div class="password-toggle rtl">
+                                <input class="form-control" name="confirm_password" type="password" id="si-password"
+                                       required placeholder="{{ translate('enter_confirm_password') }}">
+                                <label class="password-toggle-btn">
+                                    <input class="custom-control-input" type="checkbox"><i
+                                        class="czi-eye password-toggle-indicator"></i><span
+                                        class="sr-only">{{ translate('show_password')}} </span>
+                                </label>
+                                <div class="invalid-feedback">{{ translate('please_provide_valid_password.')}}</div>
+                            </div>
+                        </div>
+                        
+                        @else
+                        <form class="card-body needs-validation" novalidate method="POST"
                           action="{{request('customer.auth.password-recovery')}}">
                         @csrf
                         <div class="form-group d-none">
                             <input type="text" name="reset_token" value="{{$token}}" required>
                         </div>
+                        
 
                         <div class="form-group">
                             <label for="si-password">{{ translate('new_password')}}</label>
@@ -47,6 +93,7 @@
                                 <div class="invalid-feedback">{{ translate('please_provide_valid_password.')}}</div>
                             </div>
                         </div>
+                        @endif
 
                         <button class="btn btn--primary" type="submit">{{ translate('reset_password') }}</button>
                     </form>
