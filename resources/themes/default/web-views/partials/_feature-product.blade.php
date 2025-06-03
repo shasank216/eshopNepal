@@ -3,10 +3,8 @@
     <div class="overflow-hidden position-relative">
         <div class="inline_product clickable">
             @if($product->discount > 0)
-                {{-- <span class="for-discount-value p-1 pl-2 pr-2 font-bold fs-13"> --}}
-                <span class="ribbon ribbon-sale">
+                <span class="for-discount-value p-1 pl-2 pr-2 font-bold fs-13">
                     <span class="direction-ltr d-block">
-                        On Sale
                         @if ($product->discount_type == 'percent')
                             -{{round($product->discount,(!empty($decimal_point_settings) ? $decimal_point_settings: 0))}}%
                         @elseif($product->discount_type =='flat')

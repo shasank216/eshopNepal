@@ -424,7 +424,7 @@
 
                                         {{ translate('buy_now') }}
 
-                                    </button>
+                                    </button> 
 
                                     <button class="btn add-to-cart string-limit" type="button" disabled>
 
