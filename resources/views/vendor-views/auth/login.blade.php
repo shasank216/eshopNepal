@@ -113,7 +113,7 @@
                                 @else
                                     <div class="row py-2">
                                         <div class="col-6 pr-0">
-                                            <input type="text" class="form-control __h-40 border-0"
+                                            <input type="text" class="form-control __h-40 border-5px"
                                                 name="vendorRecaptchaKey" value=""
                                                 placeholder="{{ translate('enter_captcha_value') }}"
                                                 autocomplete="off">

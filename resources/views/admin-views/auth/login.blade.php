@@ -81,22 +81,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="termsCheckbox"
-                                           name="remember">
-                                    <label class="custom-control-label text-muted" for="termsCheckbox">
-                                        {{translate('remember_me')}}
-                                    </label>
-                                </div>
-                            </div>
+                            <!--<div class="form-group">-->
+                            <!--    <div class="custom-control custom-checkbox">-->
+                            <!--        <input type="checkbox" class="custom-control-input" id="termsCheckbox"-->
+                            <!--               name="remember">-->
+                            <!--        <label class="custom-control-label text-muted" for="termsCheckbox">-->
+                            <!--            {{translate('remember_me')}}-->
+                            <!--        </label>-->
+                            <!--    </div>-->
+                            <!--</div>-->
                             @if(isset($recaptcha) && $recaptcha['status'] == 1)
                                 <div id="recaptcha_element" class="w-100;" data-type="image"></div>
                                 <br/>
                             @else
                                 <div class="row p-2">
                                     <div class="col-6 pr-0">
-                                        <input type="text" class="form-control form-control-lg border-0"
+                                        <input type="text" class="form-control form-control-lg border-5"
                                                name="default_captcha_value" value="" required
                                                placeholder="{{translate('enter_captcha_value')}}" autocomplete="off">
                                     </div>
