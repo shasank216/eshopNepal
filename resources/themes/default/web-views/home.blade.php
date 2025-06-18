@@ -1168,10 +1168,6 @@
         </section>
 
         <!-- Seller List -->
-        {{-- @php($businessMode = getWebConfig(name: 'business_mode'))
-        @if ($businessMode == 'multi' && count($top_sellers) > 0)
-            @include('web-views.partials._top-sellers')
-        @endif --}}
         @php($businessMode = getWebConfig(name: 'business_mode'))
         @if ($businessMode == 'multi' && count($top_sellers) > 0)
             @include('web-views.partials._top-sellers')
