@@ -114,8 +114,8 @@
                             data-product-id="{{ $product->id }}">
                             <i class="czi-eye align-middle web-text-primary"></i>
                         </a>
-                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)" 
-                            data-product-id="{{ $product->id }}" 
+                        <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)"
+                            data-product-id="{{ $product->id }}"
                             data-category-id="{{ $product->category_id }}"> <!-- Ensure the category ID is included here -->
                                 <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
                         </a>
@@ -286,3 +286,4 @@
         <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
     </div> --}}
 </div>
+

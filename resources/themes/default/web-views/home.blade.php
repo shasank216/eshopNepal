@@ -937,7 +937,7 @@
             @endif
         </section>
 
-        
+
 
         @if ($web_config['flash_deals'] && count($web_config['flash_deals']->products) > 0)
             @include('web-views.partials._flash-deal', ['decimal_point_settings' => $decimalPointSettings])
@@ -1168,10 +1168,15 @@
         </section>
 
         <!-- Seller List -->
+        {{-- @php($businessMode = getWebConfig(name: 'business_mode'))
+        @if ($businessMode == 'multi' && count($top_sellers) > 0)
+            @include('web-views.partials._top-sellers')
+        @endif --}}
         @php($businessMode = getWebConfig(name: 'business_mode'))
         @if ($businessMode == 'multi' && count($top_sellers) > 0)
             @include('web-views.partials._top-sellers')
         @endif
+
         <!-- Seller List Ends -->
 
         <section class="container-fluid">
@@ -1291,6 +1296,9 @@
         //     });
         // });
 
+
+
+
         $('.product').each(function() {
             var $this = $(this);
             var hoverDetail = $this.find('.product-hover_details');
@@ -1335,10 +1343,11 @@
             // Event listener for the Add to Cart button
             $('.add-to-cart').on('click', function(e) {
                 e.preventDefault();
+                console.log('clicked');
 
                 // Get product ID dynamically from the form
                 var productId = $(this).closest('form').find('input[name="id"]').val();
-                // alert(productId);
+                // alert("home: " + productId);
 
                 // Set up the AJAX request
                 $.ajax({
@@ -1373,4 +1382,5 @@
             });
         });
     </script>
+
 @endpush
