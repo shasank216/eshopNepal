@@ -52,10 +52,10 @@
                         <div class="col-sm-6">
                             <span class="text-danger">*</span>
                             <input class="form-control form-control-user phone-input-with-country-picker" type="tel"
-                                value="{{ old('phone') }}" id="exampleInputPhone"
+                                value="{{ old('phone') }}" id="exampleInputPhone" name="phone"
                                 placeholder="{{ translate('enter_phone_number') }}" required>
                             <div class="">
-                                <input type="text" class="country-picker-phone-number w-50" name="phone" hidden
+                                <input type="text" class="country-picker-phone-number w-50" hidden
                                     readonly>
                             </div>
                         </div>

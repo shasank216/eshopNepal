@@ -153,6 +153,8 @@ class RegisterController extends BaseController
             $shop->seller_id = $seller->id;
             $shop->name = $request->shop_name;
             $shop->address = $request->shop_address;
+            $shop->longitude = $request->longitude;
+            $shop->latitude = $request->latitude;
             $shop->contact = $request->phone;
             $shop->image = ImageManager::upload('shop/', 'webp', $request->file('logo'));
             $shop->banner = ImageManager::upload('shop/banner/', 'webp', $request->file('banner'));

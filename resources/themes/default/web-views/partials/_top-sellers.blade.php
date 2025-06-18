@@ -93,7 +93,11 @@
             const url = new URL(window.location.href);
             url.searchParams.set('lat', lat);
             url.searchParams.set('lng', lng);
-            window.location.href = url.toString();
+
+            // Delay the redirect to ensure HTML finishes rendering
+            setTimeout(() => {
+                window.location.href = url.toString();
+            }, 100);
         });
     }
 </script>
