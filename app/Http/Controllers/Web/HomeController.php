@@ -108,8 +108,8 @@ class HomeController extends Controller
         //         $seller['average_rating'] = $seller['total_rating'] / ($seller['review_count'] == 0 ? 1 : $seller['review_count']);
         //     });
 
-        $userLat = $request->query('lat');
-        $userLng = $request->query('lng');
+        $userLat = $request->query('latitude');
+        $userLng = $request->query('longitude');
 
         $top_sellers = $this->seller->approved()
             ->with(['shop', 'orders', 'product.reviews'])
@@ -123,10 +123,10 @@ class HomeController extends Controller
                 }
             ])
             ->orderBy('orders_count', 'DESC')
-            ->take(30) // Fetch more initially for filtering
+            ->take(30) // Initial set to filter
             ->get();
 
-        // Calculate ratings
+        // Calculate product and seller ratings
         $top_sellers->map(function ($seller) {
             $seller->product?->map(function ($product) {
                 $product['rating'] = $product->reviews->pluck('rating')->sum();
@@ -138,40 +138,34 @@ class HomeController extends Controller
             $seller['average_rating'] = $seller['review_count'] == 0 ? 0 : ($seller['total_rating'] / $seller['review_count']);
         });
 
-        // Filter by location within 30km radius
         if ($userLat && $userLng) {
             $filtered = [];
 
             foreach ($top_sellers as $seller) {
-                if (!$seller->shop || !$seller->shop->address) continue;
+                $shop = $seller->shop;
 
-                $geo = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
-                    'address' => $seller->shop->address,
-                    'key' => env('GOOGLE_MAPS_API_KEY'),
-                ])->json();
+                if (!$shop || !$shop->latitude || !$shop->longitude) continue;
 
-                if (isset($geo['results'][0]['geometry']['location'])) {
-                    $vendorLat = $geo['results'][0]['geometry']['location']['lat'];
-                    $vendorLng = $geo['results'][0]['geometry']['location']['lng'];
+                $vendorLat = $shop->latitude;
+                $vendorLng = $shop->longitude;
 
-                    $distance = $this->calculateDistance($userLat, $userLng, $vendorLat, $vendorLng);
+                $distance = $this->calculateDistance($userLat, $userLng, $vendorLat, $vendorLng);
 
-                    if ($distance <= 30) { // within 30km radius
-                        $seller['distance'] = $distance;
-                        $filtered[] = $seller;
-                    }
+                if ($distance <= 30) {
+                    $seller['distance'] = round($distance, 2);
+                    $filtered[] = $seller;
                 }
             }
 
-            // Sort by nearest first
+            // Sort sellers by nearest
             usort($filtered, fn ($a, $b) => $a['distance'] <=> $b['distance']);
 
-            // Take only 12 closest sellers
+            // Take only top 12
             $top_sellers = collect(array_slice($filtered, 0, 12));
         } else {
-            // fallback to first 12 if location not provided
             $top_sellers = $top_sellers->take(12);
         }
+
 
 
 
@@ -1239,7 +1233,7 @@ class HomeController extends Controller
      */
     public function calculateDistance($lat1, $lon1, $lat2, $lon2): float
     {
-        $earthRadius = 6371; // km
+        $earthRadius = 6371; // in km
 
         $dLat = deg2rad($lat2 - $lat1);
         $dLon = deg2rad($lon2 - $lon1);
