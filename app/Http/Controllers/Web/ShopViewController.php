@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\DB;
 
 class ShopViewController extends Controller
 {
-    public function __construct(
+      public function __construct(
         private Product      $product,
         
         private Category     $category,
@@ -32,6 +32,7 @@ class ShopViewController extends Controller
     )
     {
     }
+
     //for seller Shop
     public function seller_shop(Request $request, $id)
     {
@@ -114,8 +115,9 @@ class ShopViewController extends Controller
                 array_push($categories, $category);
             }
         }
-         $categories_product = array_unique($categories);
-        $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
+        $categories_product = array_unique($categories);
+        
+         $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
         // dd($categoriess);
 
         $products = Product::active()
@@ -200,8 +202,9 @@ class ShopViewController extends Controller
                 'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','categories'))->render(),
             ], 200);
         }
-        // dd($inHouseTemporaryClose);
-        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop','categories_product', 'categories','currentDate','sellerVacationStartDate','sellerVacationStatus',
+       
+        
+        return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','categories_product','currentDate','sellerVacationStartDate','sellerVacationStatus',
             'sellerVacationEndDate','sellerTemporaryClose','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus','inHouseTemporaryClose'))
             ->with('seller_id', $id)
             ->with('total_review', $total_review)

@@ -113,6 +113,7 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+        // dd($request);
       
         $cart = CartManager::add_to_cart($request);
         // dd($cart['message']);
