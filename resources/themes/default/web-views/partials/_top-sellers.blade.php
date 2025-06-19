@@ -5,7 +5,7 @@
                 <div class="row d-flex justify-content-between product-head-border">
                     <div class="seller-list-title">
                         <h5 class="home-title text-capitalize">
-                            {{ translate('top_sellers') }}
+                            Nearby Sellers Just for You
                         </h5>
                     </div>
                     <div class="form-inline ml-auto">
@@ -85,19 +85,68 @@
 </div>
 
 {{-- Geolocation logic with reload protection --}}
-<script>
+{{-- <script>
     if (!window.location.search.includes("lat=")) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            const url = new URL(window.location.href);
-            url.searchParams.set('lat', lat);
-            url.searchParams.set('lng', lng);
+        const savedLat = localStorage.getItem("lat");
+        const savedLng = localStorage.getItem("lng");
 
-            // Delay the redirect to ensure HTML finishes rendering
-            setTimeout(() => {
+        if (savedLat && savedLng) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lat', savedLat);
+            url.searchParams.set('lng', savedLng);
+            window.location.href = url.toString();
+        } else {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                localStorage.setItem("lat", lat);
+                localStorage.setItem("lng", lng);
+
+                const url = new URL(window.location.href);
+                url.searchParams.set('lat', lat);
+                url.searchParams.set('lng', lng);
                 window.location.href = url.toString();
-            }, 100);
-        });
+            });
+        }
     }
+
+</script> --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Already has lat/lng in URL? Skip
+        if (window.location.search.includes("lat=")) return;
+
+        // Already stored? Use that
+        const savedLat = localStorage.getItem("lat");
+        const savedLng = localStorage.getItem("lng");
+        if (savedLat && savedLng) {
+            const url = new URL(window.location.href);
+            url.searchParams.set("lat", savedLat);
+            url.searchParams.set("lng", savedLng);
+            window.location.href = url.toString();
+            return;
+        }
+
+        // Slight delay to help mobile browsers accept request
+        setTimeout(() => {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    localStorage.setItem("lat", lat);
+                    localStorage.setItem("lng", lng);
+
+                    const url = new URL(window.location.href);
+                    url.searchParams.set("lat", lat);
+                    url.searchParams.set("lng", lng);
+                    window.location.href = url.toString();
+                },
+                function (error) {
+                    console.warn("❌ Location access denied or failed: ", error.message);
+                    // Optional fallback: Show general top sellers
+                }
+            );
+        }, 1000); // 1-second delay after page load
+    });
 </script>
+

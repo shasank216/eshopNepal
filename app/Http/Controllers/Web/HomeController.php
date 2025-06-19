@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Poster;
 use App\Repositories\WishlistRepository;
+use Illuminate\Support\Facades\log;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -108,24 +109,29 @@ class HomeController extends Controller
         //         $seller['average_rating'] = $seller['total_rating'] / ($seller['review_count'] == 0 ? 1 : $seller['review_count']);
         //     });
 
-        $userLat = $request->query('latitude');
-        $userLng = $request->query('longitude');
+        $userLat = $request->query('lat');
+        $userLng = $request->query('lng');
 
+        // $top_sellers = $this->seller->approved()
+        //     ->with(['shop', 'orders', 'product.reviews'])
+        //     ->whereHas('orders', function ($query) {
+        //         $query->where('seller_is', 'seller');
+        //     })
+        //     ->withCount([
+        //         'orders',
+        //         'product' => function ($query) {
+        //             $query->active();
+        //         }
+        //     ])
+        //     ->orderBy('orders_count', 'DESC')
+        //     ->take(30) // Initial set to filter
+        //     ->get();
         $top_sellers = $this->seller->approved()
-            ->with(['shop', 'orders', 'product.reviews'])
-            ->whereHas('orders', function ($query) {
-                $query->where('seller_is', 'seller');
-            })
-            ->withCount([
-                'orders',
-                'product' => function ($query) {
-                    $query->active();
-                }
-            ])
+            ->with(['shop', 'product.reviews'])
+            ->withCount(['orders', 'product' => fn($q) => $q->active()])
             ->orderBy('orders_count', 'DESC')
-            ->take(30) // Initial set to filter
+            ->take(30)
             ->get();
-
         // Calculate product and seller ratings
         $top_sellers->map(function ($seller) {
             $seller->product?->map(function ($product) {
@@ -146,10 +152,7 @@ class HomeController extends Controller
 
                 if (!$shop || !$shop->latitude || !$shop->longitude) continue;
 
-                $vendorLat = $shop->latitude;
-                $vendorLng = $shop->longitude;
-
-                $distance = $this->calculateDistance($userLat, $userLng, $vendorLat, $vendorLng);
+                $distance = $this->calculateDistance($userLat, $userLng, $shop->latitude, $shop->longitude);
 
                 if ($distance <= 30) {
                     $seller['distance'] = round($distance, 2);
@@ -157,14 +160,13 @@ class HomeController extends Controller
                 }
             }
 
-            // Sort sellers by nearest
             usort($filtered, fn ($a, $b) => $a['distance'] <=> $b['distance']);
-
-            // Take only top 12
             $top_sellers = collect(array_slice($filtered, 0, 12));
+            // dd($top_sellers);
         } else {
             $top_sellers = $top_sellers->take(12);
         }
+
 
 
 
@@ -1235,15 +1237,18 @@ class HomeController extends Controller
     {
         $earthRadius = 6371; // in km
 
-        $dLat = deg2rad($lat2 - $lat1);
-        $dLon = deg2rad($lon2 - $lon1);
+        $latFrom = deg2rad($lat1);
+        $lonFrom = deg2rad($lon1);
+        $latTo = deg2rad($lat2);
+        $lonTo = deg2rad($lon2);
 
-        $a = sin($dLat / 2) * sin($dLat / 2) +
-            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
-            sin($dLon / 2) * sin($dLon / 2);
+        $latDelta = $latTo - $latFrom;
+        $lonDelta = $lonTo - $lonFrom;
 
-        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-        return $earthRadius * $c;
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+            cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+
+        return $earthRadius * $angle;
     }
 
 
