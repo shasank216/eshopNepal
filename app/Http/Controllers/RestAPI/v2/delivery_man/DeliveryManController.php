@@ -10,6 +10,7 @@ use App\Models\DeliveryMan;
 use App\Models\DeliverymanNotification;
 use App\Models\DeliveryManTransaction;
 use App\Models\DeliverymanWallet;
+use App\Models\DeliveryLocationTrack;
 use App\Models\EmergencyContact;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -727,4 +728,77 @@ class DeliveryManController extends Controller
 
         return response()->json(['message' => 'Successfully change'], 200);
     }
+
+    //Location track & Store
+    public function store_live_location(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'order_id' => 'required|exists:orders,id',
+            'delivery_man' => 'required' // can be an ID or an object with ID
+        ]);
+
+        // Extract the delivery man ID from the input (handle both array/object or direct ID)
+        $dmData = $request->delivery_man;
+        $dmId = is_array($dmData) 
+            ? $dmData['id'] 
+            : (is_object($dmData) 
+                ? $dmData->id 
+                : $dmData); // if already an integer
+
+        // Check if the order belongs to this delivery man and is out for delivery
+        $order = Order::where('id', $request->order_id)
+            ->where('delivery_man_id', $dmId)
+            ->whereRaw('LOWER(order_status) = ?', ['out_for_delivery']) // ensure status match is not case sensitive
+            ->first();
+
+        if (!$order) {
+            return response()->json([
+                'message' => 'Tracking not allowed.',
+                'reason' => 'Either order not assigned to this delivery man or order status is not out_for_delivery.'
+            ], 403);
+        }
+
+        // Store the live location
+        DB::table('deliveryman_locations')->insert([
+            'delivery_man_id' => $dmId,
+            'order_id' => $request->order_id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'created_at' => now(),
+            'updated_at' => now(), // optional, if you use timestamps
+        ]);
+
+        return response()->json(['message' => 'Location updated successfully.'], 200);
+    }
+
+    public function get_live_location(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id',
+        ]);
+
+        $location = DB::table('deliveryman_locations')
+            ->where('order_id', $request->order_id)
+            ->latest('created_at')
+            ->first();
+
+        if (!$location) {
+            return response()->json(['message' => 'Location not found.'], 404);
+        }
+
+        return response()->json([
+            'latitude' => $location->latitude,
+            'longitude' => $location->longitude,
+            'delivery_man_id' => $location->delivery_man_id,
+            'timestamp' => $location->created_at,
+        ]);
+    }
+
+
+
+
+
 }

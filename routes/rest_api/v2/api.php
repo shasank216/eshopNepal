@@ -126,6 +126,10 @@ Route::group(['namespace' => 'RestAPI\v2', 'prefix' => 'v2', 'middleware' => ['a
             Route::get('last-location', 'DeliveryManController@get_last_location');
             Route::put('update-fcm-token', 'DeliveryManController@update_fcm_token');
 
+            //live location track & Store
+            Route::get('live-location', 'DeliveryManController@get_live_location');
+            Route::post('store-live-location', 'DeliveryManController@store_live_location');
+
             Route::get('delivery-wise-earned', 'DeliveryManController@delivery_wise_earned');
             Route::get('order-list-by-date', 'DeliveryManController@order_list_date_filter');
             Route::get('search', 'DeliveryManController@search');
