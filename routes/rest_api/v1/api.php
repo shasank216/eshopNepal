@@ -156,6 +156,8 @@ Route::group(['namespace' => 'RestAPI\v1', 'prefix' => 'v1', 'middleware' => ['a
                 Route::get('offline-payment-method-list', 'OrderController@offline_payment_method_list');
                 Route::post('place-by-offline-payment', 'OrderController@place_order_by_offline_payment');
                 Route::get('details', 'CustomerController@get_order_details');
+                Route::get('track-driver-location', 'CustomerController@track_driver_location');
+
             });
         });
     });

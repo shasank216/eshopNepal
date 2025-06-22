@@ -457,6 +457,36 @@ class UserProfileController extends Controller
         return view(VIEW_FILE_NAMES['account_orders'], compact('orders', 'order_by', 'categories'));
     }
 
+    public function track_driver(Request $request)
+    {
+        $order_id = $request->query('id');
+        return view(VIEW_FILE_NAMES['track_driver'], compact('order_id'));
+    }
+    
+    public function web_live_location(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id',
+        ]);
+
+        $location = DB::table('deliveryman_locations')
+            ->where('order_id', $request->order_id)
+            ->latest()
+            ->first();
+
+        if (!$location) {
+            return response()->json([
+                'message' => 'Location not found.'
+            ], 404);
+        }
+
+        return response()->json([
+            'latitude' => $location->latitude,
+            'longitude' => $location->longitude,
+        ]);
+    }
+
+
     public function account_order_details(Request $request): View|RedirectResponse
     {
         $categories = Category::all();

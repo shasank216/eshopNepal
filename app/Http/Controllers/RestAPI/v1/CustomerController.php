@@ -419,6 +419,38 @@ class CustomerController extends Controller
         return response()->json($details, 200);
     }
 
+    public function track_driver_location(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id',
+        ]);
+
+        $order = Order::where('id', $request->order_id)->first();
+
+        if (!$order || !$order->delivery_man_id) {
+            return response()->json(['message' => 'Delivery man not assigned yet.'], 404);
+        }
+
+        // Get latest location of the assigned delivery man for this order
+        $location = DB::table('deliveryman_locations')
+            ->where('order_id', $order->id)
+            ->where('delivery_man_id', $order->delivery_man_id)
+            ->latest('created_at')
+            ->first();
+
+        if (!$location) {
+            return response()->json(['message' => 'Live location not available yet.'], 404);
+        }
+
+        return response()->json([
+            'latitude' => $location->latitude,
+            'longitude' => $location->longitude,
+            'delivery_man_id' => $location->delivery_man_id,
+            'timestamp' => $location->created_at,
+        ]);
+    }
+
+
     public function get_order_by_id(Request $request)
     {
         $validator = Validator::make($request->all(), [

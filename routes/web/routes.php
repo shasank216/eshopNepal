@@ -168,6 +168,8 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('account-order-details-vendor-info', 'UserProfileController@account_order_details_seller_info')->name('account-order-details-vendor-info')->middleware('customer');
     Route::get('account-order-details-delivery-man-info', 'UserProfileController@account_order_details_delivery_man_info')->name('account-order-details-delivery-man-info')->middleware('customer');
     Route::get('account-order-details-reviews', 'UserProfileController@account_order_details_reviews')->name('account-order-details-reviews')->middleware('customer');
+    Route::get('track-driver', 'UserProfileController@track_driver')->name('track-driver');
+    Route::get('/web-track-driver-location', 'UserProfileController@web_live_location');
     Route::get('generate-invoice/{id}', 'UserProfileController@generate_invoice')->name('generate-invoice');
     Route::get('account-wishlist', 'UserProfileController@account_wishlist')->name('account-wishlist'); //add to card not work
     Route::get('refund-request/{id}','UserProfileController@refund_request')->name('refund-request');

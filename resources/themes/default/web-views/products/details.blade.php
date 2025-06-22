@@ -411,7 +411,7 @@
                                                 </button>
                                                 <button
                                                     class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
-                                                    type="button" data-update-text="{{ translate('update_cart') }}"
+                                                    type="button" data-update-text="{{ translate('add_to_cart') }}"
                                                     data-add-text="{{ translate('add_to_cart') }}">
                                                     <span class="string-limit">{{ translate('add_to_cart') }}</span>
                                                 </button>
@@ -424,7 +424,7 @@
                                                 <a href="{{ route('customer.auth.login') }}"
                                                     class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
                                                     type="button"
-                                                    data-update-text="{{ translate('update_cart') }}"
+                                                    data-update-text="{{ translate('add_to_cart') }}"
                                                     >
                                                      <span class="string-limit">{{ translate('add_to_cart') }}</span>
                                                 </a>
