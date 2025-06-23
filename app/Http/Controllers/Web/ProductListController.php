@@ -59,7 +59,6 @@ class ProductListController extends Controller
     }
 
     public function default_theme(Request $request) {
-       
         
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
@@ -299,8 +298,9 @@ public function filterProducts(Request $request)
     $categories = $request->input('categories');
 
     // Retrieve filtered products with pagination
-    $products = Product::whereIn('category_id', $categories)
-        ->paginate(10); // Adjust pagination per page if needed
+    // $products = Product::whereIn('category_id', $categories)
+    //     ->paginate(10); // Adjust pagination per page if needed
+    $products = Product::whereIn('category_id', $categories)->get();
     
     $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
 
@@ -1286,7 +1286,24 @@ public function filtercolorProduct(Request $request)
 
         // Return the view with the categories and the filtered products
         // dd($products);
-        return view(VIEW_FILE_NAMES['product_compare'], compact('categories', 'products'));
+        $product = Product::paginate(10);
+
+        $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+    $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+    $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+
+    $temporaryClose = getWebConfig('temporary_close');
+    $inHouseVacation = getWebConfig('vacation_add');
+    $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+    $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+    $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+    $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+
+        return view(VIEW_FILE_NAMES['product_compare'], compact('categories', 'products',
+        'sellerVacationStartDate','sellerTemporaryClose','sellerVacationEndDate',
+                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
+                'inHouseTemporaryClose'));
     }
     
     

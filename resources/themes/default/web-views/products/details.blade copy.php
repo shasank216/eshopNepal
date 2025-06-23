@@ -261,7 +261,6 @@
                                             }
                                         @endphp
                                     </div>
-                                    {{-- @dd($product); --}}
                                     @foreach (json_decode($product->choice_options) as $key => $choice)
                                         <div class="row flex-start mx-0 align-items-center">
                                             <div
@@ -405,17 +404,11 @@
                                             </button>
                                         @else
                                             @if (auth('customer')->check())
-                                                {{-- <button
-                                                    class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-buy-now-this-product"
-                                                    type="button" >
-                                                    <span class="string-limit">{{ translate('buy_now') }}</span>
-                                                </button> --}}
                                                 <button
                                                     class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-buy-now-this-product"
-                                                    type="button" onclick="addToCart('add-to-cart-form', true)">
+                                                    type="button">
                                                     <span class="string-limit">{{ translate('buy_now') }}</span>
                                                 </button>
-
                                                 <button
                                                     class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
                                                     type="button" data-update-text="{{ translate('add_to_cart') }}"
@@ -430,8 +423,10 @@
                                                 </a>
                                                 <a href="{{ route('customer.auth.login') }}"
                                                     class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
-                                                    type="button" data-update-text="{{ translate('add_to_cart') }}">
-                                                    <span class="string-limit">{{ translate('add_to_cart') }}</span>
+                                                    type="button"
+                                                    data-update-text="{{ translate('add_to_cart') }}"
+                                                    >
+                                                     <span class="string-limit">{{ translate('add_to_cart') }}</span>
                                                 </a>
                                             @endif
                                         @endif
@@ -513,13 +508,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex align-items-center">
-                                                                @if (
-                                                                    $sellerTemporaryClose ||
-                                                                        ($product->seller->shop->vacation_status &&
-                                                                            $currentDate >= $sellerVacationStartDate &&
-                                                                            $currentDate <= $sellerVacationEndDate))
-                                                                    <span
-                                                                        class="chat-seller-info product-details-seller-info"
+                                                                @if ($sellerTemporaryClose || ($product->seller->shop->vacation_status && $currentDate >= $sellerVacationStartDate && $currentDate <= $sellerVacationEndDate))
+                                                                    <span class="chat-seller-info product-details-seller-info"
                                                                         data-toggle="tooltip"
                                                                         title="{{ translate('this_shop_is_temporary_closed_or_on_vacation') . ' ' . translate('You_cannot_add_product_to_cart_from_this_shop_for_now') }}">
                                                                         <img src="{{ theme_asset(path: 'public/assets/front-end/img/info.png') }}"
@@ -589,31 +579,26 @@
                                             <div class="row d-flex justify-content-between">
                                                 <div class="col-3 ">
                                                     {{-- <a href="{{ route('shopView', [0]) }}" class="row d-flex align-items-center"> --}}
-                                                    <div>
-                                                        <img class="__inline-32" alt=""
-                                                            src="{{ getValidImage(path: 'storage/app/public/company/' . $web_config['fav_icon']->value, type: 'logo') }}">
-                                                    </div>
-                                                    <div class="{{ Session::get('direction') === 'rtl' ? 'right' : 'mt-3 ml-2' }} get-view-by-onclick"
-                                                        data-link="{{ route('shopView', [0]) }}">
-                                                        <span class="font-bold __text-16px">
-                                                            {{ $web_config['name']->value }}
-                                                        </span><br>
-                                                    </div>
-                                                    @if (
-                                                        $product->added_by == 'admin' &&
-                                                            ($inHouseTemporaryClose ||
-                                                                ($inHouseVacationStatus &&
-                                                                    $currentDate >= $inHouseVacationStartDate &&
-                                                                    $currentDate <= $inHouseVacationEndDate)))
-                                                        <div
-                                                            class="{{ Session::get('direction') === 'rtl' ? 'right' : 'ml-3' }}">
-                                                            <span class="chat-seller-info" data-toggle="tooltip"
-                                                                title="{{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}">
-                                                                <img src="{{ theme_asset(path: 'public/assets/front-end/img/info.png') }}"
-                                                                    alt="i">
-                                                            </span>
+                                                        <div>
+                                                            <img class="__inline-32" alt=""
+                                                                src="{{ getValidImage(path: 'storage/app/public/company/' . $web_config['fav_icon']->value, type: 'logo') }}">
                                                         </div>
-                                                    @endif
+                                                        <div class="{{ Session::get('direction') === 'rtl' ? 'right' : 'mt-3 ml-2' }} get-view-by-onclick"
+                                                            data-link="{{ route('shopView', [0]) }}">
+                                                            <span class="font-bold __text-16px">
+                                                                {{ $web_config['name']->value }}
+                                                            </span><br>
+                                                        </div>
+                                                        @if ($product->added_by == 'admin' && ($inHouseTemporaryClose || ($inHouseVacationStatus && $currentDate >= $inHouseVacationStartDate && $currentDate <= $inHouseVacationEndDate)))
+                                                            <div
+                                                                class="{{ Session::get('direction') === 'rtl' ? 'right' : 'ml-3' }}">
+                                                                <span class="chat-seller-info" data-toggle="tooltip"
+                                                                    title="{{ translate('this_shop_is_temporary_closed_or_on_vacation._You_cannot_add_product_to_cart_from_this_shop_for_now') }}">
+                                                                    <img src="{{ theme_asset(path: 'public/assets/front-end/img/info.png') }}"
+                                                                        alt="i">
+                                                                </span>
+                                                            </div>
+                                                        @endif
                                                     {{-- </a> --}}
                                                 </div>
                                                 <div class="col-5 mt-2">
@@ -649,8 +634,7 @@
                                                 <div class="col-4 position-static mt-3">
                                                     <div class="chat_with_seller-buttons">
                                                         @if (auth('customer')->id())
-                                                            <button
-                                                                class="btn w-100 d-block text-center web--bg-primary text-white"
+                                                            <button class="btn w-100 d-block text-center web--bg-primary text-white"
                                                                 data-toggle="modal" data-target="#chatting_modal"
                                                                 {{ $inHouseTemporaryClose || ($inHouseVacationStatus && $currentDate >= $inHouseVacationStartDate && $currentDate <= $inHouseVacationEndDate) ? 'disabled' : '' }}>
                                                                 <img class="mb-1" alt=""
@@ -705,8 +689,8 @@
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link __inline-27" href="#deliveryReturn"
-                                                        data-toggle="tab" role="tab">
+                                                    <a class="nav-link __inline-27" href="#deliveryReturn" data-toggle="tab"
+                                                        role="tab">
                                                         Delivery & Return
                                                     </a>
                                                 </li>
@@ -976,15 +960,11 @@
                                                             Shipping
                                                         </h3>
                                                         <ul class="shipping-ul">
-                                                            <li>Complimentary ground shipping within 1 to 7 business days
-                                                            </li>
-                                                            <li>In-store collection available within 1 to 7 business days
-                                                            </li>
+                                                            <li>Complimentary ground shipping within 1 to 7 business days</li>
+                                                            <li>In-store collection available within 1 to 7 business days</li>
                                                             <li>Next-day and Express delivery options also available</li>
-                                                            <li>Purchases are delivered in an orange box tied with a Bolduc
-                                                                ribbon, with the exception of certain items</li>
-                                                            <li>See the delivery FAQs for details on shipping methods, costs
-                                                                and delivery times</li>
+                                                            <li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception of certain items</li>
+                                                            <li>See the delivery FAQs for details on shipping methods, costs and delivery times</li>
                                                         </ul>
                                                     </div>
                                                     <div class="shipping">
