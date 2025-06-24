@@ -610,7 +610,7 @@
 
                                                             <div class="form-group">
 
-                                                                <label>{{ translate('zip_code')}}
+                                                                <label>{{ translate('zip / Postal_code')}}
 
                                                                     <span class="text-danger">*</span></label>
 

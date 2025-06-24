@@ -1,12 +1,15 @@
-@if(count($products) > 0)
+@if (count($products) > 0)
     @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
-    @foreach($products as $product)
-        @if(!empty($product['product_id']))
+    @foreach ($products as $product)
+        @if (!empty($product['product_id']))
             @php($product = $product->product)
         @endif
         <div class="items-card-container p-2">
-            @if(!empty($product))
-                @include('web-views.partials._filter-single-product', ['product' => $product, 'decimal_point_settings' => $decimal_point_settings])
+            @if (!empty($product))
+                @include('web-views.partials._filter-single-product', [
+                    'product' => $product,
+                    'decimal_point_settings' => $decimal_point_settings,
+                ])
             @endif
         </div>
     @endforeach
@@ -15,13 +18,35 @@
         <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation" id="paginator-ajax">
             {!! $products->links() !!}
         </nav>
+        {{-- <div id="pagination-container">
+            {!! $products->withQueryString()->links() !!}
+        </div> --}}
     </div>
 @else
     <div class="d-flex justify-content-center align-items-center w-100 py-5">
         <div>
-            <img src="{{ theme_asset(path: 'public/assets/front-end/img/media/product.svg') }}" class="img-fluid" alt="">
+            <img src="{{ theme_asset(path: 'public/assets/front-end/img/media/product.svg') }}" class="img-fluid"
+                alt="">
             <h6 class="text-muted">{{ translate('no_product_found') }}</h6>
         </div>
     </div>
 @endif
+<script>
+    $(document).ready(function() {
+        // Initial load
+        loadProducts();
 
+        // Filter change handler with debounce
+        let filterTimeout;
+        $('.filter-option').change(function() {
+            clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(loadProducts, 300);
+        });
+
+        // Pagination click handler
+        $(document).on('click', '#pagination-container a', function(e) {
+            e.preventDefault();
+            loadProducts($(this).attr('href'));
+        });
+    });
+</script>

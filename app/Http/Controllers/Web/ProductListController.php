@@ -38,11 +38,9 @@ class ProductListController extends Controller
         private Review       $review,
         private DealOfTheDay $deal_of_the_day,
         private Banner       $banner,
-        private MostDemanded $most_demanded, 
+        private MostDemanded $most_demanded,
         private readonly WishlistRepository  $wishlistRepo,
-    )
-    {
-    }
+    ) {}
 
 
 
@@ -50,7 +48,7 @@ class ProductListController extends Controller
     {
         $theme_name = theme_root_path();
 
-        return match ($theme_name){
+        return match ($theme_name) {
             'default' => self::default_theme($request),
             'theme_aster' => self::theme_aster($request),
             'theme_fashion' => self::theme_fashion($request),
@@ -58,8 +56,9 @@ class ProductListController extends Controller
         };
     }
 
-    public function default_theme(Request $request) {
-        
+    public function default_theme(Request $request)
+    {
+
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
         $porduct_data = Product::active()->with(['reviews']);
@@ -127,8 +126,8 @@ class ProductListController extends Controller
         }
 
         if ($request['data_from'] == 'featured_deal') {
-            $featured_deal_id = FlashDeal::where(['status'=>1])->where(['deal_type'=>'feature_deal'])->pluck('id')->first();
-            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id',$featured_deal_id)->pluck('product_id')->toArray();
+            $featured_deal_id = FlashDeal::where(['status' => 1])->where(['deal_type' => 'feature_deal'])->pluck('id')->first();
+            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id', $featured_deal_id)->pluck('product_id')->toArray();
             $query = Product::with(['reviews'])->withCount('reviews')->active()->whereIn('id', $featured_deal_product_ids);
         }
 
@@ -137,14 +136,13 @@ class ProductListController extends Controller
             $product_ids = Product::where(function ($q) use ($key) {
                 foreach ($key as $value) {
                     $q->orWhere('name', 'like', "%{$value}%")
-                        ->orWhereHas('tags',function($query)use($value){
+                        ->orWhereHas('tags', function ($query) use ($value) {
                             $query->where('tag', 'like', "%{$value}%");
                         });
                 }
             })->pluck('id');
 
-            if($product_ids->count()==0)
-            {
+            if ($product_ids->count() == 0) {
                 $product_ids = Translation::where('translationable_type', 'App\Models\Product')
                     ->where('key', 'name')
                     ->where(function ($q) use ($key) {
@@ -153,12 +151,9 @@ class ProductListController extends Controller
                         }
                     })
                     ->pluck('translationable_id');
-
-
             }
 
             $query = $porduct_data->WhereIn('id', $product_ids);
-
         }
 
         if ($request['data_from'] == 'discounted') {
@@ -167,25 +162,18 @@ class ProductListController extends Controller
 
         if ($request['sort_by'] == 'latest') {
             $fetched = $query->latest();
-            
         } elseif ($request['sort_by'] == 'low-high') {
-            
-            $fetched = $query->orderBy('unit_price', 'ASC');
-          
-           
 
+            $fetched = $query->orderBy('unit_price', 'ASC');
         } elseif ($request['sort_by'] == 'high-low') {
-          
+
             $fetched = $query->orderBy('unit_price', 'DESC');
-           
         } elseif ($request['sort_by'] == 'a-z') {
-           
+
             $fetched = $query->orderBy('name', 'ASC');
-           
         } elseif ($request['sort_by'] == 'z-a') {
-            
+
             $fetched = $query->orderBy('name', 'DESC');
-           
         } else {
             $fetched = $query->latest();
         }
@@ -207,300 +195,437 @@ class ProductListController extends Controller
         $products = $fetched->paginate(20)->appends($data);
 
 
-        
+
 
         if ($request->ajax()) {
 
             $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
             $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
             $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
-        
+
             $temporaryClose = getWebConfig('temporary_close');
             $inHouseVacation = getWebConfig('vacation_add');
             $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
             $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
             $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
             $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-          
+
             return response()->json([
-                'total_product'=>$products->total(),
-                'view' => view('web-views.products._ajax-products', compact('products','sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'))->render()
+                'total_product' => $products->total(),
+                'view' => view('web-views.products._ajax-products', compact(
+                    'products',
+                    'sellerVacationStartDate',
+                    'sellerTemporaryClose',
+                    'sellerTemporaryClose',
+                    'temporaryClose',
+                    'inHouseVacation',
+                    'inHouseVacationStartDate',
+                    'inHouseVacationEndDate',
+                    'inHouseVacationStatus',
+                    'inHouseTemporaryClose'
+                ))->render()
             ], 200);
         }
-        
+
         if ($request['data_from'] == 'category') {
             $data['brand_name'] = Category::find((int)$request['id'])->name;
-           
         }
         if ($request['data_from'] == 'brand') {
             $brand_data = Brand::active()->find((int)$request['id']);
-           
-            if($brand_data) {
+
+            if ($brand_data) {
                 $data['brand_name'] = $brand_data->name;
-            }else {
+            } else {
                 Toastr::warning(translate('not_found'));
                 return redirect('/');
             }
         }
 
 
-    //    $colors= Color::all();
-    $colorData = Product::distinct()->pluck('colors');
-     // Initialize an array to store the parsed colors
-     $colors = [];
+        //    $colors= Color::all();
+        $colorData = Product::distinct()->pluck('colors');
+        // Initialize an array to store the parsed colors
+        $colors = [];
 
-     // Parse each JSON string
-     foreach ($colorData as $jsonString) {
-         $parsedColors = json_decode($jsonString, true);
- 
-         // Merge parsed colors into the $colors array if not empty
-         if (!empty($parsedColors)) {
-             $colors = array_merge($colors, $parsedColors);
-         }
-     }
+        // Parse each JSON string
+        foreach ($colorData as $jsonString) {
+            $parsedColors = json_decode($jsonString, true);
 
-
-     $business_settings = DB::table('business_settings')->where('id',1)->first();
-     $business_settings_value=$business_settings->value;
-     
-     $defaultCurrencies = DB::table('currencies')->where('id',$business_settings_value)->first();
-     $product = Product::paginate(10);
-     $product=$this->product->active()->inRandomOrder()->first();
-     $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-     $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
-
-    $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
-
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+            // Merge parsed colors into the $colors array if not empty
+            if (!empty($parsedColors)) {
+                $colors = array_merge($colors, $parsedColors);
+            }
+        }
 
 
-    //   dd( $inHouseTemporaryClose);
-    return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'data','colors','defaultCurrencies','wishlistStatus','countWishlist', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose' ));
+        $business_settings = DB::table('business_settings')->where('id', 1)->first();
+        $business_settings_value = $business_settings->value;
+
+        $defaultCurrencies = DB::table('currencies')->where('id', $business_settings_value)->first();
+        $product = Product::paginate(10);
+        $product = $this->product->active()->inRandomOrder()->first();
+        $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+        $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+        $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+        $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+
+        //   dd( $inHouseTemporaryClose);
+        return view(VIEW_FILE_NAMES['products_view_page'], compact(
+            'products',
+            'data',
+            'colors',
+            'defaultCurrencies',
+            'wishlistStatus',
+            'countWishlist',
+            'sellerVacationStartDate',
+            'sellerTemporaryClose',
+            'sellerTemporaryClose',
+            'temporaryClose',
+            'inHouseVacation',
+            'inHouseVacationStartDate',
+            'inHouseVacationEndDate',
+            'inHouseVacationStatus',
+            'inHouseTemporaryClose'
+        ));
     }
 
 
 
     //biwek
-// Controller method
-public function filterProducts(Request $request)
-{
-    $categories = $request->input('categories');
+    // Controller method
+    // public function filterProducts(Request $request)
+    // {
+    //     $categories = $request->input('categories');
 
-    // Retrieve filtered products with pagination
-    $products = Product::whereIn('category_id', $categories)
-        ->paginate(10); // Adjust pagination per page if needed
-    
-    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+    //     // Retrieve filtered products with pagination
+    //     // $products = Product::whereIn('category_id', $categories)
+    //     //     ->paginate(10); // Adjust pagination per page if needed
+    //     $products = Product::whereIn('category_id', $categories)->get();
 
-    // dd( $products);
-    // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-    //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+    //     $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
 
-    $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+    //     // dd( $products);
+    //     // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+    //     //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
 
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-    
-    // Return the rendered view for AJAX
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'))->render()
-    ]);
-}
+    //     $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+    //     $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+    //     $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
 
-public function filterBrand(Request $request)
-{
-    // Get the brand IDs from the request
-    $brandIds = $request->input('brands'); // Make sure 'brands' matches the key in your AJAX request
+    //     $temporaryClose = getWebConfig('temporary_close');
+    //     $inHouseVacation = getWebConfig('vacation_add');
+    //     $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+    //     $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+    //     $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+    //     $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
 
-    // Check if any brand IDs were provided
-    if (!empty($brandIds)) {
-        // Retrieve filtered products based on the selected brand IDs with pagination
-        $products = Product::whereIn('brand_id', $brandIds)
-            ->paginate(10); // Adjust pagination per page if needed
-    } else {
-        // If no brand IDs were provided, return an empty collection or handle as needed
-        $products = collect(); // Empty collection
-    }
+    //     // Return the rendered view for AJAX
+    //     return response()->json([
+    //         'data' => view('web-views.products._ajax-products', compact(
+    //             'products',
+    //             'decimal_point_settings',
+    //             'sellerVacationStartDate',
+    //             'sellerTemporaryClose',
+    //             'sellerTemporaryClose',
+    //             'temporaryClose',
+    //             'inHouseVacation',
+    //             'inHouseVacationStartDate',
+    //             'inHouseVacationEndDate',
+    //             'inHouseVacationStatus',
+    //             'inHouseTemporaryClose'
+    //         ))->render()
+    //     ]);
+    // }
 
-    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+    public function filterProducts(Request $request)
+    {
+        $categories = $request->input('categories');
+        $products = Product::whereIn('category_id', $categories)->paginate(15);
+        // $categories = $request->input('categories', []);
+        // $products = Product::when(!empty($categories), function ($query) use ($categories) {
+        //     $query->whereIn('category_id', $categories);
+        // })
+        //     ->paginate(10)
+        //     ->appends($request->except('page'));
+        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings');
 
-    // dd( $products);
-    // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-    //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+        // Initialize variables that will be used in the view
+        $sellerVacationStartDate = null;
+        $sellerVacationEndDate = null;
+        $sellerTemporaryClose = false; // Initialize the variable
 
-    $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = null;
+        $inHouseVacationEndDate = null;
+        $inHouseVacationStatus = false;
+        $inHouseTemporaryClose = false;
 
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-    
-    // Return the rendered view for AJAX
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'))->render()
-    ]);
-}
-public function filterPrice(Request $request)
-{
-    $minPrice = $request->input('min_price');
-    $maxPrice = $request->input('max_price');
+        // If you're only showing one product, you can use first()
+        if ($products->count() > 0) {
+            $product = $products->first();
 
-    // Validate inputs
-    $validated = $request->validate([
-        'min_price' => 'required|numeric|min:0',
-        'max_price' => 'required|numeric|min:0',
-    ]);
-
-    // Filter products based on the price range
-    $products = Product::whereBetween('unit_price', [$minPrice, $maxPrice])->paginate(10); // Using pagination for better performance
-
-    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
-
-    // dd( $products);
-    // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-    //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
-
-    $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
-
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-    
-    // Return the rendered view for AJAX
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'))->render()
-    ]);
-}
-
-// filter rating
-public function filterRatings(Request $request)
-{
-    $ratings = $request->input('ratings');
-
-    // Get all product IDs that have reviews with the selected ratings
-    $ratingProductIds = Review::whereIn('rating', $ratings)->pluck('product_id');
-
-    // Get all products that match the product IDs
-    $products = Product::whereIn('id', $ratingProductIds)->paginate(10);
-   
-
-    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
-
-    // dd( $products);
-    // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-    //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
-
-    $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
-
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-    
-    // Return the rendered view for AJAX
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'))->render()
-    ]);
-}
-// filter color
-public function filtercolorProduct(Request $request)
-{
-    // Get the colors from the request, defaulting to an empty array if none are provided
-    $colors = $request->input('colors', []);
-
-    // Ensure colors array is not empty
-    if (!empty($colors)) {
-        // Filter products where the JSON column 'color' contains any of the colors in the $colors array
-        $products = Product::where(function($query) use ($colors) {
-            foreach ($colors as $color) {
-                $query->orWhereJsonContains('colors', $color);
+            if ($product->added_by == 'seller' && $product->seller && $product->seller->shop) {
+                $sellerVacationStartDate = $product->seller->shop->vacation_start_date
+                    ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date))
+                    : null;
+                $sellerVacationEndDate = $product->seller->shop->vacation_end_date
+                    ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date))
+                    : null;
+                $sellerTemporaryClose = $product->seller->shop->temporary_close ?? false;
             }
-        })->paginate(10);
-    } else {
-        // If no colors are selected, fetch all products or handle accordingly
-        $products = Product::paginate(10);
+
+            if ($product->added_by == 'admin') {
+                $inHouseVacationStartDate = $inHouseVacation['vacation_start_date'] ?? null;
+                $inHouseVacationEndDate = $inHouseVacation['vacation_end_date'] ?? null;
+                $inHouseVacationStatus = $inHouseVacation['status'] ?? false;
+                $inHouseTemporaryClose = $temporaryClose['status'] ?? false;
+            }
+        }
+        
+
+        return response()->json([
+            'data' => view('web-views.products._ajax-products', compact(
+                'products',
+                'decimal_point_settings',
+                'sellerVacationStartDate',
+                'sellerVacationEndDate',
+                'sellerTemporaryClose', // Now properly defined
+                'temporaryClose',
+                'inHouseVacation',
+                'inHouseVacationStartDate',
+                'inHouseVacationEndDate',
+                'inHouseVacationStatus',
+                'inHouseTemporaryClose'
+            ))->render()
+        ]);
+    }
+    public function filterBrand(Request $request)
+    {
+        // Get the brand IDs from the request
+        $brandIds = $request->input('brands'); // Make sure 'brands' matches the key in your AJAX request
+
+        // Check if any brand IDs were provided
+        if (!empty($brandIds)) {
+            // Retrieve filtered products based on the selected brand IDs with pagination
+            $products = Product::whereIn('brand_id', $brandIds)
+                ->paginate(10); // Adjust pagination per page if needed
+        } else {
+            // If no brand IDs were provided, return an empty collection or handle as needed
+            $products = collect(); // Empty collection
+        }
+
+        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+
+        // dd( $products);
+        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+        $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+        $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+        // Return the rendered view for AJAX
+        return response()->json([
+            'data' => view('web-views.products._ajax-products', compact(
+                'products',
+                'decimal_point_settings',
+                'sellerVacationStartDate',
+                'sellerTemporaryClose',
+                'sellerTemporaryClose',
+                'temporaryClose',
+                'inHouseVacation',
+                'inHouseVacationStartDate',
+                'inHouseVacationEndDate',
+                'inHouseVacationStatus',
+                'inHouseTemporaryClose'
+            ))->render()
+        ]);
+    }
+    public function filterPrice(Request $request)
+    {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+
+        // Validate inputs
+        $validated = $request->validate([
+            'min_price' => 'required|numeric|min:0',
+            'max_price' => 'required|numeric|min:0',
+        ]);
+
+        // Filter products based on the price range
+        $products = Product::whereBetween('unit_price', [$minPrice, $maxPrice])->paginate(10); // Using pagination for better performance
+
+        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+
+        // dd( $products);
+        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+        $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+        $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+        // Return the rendered view for AJAX
+        return response()->json([
+            'data' => view('web-views.products._ajax-products', compact(
+                'products',
+                'decimal_point_settings',
+                'sellerVacationStartDate',
+                'sellerTemporaryClose',
+                'sellerTemporaryClose',
+                'temporaryClose',
+                'inHouseVacation',
+                'inHouseVacationStartDate',
+                'inHouseVacationEndDate',
+                'inHouseVacationStatus',
+                'inHouseTemporaryClose'
+            ))->render()
+        ]);
     }
 
-    // Debugging: View the products retrieved
-    // dd($products);
+    // filter rating
+    public function filterRatings(Request $request)
+    {
+        $ratings = $request->input('ratings');
 
-    $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+        // Get all product IDs that have reviews with the selected ratings
+        $ratingProductIds = Review::whereIn('rating', $ratings)->pluck('product_id');
 
-    // dd( $products);
-    // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-    //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
-
-    $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
-
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
-    
-    // Return the rendered view for AJAX
-    return response()->json([
-        'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'))->render()
-    ]);
-}
+        // Get all products that match the product IDs
+        $products = Product::whereIn('id', $ratingProductIds)->paginate(10);
 
 
+        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
 
-    
+        // dd( $products);
+        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+        $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+        $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+        // Return the rendered view for AJAX
+        return response()->json([
+            'data' => view('web-views.products._ajax-products', compact(
+                'products',
+                'decimal_point_settings',
+                'sellerVacationStartDate',
+                'sellerTemporaryClose',
+                'sellerTemporaryClose',
+                'temporaryClose',
+                'inHouseVacation',
+                'inHouseVacationStartDate',
+                'inHouseVacationEndDate',
+                'inHouseVacationStatus',
+                'inHouseTemporaryClose'
+            ))->render()
+        ]);
+    }
+    // filter color
+    public function filtercolorProduct(Request $request)
+    {
+        // Get the colors from the request, defaulting to an empty array if none are provided
+        $colors = $request->input('colors', []);
+
+        // Ensure colors array is not empty
+        if (!empty($colors)) {
+            // Filter products where the JSON column 'color' contains any of the colors in the $colors array
+            $products = Product::where(function ($query) use ($colors) {
+                foreach ($colors as $color) {
+                    $query->orWhereJsonContains('colors', $color);
+                }
+            })->paginate(10);
+        } else {
+            // If no colors are selected, fetch all products or handle accordingly
+            $products = Product::paginate(10);
+        }
+
+        // Debugging: View the products retrieved
+        // dd($products);
+
+        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
+
+        // dd( $products);
+        // $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+
+        $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+        $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
+
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+
+        // Return the rendered view for AJAX
+        return response()->json([
+            'data' => view('web-views.products._ajax-products', compact(
+                'products',
+                'decimal_point_settings',
+                'sellerVacationStartDate',
+                'sellerTemporaryClose',
+                'sellerTemporaryClose',
+                'temporaryClose',
+                'inHouseVacation',
+                'inHouseVacationStartDate',
+                'inHouseVacationEndDate',
+                'inHouseVacationStatus',
+                'inHouseTemporaryClose'
+            ))->render()
+        ]);
+    }
+
+
+
+
 
     public function theme_aster($request)
     {
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
         $porduct_data = Product::active()->with([
-            'reviews','rating',
+            'reviews',
+            'rating',
             'seller.shop',
-            'wishList'=>function($query){
+            'wishList' => function ($query) {
                 return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
             },
-            'compareList'=>function($query){
+            'compareList' => function ($query) {
                 return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
             }
         ])->withCount('reviews');
@@ -578,51 +703,52 @@ public function filtercolorProduct(Request $request)
         }
         if ($request['data_from'] == 'featured') {
             $query = Product::with([
-                'reviews','seller.shop',
-                'wishList'=>function($query){
+                'reviews',
+                'seller.shop',
+                'wishList' => function ($query) {
                     return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
                 },
-                'compareList'=>function($query){
+                'compareList' => function ($query) {
                     return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
                 }
             ])->active()->withCount('reviews')->where('featured', 1);
         }
 
         if ($request['data_from'] == 'featured_deal') {
-            $featured_deal_id = FlashDeal::where(['status'=>1])->where(['deal_type'=>'feature_deal'])->pluck('id')->first();
-            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id',$featured_deal_id)->pluck('product_id')->toArray();
+            $featured_deal_id = FlashDeal::where(['status' => 1])->where(['deal_type' => 'feature_deal'])->pluck('id')->first();
+            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id', $featured_deal_id)->pluck('product_id')->toArray();
             $query = Product::with([
-                'reviews','seller.shop',
-                'wishList'=>function($query){
+                'reviews',
+                'seller.shop',
+                'wishList' => function ($query) {
                     return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
                 },
-                'compareList'=>function($query){
+                'compareList' => function ($query) {
                     return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
                 }
             ])->active()->withCount('reviews')->whereIn('id', $featured_deal_product_ids);
         }
         if ($request['data_from'] == 'search') {
             $key = explode(' ', $request['name']);
-                $product_ids = Product::with([
-                    'seller.shop',
-                    'wishList'=>function($query){
-                        return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
-                    },
-                    'compareList'=>function($query){
-                        return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
-                    }
-                ])
+            $product_ids = Product::with([
+                'seller.shop',
+                'wishList' => function ($query) {
+                    return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
+                },
+                'compareList' => function ($query) {
+                    return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
+                }
+            ])
                 ->where(function ($q) use ($key) {
                     foreach ($key as $value) {
                         $q->orWhere('name', 'like', "%{$value}%")
-                            ->orWhereHas('tags',function($query)use($value){
+                            ->orWhereHas('tags', function ($query) use ($value) {
                                 $query->where('tag', 'like', "%{$value}%");
                             });
                     }
                 })->pluck('id');
 
-            if($product_ids->count()==0)
-            {
+            if ($product_ids->count() == 0) {
                 $product_ids = Translation::where('translationable_type', 'App\Models\Product')
                     ->where('key', 'name')
                     ->where(function ($q) use ($key) {
@@ -637,16 +763,17 @@ public function filtercolorProduct(Request $request)
         }
         if ($request['data_from'] == 'discounted') {
             $query = Product::with([
-                'reviews','seller.shop',
-                'wishList'=>function($query){
+                'reviews',
+                'seller.shop',
+                'wishList' => function ($query) {
                     return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
                 },
-                'compareList'=>function($query){
+                'compareList' => function ($query) {
                     return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
                 }
             ])->active()->withCount('reviews')->where('discount', '!=', 0);
         }
-        if(!$request['data_from'] && !$request['name'] && $request['ratings']){
+        if (!$request['data_from'] && !$request['name'] && $request['ratings']) {
             $query = $query ?? $porduct_data;
         }
         if ($request['sort_by'] == 'latest') {
@@ -665,9 +792,8 @@ public function filtercolorProduct(Request $request)
         if ($request['min_price'] != null || $request['max_price'] != null) {
             $fetched = $fetched->whereBetween('unit_price', [Helpers::convert_currency_to_usd($request['min_price']), Helpers::convert_currency_to_usd($request['max_price'])]);
         }
-        if ($request['ratings'] != null)
-        {
-            $fetched->with('rating')->whereHas('rating', function($query) use($request){
+        if ($request['ratings'] != null) {
+            $fetched->with('rating')->whereHas('rating', function ($query) use ($request) {
                 return $query;
             });
         }
@@ -688,44 +814,43 @@ public function filtercolorProduct(Request $request)
         $rating_4 = 0;
         $rating_5 = 0;
 
-        foreach($common_query->get() as $rating){
-            if(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >0 && $rating->rating[0]['average'] <2)){
+        foreach ($common_query->get() as $rating) {
+            if (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] > 0 && $rating->rating[0]['average'] < 2)) {
                 $rating_1 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >=2 && $rating->rating[0]['average'] <3)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >= 2 && $rating->rating[0]['average'] < 3)) {
                 $rating_2 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >=3 && $rating->rating[0]['average'] <4)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >= 3 && $rating->rating[0]['average'] < 4)) {
                 $rating_3 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >=4 && $rating->rating[0]['average'] <5)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >= 4 && $rating->rating[0]['average'] < 5)) {
                 $rating_4 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] == 5)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] == 5)) {
                 $rating_5 += 1;
             }
         }
         $ratings = [
-            'rating_1'=>$rating_1,
-            'rating_2'=>$rating_2,
-            'rating_3'=>$rating_3,
-            'rating_4'=>$rating_4,
-            'rating_5'=>$rating_5,
+            'rating_1' => $rating_1,
+            'rating_2' => $rating_2,
+            'rating_3' => $rating_3,
+            'rating_4' => $rating_4,
+            'rating_5' => $rating_5,
         ];
 
         $products = $common_query->paginate(20)->appends($data);
 
-        if ($request['ratings'] != null)
-        {
-            $products = $products->map(function($product) use($request){
+        if ($request['ratings'] != null) {
+            $products = $products->map(function ($product) use ($request) {
                 $product->rating = $product->rating->pluck('average')[0];
                 return $product;
             });
-            $products = $products->where('rating','>=',$request['ratings'])
-                ->where('rating','<',$request['ratings']+1)
+            $products = $products->where('rating', '>=', $request['ratings'])
+                ->where('rating', '<', $request['ratings'] + 1)
                 ->paginate(20)->appends($data);
         }
 
         if ($request->ajax()) {
             return response()->json([
-                'total_product'=>$products->total(),
-                'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','product_ids'))->render(),
+                'total_product' => $products->total(),
+                'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products', 'product_ids'))->render(),
             ], 200);
         }
         if ($request['data_from'] == 'category') {
@@ -733,9 +858,9 @@ public function filtercolorProduct(Request $request)
         }
         if ($request['data_from'] == 'brand') {
             $brand_data = Brand::active()->find((int)$request['id']);
-            if($brand_data) {
+            if ($brand_data) {
                 $data['brand_name'] = $brand_data->name;
-            }else {
+            } else {
                 Toastr::warning(translate('not_found'));
                 return redirect('/');
             }
@@ -748,27 +873,30 @@ public function filtercolorProduct(Request $request)
     {
 
         $tag_category = [];
-        if($request->data_from == 'category')
-        {
-            $tag_category = Category::where('id',$request->id)->select('id', 'name')->get();
+        if ($request->data_from == 'category') {
+            $tag_category = Category::where('id', $request->id)->select('id', 'name')->get();
         }
 
         $tag_brand = [];
-        if($request->data_from == 'brand')
-        {
-            $tag_brand = Brand::where('id', $request->id)->select('id','name')->get();
+        if ($request->data_from == 'brand') {
+            $tag_brand = Brand::where('id', $request->id)->select('id', 'name')->get();
         }
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
         $porduct_data = Product::active()->withSum('orderDetails', 'qty', function ($query) {
-                            $query->where('delivery_status', 'delivered');
-                        })
-                        ->with(['category','reviews','rating','wishList'=>function($query){
-                            return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
-                        },
-                        'compareList'=>function($query){
-                            return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
-                        }])->withCount('reviews');
+            $query->where('delivery_status', 'delivered');
+        })
+            ->with([
+                'category',
+                'reviews',
+                'rating',
+                'wishList' => function ($query) {
+                    return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
+                },
+                'compareList' => function ($query) {
+                    return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
+                }
+            ])->withCount('reviews');
 
         $product_ids = [];
         if ($request['data_from'] == 'category') {
@@ -851,24 +979,24 @@ public function filtercolorProduct(Request $request)
 
         if ($request->has('shop_id') && $request['shop_id'] == 0) {
             $query = Product::active()
-                    ->with(['reviews'])
-                    ->withCount('reviews')
-                    ->where(['added_by'=>'admin','featured'=>1]);
-        }elseif($request->has('shop_id') && $request['shop_id'] != 0){
+                ->with(['reviews'])
+                ->withCount('reviews')
+                ->where(['added_by' => 'admin', 'featured' => 1]);
+        } elseif ($request->has('shop_id') && $request['shop_id'] != 0) {
             $query = Product::active()
-                        ->withCount('reviews')
-                        ->where(['added_by' => 'seller', 'featured' => 1])
-                        ->with(['reviews', 'seller.shop' => function($query) use ($request) {
-                            $query->where('id', $request->shop_id);
-                        }])
-                        ->whereHas('seller.shop', function($query) use ($request) {
-                            $query->where('id', $request->shop_id)->whereNotNull('id');
-                        });
+                ->withCount('reviews')
+                ->where(['added_by' => 'seller', 'featured' => 1])
+                ->with(['reviews', 'seller.shop' => function ($query) use ($request) {
+                    $query->where('id', $request->shop_id);
+                }])
+                ->whereHas('seller.shop', function ($query) use ($request) {
+                    $query->where('id', $request->shop_id)->whereNotNull('id');
+                });
         }
 
         if ($request['data_from'] == 'featured_deal') {
-            $featured_deal_id = FlashDeal::where(['status'=>1])->where(['deal_type'=>'feature_deal'])->pluck('id')->first();
-            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id',$featured_deal_id)->pluck('product_id')->toArray();
+            $featured_deal_id = FlashDeal::where(['status' => 1])->where(['deal_type' => 'feature_deal'])->pluck('id')->first();
+            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id', $featured_deal_id)->pluck('product_id')->toArray();
             $query = Product::with(['reviews'])->active()->whereIn('id', $featured_deal_product_ids);
         }
 
@@ -877,7 +1005,7 @@ public function filtercolorProduct(Request $request)
             $product_ids = Product::where(function ($q) use ($key) {
                 foreach ($key as $value) {
                     $q->orWhere('name', 'like', "%{$value}%")
-                        ->orWhereHas('tags',function($query)use($value){
+                        ->orWhereHas('tags', function ($query) use ($value) {
                             $query->where('tag', 'like', "%{$value}%");
                         });
                 }
@@ -887,14 +1015,13 @@ public function filtercolorProduct(Request $request)
                 $q->orWhere('name', 'like', "%{$request['name']}%");
             })->whereHas('seller', function ($query) {
                 return $query->where(['status' => 'approved']);
-            })->with('products', function($query){
+            })->with('products', function ($query) {
                 return $query->active()->where('added_by', 'seller');
             })->get();
 
             $seller_products = [];
-            foreach($sellers as $seller){
-                if(isset($seller->product) && $seller->product->count() > 0)
-                {
+            foreach ($sellers as $seller) {
+                if (isset($seller->product) && $seller->product->count() > 0) {
                     $ids = $seller->product->pluck('id');
                     array_push($seller_products, ...$ids);
                 }
@@ -910,8 +1037,7 @@ public function filtercolorProduct(Request $request)
             $product_ids = $product_ids->merge($seller_products)->merge($inhouse_product);
 
 
-            if($product_ids->count()==0)
-            {
+            if ($product_ids->count() == 0) {
                 $product_ids = Translation::where('translationable_type', 'App\Models\Product')
                     ->where('key', 'name')
                     ->where(function ($q) use ($key) {
@@ -923,7 +1049,6 @@ public function filtercolorProduct(Request $request)
             }
 
             $query = $porduct_data->WhereIn('id', $product_ids);
-
         }
 
         if ($request['data_from'] == 'discounted') {
@@ -954,7 +1079,7 @@ public function filtercolorProduct(Request $request)
         $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
         $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
         $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
-    
+
         $temporaryClose = getWebConfig('temporary_close');
         $inHouseVacation = getWebConfig('vacation_add');
         $inHouseVacationStartDate = $products['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
@@ -962,25 +1087,24 @@ public function filtercolorProduct(Request $request)
         $inHouseVacationStatus = $products['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
         $inHouseTemporaryClose = $products['added_by'] == 'admin' ? $temporaryClose['status'] : false;
 
-        if ($request['ratings'] != null)
-        {
-            $products = $products->map(function($product) use($request){
+        if ($request['ratings'] != null) {
+            $products = $products->map(function ($product) use ($request) {
                 $product->rating = $product->rating->pluck('average')[0];
                 return $product;
             });
-            $products = $products->where('rating','>=',$request['ratings'])
-                ->where('rating','<',$request['ratings']+1)
+            $products = $products->where('rating', '>=', $request['ratings'])
+                ->where('rating', '<', $request['ratings'] + 1)
                 ->paginate(20);
         }
 
         // Categories start
-        $categories = Category::withCount(['product'=>function($query){
-                $query->active();
-            }])->with(['childes' => function ($query) {
-                $query->with(['childes' => function ($query) {
-                    $query->withCount(['subSubCategoryProduct'])->where('position', 2);
-                }])->withCount(['subCategoryProduct'])->where('position', 1);
-            }, 'childes.childes'])
+        $categories = Category::withCount(['product' => function ($query) {
+            $query->active();
+        }])->with(['childes' => function ($query) {
+            $query->with(['childes' => function ($query) {
+                $query->withCount(['subSubCategoryProduct'])->where('position', 2);
+            }])->withCount(['subCategoryProduct'])->where('position', 1);
+        }, 'childes.childes'])
             ->where('position', 0)->get();
         // Categories End
 
@@ -995,7 +1119,7 @@ public function filtercolorProduct(Request $request)
 
         foreach ($colors_collection as $color_json) {
             $color_array = json_decode($color_json, true);
-            if($color_array){
+            if ($color_array) {
                 $colors_in_shop_merge = array_merge($colors_in_shop_merge, $color_array);
             }
         }
@@ -1005,29 +1129,44 @@ public function filtercolorProduct(Request $request)
 
         if ($request->ajax()) {
             return response()->json([
-                'total_product'=>$products->total(),
-                'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','product_ids'))->render(),
+                'total_product' => $products->total(),
+                'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products', 'product_ids'))->render(),
             ], 200);
         }
 
         if ($request['data_from'] == 'brand') {
             $brand_data = Brand::active()->find((int)$request['id']);
-            if(!$brand_data) {
+            if (!$brand_data) {
                 Toastr::warning(translate('not_found'));
                 return redirect('/');
             }
         }
 
-        return view(VIEW_FILE_NAMES['products_view_page'], compact('products','tag_category','tag_brand','product_ids','categories','colors_in_shop','banner', 'sellerVacationStartDate','sellerTemporaryClose','sellerTemporaryClose',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'));
+        return view(VIEW_FILE_NAMES['products_view_page'], compact(
+            'products',
+            'tag_category',
+            'tag_brand',
+            'product_ids',
+            'categories',
+            'colors_in_shop',
+            'banner',
+            'sellerVacationStartDate',
+            'sellerTemporaryClose',
+            'sellerTemporaryClose',
+            'temporaryClose',
+            'inHouseVacation',
+            'inHouseVacationStartDate',
+            'inHouseVacationEndDate',
+            'inHouseVacationStatus',
+            'inHouseTemporaryClose'
+        ));
     }
 
     public function theme_all_purpose(Request $request)
     {
         $request['sort_by'] == null ? $request['sort_by'] == 'latest' : $request['sort_by'];
 
-        $porduct_data = Product::active()->with(['reviews','rating'])->withCount('reviews');
+        $porduct_data = Product::active()->with(['reviews', 'rating'])->withCount('reviews');
 
         $product_ids = [];
         if ($request['data_from'] == 'category') {
@@ -1106,8 +1245,8 @@ public function filtercolorProduct(Request $request)
         }
 
         if ($request['data_from'] == 'featured_deal') {
-            $featured_deal_id = FlashDeal::where(['status'=>1])->where(['deal_type'=>'feature_deal'])->pluck('id')->first();
-            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id',$featured_deal_id)->pluck('product_id')->toArray();
+            $featured_deal_id = FlashDeal::where(['status' => 1])->where(['deal_type' => 'feature_deal'])->pluck('id')->first();
+            $featured_deal_product_ids = FlashDealProduct::where('flash_deal_id', $featured_deal_id)->pluck('product_id')->toArray();
             $query = Product::with(['reviews'])->active()->withCount('reviews')->whereIn('id', $featured_deal_product_ids);
         }
 
@@ -1116,14 +1255,13 @@ public function filtercolorProduct(Request $request)
             $product_ids = Product::where(function ($q) use ($key) {
                 foreach ($key as $value) {
                     $q->orWhere('name', 'like', "%{$value}%")
-                        ->orWhereHas('tags',function($query)use($value){
+                        ->orWhereHas('tags', function ($query) use ($value) {
                             $query->where('tag', 'like', "%{$value}%");
                         });
                 }
             })->pluck('id');
 
-            if($product_ids->count()==0)
-            {
+            if ($product_ids->count() == 0) {
                 $product_ids = Translation::where('translationable_type', 'App\Models\Product')
                     ->where('key', 'name')
                     ->where(function ($q) use ($key) {
@@ -1135,7 +1273,6 @@ public function filtercolorProduct(Request $request)
             }
 
             $query = $porduct_data->WhereIn('id', $product_ids);
-
         }
 
         if ($request['data_from'] == 'discounted') {
@@ -1167,25 +1304,25 @@ public function filtercolorProduct(Request $request)
         $rating_4 = 0;
         $rating_5 = 0;
 
-        foreach($common_query->get() as $rating){
-            if(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >0 && $rating->rating[0]['average'] <2)){
+        foreach ($common_query->get() as $rating) {
+            if (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] > 0 && $rating->rating[0]['average'] < 2)) {
                 $rating_1 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >=2 && $rating->rating[0]['average'] <3)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >= 2 && $rating->rating[0]['average'] < 3)) {
                 $rating_2 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >=3 && $rating->rating[0]['average'] <4)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >= 3 && $rating->rating[0]['average'] < 4)) {
                 $rating_3 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >=4 && $rating->rating[0]['average'] <5)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] >= 4 && $rating->rating[0]['average'] < 5)) {
                 $rating_4 += 1;
-            }elseif(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] == 5)){
+            } elseif (isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] == 5)) {
                 $rating_5 += 1;
             }
         }
         $ratings = [
-            'rating_1'=>$rating_1,
-            'rating_2'=>$rating_2,
-            'rating_3'=>$rating_3,
-            'rating_4'=>$rating_4,
-            'rating_5'=>$rating_5,
+            'rating_1' => $rating_1,
+            'rating_2' => $rating_2,
+            'rating_3' => $rating_3,
+            'rating_4' => $rating_4,
+            'rating_5' => $rating_5,
         ];
         $data = [
             'id' => $request['id'],
@@ -1194,14 +1331,14 @@ public function filtercolorProduct(Request $request)
         ];
         $products_count = $common_query->count();
         $products = $common_query->paginate(4)->appends($data);
-        $categories = Category::withCount(['product'=>function($query){
-                        $query->where(['status'=>'1']);
-                    }])->with(['childes' => function ($sub_query) {
-                        $sub_query->with(['childes' => function ($sub_sub_query) {
-                            $sub_sub_query->withCount(['sub_sub_category_product'])->where('position', 2);
-                        }])->withCount(['sub_category_product'])->where('position', 1);
-                    }, 'childes.childes'])
-                    ->where('position', 0)->get();
+        $categories = Category::withCount(['product' => function ($query) {
+            $query->where(['status' => '1']);
+        }])->with(['childes' => function ($sub_query) {
+            $sub_query->with(['childes' => function ($sub_sub_query) {
+                $sub_sub_query->withCount(['sub_sub_category_product'])->where('position', 2);
+            }])->withCount(['sub_category_product'])->where('position', 1);
+        }, 'childes.childes'])
+            ->where('position', 0)->get();
         // Categories End
         // Colors Start
         $colors_in_shop_merge = [];
@@ -1214,7 +1351,7 @@ public function filtercolorProduct(Request $request)
 
         foreach ($colors_collection as $color_json) {
             $color_array = json_decode($color_json, true);
-            if($color_array){
+            if ($color_array) {
                 $colors_in_shop_merge = array_merge($colors_in_shop_merge, $color_array);
             }
         }
@@ -1224,19 +1361,19 @@ public function filtercolorProduct(Request $request)
 
         if ($request->ajax()) {
             return response()->json([
-                'total_product'=>$products->total(),
-                'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','product_ids'))->render(),
+                'total_product' => $products->total(),
+                'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products', 'product_ids'))->render(),
             ], 200);
         }
 
         if ($request['data_from'] == 'brand') {
             $brand_data = Brand::active()->find((int)$request['id']);
-            if(!$brand_data) {
+            if (!$brand_data) {
                 Toastr::warning(translate('not_found'));
                 return redirect('/');
             }
         }
-        return view(VIEW_FILE_NAMES['products_view_page'], compact('products','product_ids','products_count','categories','colors_in_shop','banner','ratings'));
+        return view(VIEW_FILE_NAMES['products_view_page'], compact('products', 'product_ids', 'products_count', 'categories', 'colors_in_shop', 'banner', 'ratings'));
     }
 
 
@@ -1258,29 +1395,30 @@ public function filtercolorProduct(Request $request)
     // }
 
 
-    public function compare_product_list(Request $request) {
+    public function compare_product_list(Request $request)
+    {
         // Get the product IDs from the query string
         $productIds = $request->input('ids');
-        
+
         // Convert the product IDs into an array
         $productIdsArray = $productIds ? explode(',', $productIds) : [];
-    
+
         // Categories logic
         $categories = Category::withCount(['product' => function ($query) {
             $query->active();
         }])
-        ->with(['childes' => function ($query) {
-            $query->with(['childes' => function ($query) {
-                $query->withCount(['subSubCategoryProduct'])->where('position', 2);
-            }])->withCount(['subCategoryProduct'])->where('position', 1);
-        }, 'childes.childes'])
-        ->where('position', 0)->get();
-    
+            ->with(['childes' => function ($query) {
+                $query->with(['childes' => function ($query) {
+                    $query->withCount(['subSubCategoryProduct'])->where('position', 2);
+                }])->withCount(['subCategoryProduct'])->where('position', 1);
+            }, 'childes.childes'])
+            ->where('position', 0)->get();
+
         // Filter products by selected product IDs and their categories
         $products = !empty($productIdsArray)
             ? Product::whereIn('id', $productIdsArray)
-                      ->whereIn('category_id', $categories->pluck('id')->toArray())
-                      ->get()
+            ->whereIn('category_id', $categories->pluck('id')->toArray())
+            ->get()
             : collect(); // Empty collection if no products are selected
 
         // Return the view with the categories and the filtered products
@@ -1288,22 +1426,29 @@ public function filtercolorProduct(Request $request)
         $product = Product::paginate(10);
 
         $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
-    $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
-    $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+        $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+        $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
 
-    $temporaryClose = getWebConfig('temporary_close');
-    $inHouseVacation = getWebConfig('vacation_add');
-    $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-    $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-    $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-    $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+        $temporaryClose = getWebConfig('temporary_close');
+        $inHouseVacation = getWebConfig('vacation_add');
+        $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
+        $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
+        $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
+        $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
 
 
-        return view(VIEW_FILE_NAMES['product_compare'], compact('categories', 'products',
-        'sellerVacationStartDate','sellerTemporaryClose','sellerVacationEndDate',
-                'temporaryClose','inHouseVacation','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus',
-                'inHouseTemporaryClose'));
+        return view(VIEW_FILE_NAMES['product_compare'], compact(
+            'categories',
+            'products',
+            'sellerVacationStartDate',
+            'sellerTemporaryClose',
+            'sellerVacationEndDate',
+            'temporaryClose',
+            'inHouseVacation',
+            'inHouseVacationStartDate',
+            'inHouseVacationEndDate',
+            'inHouseVacationStatus',
+            'inHouseTemporaryClose'
+        ));
     }
-    
-    
 }
