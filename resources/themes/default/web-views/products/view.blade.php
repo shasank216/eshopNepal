@@ -19,40 +19,51 @@
             {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0.6875 rem;
             ;
         }
+
         .for-count-value {
             {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0.6875 rem;
         }
+
         .for-brand-hover:hover {
             color: var(--web-primary);
         }
+
         .for-hover-label:hover {
             color: var(--web-primary) !important;
         }
+
         .page-item.active .page-link {
             background-color: var(--web-primary) !important;
         }
+
         .for-sorting {
             padding- {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 9px;
         }
+
         .sidepanel {
             {{ Session::get('direction') === 'rtl' ? 'right' : 'left' }}: 0;
         }
+
         .sidepanel .closebtn {
             {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 25 px;
         }
+
         @media (max-width: 360px) {
             .for-sorting-mobile {
                 margin- {{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}: 0% !important;
             }
+
             .for-mobile {
                 margin- {{ Session::get('direction') === 'rtl' ? 'right' : 'left' }}: 10% !important;
             }
         }
+
         @media (max-width: 500px) {
             .for-mobile {
                 margin- {{ Session::get('direction') === 'rtl' ? 'right' : 'left' }}: 27%;
             }
         }
+
         .checkbox-wrapper-48 {
             --gray: #636e72;
             --very-light-gray: #eee;
@@ -60,9 +71,11 @@
             --x-light-gray: #dfe6e9;
             --gradient: linear-gradient(180deg, #1F3C74 0%, #1F3C74 100%);
         }
+
         .checkbox-wrapper-48 label {
             font-size: 1.35em;
         }
+
         /* CORE STYLES */
         .checkbox-wrapper-48 input {
             -webkit-appearance: none;
@@ -76,18 +89,21 @@
             display: none;
             cursor: pointer;
         }
+
         /*.checkbox-wrapper-48 input[type=checkbox] {
-                                                                        border-radius: 0.25em;
-                                                                    }*/
+                                                                                border-radius: 0.25em;
+                                                                            }*/
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
             background: var(--gradient) border-box;
             box-shadow: 0 0 0 0.1em inset #fff;
         }
+
         .checkbox-wrapper-48 input:not(:checked):hover {
             border-color: transparent;
             background: linear-gradient(#fff, #fff) padding-box, var(--gradient) border-box;
         }
+
         .categories_text {
             font-size: 16px;
             font-weight: 500;
@@ -96,9 +112,11 @@
             text-align: left;
             cursor: pointer;
         }
+
         .categories_span {
             color: lightgray;
         }
+
         .header_categories {
             font-size: 20px;
             font-weight: 600;
@@ -107,17 +125,21 @@
             text-align: left;
             color: #774EA5;
         }
+
         .purple-icon {
             color: #774EA5;
         }
+
         .collapse-button {
             cursor: pointer;
             display: flex;
             align-items: center;
         }
+
         .collapse-button .fa {
             margin-left: 10px;
         }
+
         .slider-price-range {
             background-color: #f0f0f0;
             padding: 3px 1rem;
@@ -129,6 +151,7 @@
             letter-spacing: 0.0025em;
             text-align: left;
         }
+
         #priceRange {
             appearance: none;
             /* Standard */
@@ -143,6 +166,7 @@
             border-radius: 5px;
             outline: none;
         }
+
         #priceRange::-webkit-slider-thumb {
             appearance: none;
             -webkit-appearance: none;
@@ -153,6 +177,7 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
         #priceRange::-moz-range-thumb {
             appearance: none;
             -moz-appearance: none;
@@ -163,10 +188,12 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
         .custom-checkbox {
             display: none;
             /* Hide default checkbox */
         }
+
         .custom-checkbox+.form-check-label {
             display: inline-block;
             width: 32px;
@@ -179,6 +206,7 @@
             position: relative;
             cursor: pointer;
         }
+
         .custom-checkbox:checked+.form-check-label::before {
             content: '';
             position: absolute;
@@ -192,41 +220,51 @@
             /* Optional: rounded corners */
             transform: translate(-50%, -50%);
         }
+
         .custom-checkbox:checked+.form-check-label {
             border-color: transparent;
         }
+
         .rating_star span img {
             width: 22px;
             margin-bottom: 7px;
         }
+
         .noUi-target,
         .noUi-connects {
             height: 6px;
         }
+
         .noUi-horizontal .noUi-handle,
         .noUi-touch-area {
             width: 18.48px;
             height: 18px;
             border-radius: 50%;
         }
+
         .noUi-touch-area {
             background: #1F3C74;
         }
+
         .noUi-handle:after,
         .noUi-handle:before {
             background: unset !important;
         }
+
         .noUi-connect {
             background: linear-gradient(90deg, #8974F7 0%, #1F3C74 100%);
         }
+
         .noUi-tooltip {
             display: none;
         }
+
         /* Sorting Products */
         .items-container {
             display: grid;
             gap: 10px;
         }
+
         /*  */
         .button-group button i {
             /* padding: 10px 20px; */
@@ -237,26 +275,32 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
+
         .button-group button.active i {
             color: #1F3C74;
         }
+
         .items-container {
             display: grid;
             gap: 10px;
         }
+
         /*  */
         .w-20 {
             width: 20px;
         }
+
         .h-20 {
             height: 20px;
         }
+
         .sorting-item {
             border-radius: unset !important;
             border: unset !important;
             box-shadow: unset !important;
             background: unset !important;
         }
+
         /* Sorting Products Ends */
     </style>
 @endpush
@@ -275,9 +319,9 @@
                 </span>
             </div>
             <!-- <div>
-                    <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                    <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                </div> -->
+                            <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                            <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                        </div> -->
             <div class="d-flex align-items-center gap-3">
                 <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
                     <input hidden name="data_from" value="{{ $data['data_from'] }}">
@@ -364,7 +408,8 @@
                                     <div class="checkbox-wrapper-48">
                                         <label class="d-flex align-items-center">
                                             <input type="radio" class="mr-2 category-checkbox" name="categories"
-                                                value="{{ $category['id'] }}"  {{ request('id') == $category['id'] ? 'checked' : '' }}>
+                                                value="{{ $category['id'] }}"
+                                                {{ request('id') == $category['id'] ? 'checked' : '' }}>
                                             <p class="m-0 categories_text">{{ $category['name'] }}
                                                 <span class="categories_span">
                                                     {{-- (10) --}}
@@ -935,7 +980,7 @@
         data-name="{{ $data['name'] }}" data-from="{{ $data['data_from'] }}" data-sort="{{ $data['sort_by'] }}"
         data-min-price="{{ $data['min_price'] }}" data-max-price="{{ $data['max_price'] }}"
         data-message="{{ translate('items_found') }}"></span>
-       <!-- Compare Limit Message -->
+    <!-- Compare Limit Message -->
     <div id="compare-limit-message" style="display:none;">
         <span id="compare-message-text">You have already selected 4 products.</span>
         <button class="btn" id="clear-compare-items">Clear Compare Items</button>
@@ -945,7 +990,8 @@
         <a href="{{ url('compare/product') }}">
             Compare <span id="compare-product-count">0</span>
         </a>
-  </div>
+
+    </div>
 @endsection
 @push('script')
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/product-view.js') }}"></script>
@@ -1081,46 +1127,75 @@
     </script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
-        // Define the function for AJAX request
-        function filterProducts() {
-            // Collect all selected category IDs
+        $(document).ready(function() {
+            function filterProducts() {
+                let selectedCategories = [];
+                $('.category-checkbox:checked').each(function() {
+                    selectedCategories.push($(this).val());
+                });
+                let searchTerm = $('#search-input').val(); 
+                // Make AJAX request to filter products
+                $.ajax({
+                    url: "{{ route('products.filter') }}", // Ensure this route is correct
+                    type: 'GET',
+                    data: {
+                        categories: selectedCategories,
+                        search: searchTerm, // Include the search term in the request
+                    },
+                    success: function(response) {
+                        // Replace the content of the items-container with the response HTML
+                        $('#ajax-products').html(response.data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error filtering products:', xhr.responseText);
+                        // Display a user-friendly error message
+                        // alert('An error occurred while filtering products. Please try again.');
+                    },
+                });
+            }
+            // Trigger the AJAX function on page load
+            filterProducts();
+            // Trigger the AJAX function when any category checkbox is changed
+            $('.category-checkbox').on('change', function() {
+                filterProducts();
+            });
+            // Trigger the AJAX function when the search input is changed
+            $('#search-input').on('input', function() {
+                filterProducts();
+            });
+        });
+
+        //AJAX Pagination (products)
+        $(document).on('click', '#ajax-products .pagination a', function(e) {
+            e.preventDefault();
+
+            let url = $(this).attr('href'); 
+
             let selectedCategories = [];
-            $('.category-checkbox:checked').each(function () {
+            $('.category-checkbox:checked').each(function() {
                 selectedCategories.push($(this).val());
             });
-            // Collect the search term
-            let searchTerm = $('#search-input').val(); // Assume there's an input field with ID 'search-input'
-            // Make AJAX request to filter products
+
+            let searchTerm = $('#search-input').val();
+
             $.ajax({
-                url: "{{ route('products.filter') }}", // Ensure this route is correct
+                url: url,
                 type: 'GET',
                 data: {
                     categories: selectedCategories,
-                    search: searchTerm, // Include the search term in the request
+                    search: searchTerm,
                 },
-                success: function (response) {
-                    // Replace the content of the items-container with the response HTML
+                success: function(response) {
                     $('#ajax-products').html(response.data);
+                    $('html, body').animate({
+                        scrollTop: $('#ajax-products').offset().top
+                    }, 500); 
                 },
-                error: function (xhr, status, error) {
-                    console.error('Error filtering products:', xhr.responseText);
-                    // Display a user-friendly error message
-                    // alert('An error occurred while filtering products. Please try again.');
-                },
+                error: function(xhr) {
+                    console.error('Pagination error:', xhr.responseText);
+                }
             });
-        }
-        // Trigger the AJAX function on page load
-        filterProducts();
-        // Trigger the AJAX function when any category checkbox is changed
-        $('.category-checkbox').on('change', function () {
-            filterProducts();
         });
-        // Trigger the AJAX function when the search input is changed
-        $('#search-input').on('input', function () {
-            filterProducts();
-        });
-    });
     </script>
     {{-- brand --}}
     <script>
@@ -1205,23 +1280,24 @@
                 }
             });
         }
+
         function reinitializeFunctionalities() {
             $(document).off('click', '.action-add-to-cart-form-re-init');
             $(document).off('click', '.product-action-add-wishlist');
             $(document).off('click', '.action-product-quick-view');
 
-            $(document).on('click', '.action-add-to-cart-form-re-init', function (e) {
+            $(document).on('click', '.action-add-to-cart-form-re-init', function(e) {
                 e.preventDefault();
                 let productId = $(this).data('product-id');
                 addToCart(productId);
             });
 
-            $(document).on('click', '.product-action-add-wishlist', function () {
+            $(document).on('click', '.product-action-add-wishlist', function() {
                 let id = $(this).data('product-id');
                 addWishlist(id);
             });
 
-            $(document).on('click', '.action-product-quick-view', function () {
+            $(document).on('click', '.action-product-quick-view', function() {
                 let productId = $(this).data('product-id');
                 productQuickView(productId);
             });
@@ -1239,7 +1315,7 @@
                         variation_code: variationCode,
                         quantity: quantity
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.status === 1) {
                             toastr.success(response.message);
                             updateCartUI(response.cart); // Update cart without reload
@@ -1247,7 +1323,7 @@
                             toastr.error('Failed to add product to cart!');
                         }
                     },
-                    error: function () {
+                    error: function() {
                         toastr.error('An error occurred.');
                     }
                 });
@@ -1259,10 +1335,9 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             reinitializeFunctionalities();
         });
-
     </script>
     <script>
         $(document).ready(function() {
@@ -1318,6 +1393,7 @@
                 });
                 return selectedColors;
             }
+
             function updateProducts() {
                 var selectedColors = getSelectedColors();
                 // Debugging: Uncomment to see selected colors in alert

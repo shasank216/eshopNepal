@@ -350,13 +350,13 @@ class ProductListController extends Controller
     public function filterProducts(Request $request)
     {
         $categories = $request->input('categories');
-        $products = Product::whereIn('category_id', $categories)->paginate(15);
+        // $products = Product::whereIn('category_id', $categories)->paginate(10);
         // $categories = $request->input('categories', []);
-        // $products = Product::when(!empty($categories), function ($query) use ($categories) {
-        //     $query->whereIn('category_id', $categories);
-        // })
-        //     ->paginate(10)
-        //     ->appends($request->except('page'));
+        $products = Product::when(!empty($categories), function ($query) use ($categories) {
+            $query->whereIn('category_id', $categories);
+        })
+            ->paginate(10)
+            ->appends($request->except('page'));
         $decimal_point_settings = getWebConfig(name: 'decimal_point_settings');
 
         // Initialize variables that will be used in the view
