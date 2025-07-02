@@ -25,6 +25,13 @@
 
     <meta property="og:description" content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
     <meta property="twitter:description" content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
+    
+    <style>
+        .items-card-container {
+            width: 100% !important;
+        }
+    </style>
+    
 @endpush
 
 @section('content')
@@ -107,14 +114,14 @@
                             </button>
                         </div>
                         <div class="accordion __cate-side-arrordion">
-                            @foreach($categories as $category)
+                            @foreach($categories_product as $category)
                                 <div class="menu--caret-accordion">
-                                    <!-- Parent Category -->
+                                     <!--Parent Category -->
                                     <div class="card-header flex-between">
                                         <div>
                                             <label class="for-hover-label cursor-pointer"
                                                 data-link="{{route('shopView',['id'=> $seller_id,'category_id'=>$category['id']])}}">
-                                                <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
+                                                <input type="checkbox" class="mr-2 category-checkbox d-none" name="categories[]"
                                                     value="{{ $category['id'] }}" {{ in_array($category['id'], request('categories', [])) ? 'checked' : '' }}>
                                                 {{$category['name']}}
                                             </label>
@@ -128,7 +135,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Display child categories of the parent category -->
+                                     <!--Display child categories of the parent category -->
                                     @if($category->childes->count() > 0)
                                         <div class="card-body p-0 ms-2 d--none" id="collapse-{{$category['id']}}">
                                             @foreach($category->childes as $child)
@@ -138,7 +145,7 @@
                                                             <label class="cursor-pointer get-view-by-onclick" data-link="{{ route('shopView',['id'=> $seller_id,'sub_category_id'=>$child['id']]) }}">
                                                                 <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
                                                                     value="{{ $child['id'] }}" {{ in_array($child['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                                {{-- {{$child['name']}} --}}
+                                                                <!--{{$child['name']}}-->
                                                             </label>
                                                         </div>
                                                         <div class="px-2 cursor-pointer menu--caret">
@@ -150,7 +157,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- Display sub-subcategories of the child category -->
+                                                     <!--Display sub-subcategories of the child category -->
                                                     @if($child->childes->count() > 0)
                                                         <div class="card-body p-0 ms-2 d--none" id="collapse-{{$child['id']}}">
                                                             @foreach($child->childes as $ch)
@@ -159,7 +166,7 @@
                                                                         data-link="{{ route('shopView',['id'=> $seller_id,'sub_sub_category_id'=>$ch['id']])}}">
                                                                         <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
                                                                             value="{{ $ch['id'] }}" {{ in_array($ch['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                                        {{-- {{$ch['name']}} --}}
+                                                                        <!--{{$ch['name']}}-->
                                                                     </label>
                                                                 </div>
                                                             @endforeach

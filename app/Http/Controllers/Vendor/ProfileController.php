@@ -74,6 +74,8 @@ class ProfileController extends BaseController
      */
     public function update(VendorRequest $request, string|int $id):JsonResponse
     {
+       
+
         $vendor = $this->vendorRepo->getFirstWhere(['id'=>$id]);
         $this->vendorRepo->update(id:$id,data: $this->vendorService->getVendorDataForUpdate(request:$request,vendor:$vendor));
         return response()->json(['message'=>translate('profile_updated_successfully')]);

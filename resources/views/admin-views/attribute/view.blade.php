@@ -84,7 +84,7 @@
                         <div class="table-responsive">
                             <table id="datatable"
                                    class="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table w-100">
-                                <thead class="thead-light thead-50 text-capitalize">
+                                <thead class="thead-50 text-capitalize">
                                 <tr>
                                     <th>{{ translate('SL') }}</th>
                                     <th class="text-center">{{ translate('attribute_Name') }} </th>
