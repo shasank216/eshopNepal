@@ -30,13 +30,13 @@
 
                     <div class="card py-1 mt-3" style="max-width: 300px;">
                         <form class="card-body p-3 needs-validation" action="{{ route('customer.auth.forgot-password') }}"
-                            method="post">
+                              method="post">
                             @csrf
 
                             <div class="form-group mb-2">
                                 <label for="recover_type" class="small mb-1">Recover Type</label>
                                 <select name="recover_type" id="recover_type" class="form-control form-control-sm">
-                                    <option value="email">Email</option>
+                                    <option value="email" selected>Email</option>
                                     <option value="phone">Phone</option>
                                 </select>
                             </div>
@@ -44,7 +44,8 @@
                             <div id="email_section" class="form-group mb-2">
                                 <label for="recover-email" class="small mb-1">{{ translate('email_address') }}</label>
                                 <input class="form-control form-control-sm" type="email" name="identity"
-                                    id="recover-email" required placeholder="{{ translate('ex') }}: demo@example.com">
+                                       id="recover-email" required
+                                       placeholder="{{ translate('ex') }}: demo@example.com">
                                 <div class="invalid-feedback small">
                                     {{ translate('please_provide_valid_email_address.') }}
                                 </div>
@@ -52,8 +53,9 @@
 
                             <div id="phone_section" class="form-group mb-2 d-none">
                                 <label for="recover-phone" class="small mb-1">{{ translate('phone_number') }}</label>
-                                <input class="form-control form-control-sm" type="tel" name="identity"
-                                    id="recover-phone" placeholder="{{ translate('ex') }}: 9800000000">
+                                <input class="form-control form-control-sm" type="tel"
+                                       id="recover-phone"
+                                       placeholder="{{ translate('ex') }}: 9800000000">
                                 <div class="invalid-feedback small">
                                     {{ translate('please_provide_valid_phone_number.') }}
                                 </div>
@@ -82,12 +84,12 @@
 
                     <div class="card py-2 mt-4">
                         <form class="card-body needs-validation" action="{{ route('customer.auth.forgot-password') }}"
-                            method="post">
+                              method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="recover-email">{{ translate('phone_number') }}</label>
+                                <label for="recover-phone">{{ translate('phone_number') }}</label>
                                 <input class="form-control" type="text" name="identity" required
-                                    placeholder="{{ translate('enter_your_phone_number') }}">
+                                       placeholder="{{ translate('enter_your_phone_number') }}">
                                 <div class="invalid-feedback">
                                     {{ translate('please_provide_valid_phone_number') }}
                                 </div>
@@ -101,15 +103,16 @@
     </div>
 @endsection
 
+@push('script')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const recoverType = document.getElementById("recover_type");
         const emailSection = document.getElementById("email_section");
         const phoneSection = document.getElementById("phone_section");
         const emailInput = document.getElementById("recover-email");
         const phoneInput = document.getElementById("recover-phone");
 
-        recoverType.addEventListener("change", function() {
+        recoverType.addEventListener("change", function () {
             if (recoverType.value === "email") {
                 emailSection.classList.remove("d-none");
                 phoneSection.classList.add("d-none");
@@ -130,3 +133,4 @@
         });
     });
 </script>
+@endpush
