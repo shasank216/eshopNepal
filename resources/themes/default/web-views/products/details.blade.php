@@ -1266,12 +1266,12 @@
                             </button>
                         @else
                             <a href="{{ route('customer.auth.login') }}"
-                                class="btn btn-secondary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} "
+                                class="btn btn-secondary btn-sm btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} "
                                 type="button">
                                 <span class="string-limit">{{ translate('buy_now') }}</span>
                             </a>
                             <a href="{{ route('customer.auth.login') }}"
-                                class="btn btn--primary element-center btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }} action-add-to-cart-form"
+                                class="btn btn--primary btn-sm string-limit btn-gap-{{ Session::get('direction') === 'rtl' ? 'left' : 'right' }}"
                                 type="button" data-update-text="{{ translate('add_to_cart') }}">
                                 <span class="string-limit">{{ translate('add_to_cart') }}</span>
                             </a>
