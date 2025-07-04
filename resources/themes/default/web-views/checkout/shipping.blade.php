@@ -800,7 +800,23 @@
 
         }
 
-        initializePhoneInput(".phone-input-with-country-picker-2", ".country-picker-phone-number-2");
+        // initializePhoneInput(".phone-input-with-country-picker-2", ".country-picker-phone-number-2");
+        // initializePhoneInput(".country-picker-phone-number", ".country-picker-phone-number");
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = document.querySelector(".country-picker-phone-number").value;
+
+            // Step 1: Remove all non-digits
+            let digitsOnly = data.replace(/[^0-9]/g, '');
+
+            // Step 2: Get the last 10 digits (assumed local number length)
+            let localPhone = digitsOnly.slice(-10);
+
+            console.log('Local phone number:', localPhone);
+            document.querySelector(".country-picker-phone-number").value = localPhone;
+            document.querySelector(".country-picker-phone-number-2").value = localPhone;
+        });
+
 
     </script>
 
