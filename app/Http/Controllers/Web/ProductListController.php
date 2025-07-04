@@ -142,6 +142,9 @@ class ProductListController extends Controller
                 }
             })->pluck('id');
 
+            // ✅ Add this log
+            \Log::info('Product IDs from search', ['ids' => $product_ids]);
+
             if ($product_ids->count() == 0) {
                 $product_ids = Translation::where('translationable_type', 'App\Models\Product')
                     ->where('key', 'name')
@@ -153,8 +156,14 @@ class ProductListController extends Controller
                     ->pluck('translationable_id');
             }
 
-            $query = $porduct_data->WhereIn('id', $product_ids);
+            if ($product_ids->count()) {
+                $query = $porduct_data->whereIn('id', $product_ids);
+            } else {
+                // This fallback is missing in your code
+                $query = $porduct_data->whereRaw('0 = 1'); // Show no products
+            }
         }
+
 
         if ($request['data_from'] == 'discounted') {
             $query = Product::with(['reviews'])->withCount('reviews')->active()->where('discount', '!=', 0);
@@ -199,7 +208,7 @@ class ProductListController extends Controller
 
         if ($request->ajax()) {
 
-            $sellerVacationStartDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
+            $sellerVacationStartDate = ($products ['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
             $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;
             $sellerTemporaryClose = ($products['added_by'] == 'seller' && isset($products->seller->shop->temporary_close)) ? $products->seller->shop->temporary_close : false;
 
@@ -347,69 +356,69 @@ class ProductListController extends Controller
     //     ]);
     // }
 
-    public function filterProducts(Request $request)
-    {
-        $categories = $request->input('categories');
-        // $products = Product::whereIn('category_id', $categories)->paginate(10);
-        // $categories = $request->input('categories', []);
-        $products = Product::when(!empty($categories), function ($query) use ($categories) {
-            $query->whereIn('category_id', $categories);
-        })
-            ->paginate(10)
-            ->appends($request->except('page'));
-        $decimal_point_settings = getWebConfig(name: 'decimal_point_settings');
+    // public function filterProducts(Request $request)
+    // {
+    //     $categories = $request->input('categories');
+    //     // $products = Product::whereIn('category_id', $categories)->paginate(10);
+    //     // $categories = $request->input('categories', []);
+    //     $products = Product::when(!empty($categories), function ($query) use ($categories) {
+    //         $query->whereIn('category_id', $categories);
+    //     })
+    //         ->paginate(10)
+    //         ->appends($request->except('page'));
+    //     $decimal_point_settings = getWebConfig(name: 'decimal_point_settings');
 
-        // Initialize variables that will be used in the view
-        $sellerVacationStartDate = null;
-        $sellerVacationEndDate = null;
-        $sellerTemporaryClose = false; // Initialize the variable
+    //     // Initialize variables that will be used in the view
+    //     $sellerVacationStartDate = null;
+    //     $sellerVacationEndDate = null;
+    //     $sellerTemporaryClose = false; // Initialize the variable
 
-        $temporaryClose = getWebConfig('temporary_close');
-        $inHouseVacation = getWebConfig('vacation_add');
-        $inHouseVacationStartDate = null;
-        $inHouseVacationEndDate = null;
-        $inHouseVacationStatus = false;
-        $inHouseTemporaryClose = false;
+    //     $temporaryClose = getWebConfig('temporary_close');
+    //     $inHouseVacation = getWebConfig('vacation_add');
+    //     $inHouseVacationStartDate = null;
+    //     $inHouseVacationEndDate = null;
+    //     $inHouseVacationStatus = false;
+    //     $inHouseTemporaryClose = false;
 
-        // If you're only showing one product, you can use first()
-        if ($products->count() > 0) {
-            $product = $products->first();
+    //     // If you're only showing one product, you can use first()
+    //     if ($products->count() > 0) {
+    //         $product = $products->first();
 
-            if ($product->added_by == 'seller' && $product->seller && $product->seller->shop) {
-                $sellerVacationStartDate = $product->seller->shop->vacation_start_date
-                    ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date))
-                    : null;
-                $sellerVacationEndDate = $product->seller->shop->vacation_end_date
-                    ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date))
-                    : null;
-                $sellerTemporaryClose = $product->seller->shop->temporary_close ?? false;
-            }
+    //         if ($product->added_by == 'seller' && $product->seller && $product->seller->shop) {
+    //             $sellerVacationStartDate = $product->seller->shop->vacation_start_date
+    //                 ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date))
+    //                 : null;
+    //             $sellerVacationEndDate = $product->seller->shop->vacation_end_date
+    //                 ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date))
+    //                 : null;
+    //             $sellerTemporaryClose = $product->seller->shop->temporary_close ?? false;
+    //         }
 
-            if ($product->added_by == 'admin') {
-                $inHouseVacationStartDate = $inHouseVacation['vacation_start_date'] ?? null;
-                $inHouseVacationEndDate = $inHouseVacation['vacation_end_date'] ?? null;
-                $inHouseVacationStatus = $inHouseVacation['status'] ?? false;
-                $inHouseTemporaryClose = $temporaryClose['status'] ?? false;
-            }
-        }
+    //         if ($product->added_by == 'admin') {
+    //             $inHouseVacationStartDate = $inHouseVacation['vacation_start_date'] ?? null;
+    //             $inHouseVacationEndDate = $inHouseVacation['vacation_end_date'] ?? null;
+    //             $inHouseVacationStatus = $inHouseVacation['status'] ?? false;
+    //             $inHouseTemporaryClose = $temporaryClose['status'] ?? false;
+    //         }
+    //     }
         
 
-        return response()->json([
-            'data' => view('web-views.products._ajax-products', compact(
-                'products',
-                'decimal_point_settings',
-                'sellerVacationStartDate',
-                'sellerVacationEndDate',
-                'sellerTemporaryClose', // Now properly defined
-                'temporaryClose',
-                'inHouseVacation',
-                'inHouseVacationStartDate',
-                'inHouseVacationEndDate',
-                'inHouseVacationStatus',
-                'inHouseTemporaryClose'
-            ))->render()
-        ]);
-    }
+    //     return response()->json([
+    //         'data' => view('web-views.products._ajax-products', compact(
+    //             'products',
+    //             'decimal_point_settings',
+    //             'sellerVacationStartDate',
+    //             'sellerVacationEndDate',
+    //             'sellerTemporaryClose', // Now properly defined
+    //             'temporaryClose',
+    //             'inHouseVacation',
+    //             'inHouseVacationStartDate',
+    //             'inHouseVacationEndDate',
+    //             'inHouseVacationStatus',
+    //             'inHouseTemporaryClose'
+    //         ))->render()
+    //     ]);
+    // }
     public function filterBrand(Request $request)
     {
         // Get the brand IDs from the request
