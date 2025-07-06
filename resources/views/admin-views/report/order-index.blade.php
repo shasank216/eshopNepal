@@ -46,6 +46,20 @@
                                 <label>{{ ucwords(translate('end_date'))}}</label>
                             </div>
                         </div>
+                        <div class="col-sm-6 col-md-3">
+                            <select class="form-control" name="order_status">
+                                <option value="all" {{ $order_status == 'all' ? 'selected' : '' }}>{{ translate('all_status') }}</option>
+                                <option value="pending" {{ $order_status == 'pending' ? 'selected' : '' }}>{{ translate('pending') }}</option>
+                                <option value="confirmed" {{ $order_status == 'confirmed' ? 'selected' : '' }}>{{ translate('confirmed') }}</option>
+                                <option value="processing" {{ $order_status == 'processing' ? 'selected' : '' }}>{{ translate('processing') }}</option>
+                                <option value="out_for_delivery" {{ $order_status == 'out_for_delivery' ? 'selected' : '' }}>{{ translate('out_for_delivery') }}</option>
+                                <option value="delivered" {{ $order_status == 'delivered' ? 'selected' : '' }}>{{ translate('delivered') }}</option>
+                                <option value="returned" {{ $order_status == 'returned' ? 'selected' : '' }}>{{ translate('returned') }}</option>
+                                <option value="failed" {{ $order_status == 'failed' ? 'selected' : '' }}>{{ translate('failed') }}</option>
+                                <option value="canceled" {{ $order_status == 'canceled' ? 'selected' : '' }}>{{ translate('canceled') }}</option>
+                            </select>
+                        </div>
+
                         <div class="col-sm-6 col-md-3 filter-btn">
                             <button type="submit" class="btn btn--primary px-4 px-md-5">
                                 {{translate('filter')}}

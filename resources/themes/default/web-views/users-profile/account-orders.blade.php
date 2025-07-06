@@ -105,10 +105,20 @@
                                         <td class="bodytr">
                                             <div class="text-dark fs-13 font-bold">
                                                 {{-- Live tracking button --}}
-                                                <a href="{{ route('track-driver', ['id'=>$order->id])}}"
-                                                    class="btn-outline--info text-base __action-btn btn-shadow rounded-full" title="{{translate('live_location')}}">
-                                                    <i class="fa fa-map-marker"></i> 
-                                                </a>
+                                                @if($order->order_status === 'out_for_delivery')
+                                                    <a href="{{ route('track-driver', ['id' => $order->id]) }}" target="_blank"
+                                                        class="btn-outline--info text-base __action-btn btn-shadow rounded-full"
+                                                        title="{{ translate('live_location') }}">
+                                                        <i class="fa fa-map-marker"></i>
+                                                    </a>
+                                                @else
+                                                    <a href="javascript:void(0)"
+                                                        class="btn-outline--secondary text-base __action-btn btn-shadow rounded-full disabled"
+                                                        title="Tracking available only when out for delivery"
+                                                        style="pointer-events: none; opacity: 0.5;">
+                                                        <i class="fa fa-map-marker"></i>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </td>
                                         <td class="bodytr">

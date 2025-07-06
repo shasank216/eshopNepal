@@ -243,7 +243,7 @@
                                                                 </label>
                                                                 <input type="text" class="form-control phone-input-with-country-picker-2"
                                                                     id="billing_phone" {{ $billingAddresses->count()==0 ? 'required' : '' }}>
-                                                                <input type="hidden" class="country-picker-phone-number-2 w-50" name="billing_phone" readonly>
+                                                                <input type="hidden" id="shipping_phone_view" class="country-picker-phone-number-2 w-50" name="billing_phone" readonly>
                                                             </div>
                                                         </div>
                                                         @if(!auth('customer')->check())
