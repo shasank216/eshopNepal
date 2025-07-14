@@ -47,6 +47,8 @@ use Laravel\Passport\HasApiTokens;
  * @property $temp_block_time
  * @property string|null $referral_code
  * @property int $referred_by
+ * @property string|null $date_of_birth
+ * @property string|null $gender
  *
  * @package App\Models
  */
@@ -95,6 +97,8 @@ class User extends Authenticatable
         'temp_block_time',
         'referral_code',
         'referred_by',
+        'date_of_birth',
+        'gender',
     ];
 
     /**
@@ -147,6 +151,8 @@ class User extends Authenticatable
         'temp_block_time' => 'datetime',
         'referral_code' => 'string',
         'referred_by' => 'integer',
+        'date_of_birth' => 'string',
+        'gender' => 'string',
     ];
 
     // Old Relation: wish_list

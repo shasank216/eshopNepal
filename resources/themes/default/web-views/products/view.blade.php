@@ -410,13 +410,13 @@
                                             <input type="radio" class="mr-2 category-checkbox" name="categories"
                                                 value="{{ $category['id'] }}"
                                                 {{ request('id') == $category['id'] ? 'checked' : '' }}>
-                                            <p class="m-0 categories_text">{{ $category['name'] }}
+
+                                            <a href="{{ route('products', ['data_from' => 'category', 'id' => $category['id'], 'page' => 1]) }}" class="m-0 categories_text text-decoration-none text-dark">
+                                                {{ $category['name'] }}
                                                 <span class="categories_span">
-                                                    {{-- (10) --}}
                                                     ({{ $category->products_count }})
-                                                    <!-- Display parent category product count -->
                                                 </span>
-                                            </p>
+                                            </a>
                                         </label>
                                     </div>
                                 @endforeach

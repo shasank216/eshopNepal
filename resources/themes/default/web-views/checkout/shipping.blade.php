@@ -71,7 +71,7 @@
                                                                     <span class="text-danger">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control phone-input-with-country-picker" name="phone" id="phone" {{$shippingAddresses->count()==0?'required':''}}>
-                                                                <input type="hidden" id="shipping_phone_view" class="country-picker-phone-number w-50" name="phone" readonly>
+                                                                {{-- <input type="hidden" id="shipping_phone_view" class="country-picker-phone-number w-50" name="phone" readonly> --}}
                                                             </div>
                                                         </div>
                                                         @if(!auth('customer')->check())
@@ -374,18 +374,18 @@
                 $(inputElement).parent().find('.map-address-alert').removeClass('opacity-0').addClass('opacity-100')
             }
         }
-        // initializePhoneInput(".phone-input-with-country-picker-2", ".country-picker-phone-number-2");
-        // initializePhoneInput(".country-picker-phone-number", ".country-picker-phone-number");
-        document.addEventListener('DOMContentLoaded', () => {
-            const data = document.querySelector(".country-picker-phone-number").value;
-            // Step 1: Remove all non-digits
-            let digitsOnly = data.replace(/[^0-9]/g, '');
-            // Step 2: Get the last 10 digits (assumed local number length)
-            let localPhone = digitsOnly.slice(-10);
-            console.log('Local phone number:', localPhone);
-            document.querySelector(".country-picker-phone-number").value = localPhone;
-            document.querySelector(".country-picker-phone-number-2").value = localPhone;
-        });
+        initializePhoneInput(".phone-input-with-country-picker-2", ".country-picker-phone-number-2");
+        initializePhoneInput(".country-picker-phone-number", ".country-picker-phone-number");
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const data = document.querySelector(".country-picker-phone-number").value;
+        //     // Step 1: Remove all non-digits
+        //     let digitsOnly = data.replace(/[^0-9]/g, '');
+        //     // Step 2: Get the last 10 digits (assumed local number length)
+        //     let localPhone = digitsOnly.slice(-10);
+        //     console.log('Local phone number:', localPhone);
+        //     document.querySelector(".country-picker-phone-number").value = localPhone;
+        //     document.querySelector(".country-picker-phone-number-2").value = localPhone;
+        // });
     </script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/bootstrap-select.min.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/shipping.js') }}"></script>
