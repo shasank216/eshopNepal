@@ -12,6 +12,7 @@ use App\Http\Controllers\Customer\PaymentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
+
 Route::group(['namespace' => 'RestAPI\v4', 'prefix' => 'v4', 'middleware' => ['api_lang']], function () {
     Route::group(['prefix' => 'config'], function () {
         Route::get('/', 'ConfigController@configuration');
@@ -44,22 +45,21 @@ Route::group(['namespace' => 'RestAPI\v4', 'prefix' => 'v4', 'middleware' => ['a
 
     Route::get('common-track-order', 'OrderController@common_track_order');
 
-    Route::group(['prefix' => 'shipping-method','middleware'=>'apiGuestCheck'], function () {
+    Route::group(['prefix' => 'shipping-method', 'middleware' => 'apiGuestCheck'], function () {
         Route::get('detail/{id}', 'ShippingMethodController@get_shipping_method_info');
         Route::get('by-seller/{id}/{seller_is}', 'ShippingMethodController@shipping_methods_by_seller');
         Route::post('choose-for-order', 'ShippingMethodController@choose_for_order');
         Route::get('chosen', 'ShippingMethodController@chosen_shipping_methods');
 
-        Route::get('check-shipping-type','ShippingMethodController@check_shipping_type');
+        Route::get('check-shipping-type', 'ShippingMethodController@check_shipping_type');
     });
 
-     Route::group(['prefix' => 'cart','middleware'=>'apiGuestCheck'], function () {
+    Route::group(['prefix' => 'cart', 'middleware' => 'apiGuestCheck'], function () {
         Route::get('/', 'CartController@cart');
         Route::post('add', 'CartController@add_to_cart');
         Route::put('update', 'CartController@update_cart');
         Route::delete('remove', 'CartController@remove_from_cart');
-        Route::delete('remove-all','CartController@remove_all_from_cart');
-
+        Route::delete('remove-all', 'CartController@remove_all_from_cart');
     });
 
     Route::get('faq', 'GeneralController@faq');
@@ -155,7 +155,7 @@ Route::group(['namespace' => 'RestAPI\v4', 'prefix' => 'v4', 'middleware' => ['a
         Route::get('info', 'CustomerController@info');
         Route::put('update-profile', 'CustomerController@update_profile');
         Route::put('cm-firebase-token', 'CustomerController@update_cm_firebase_token');
-        Route::get('account-delete','CustomerController@account_delete');
+        Route::get('account-delete', 'CustomerController@account_delete');
 
         Route::group(['prefix' => 'address'], function () {
             Route::get('get/{id}', 'CustomerController@get_address');
@@ -229,18 +229,18 @@ Route::group(['namespace' => 'RestAPI\v4', 'prefix' => 'v4', 'middleware' => ['a
         });
     });
 
-    Route::group(['prefix' => 'digital-payment','middleware'=>'apiGuestCheck'], function () {
+    Route::group(['prefix' => 'digital-payment', 'middleware' => 'apiGuestCheck'], function () {
         Route::post('/', [PaymentController::class, 'payment']);
     });
 
-    Route::group(['prefix' => 'add-to-fund','middleware'=>'auth:api'], function () {
+    Route::group(['prefix' => 'add-to-fund', 'middleware' => 'auth:api'], function () {
         Route::get('bonus-list', 'UserWalletController@bonus_list');
         Route::post('/', [PaymentController::class, 'customer_add_to_fund_request']);
     });
 
     Route::group(['prefix' => 'order'], function () {
         Route::get('track', 'OrderController@track_order');
-        Route::get('cancel-order','OrderController@order_cancel');
+        Route::get('cancel-order', 'OrderController@order_cancel');
     });
 
     Route::group(['prefix' => 'banners'], function () {
@@ -254,7 +254,7 @@ Route::group(['namespace' => 'RestAPI\v4', 'prefix' => 'v4', 'middleware' => ['a
         Route::get('all', 'SellerController@get_all_sellers');
     });
 
-    Route::group(['prefix' => 'coupon','middleware' => 'auth:api'], function () {
+    Route::group(['prefix' => 'coupon', 'middleware' => 'auth:api'], function () {
         Route::get('apply', 'CouponController@apply');
         Route::get('list', 'CouponController@list');
     });
