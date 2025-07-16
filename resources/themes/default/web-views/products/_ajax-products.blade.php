@@ -32,21 +32,56 @@
     </div>
 @endif
 <script>
-    $(document).ready(function() {
-        // Initial load
-        loadProducts();
+    $(document).ready(function () {
+        // Initial load with current URL parameters
+        loadProducts(window.location.href);
 
-        // Filter change handler with debounce
         let filterTimeout;
-        $('.filter-option').change(function() {
+        $('.filter-option').change(function () {
             clearTimeout(filterTimeout);
-            filterTimeout = setTimeout(loadProducts, 300);
+            filterTimeout = setTimeout(function () {
+                updateURLWithFilters();
+            }, 300);
         });
 
-        // Pagination click handler
-        $(document).on('click', '#pagination-container a', function(e) {
+        // Pagination click
+        $(document).on('click', '#pagination-container a', function (e) {
             e.preventDefault();
             loadProducts($(this).attr('href'));
+            history.pushState(null, '', $(this).attr('href')); // Update URL on pagination
         });
+
+        function updateURLWithFilters() {
+            let params = new URLSearchParams(window.location.search);
+
+            $('.filter-option').each(function () {
+                let name = $(this).attr('name');
+                let value = $(this).val();
+                if (value) {
+                    params.set(name, value);
+                } else {
+                    params.delete(name);
+                }
+            });
+
+            let newUrl = window.location.pathname + '?' + params.toString();
+            history.pushState(null, '', newUrl); // Updates the URL
+            loadProducts(newUrl); // Load filtered products
+        }
+
+        function loadProducts(url = window.location.href) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    $('#product-grid').html(data.view); // Make sure your container has this ID
+                    $('#total-product-count').text(data.total_product);
+                },
+                error: function (xhr) {
+                    console.log('Error loading products:', xhr);
+                }
+            });
+        }
     });
 </script>
+

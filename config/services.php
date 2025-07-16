@@ -47,5 +47,11 @@ return [
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
         'redirect' => env('TWITTER_SERVICE_CALLBACK'),
     ],
+    
+    'alpha_sms' => [
+        'key' => env('ALPHA_SMS_KEY'),
+        'senderid' => env('ALPHA_SMS_SENDERID'),
+        'base_url' => 'https://asp.alpha.com.np/smsapi/index.php',
+    ],
 
 ];

@@ -1,12 +1,9 @@
 @extends('layouts.front-end.app')
-
 @section('title', auth('customer')->user()->f_name.' '.auth('customer')->user()->l_name)
-
 @push('css_or_js')
     <link rel="stylesheet" href="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/css/intlTelInput.css') }}">
     <link rel="stylesheet" href="{{ asset('public/assets/front-end/css/jquery-ui.css') }}">
 @endpush
-
 @section('content')
     <div class="container-fluid py-2 py-md-4 p-0 p-md-2 user-profile-container px-5px">
         <div class="row">
@@ -14,7 +11,6 @@
             <section class="col-lg-9 __customer-profile px-0">
                 <div class="card">
                     <div class="card-body">
-
                         <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
                             <h5 class="font-bold m-0 fs-16">{{ translate('profile_Info') }}</h5>
                             <button class="profile-aside-btn btn btn--primary px-2 rounded px-2 py-1 d-lg-none">
@@ -24,7 +20,6 @@
                                           fill="white"/>
                                 </svg>
                             </button>
-
                             <div class="text-end d-none d-lg-block">
                                 <div class="dropdown">
                                     <button class="btn border border-base px-2 py-1" type="button" data-toggle="dropdown">
@@ -40,7 +35,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="card-inner">
                             <form class="mt-3 px-sm-2 pb-2" action="{{route('user-update')}}" method="post"
                                   id="profile_form"
@@ -80,7 +74,6 @@
                                         <input type="text" class="form-control" id="l_name" name="l_name"
                                                value="{{$customerDetail['l_name']}}">
                                     </div>
-
                                     <div class="form-group col-md-6 mb-0">
                                         <label for="phone" class="mb-2 text-capitalize">
                                             {{ translate('phone_number') }}
@@ -88,36 +81,31 @@
                                         @php($userCountryAndPhone = ($customerDetail['country_code'] ? '+'.$customerDetail['country_code'] : '').$customerDetail['phone'])
                                         <input class="form-control phone-input-with-country-picker" id="phone" type="text"
                                                value="{{ $userCountryAndPhone }}" placeholder="{{ translate('enter_phone_number') }}" required>
-
                                         <div class="">
                                             <input type="hidden" class="country-picker-phone-number w-50" name="phone" value="{{ $customerDetail['phone'] }}" readonly>
                                         </div>
                                     </div>
-
                                     <div class="form-group col-md-6 mb-0">
                                         <label for="inputEmail4"
                                                class="mb-2 text-capitalize">{{translate('email')}} </label>
                                         <input type="email" class="form-control" id="account-email"
                                                value="{{$customerDetail['email']}}" disabled>
                                     </div>
-
                                     <!-- added -->
                                     <div class="form-group col-md-6 mb-0">
                                         <label for="dob" class="mb-2 text-capitalize">D.O.B</label>
-                                        <input type="text" class="form-control" id="dob" name="dob" value="">
+                                        <input type="text" class="form-control" id="dob" name="date_of_birth" value="{{$customerDetail['date_of_birth']}}">
                                     </div>
-                                    
                                     <div class="form-group col-md-6 mb-0">
                                         <label for="gender" class="mb-2 text-capitalize">Gender</label>
                                         <select class="form-control" id="gender" name="gender">
                                             <option value="">Select Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Others">Others</option>
+                                            <option value="Male" {{ old('gender', $customerDetail['gender'] ?? '') == 'Male' ? 'selected' : '' }}>Male</option>
+                                            <option value="Female" {{ old('gender', $customerDetail['gender'] ?? '') == 'Female' ? 'selected' : '' }}>Female</option>
+                                            <option value="Others" {{ old('gender', $customerDetail['gender'] ?? '') == 'Others' ? 'selected' : '' }}>Others</option>
                                         </select>
                                     </div>                                    
                                     <!-- added ends -->
-
                                     {{-- <div class="form-group col-md-6 mb-0">
                                         <label for="si-password"
                                                class="mb-2 text-capitalize">{{translate('new_password')}}</label>
@@ -133,7 +121,6 @@
                                         </div>
                                         <span class="text-danger mx-1 password-error"></span>
                                     </div> --}}
-
                                     {{-- <div class="form-group col-md-6 mb-0">
                                         <label for="newPass"
                                                class="mb-2 text-capitalize">{{translate('confirm_password')}} </label>
@@ -164,21 +151,17 @@
             </section>
         </div>
     </div>
-
     <div class="bottom-sticky_offset"></div>
     <div class="bottom-sticky_ele bg-white d-md-none p-3 ">
         <button type="submit" class="btn btn--primary w-100 update-account-info">
             {{translate('update')}}
         </button>
     </div>
-
 @endsection
-
 @push('script')
     <script src="{{ theme_asset(path: 'public/assets/front-end/plugin/intl-tel-input/js/intlTelInput.js') }}"></script>
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/country-picker-init.js') }}"></script>
     <script src="{{ asset('public/assets/front-end/js/jquery-ui.js') }}"></script>
-
     <script>
         $(document).ready(function() {
             // Initialize datepicker

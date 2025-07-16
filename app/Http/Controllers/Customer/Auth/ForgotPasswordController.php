@@ -91,6 +91,7 @@ class ForgotPasswordController extends Controller
                             $reset_data->save();
                         }
                         $reset_url = url('/') . '/customer/auth/reset-password?token=' . $token;
+                        \Mail::to($customer['email'])->send(new \App\Mail\PasswordResetMail($reset_url));
                         PasswordResetMailEvent::dispatch($customer['email'], $reset_url);
 
                         Toastr::success(translate('Check_your_email').' '.translate('Password_reset_url_sent'));

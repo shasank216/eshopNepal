@@ -246,7 +246,6 @@ class ChattingController extends BaseController
      */
     protected function getRenderMessagesView(object $user, object $message, string $type): array
     {
-       
         $userData = ['name' => $user['f_name'].' '.$user['l_name'],'phone' => $user['country_code'].$user['phone']];
 
         if ($type == 'customer') {

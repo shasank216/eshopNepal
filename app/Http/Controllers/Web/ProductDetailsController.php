@@ -66,7 +66,7 @@ class ProductDetailsController extends Controller
     public function getDefaultTheme(string $slug): View|RedirectResponse
     {
     
-      
+    //   return "hello";
         $product = $this->productRepo->getFirstWhereActive(params: ['slug' => $slug], relations: ['reviews', 'seller.shop']);
         if ($product) {
             $overallRating = getOverallRating(reviews: $product->reviews);

@@ -20,7 +20,7 @@ use App\Models\ShippingAddress;
 use App\Models\SupportTicket;
 use App\Models\Wishlist;
 use App\Traits\CommonTrait;
-use App\User;
+use App\Models\User;
 use App\Utils\CustomerManager;
 use App\Utils\ImageManager;
 use App\Utils\OrderManager;
@@ -162,6 +162,7 @@ class UserProfileController extends Controller
 }
     public function user_update(Request $request)
     {
+        
         $request->validate([
             'f_name' => 'required',
             'l_name' => 'required',
@@ -202,6 +203,8 @@ class UserProfileController extends Controller
             'f_name' => $request['f_name'],
             'l_name' => $request['l_name'],
             'phone' => $request['phone'],
+            'date_of_birth' => $request['date_of_birth'],
+            'gender' => $request['gender'],
             'password' => strlen($request['password']) > 5 ? bcrypt($request['password']) : auth('customer')->user()->password,
         ];
         if (auth('customer')->check()) {

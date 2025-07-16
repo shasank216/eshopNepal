@@ -48,7 +48,7 @@
                                 <ul class="nav nav-tabs w-fit-content mb-2">
                                     @foreach($languages as $language)
                                         <li class="nav-item text-capitalize">
-                                            <a class="nav-link lang-link {{$language == $defaultLanguage? 'active':''}}"
+                                            <a class="nav-link lang-link  {{$language == $defaultLanguage? 'active':''}}"
                                             href="javascript:"
                                             id="{{$language}}-link">{{ getLanguageName($language).'('.strtoupper($language).')' }}
                                             </a>
@@ -263,7 +263,7 @@
                                         ?>
                                     <div class="{{ $language != 'en'? 'd-none':''}} lang-form" id="{{ $language}}-form">
                                         <div class="d-flex">
-                                            <h2 class="mb-2 pb-1 text-gulf-blue">{{ $translate[$language]['name']??$product['name']}}</h2>
+                                            <h2 class="mb-2 pb-1 ">{{ $translate[$language]['name']??$product['name']}}</h2>
                                             <a class="btn btn-outline--primary btn-sm square-btn mx-2 w-auto h-25"
                                                title="{{ translate('edit') }}"
                                                href="{{ route('admin.products.update', [$product['id']]) }}">
@@ -271,7 +271,7 @@
                                             </a>
                                         </div>
                                         <div class="">
-                                            <label class="text-gulf-blue font-weight-bold">{{ translate('description').' : ' }}</label>
+                                            <label class=" font-weight-bold">{{ translate('description').' : ' }}</label>
                                             <div class="rich-editor-html-content">
                                                 {!! $translate[$language]['description'] ?? $product['details'] !!}
                                             </div>
@@ -289,11 +289,11 @@
                     <div class="border p-3 mobile-w-100 w-170">
                         <div class="d-flex flex-column mb-1">
                             <h6 class="font-weight-normal text-capitalize">{{ translate('total_sold') }} :</h6>
-                            <h3 class="text-primary fs-18">{{ $product['qtySum'] }}</h3>
+                            <h3 class=" fs-18">{{ $product['qtySum'] }}</h3>
                         </div>
                         <div class="d-flex flex-column">
                             <h6 class="font-weight-normal text-capitalize">{{ translate('total_sold_amount') }} :</h6>
-                            <h3 class="text-primary fs-18">
+                            <h3 class=" fs-18">
                                 {{setCurrencySymbol(amount: usdToDefaultCurrency(amount: ($product['priceSum'] * $product['qtySum']) - $product['discountSum'])) }}
                             </h3>
                         </div>

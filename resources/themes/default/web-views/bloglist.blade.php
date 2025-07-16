@@ -95,7 +95,7 @@
         </nav>
         <hr>
 
-        <div class="container-fluid" style="margin-top: 40px;">
+        <div class="container-fluid px-0" style="margin-top: 40px;">
             <div class="row">
                 <!-- First Row -->
                 @if ($blogs->isEmpty())

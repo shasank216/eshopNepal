@@ -61,6 +61,7 @@ class Seller extends Authenticatable
         'vat_pan_img',
         'registration_cert_img',
         'citizenship_img',
+        'company_cheque_book',
         'address'
     ];
 

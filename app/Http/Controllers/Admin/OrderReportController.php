@@ -24,10 +24,16 @@ class OrderReportController extends Controller
         $from = $request->from;
         $to = $request->to;
         $search = $request->search;
-        $query_param = ['seller_id'=>$seller_id, 'search' => $request->search, 'date_type' => $date_type, 'from' => $from, 'to' => $to];
+         $order_status = $request->order_status ?? 'all';
+        $query_param = ['seller_id'=>$seller_id, 'search' => $request->search, 'date_type' => $date_type, 'from' => $from, 'to' => $to, 'order_status' => $order_status];
         $sellers = Seller::where(['status'=>'approved'])->get();
 
         $chart_data = self::order_report_chart_filter($request);
+        $orders = Order::query();
+
+        if ($order_status !== 'all') {
+            $orders->where('order_status', $order_status);
+        }
 
         $orders = self::all_order_table_data_filter($request);
         $orders = $orders->latest('updated_at')->paginate(Helpers::pagination_limit())->appends($query_param);
@@ -90,7 +96,7 @@ class OrderReportController extends Controller
             'digital_payment' => $digital_payment,
         ];
 
-        return view('admin-views.report.order-index', compact('orders', 'order_count', 'payment_data', 'chart_data', 'due_amount', 'settled_amount', 'sellers', 'seller_id', 'search', 'date_type', 'from', 'to'));
+        return view('admin-views.report.order-index', compact('orders', 'order_count', 'payment_data', 'chart_data', 'due_amount', 'settled_amount', 'sellers', 'seller_id', 'search', 'date_type', 'from', 'to', 'order_status'));
     }
 
     public function order_report_chart_filter($request)
@@ -320,19 +326,23 @@ class OrderReportController extends Controller
         $to = $request['to'];
         $seller_id = $request['seller_id'] ?? 'all';
         $date_type = $request['date_type'] ?? 'this_year';
+        $order_status = $request['order_status'] ?? 'all';
 
         $orders_query = Order::withSum('details', 'tax')
-            ->withSum('details', 'discount')
-            ->when($search, function ($q) use ($search) {
-                $q->orWhere('id', 'like', "%{$search}%");
-            })
-            ->when($seller_id != 'all', function ($query) use ($seller_id) {
-                $query->when($seller_id == 'inhouse', function ($q) {
-                    $q->where(['seller_id' => 1, 'seller_is' => 'admin']);
-                })->when($seller_id != 'inhouse', function ($q) use ($seller_id) {
-                    $q->where(['seller_id' => $seller_id, 'seller_is' => 'seller']);
-                });
+        ->withSum('details', 'discount')
+        ->when($search, function ($q) use ($search) {
+            $q->orWhere('id', 'like', "%{$search}%");
+        })
+        ->when($seller_id != 'all', function ($query) use ($seller_id) {
+            $query->when($seller_id == 'inhouse', function ($q) {
+                $q->where(['seller_id' => 1, 'seller_is' => 'admin']);
+            })->when($seller_id != 'inhouse', function ($q) use ($seller_id) {
+                $q->where(['seller_id' => $seller_id, 'seller_is' => 'seller']);
             });
+        })
+        ->when($order_status !== 'all', function ($query) use ($order_status) {
+            $query->where('order_status', $order_status);
+        });
         return self::date_wise_common_filter($orders_query, $date_type, $from, $to);
     }
 

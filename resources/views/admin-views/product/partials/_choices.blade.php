@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-3">
                 <input type="hidden" name="choice_no[]" value="{{$choice_no[$key]??''}}">
-                <input type="text" class="form-control" name="choice[]" value="{{$choice['title']}}"
+                <input type="text" class="form-control textWhite" name="choice[]" value="{{$choice['title']}}"
                        placeholder="{{translate('choice_Title') }}" readonly>
             </div>
             <div class="col-lg-9">

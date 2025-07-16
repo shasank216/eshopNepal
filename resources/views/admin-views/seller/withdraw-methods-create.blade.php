@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="reset" class="btn btn--secondary mx-2">{{translate('reset')}}</button>
+                            <button type="reset" class="btn mx-2 btn-secondary">{{translate('reset')}}</button>
                             <button type="submit" class="btn btn--primary demo_check">{{translate('submit')}}</button>
                         </div>
                     </div>

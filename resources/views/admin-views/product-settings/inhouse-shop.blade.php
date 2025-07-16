@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <div class="pt-10 rounded bg-position-center bg-soft-secondary"
+                <div class="rounded bg-position-center bg-soft-secondary"
                      data-bg-img="{{ getValidImage(path: 'storage/app/public/shop/'. getWebConfig(name: 'shop_banner'), type:'backend-banner') }}">
                     <div class="media flex-wrap align-items-end gap-3 p-2">
                         <div class="bg-white rounded py-4 px-5 shadow-lg">
