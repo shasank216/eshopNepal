@@ -1133,7 +1133,7 @@
                 $('.category-checkbox:checked').each(function() {
                     selectedCategories.push($(this).val());
                 });
-                let searchTerm = $('#search-input').val(); 
+                let searchTerm = $('#search-input').val();
                 // Make AJAX request to filter products
                 $.ajax({
                     url: "{{ route('products.filter') }}", // Ensure this route is correct
@@ -1169,7 +1169,7 @@
         $(document).on('click', '#ajax-products .pagination a', function(e) {
             e.preventDefault();
 
-            let url = $(this).attr('href'); 
+            let url = $(this).attr('href');
 
             let selectedCategories = [];
             $('.category-checkbox:checked').each(function() {
@@ -1189,7 +1189,7 @@
                     $('#ajax-products').html(response.data);
                     $('html, body').animate({
                         scrollTop: $('#ajax-products').offset().top
-                    }, 500); 
+                    }, 500);
                 },
                 error: function(xhr) {
                     console.error('Pagination error:', xhr.responseText);
