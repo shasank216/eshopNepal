@@ -49,7 +49,7 @@ class NotificationController extends Controller
 
         $orders = Order::where('customer_id', $customer->id)
             ->with(['customer', 'seller'])
-            ->where('order_status',  'out_for_delivery')
+            // ->where('order_status',  'out_for_delivery')
             ->select('id', 'customer_id', 'order_status', 'seller_id', 'created_at')
             ->latest()
             ->get();
