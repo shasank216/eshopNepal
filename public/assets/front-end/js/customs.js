@@ -914,6 +914,7 @@ function addToCart(form_id = 'add-to-cart-form', redirect_to_checkout = false) {
         });
     }
 }
+
 function commonFunctionalityForProductView() {
     // $('.action-buy-now-this-product').on('click', function (){
     //     let id = $(this).data('product-id');

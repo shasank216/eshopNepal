@@ -8124,4 +8124,5 @@
   'you_have_already_denied_refund_status_once' => 'You have already denied refund status once',
   'update_your_bank_details_with_correct_information' => 'Update your bank details with correct information',
   'fegbv' => 'Fegbv',
+  'View Details' => 'View Details',
 );

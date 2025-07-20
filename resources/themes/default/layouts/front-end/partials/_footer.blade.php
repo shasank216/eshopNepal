@@ -6,7 +6,7 @@
 
             <div class="row mt-5 align-items-center subscribe-container">
 
-                <div class="col-md-4 col-sm-6 mt-1">
+                <div class="col-md-6 col-sm-6 mt-1">
 
                     <div class="signup">
 
@@ -16,7 +16,7 @@
 
                 </div>
 
-                <div class="col-md-4 col-sm-6 mt-2 shopping-first">
+                {{-- <div class="col-md-4 col-sm-6 mt-2 shopping-first">
 
                     <div class="shopping">
 
@@ -24,9 +24,9 @@
 
                     </div>
 
-                </div>
+                </div> --}}
 
-                <div class="col-md-4 colsm-12 footer-padding-bottom offset-max-sm--1 pb-3 pt-3 pb-sm-0 __inline-9">
+                <div class="col-md-6 colsm-12 footer-padding-bottom offset-max-sm--1 pb-3 pt-3 pb-sm-0 __inline-9">
 
                     <div class="text-nowrap mb-3 position-relative">
 
@@ -726,7 +726,7 @@
 
                     <div class="container-fluid footer-additional w-100">
 
-                        <div class="footer-additional-content">
+                        {{-- <div class="footer-additional-content">
 
                             <div class="foot-bottom-head text-def">
 
@@ -740,7 +740,7 @@
 
                             </div>
 
-                        </div>
+                        </div> --}}
 
                         <div class="footer-additional-content">
 

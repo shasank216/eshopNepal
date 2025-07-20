@@ -19,7 +19,7 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
 
     Route::group(['prefix' => 'registration', 'namespace' => 'auth'], function () {
         Route::post('/', 'RegisterController@store');
-    	Route::post('verify-otp', 'RegisterController@verifyOtp');
+        Route::post('verify-otp', 'RegisterController@verifyOtp');
     });
     Route::group(['middleware' => ['seller_api_auth']], function () {
         Route::put('language-change', 'SellerController@language_change');
@@ -91,7 +91,6 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
             Route::get('list', 'RefundController@list');
             Route::get('refund-details', 'RefundController@refund_details');
             Route::post('refund-status-update', 'RefundController@refund_status_update');
-
         });
 
         Route::group(['prefix' => 'coupon'], function () {
@@ -171,7 +170,6 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
             Route::get('/', 'ShopController@notification_index');
             Route::get('/view', 'ShopController@seller_notification_view');
         });
-
     });
 
     Route::group(['prefix' => 'products'], function () {
@@ -182,4 +180,3 @@ Route::group(['namespace' => 'RestAPI\v3\seller', 'prefix' => 'v3/seller', 'midd
     Route::post('messages_store', 'ProductController@messages_store');
     Route::get('messages_view/{user_id}', 'ProductController@messages_view');
 });
-

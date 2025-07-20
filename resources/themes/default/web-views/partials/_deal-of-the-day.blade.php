@@ -1,7 +1,6 @@
 @if (isset($product))
     <div class="rtl">
         <div class="row g-4 pt-2 mt-0 pb-2 __deal-of align-items-start">
-
             <div class="col-md-3 col-sm-12">
                 <div class="deal_of_the_day h-100">
                     @if (isset($deal_of_the_day->product))
@@ -32,7 +31,6 @@
                                 <div class="__i-1 bg-transparent text-center mb-0">
                                     <div class="px-0 d-flex flex-column">
                                         <p class="bold-subtitle m-0"> {{ $product->brand->name }}</p>
-
                                         @php($overallRating = getOverallRating($deal_of_the_day->product['reviews']))
                                         @if ($overallRating[0] != 0)
                                             <div class="rating-show">
@@ -60,7 +58,6 @@
                                         </a>
                                         <div
                                             class="mb-3 pt-1 d-flex flex-wrap justify-content-center align-items-center text-center gap-8">
-
                                             @if ($product->discount > 0)
                                                 <p class="product-price m-0">
                                                     {{ webCurrencyConverter(amount: $product->unit_price) }}
@@ -81,11 +78,11 @@
                                                 </p>
                                             @endif
                                         </div>
-                                        <button class="btn btn add-to-cart text-uppercase get-view-by-onclick"
-                                            data-link="{{ route('product', $deal_of_the_day->product->slug) }}">
+                                        <button
+                                            class="btn btn--primary font-bold px-4 rounded-10 text-uppercase w-100 action-buy-now-this-product"
+                                            data-product-id="{{ $product->id }}">
                                             {{ translate('buy_now') }}
                                         </button>
-
                                     </div>
                                 </div>
                             </a>
@@ -99,7 +96,6 @@
                                 </h4>
                             </div>
                             <div class="recommended-product-card mt-0">
-
                                 <a href="{{ route('product', $product->slug) }}">
                                     <div class="d-flex justify-content-center align-items-center __pt-20 __m-20-r">
                                         <div class="position-relative">
@@ -138,7 +134,6 @@
                                                             <span class="review-text">reviews</span>
                                                         </label>
                                                     </span>
-
                                                 </div>
                                             @endif
                                             <h6 class="font-semibold pt-1">
@@ -160,7 +155,7 @@
                                             <button
                                                 class="btn btn--primary font-bold px-4 rounded-10 text-uppercase get-view-by-onclick w-100"
                                                 data-link="{{ route('product', $product->slug) }}">
-                                                {{ translate('buy_now') }}
+                                                {{ translate('View Details') }}
                                             </button>
                                         </div>
                                     </div>
@@ -170,7 +165,6 @@
                     @endif
                 </div>
             </div>
-
             <div class="col-md-9 col-sm-12">
                 <div class="">
                     <div class="d-flex justify-content-between align-items-center mb-4 product-head-border">
@@ -188,7 +182,6 @@
                             </a>
                         </div>
                     </div>
-
                     {{-- <div class="row mt-0 g-2">
                         @foreach ($latest_products as $product)
                             <div class="col-xl-3 col-sm-4 col-md-6 col-lg-4 col-6">
@@ -199,8 +192,6 @@
                         @endforeach
                     </div> --}}
                 </div>
-            
-
                 <div class="owl-theme owl-carousel latest-slider">
                     @foreach ($latest_products as $product)
                         <div>
@@ -214,7 +205,6 @@
                     @endforeach
                 </div>
             </div>
-
         </div>
     </div>
 @endif

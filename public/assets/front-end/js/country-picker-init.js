@@ -36,29 +36,36 @@
 "use strict";
 function initializePhoneInput(selector, outputSelector) {
     const phoneInput = document.querySelector(selector);
+    const defaultCountryCode = $('.system-default-country-code').data('value')?.toLowerCase() || 'np';
 
-    let phoneInputInit = window.intlTelInput(phoneInput, {
-        initialCountry: $('.system-default-country-code').data('value').toLowerCase(),
-        showSelectedDialCode: true,
-        nationalMode: false,
+    if (!phoneInput) return;
+
+    // Strip existing country code from the input if duplicated
+    const defaultDialCode = '+977'; // adjust or fetch based on defaultCountryCode
+    if (phoneInput.value.startsWith(defaultDialCode)) {
+        phoneInput.value = phoneInput.value.replace(defaultDialCode, '');
+    }
+
+    const iti = window.intlTelInput(phoneInput, {
         separateDialCode: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        nationalMode: false,
+        initialCountry: defaultCountryCode,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.min.js"
     });
 
     function updateHiddenField() {
-        const fullNumber = phoneInputInit.getNumber(); // full number with country code
+        const fullNumber = iti.getNumber(); // e.g. +9779811018614
         $(outputSelector).val(fullNumber);
     }
 
-    updateHiddenField();
-
     phoneInput.addEventListener('change', updateHiddenField);
     phoneInput.addEventListener('keyup', updateHiddenField);
+    phoneInput.addEventListener('blur', updateHiddenField);
+    phoneInput.addEventListener('countrychange', updateHiddenField);
 
-    $(".iti__country").on("click", function() {
-        setTimeout(updateHiddenField, 100); // delay needed to allow selection
-    });
+    updateHiddenField();
 }
+
 $(document).ready(function() {
     try {
         initializePhoneInput(".phone-input-with-country-picker", ".country-picker-phone-number");

@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+
 /**
  * Class Notification
  *
@@ -40,14 +41,19 @@ class Notification extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function scopeActive($query):mixed
+    public function scopeActive($query): mixed
     {
         return $query->where('status', 1);
     }
 
     /* notification_seen_by -> notificationSeenBy */
-    public function notificationSeenBy():HasOne
+    public function notificationSeenBy(): HasOne
     {
         return $this->hasOne(NotificationSeen::class, 'notification_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }
