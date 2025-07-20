@@ -26,9 +26,9 @@ class ShopViewController extends Controller
 {
       public function __construct(
         private Product      $product,
-        
+
         private Category     $category,
-       
+
     )
     {
     }
@@ -47,7 +47,7 @@ class ShopViewController extends Controller
     }
 
     public function default_theme($request, $id) {
-        
+
         $business_mode = getWebConfig(name: 'business_mode');
 
         if($id!=0 && $business_mode == 'single') {
@@ -56,12 +56,15 @@ class ShopViewController extends Controller
         }
 
         if ($id != 0) {
-            $shop = Shop::where('id', $id)->first();
+            // $shop = Shop::where('id', $id)->first();
+            $shop = Shop::where('seller_id', $id)->first();
+
             if (!$shop) {
                 Toastr::error(translate('shop_does_not_exist'));
                 return back();
             }else {
-                $active_seller = Seller::approved()->find($shop['seller_id']);
+                // $active_seller = Seller::approved()->find($shop['seller_id']);
+                 $active_seller = Seller::approved()->find($id); // ✅ use $id directly
                 if(!$active_seller) {
                     Toastr::warning(translate('not_found'));
                     return redirect('/');
@@ -69,7 +72,7 @@ class ShopViewController extends Controller
             }
         }
 
-        $id = $id != 0 ? Shop::where('id', $id)->first()->seller_id : $id;
+        // $id = $id != 0 ? Shop::where('id', $id)->first()->seller_id : $id;
 
         $product_ids = Product::active()->when($id == 0, function ($query) {
                 return $query->where(['added_by' => 'admin']);
@@ -116,7 +119,7 @@ class ShopViewController extends Controller
             }
         }
         $categories_product = array_unique($categories);
-        
+
          $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
         // dd($categoriess);
 
@@ -195,15 +198,15 @@ class ShopViewController extends Controller
         $inHouseVacationEndDate = $id == 0 ? $inhouseVacation['vacation_end_date'] : null;
         $inHouseVacationStatus = $id == 0 ? $inhouseVacation['status'] : false;
         $inHouseTemporaryClose = $id == 0 ? $inhouseVacation['status'] : false;
-        
+
         if ($request->ajax()) {
-           
+
             return response()->json([
                 'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','categories'))->render(),
             ], 200);
         }
-       
-        
+
+
         return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','categories_product','currentDate','sellerVacationStartDate','sellerVacationStatus',
             'sellerVacationEndDate','sellerTemporaryClose','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus','inHouseTemporaryClose'))
             ->with('seller_id', $id)
@@ -965,7 +968,7 @@ class ShopViewController extends Controller
     }
 
     public function theme_all_purpose($request, $id){
-       
+
         $business_mode = getWebConfig(name: 'business_mode');
 
         if($id!=0 && $business_mode == 'single') {

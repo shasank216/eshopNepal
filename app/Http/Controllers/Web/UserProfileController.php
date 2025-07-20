@@ -68,8 +68,8 @@ class UserProfileController extends Controller
 
     public function user_account(Request $request)
     {
-      
-      
+
+
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $customerDetail = User::where('id', auth('customer')->id())->first();
         $categories = Category::all();
@@ -82,7 +82,7 @@ class UserProfileController extends Controller
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $customerDetail = User::where('id', auth('customer')->id())->first();
         $categories = Category::all();
-    
+
         return view()->file(resource_path('themes/default/web-views/users-profile/reset_password.blade.php'), compact('customerDetail', 'categories', 'country_restrict_status'));
     }
 
@@ -93,9 +93,9 @@ class UserProfileController extends Controller
     //             'password' => 'required|min:8|same:confirm_password',
     //         ]);
     //     }
-        
 
-      
+
+
 
     //     if (User::where('id', '!=', auth('customer')->id())->where(['phone'=>$request['phone']])->first()) {
     //         Toastr::warning(translate('phone_already_taken'));
@@ -115,7 +115,7 @@ class UserProfileController extends Controller
     //     ]);
 
     //     $userDetails = [
-           
+
     //         'password' => strlen($request['password']) > 5 ? bcrypt($request['password']) : auth('customer')->user()->password,
     //     ];
     //     if (auth('customer')->check()) {
@@ -140,7 +140,7 @@ class UserProfileController extends Controller
                 ->numbers()    // Requires at least one number
                 ->symbols()    // Requires at least one special character
                 ->uncompromised(), // Ensure the password hasn't appeared in data leaks
-           
+
         ],
     ]);
 
@@ -162,7 +162,7 @@ class UserProfileController extends Controller
 }
     public function user_update(Request $request)
     {
-        
+// dd($request->all());
         $request->validate([
             'f_name' => 'required',
             'l_name' => 'required',
@@ -176,16 +176,16 @@ class UserProfileController extends Controller
             'phone.required' => 'Phone is required',
         ]);
 
-        if ($request['password']) {
-            $request->validate([
-                'password' => 'required|same:confirm_password',
-            ]);
-        }
+        // if ($request['password']) {
+        //     $request->validate([
+        //         'password' => 'required|same:confirm_password',
+        //     ]);
+        // }
 
-        if (User::where('id', '!=', auth('customer')->id())->where(['phone'=>$request['phone']])->first()) {
-            Toastr::warning(translate('phone_already_taken'));
-            return back();
-        }
+        // if (User::where('id', '!=', auth('customer')->id())->where(['phone'=>$request['phone']])->first()) {
+        //     Toastr::warning(translate('phone_already_taken'));
+        //     return back();
+        // }
 
         $image = $request->file('image');
 
@@ -205,8 +205,9 @@ class UserProfileController extends Controller
             'phone' => $request['phone'],
             'date_of_birth' => $request['date_of_birth'],
             'gender' => $request['gender'],
-            'password' => strlen($request['password']) > 5 ? bcrypt($request['password']) : auth('customer')->user()->password,
+            // 'password' => strlen($request['password']) > 5 ? bcrypt($request['password']) : auth('customer')->user()->password,
         ];
+
         if (auth('customer')->check()) {
             User::where(['id' => auth('customer')->id()])->update($userDetails);
             Toastr::info(translate('updated_successfully'));
@@ -218,7 +219,7 @@ class UserProfileController extends Controller
 
     public function account_address_add()
     {
-     
+
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $zip_restrict_status = Helpers::get_business_settings('delivery_zip_code_area_restriction');
         $default_location = Helpers::get_business_settings('default_location');
@@ -465,7 +466,7 @@ class UserProfileController extends Controller
         $order_id = $request->query('id');
         return view(VIEW_FILE_NAMES['track_driver'], compact('order_id'));
     }
-    
+
     public function web_live_location(Request $request)
     {
         $request->validate([
@@ -878,18 +879,18 @@ class UserProfileController extends Controller
     //     Toastr::error(translate('invalid_Order_Id_or_phone_Number'));
     //     return redirect()->route('track-order.index', ['order_id' => $request['order_id'], 'phone_number' => $request['phone_number']]);
     // }
-    
+
     public function track_order_result(Request $request)
     {
         $isOrderOnlyDigital = false;
         $user = auth('customer')->user();
         $categories = Category::all();
-    
+
         // Check if the user is logged in or if the order is a guest order
         if (!isset($user)) {
             // If user is not logged in, search for the order
             $order = Order::where('id', $request['order_id'])->first();
-    
+
             if ($order && $order->is_guest) {
                 // Handle guest order
                 $orderDetails = Order::with('shippingAddress')
@@ -900,7 +901,7 @@ class UserProfileController extends Controller
                 $orderDetails = Order::where('id', $request['order_id'])
                     ->first();
             }
-    
+
         } else {
             // If the user is logged in, check for the order associated with the logged-in user
             $order = Order::where('id', $request['order_id'])->first();
@@ -912,7 +913,7 @@ class UserProfileController extends Controller
                         $query->where('customer_id', auth('customer')->id());
                     })->first();
             }
-    
+
             // Handle cases from order details
             if ($request['from_order_details'] == 1) {
                 $orderDetails = Order::where('id', $request['order_id'])
@@ -921,10 +922,10 @@ class UserProfileController extends Controller
                     })->first();
             }
         }
-    
+
         // Get order verification status from config
         $order_verification_status = getWebConfig(name: 'order_verification');
-    
+
         // Check if the order exists and handle POS order cases
         if (isset($orderDetails)) {
             if ($orderDetails['order_type'] == 'POS') {
@@ -936,14 +937,14 @@ class UserProfileController extends Controller
                     translate('_to_know_more_details') . '.');
                 return redirect()->back();
             }
-    
+
             // Check if the order is digital only
             $isOrderOnlyDigital = self::getCheckIsOrderOnlyDigital($orderDetails);
-    
+
             // Return view with order details
             return view(VIEW_FILE_NAMES['track_order'], compact('orderDetails', 'order_verification_status', 'isOrderOnlyDigital', 'categories'));
         }
-    
+
         // If the order ID is invalid, show an error message
         Toastr::error(translate('invalid_Order_Id'));
         return redirect()->route('track-order.index', ['order_id' => $request['order_id']]);
