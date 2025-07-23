@@ -2,7 +2,8 @@
     @if ($web_config['guest_checkout_status'] || auth('customer')->check())
         <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-white" href="{{ route('shop-cart') }}"
             style="border-radius:10px; background: #1F3C74 !important;">
-            <span class="navbar-tool-label  d-flex align-items-center justify-content-center" style="right: -10px;
+            <span class="navbar-tool-label  d-flex align-items-center justify-content-center" id="cart-count"
+                style="right: -10px;
             top: 0.6875rem;
             background-color: #FBB835 !important;
             border: 2px solid white;
@@ -13,16 +14,17 @@
             <i class="navbar-tool-icon czi-cart"></i>
         </a>
         <a class="navbar-tool-text ms-2" href="{{ route('shop-cart') }}">
-            <small class="fw-bold" style="font-size: 14px; font-weight: 600; letter-spacing: 0.005em; color: #303560 !important;">
+            <small class="fw-bold"
+                style="font-size: 14px; font-weight: 600; letter-spacing: 0.005em; color: #303560 !important;">
                 {{ translate('my_cart') }}
             </small>
-            <span class="cart-total-price fs-14" style="letter-spacing: 0.005em; color: #5C5C5C;">
+            <span class="cart-total-price fs-14" style="letter-spacing: 0.005em; color: #5C5C5C;" id="cart-total">
                 {{ webCurrencyConverter(amount: \App\Utils\CartManager::cart_total_applied_discount(\App\Utils\CartManager::get_cart())) }}
             </span>
         </a>
     @else
-        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-white" href="{{ route('customer.auth.login') }}"
-            style="border-radius:10px; background: #1F3C74 !important;">
+        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle text-white"
+            href="{{ route('customer.auth.login') }}" style="border-radius:10px; background: #1F3C74 !important;">
             <span class="navbar-tool-label d-flex align-items-center justify-content-center"
                 style="right: -10px;
     top: 0.6875rem;
@@ -35,7 +37,8 @@
             <i class="navbar-tool-icon czi-cart"></i>
         </a>
         <a class="navbar-tool-text ms-2" href="{{ route('customer.auth.login') }}">
-            <small class="fw-bold" style="font-size: 14px; font-weight: 600; letter-spacing: 0.005em; color: #303560 !important;">{{ translate('my_cart') }}</small>
+            <small class="fw-bold"
+                style="font-size: 14px; font-weight: 600; letter-spacing: 0.005em; color: #303560 !important;">{{ translate('my_cart') }}</small>
             <span class="cart-total-price fs-14" style="letter-spacing: 0.005em; color: #5C5C5C;">
                 {{ webCurrencyConverter(amount: \App\Utils\CartManager::cart_total_applied_discount(\App\Utils\CartManager::get_cart())) }}
             </span>
