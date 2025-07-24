@@ -9,17 +9,17 @@ $(document).on('ready', function () {
     });
 });
 
-$('.submit-login-form').on('click',function (){
+$('.submit-login-form').on('click', function () {
     var response = 1;
-    try{
+    try {
         response = grecaptcha.getResponse();
-    }catch (e) {
+    } catch (e) {
 
     }
     if (response.length === 0) {
         e.preventDefault();
         toastr.error($('#message-please-check-recaptcha').data('text'));
-    }else {
+    } else {
         $.ajaxSetup({
             headers: {
                 'X-XSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -39,28 +39,47 @@ $('.submit-login-form').on('click',function (){
                             ProgressBar: true
                         });
                     }
-                } else if(data.error){
+                } else if (data.error) {
                     toastr.error(data.error, {
                         CloseButton: true,
                         ProgressBar: true
                     });
-                }else if(data.status){
-                    $('.'+data.status+'-message').removeClass('d-none')
-                }else {
+                } else if (data.status) {
+                    $('.' + data.status + '-message').removeClass('d-none')
+                } else {
                     location.href = data.redirectRoute;
                     toastr.success(data.success)
                 }
-            },complete: function () {
+            }, error: function (xhr) {
+                if (xhr.status === 422) {
+                    const errors = xhr.responseJSON.errors;
+                    for (let field in errors) {
+                        if (errors.hasOwnProperty(field)) {
+                            errors[field].forEach(message => {
+                                toastr.error(message, {
+                                    CloseButton: true,
+                                    ProgressBar: true
+                                });
+                            });
+                        }
+                    }
+                } else {
+                    toastr.error('Something went wrong. Please try again.', {
+                        CloseButton: true,
+                        ProgressBar: true
+                    });
+                }
+            }, complete: function () {
                 $('#loading').fadeOut();
             },
         })
     }
 })
-$('.clear-alter-message').on('click',function (){
+$('.clear-alter-message').on('click', function () {
     $('.vendor-suspend').addClass('d-none')
 })
 $('.get-login-recaptcha-verify').on('click', function () {
-    document.getElementById('default_recaptcha_id').src = $(this).data('link') + "/" + Math.random()+'?captcha_session_id=vendorRecaptchaSessionKey';
+    document.getElementById('default_recaptcha_id').src = $(this).data('link') + "/" + Math.random() + '?captcha_session_id=vendorRecaptchaSessionKey';
 });
 
 $('#copyLoginInfo').on('click', function () {

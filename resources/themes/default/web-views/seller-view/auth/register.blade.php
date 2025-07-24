@@ -55,8 +55,7 @@
                                 value="{{ old('phone') }}" id="exampleInputPhone" name="phone"
                                 placeholder="{{ translate('enter_phone_number') }}" required>
                             <div class="">
-                                <input type="text" class="country-picker-phone-number w-50" hidden
-                                    readonly>
+                                <input type="text" class="country-picker-phone-number w-50" hidden readonly>
                             </div>
                         </div>
 
@@ -80,9 +79,9 @@
                             <span class="text-danger">*</span>
                             <div class="form-group mb-0">
                                 <div class="password-toggle rtl">
-                                    <input class="form-control text-align-direction" name="confirm_password" type="password"
-                                        placeholder="{{ translate('repeat_password') }}" id="exampleRepeatPassword"
-                                        required>
+                                    <input class="form-control text-align-direction" name="password_confirmation"
+                                        type="password" placeholder="{{ translate('repeat_password') }}"
+                                        id="exampleRepeatPassword" required>
                                     <label class="password-toggle-btn">
                                         <input class="custom-control-input text-align-direction" type="checkbox">
                                         <i class="tio-hidden password-toggle-indicator"></i>
@@ -94,7 +93,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            
+
                             <div class="text-center">
                                 <img class="__img-125px object-cover" id="viewer"
                                     src="{{ getValidImage(path: 'public/assets/front-end/img/placeholder/user.png', type: 'avatar') }}"
@@ -209,7 +208,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                       
+
                         <div class="col-sm-6 ">
                             <span class="text-danger">*</span>
                             <input type="text" class="form-control form-control-user" id="shop_name" name="shop_name"
@@ -222,7 +221,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="pb-3">
-                                
+
                                 <div class="text-center">
                                     <img class="__img-125px object-cover" id="viewerLogo"
                                         src="{{ getValidImage(path: 'public/assets/front-end/img/placeholder/placeholder-1-1.png', type: 'logo') }}"
@@ -446,11 +445,11 @@
                     'latLng': latlng
                 }, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-                      
+
                         if (results[1]) {
 
                             document.getElementById('address').value = results[1].formatted_address;
-                                // console.log(results[1].formatted_address);
+                            // console.log(results[1].formatted_address);
                             let systemCountryRestrictStatus = $('#system-country-restrict-status').data(
                                 'value');
                             if (systemCountryRestrictStatus) {

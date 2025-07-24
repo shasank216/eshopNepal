@@ -1,11 +1,11 @@
 'use strict';
 
-$('.form-submit').on('click',function (){
+$('.form-submit').on('click', function () {
     let getText = $('#get-confirm-and-cancel-button-text');
-    const getFormId =  $(this).data('form-id');
+    const getFormId = $(this).data('form-id');
     Swal.fire({
         title: getText.data('sure'),
-        text:  getText.data('message'),
+        text: getText.data('message'),
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -23,7 +23,7 @@ $('.form-submit').on('click',function (){
                 }
             });
             $.post({
-                url: $('#'+getFormId).attr('action'),
+                url: $('#' + getFormId).attr('action'),
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -38,18 +38,37 @@ $('.form-submit').on('click',function (){
                                 ProgressBar: true
                             });
                         }
-                    } else if(data.error){
+                    } else if (data.error) {
                         toastr.error(data.error, {
                             CloseButton: true,
                             ProgressBar: true
                         });
-                    }else {
+                    } else {
                         $('.registration-success-modal').modal('show');
                         setTimeout(function () {
                             location.href = data.redirectRoute;
-                        }, 4000);
+                        }, 1000);
                     }
-                },complete: function () {
+                }, error: function (xhr) {
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        for (let field in errors) {
+                            if (errors.hasOwnProperty(field)) {
+                                errors[field].forEach(message => {
+                                    toastr.error(message, {
+                                        CloseButton: true,
+                                        ProgressBar: true
+                                    });
+                                });
+                            }
+                        }
+                    } else {
+                        toastr.error('Something went wrong. Please try again.', {
+                            CloseButton: true,
+                            ProgressBar: true
+                        });
+                    }
+                }, complete: function () {
                     $('#loading').fadeOut();
                 },
             })
