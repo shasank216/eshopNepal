@@ -33,7 +33,7 @@ use App\Models\Seller;
 use App\Models\VendorWallet;
 use App\Models\Shop;
 use App\Utils\ImageManager;
-
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends BaseController
 {
@@ -117,25 +117,32 @@ class RegisterController extends BaseController
 
     public function add(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'email'         => 'required|unique:sellers',
-        //     'shop_address'  => 'required',
-        //     'f_name'        => 'required',
-        //     'l_name'        => 'required',
-        //     'shop_name'     => 'required',
-        //     'phone'         => 'required|unique:sellers',
-        //     'password'      => 'required|min:8',
-        //     'image'         => 'required|mimes:jpg,jpeg,png,gif',
-        //     'logo'          => 'required|mimes:jpg,jpeg,png,gif',
-        //     'banner'        => 'required|mimes:jpg,jpeg,png,gif',
-        //     'bottom_banner' => 'mimes:jpg,jpeg,png,gif',
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'email'         => 'required|unique:sellers',
+            'shop_address'  => 'required',
+            'f_name'        => 'required',
+            'l_name'        => 'required',
+            'shop_name'     => 'required',
+            'phone'         => 'required|unique:sellers',
+            'password'      => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+            ],
+            'image'         => 'required|mimes:jpg,jpeg,png,gif',
+            'logo'          => 'required|mimes:jpg,jpeg,png,gif',
+            'banner'        => 'required|mimes:jpg,jpeg,png,gif',
+            'bottom_banner' => 'mimes:jpg,jpeg,png,gif',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return redirect()->back()
-        //         ->withErrors($validator)
-        //         ->withInput();
-        // }
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
 
         DB::beginTransaction();
         try {
@@ -252,24 +259,24 @@ class RegisterController extends BaseController
         //     // Update the seller's phone verification
         //     Seller::where('phone', $otpRecord->phone)->update(['phone_verified_at' => now()]);
         //     DB::table('otps')->where('id', $otpRecord->id)->delete();
-    
+
         //     // Return a JSON response
         //     return response()->json(
         //         [
         //             'redirectRoute' => route('vendor.auth.login')
         //         ]
         //     );
-        
+
         // }
         if ($otpRecord) {
             // Update the seller's phone verification
             Seller::where('phone', $otpRecord->phone)->update(['phone_verified_at' => now()]);
             DB::table('otps')->where('id', $otpRecord->id)->delete();
-        
+
             // Redirect to vendor login page
             return redirect()->route('vendor.auth.login')->with('success', 'Phone number verified successfully.');
         }
-        
+
         // Show an error message using Toastr
         Toastr::error(translate('invalid_otp'));
         return redirect()->back();

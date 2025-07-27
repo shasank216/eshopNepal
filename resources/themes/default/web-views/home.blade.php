@@ -319,8 +319,8 @@
             }
 
             .carding {
-                 /*width: 247px; */
-                 height: 230px;
+                /*width: 247px; */
+                height: 230px;
                 /*height: 300px;*/
                 /* background-color: color-mix(in srgb, #606BBF, #fff 90%); */
                 border-radius: 15px;
@@ -338,7 +338,7 @@
 
             .product-hover_details .carding {
                 /* top: -25px;
-                                left: -10px; */
+                                                                                                                                                left: -10px; */
                 /* width: 246px; */
                 width: 100%;
                 /* margin-right: 10px; */
@@ -579,8 +579,8 @@
             }
 
             /* .product-card:hover {
-                                transform: scale(1.05);
-                            } */
+                                                                                                                                                transform: scale(1.05);
+                                                                                                                                            } */
 
             .product-category {
                 color: #727272;
@@ -628,7 +628,7 @@
                 color: white;
                 z-index: 3;
                 /* top: 20px;
-                left: -13px; */
+                                                                                                                                left: -13px; */
                 clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
                 box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
             }
@@ -999,7 +999,8 @@
         <section class="container-fluid">
             @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
 
-            <div class="container-fluid pt-5 pb-5 mb-2 px-0 mb-md-4 rtl __inline-35" dir="{{ Session::get('direction') }}">
+            <div class="container-fluid pt-5 pb-5 mb-2 px-0 mb-md-4 rtl __inline-35"
+                dir="{{ Session::get('direction') }}">
                 <div class="d-flex justify-content-between align-items-center mb-14px product-head-border">
                     <div class="text-center mb-2">
                         <span class="for-feature-title __text-22px font-bold text-center">
@@ -1339,7 +1340,6 @@
             // Event listener for the Add to Cart button
             $('.add-to-cart').on('click', function(e) {
                 e.preventDefault();
-                console.log('clicked');
 
                 // Get product ID dynamically from the form
                 var productId = $(this).closest('form').find('input[name="id"]').val();
@@ -1356,14 +1356,19 @@
                     },
                     success: function(response) {
                         if (response.status === 1) {
-                            // console.log(response.cart);
                             toastr.success(response.message);
                             // alert('Product added to cart successfully!'); // You can replace with Toast message or a cart update
                             // You can update your cart UI here, for example, update cart counter, etc.
                             // Reload the page after 1 second
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000); // 1000ms = 1 second delay before reload
+                            $('#cart-count').text(response.cart.total_quantity);
+                            $('#cart-total').text(
+                                'Rs. ' + Number(response.cart.total_cost).toLocaleString(
+                                    'en-IN', {
+                                        maximumFractionDigits: 2
+                                    })
+                            );
+                            $('#cart_items').html(response.cart.html);
+
 
                         } else {
                             // alert('Failed to add product to cart!');
@@ -1378,5 +1383,4 @@
             });
         });
     </script>
-
 @endpush

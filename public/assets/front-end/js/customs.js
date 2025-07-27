@@ -488,6 +488,7 @@ $("#customer-login-form").on('submit', function (e) {
 })
 $("#customer-register-form").on('submit', function (e) {
     e.preventDefault();
+
     $.ajax({
         type: "POST",
         url: $(this).data('action'),
@@ -500,6 +501,12 @@ $("#customer-register-form").on('submit', function (e) {
                 for (let index = 0; index < response.errors.length; index++) {
                     toastr.error(response.errors[index].message);
                 }
+                let captchaImg = $("#default_recaptcha_id");
+                if (captchaImg.length) {
+                    let src = captchaImg.attr("src").split('?')[0];
+                    captchaImg.attr("src", src + "?v=" + new Date().getTime());
+                    $('input[name="default_recaptcha_value_customer_regi"]').val('');
+                }
             } else if (response.error) {
                 toastr.error(response.error);
             } else if (response.status === 1) {
@@ -510,12 +517,24 @@ $("#customer-register-form").on('submit', function (e) {
             }
         },
         error: function () {
+            console.log('err');
+
+            //refresh captcha
+            let captchaImg = $("#default_recaptcha_id");
+            console.log(captchaImg);
+
+            if (captchaImg.length) {
+                let src = captchaImg.attr("src").split('?')[0];
+                captchaImg.attr("src", src + "?v=" + new Date().getTime());
+                $('input[name="default_recaptcha_value_customer_regi"]').val('');
+            }
         },
         complete: function () {
             $("#loading").removeClass("d-grid");
         },
     });
-})
+});
+
 $('.remove-img-row-by-key').on('click', function () {
     let reviewId = $(this).data('review-id')
     let getPhoto = $(this).data('photo')
@@ -972,43 +991,48 @@ function orderSummaryStickyFunction() {
     });
 }
 function cartListQuantityUpdateInit() {
-    $('.action-update-cart-quantity').on('click', function () {
+    $(document).on('click', '.action-update-cart-quantity', function () {
         let cartId = $(this).data('cart-id');
         let productId = $(this).data('product-id');
         let action = $(this).data('action');
         let event = $(this).data('event');
-        updateCartQuantity(cartId, productId, action, event)
-    })
-    $('.action-update-cart-quantity-list').on('click', function () {
+        updateCartQuantity(cartId, productId, action, event);
+    });
+
+    $(document).on('click', '.action-update-cart-quantity-list', function () {
         let minimumOrderQuantity = $(this).data('minimum-order');
         let key = $(this).data('cart-id');
         let increment = $(this).data('increment');
         let event = $(this).data('event');
-        updateCartQuantityList(minimumOrderQuantity, key, increment, event)
-    })
-    $('.action-change-update-cart-quantity-list').on('change', function () {
+        updateCartQuantityList(minimumOrderQuantity, key, increment, event);
+    });
+
+    $(document).on('change', '.action-change-update-cart-quantity-list', function () {
         let minimumOrderQuantity = $(this).data('minimum-order');
         let key = $(this).data('cart-id');
         let increment = $(this).data('increment');
         let event = $(this).data('event');
-        updateCartQuantityList(minimumOrderQuantity, key, increment, event)
-    })
-    $('.action-update-cart-quantity-list-mobile').on('click', function () {
+        updateCartQuantityList(minimumOrderQuantity, key, increment, event);
+    });
+
+    $(document).on('click', '.action-update-cart-quantity-list-mobile', function () {
         let minimumOrderQuantity = $(this).data('minimum-order');
         let key = $(this).data('cart-id');
         let increment = $(this).data('increment');
         let event = $(this).data('event');
-        updateCartQuantityListMobile(minimumOrderQuantity, key, increment, event)
-    })
-    $('.action-change-update-cart-quantity-list-mobile').on('change', function () {
+        updateCartQuantityListMobile(minimumOrderQuantity, key, increment, event);
+    });
+
+    $(document).on('change', '.action-change-update-cart-quantity-list-mobile', function () {
         let minimumOrderQuantity = $(this).data('minimum-order');
         let key = $(this).data('cart-id');
         let increment = $(this).data('increment');
         let event = $(this).data('event');
-        updateCartQuantityListMobile(minimumOrderQuantity, key, increment, event)
-    })
+        updateCartQuantityListMobile(minimumOrderQuantity, key, increment, event);
+    });
 }
-cartListQuantityUpdateInit()
+
+// cartListQuantityUpdateInit()
 function actionCheckoutFunctionInit() {
     $('.action-checkout-function').on('click', function () {
         let getRoute = $('#route-action-checkout-function').data('route');
@@ -1831,7 +1855,7 @@ $('.password-check').on('keyup keypress change click', function () {
 //         });
 //     });
 // });
-// new 
+// new
 // JavaScript/jQuery File
 $(document).ready(function () {
     const maxItems = 4; // Maximum products that can be compared
