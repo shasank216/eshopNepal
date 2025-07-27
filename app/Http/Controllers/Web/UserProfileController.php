@@ -124,6 +124,10 @@ class UserProfileController extends Controller
     // }
     public function user_password_update(Request $request)
     {
+
+        // Toastr::error(translate('Test'));
+        // dd($request->all());
+
         // Validate password with strong password requirements
         $request->validate([
             'password' => [
@@ -136,6 +140,7 @@ class UserProfileController extends Controller
                     ->numbers()    // Requires at least one number
                     ->symbols()    // Requires at least one special character
                     ->uncompromised(), // Ensure the password hasn't appeared in data leaks
+
 
             ],
         ], [
@@ -154,6 +159,27 @@ class UserProfileController extends Controller
             $userDetails = [
                 'password' => bcrypt($request['password']),
             ];
+
+
+
+            ],
+        ], [
+            'password.required' => translate('The_password_is_required'),
+            'password.confirmed' => translate('The_password_confirmation_does_not_match'),
+            'password.min' => translate('The_password_must_be_at_least_8_characters'),
+            'password.mixed' => translate('The_password_must_contain_at_least_one_uppercase_and_one_lowercase_letter'),
+            'password.letters' => translate('The_password_must_contain_at_least_one_letter'),
+            'password.numbers' => translate('The_password_must_contain_at_least_one_number'),
+            'password.symbols' => translate('The_password_must_contain_at_least_one_special_character'),
+            'password.uncompromised' => translate('The_password_has_appeared_in_a_data_breach_and_should_not_be_used'),
+        ]);
+
+        // Only update the password if the user is authenticated
+        if (auth('customer')->check()) {
+            $userDetails = [
+                'password' => bcrypt($request['password']),
+            ];
+
 
             // Update the user's password
             User::where('id', auth('customer')->id())->update($userDetails);
@@ -366,14 +392,15 @@ class UserProfileController extends Controller
 
     public function address_update(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'city' => 'required',
-            'zip' => 'required',
-            'country' => 'required',
-            'address' => 'required',
-        ]);
+        
+        // $request->validate([
+        //     'name' => 'required',
+        //     'phone' => 'required',
+        //     'city' => 'required',
+        //     'zip' => 'required',
+        //     'country' => 'required',
+        //     'address' => 'required',
+        // ]);
 
         $country_restrict_status = Helpers::get_business_settings('delivery_country_restriction');
         $zip_restrict_status = Helpers::get_business_settings('delivery_zip_code_area_restriction');
@@ -402,7 +429,6 @@ class UserProfileController extends Controller
             'is_billing' => $request->is_billing,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'created_at' => now(),
             'updated_at' => now(),
         ];
         if (auth('customer')->check()) {
