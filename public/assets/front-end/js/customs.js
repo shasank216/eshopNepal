@@ -1029,7 +1029,7 @@ function cartListQuantityUpdateInit() {
         let increment = $(this).data('increment');
         let event = $(this).data('event');
         updateCartQuantityListMobile(minimumOrderQuantity, key, increment, event);
-    });
+    });
 }
 
 // cartListQuantityUpdateInit()
