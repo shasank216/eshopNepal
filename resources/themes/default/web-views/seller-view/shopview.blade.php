@@ -1,7 +1,5 @@
 @extends('layouts.front-end.app')
-
 @section('title',translate('shop_Page'))
-
 @push('css_or_js')
     @if($shop['id'] != 0)
         <meta property="og:image" content="{{dynamicStorage(path: 'storage/app/public/shop')}}/{{$shop->image}}"/>
@@ -12,7 +10,6 @@
         <meta property="og:title" content="{{ $shop['name']}} "/>
         <meta property="og:url" content="{{route('shopView',[$shop['id']])}}">
     @endif
-
     @if($shop['id'] != 0)
         <meta property="twitter:card" content="{{dynamicStorage(path: 'storage/app/public/shop')}}/{{$shop->image}}"/>
         <meta property="twitter:title" content="{{route('shopView',[$shop['id']])}}"/>
@@ -22,22 +19,16 @@
         <meta property="twitter:title" content="{{route('shopView',[$shop['id']])}}"/>
         <meta property="twitter:url" content="{{route('shopView',[$shop['id']])}}">
     @endif
-
     <meta property="og:description" content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
     <meta property="twitter:description" content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
-    
     <style>
         .items-card-container {
             width: 100% !important;
         }
     </style>
-    
 @endpush
-
 @section('content')
-
     @php($decimalPointSettings = getWebConfig(name: 'decimal_point_settings'))
-
     <div class="container-fluid py-4 __inline-67">
         <div class="rtl">
             <div class="bg-white __shop-banner-main">
@@ -50,12 +41,9 @@
                          src="{{ getValidImage(path: 'storage/app/public/shop/'.($banner ?? 'banner'), type: 'wide-banner') }}">
                 @endif
                 @include('web-views.seller-view.shop-info-card', ['displayClass' => 'd-none d-md-block max-width-500px'])
-
             </div>
         </div>
-
         @include('web-views.seller-view.shop-info-card', ['displayClass' => 'd-md-none border mt-3'])
-
         <div class="d-flex flex-wrap gap-3 justify-content-sm-between py-4 web-direction">
             <div class="d-flex flex-wrap justify-content-between align-items-center w-max-md-100 me-auto gap-3">
                 <h3 class="widget-title align-self-center font-bold fs-16 my-0">{{translate('categories')}}</h3>
@@ -88,7 +76,6 @@
                         </select>
                     </div>
                 </form>
-
                 <form method="get" action="{{route('shopView',['id'=>$seller_id])}}">
                     <div class="search_form input-group search-form-input-group">
                         <input type="hidden" name="category_id" value="{{request('category_id')}}" >
@@ -102,11 +89,9 @@
                 </form>
             </div>
         </div>
-
         <div class="row rtl">
             <div class="col-lg-3 mr-0 pe-4">
                 <aside class="SearchParameters" id="SearchParameters">
-
                     <div class="__shop-page-sidebar">
                         <div class="cz-sidebar-header">
                             <button class="shop-page-sidebar-close close ms-auto" type="button" data-dismiss="sidebar" aria-label="Close">
@@ -134,7 +119,6 @@
                                             </strong>
                                         </div>
                                     </div>
-
                                      <!--Display child categories of the parent category -->
                                     @if($category->childes->count() > 0)
                                         <div class="card-body p-0 ms-2 d--none" id="collapse-{{$category['id']}}">
@@ -156,7 +140,6 @@
                                                             </strong>
                                                         </div>
                                                     </div>
-
                                                      <!--Display sub-subcategories of the child category -->
                                                     @if($child->childes->count() > 0)
                                                         <div class="card-body p-0 ms-2 d--none" id="collapse-{{$child['id']}}">
@@ -178,13 +161,10 @@
                                     @endif
                                 </div>
                             @endforeach
-
-
                         </div>
                     </div>
                 </aside>
             </div>
-
             <div class="col-lg-9 product-div">
                 @if (count($products) > 0)
                     <div class="row g-3" id="ajax-products">
@@ -200,11 +180,8 @@
                 @endif
             </div>
         </div>
-
     </div>
-
     <span id="shop-sort-by-filter-url" data-url="{{url('/')}}/shopView/{{$shop['id']}}"></span>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -222,10 +199,8 @@
                         @if($shop['id'] != 0)
                             <input value="{{$shop->seller_id}}}" name="seller_id" hidden>
                         @endif
-
                         <textarea name="message" class="form-control min-height-100px max-height-200px" required placeholder="{{ translate('Write_here') }}..."></textarea>
                         <br>
-
                         <div class="justify-content-end gap-2 d-flex flex-wrap">
                             <a href="{{route('chat', ['type' => 'seller'])}}" class="btn btn-soft-primary bg--secondary border">
                                 {{translate('go_to_chatbox')}}
@@ -236,103 +211,52 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
-
     <!-- Compare Limit Message -->
-
     <div id="compare-limit-message" style="display:none;">
-
         <span id="compare-message-text">You have already selected 4 products.</span>
-
         <button class="btn" id="clear-compare-items">Clear Compare Items</button>
-
     </div>
-
-
-
     <!-- Compare Count Display -->
-
     <div class="compare-count" style="display:none;">
-
         <a href="{{ url('compare/product') }}">
-
             Compare <span id="compare-product-count">0</span>
-
         </a>
-
     </div>
-
     <span id="store-request-data-product-name" data-value="{{ request('product_name') }}"></span>
     <span id="store-request-data-category-id" data-value="{{ request('category_id') }}"></span>
     <span id="store-request-data-sub-category-id" data-value="{{ request('sub_category_id') }}"></span>
     <span id="store-request-data-sub-sub-category-id" data-value="{{ request('sub_sub_category_id') }}"></span>
-
 @endsection
 @push('script')
-
 <script>
     $(document).ready(function() {
-
 $('.category-checkbox').on('change', function() {
-
     // Collect all selected category IDs
-
     let selectedCategories = [];
-
-
-
     $('.category-checkbox:checked').each(function() {
-
         selectedCategories.push($(this).val());
-
     });
-
-
-
     // Make AJAX request to filter products
-
     $.ajax({
-
         url: "{{ route('products.filter') }}", // Ensure this route is correct
-
         type: 'GET',
-
         data: {
-
             categories: selectedCategories
-
         },
-
         success: function(response) {
-
             // Replace the content of the items-container with the response HTML
-
             $('#ajax-products').html(response.data);
-
         },
-
         error: function(xhr, status, error) {
-
             // console.error('Error filtering products:', xhr.responseText);
-
             // // Display a user-friendly error message
-
             // alert('An error occurred while filtering products. Please try again.');
-
         }
-
     });
-
 });
-
-
-
 });
 </script>
-
-
 @endpush
-

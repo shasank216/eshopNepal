@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Web;
-
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
@@ -21,23 +19,18 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 class ShopViewController extends Controller
 {
       public function __construct(
         private Product      $product,
-
         private Category     $category,
-
     )
     {
     }
-
     //for seller Shop
     public function seller_shop(Request $request, $id)
     {
         $theme_name = theme_root_path();
-
         return match ($theme_name){
             'default' => self::default_theme($request, $id),
             'theme_aster' => self::theme_aster($request, $id),
@@ -45,20 +38,15 @@ class ShopViewController extends Controller
             'theme_all_purpose' => self::theme_all_purpose($request, $id),
         };
     }
-
     public function default_theme($request, $id) {
-
         $business_mode = getWebConfig(name: 'business_mode');
-
         if($id!=0 && $business_mode == 'single') {
             Toastr::error(translate('access_denied!!'));
             return back();
         }
-
         if ($id != 0) {
             // $shop = Shop::where('id', $id)->first();
             $shop = Shop::where('seller_id', $id)->first();
-
             if (!$shop) {
                 Toastr::error(translate('shop_does_not_exist'));
                 return back();
@@ -71,9 +59,7 @@ class ShopViewController extends Controller
                 }
             }
         }
-
         // $id = $id != 0 ? Shop::where('id', $id)->first()->seller_id : $id;
-
         $product_ids = Product::active()->when($id == 0, function ($query) {
                 return $query->where(['added_by' => 'admin']);
             })
@@ -89,28 +75,22 @@ class ShopViewController extends Controller
                 $seller = Seller::find($id);
                 $total_order = $seller->orders->where('seller_is','seller')->where('order_type','default_type')->count();
             }
-
-
         $products = Product::withCount('reviews')->whereIn('id', $product_ids)->paginate(12);
         //finding category ids
-
         $category_info = [];
         foreach ($products as $product) {
             array_push($category_info, $product['category_ids']);
         }
-
         $category_info_decoded = [];
         foreach ($category_info as $info) {
             array_push($category_info_decoded, json_decode($info));
         }
-
         $category_ids = [];
         foreach ($category_info_decoded as $decoded) {
             foreach ($decoded as $info) {
                 array_push($category_ids, $info->id);
             }
         }
-
         $categories = [];
         foreach ($category_ids as $category_id) {
             $category = Category::with(['childes.childes'])->where('position', 0)->find($category_id);
@@ -119,14 +99,11 @@ class ShopViewController extends Controller
             }
         }
         $categories_product = array_unique($categories);
-
          $categories = $this->category->with('childes.childes')->where(['position' => 0])->priority()->take(14)->get();
         // dd($categoriess);
-
         $products = Product::active()
             ->withCount('reviews')
             ->when($id == 0, function ($query) {
-
                 return $query->where(['added_by' => 'admin']);
             })
             ->when($id != 0, function ($query) use ($id) {
@@ -179,34 +156,27 @@ class ShopViewController extends Controller
                 'sub_sub_category_id'=>$request->sub_sub_category_id,
                 'product_name'=>$request->product_name
             ]);
-
         if ($id == 0) {
             $shop = ['id' => 0, 'name' => Helpers::get_business_settings('company_name')];
         } else {
             $shop = Shop::where('seller_id', $id)->first();
         }
-
         $currentDate = date('Y-m-d');
         $sellerVacationStartDate = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_start_date)) : null;
         $sellerVacationEndDate = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_end_date)) : null;
         $sellerTemporaryClose = $id != 0 ? $shop->temporary_close : false;
         $sellerVacationStatus = $id != 0 ? $shop->vacation_status : false;
-
         $temporaryClose = Helpers::get_business_settings('temporary_close');
         $inhouseVacation = Helpers::get_business_settings('vacation_add');
         $inHouseVacationStartDate = $id == 0 ? $inhouseVacation['vacation_start_date'] : null;
         $inHouseVacationEndDate = $id == 0 ? $inhouseVacation['vacation_end_date'] : null;
         $inHouseVacationStatus = $id == 0 ? $inhouseVacation['status'] : false;
         $inHouseTemporaryClose = $id == 0 ? $inhouseVacation['status'] : false;
-
         if ($request->ajax()) {
-
             return response()->json([
                 'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products','categories'))->render(),
             ], 200);
         }
-
-
         return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','categories_product','currentDate','sellerVacationStartDate','sellerVacationStatus',
             'sellerVacationEndDate','sellerTemporaryClose','inHouseVacationStartDate','inHouseVacationEndDate','inHouseVacationStatus','inHouseTemporaryClose'))
             ->with('seller_id', $id)
@@ -214,15 +184,12 @@ class ShopViewController extends Controller
             ->with('avg_rating', $avg_rating)
             ->with('total_order', $total_order);
     }
-
     public function theme_aster($request, $id){
         $business_mode = getWebConfig(name: 'business_mode');
-
         if($id!=0 && $business_mode == 'single') {
             Toastr::error(translate('access_denied!!'));
             return back();
         }
-
         if ($id != 0) {
             $shop = Shop::where('id', $id)->first();
             if (!$shop) {
@@ -236,10 +203,7 @@ class ShopViewController extends Controller
                 }
             }
         }
-
         $id = $id != 0 ? Shop::where('id', $id)->first()->seller_id : $id;
-
-
         $product_rating = Product::active()->with('rating')
             ->withCount('reviews')
             ->when($id == 0, function ($query) {
@@ -254,7 +218,6 @@ class ShopViewController extends Controller
         $rating_3 = 0;
         $rating_4 = 0;
         $rating_5 = 0;
-
         foreach($product_rating as $rating){
             if(isset($rating->rating[0]['average']) && ($rating->rating[0]['average'] > 0 && $rating->rating[0]['average'] <2)){
                 $rating_1 += 1;
@@ -275,7 +238,6 @@ class ShopViewController extends Controller
             'rating_4'=>$rating_4,
             'rating_5'=>$rating_5,
         ];
-
         $product_ids = Product::active()->when($id == 0, function ($query) {
                 return $query->where(['added_by' => 'admin']);
             })
@@ -286,7 +248,6 @@ class ShopViewController extends Controller
         $reviewData = Review::active()->whereIn('product_id', $product_ids);
         $averageRating = $reviewData->avg('rating');
         $totalReviews = $reviewData->count();
-
         // color & seller wise review start
         $rattingStatusPositive = 0;
         $rattingStatusGood = 0;
@@ -305,8 +266,6 @@ class ShopViewController extends Controller
             'neutral' => $totalReviews != 0 ?($rattingStatusNeutral*100)/ $totalReviews:0,
             'negative' => $totalReviews != 0 ?($rattingStatusNegative*100)/ $totalReviews:0,
         ];
-
-
         if($id == 0){
             $totalOrder = Order::where('seller_is','admin')->where('order_type','default_type')->count();
             $products_for_review = Product::active()->where('added_by', 'admin')->withCount('reviews')->count();
@@ -343,7 +302,6 @@ class ShopViewController extends Controller
         if(auth('customer')->check()){
             $follow_status = ShopFollower::where(['shop_id'=>$id,'user_id'=>auth('customer')->id()])->count();
         }
-
         //finding category ids
         $products = Product::active()
             ->with([
@@ -363,24 +321,20 @@ class ShopViewController extends Controller
                 return $query->where(['added_by' => 'seller'])
                     ->where('user_id', $id);
             })->get();
-
         $category_info = [];
         foreach ($products as $product) {
             array_push($category_info, $product['category_ids']);
         }
-
         $category_info_decoded = [];
         foreach ($category_info as $info) {
             array_push($category_info_decoded, json_decode($info));
         }
-
         $category_ids = [];
         foreach ($category_info_decoded as $decoded) {
             foreach ($decoded as $info) {
                 array_push($category_ids, $info->id);
             }
         }
-
         $categories = [];
         foreach ($category_ids as $category_id) {
             $category = Category::with(['childes.childes'])->where('position', 0)->find($category_id);
@@ -390,26 +344,21 @@ class ShopViewController extends Controller
         }
         $categories = array_unique($categories);
         //end
-
         $brand_info = [];
         foreach ($products as $product) {
             array_push($brand_info, $product['brand_id']);
         }
-
         $brands = Brand::active()->whereIn('id', $brand_info)->withCount('brandProducts')->latest()->get();
-
         foreach($brands as $brand)
         {
             $count = $products->where('brand_id', $brand->id)->count();
             $brand->count = $count;
         }
-
         if ($id == 0) {
             $shop = ['id' => 0, 'name' => Helpers::get_business_settings('company_name')];
         } else {
             $shop = Shop::where('seller_id', $id)->first();
         }
-
         //products search
         $products = Product::active()
             ->with([
@@ -512,25 +461,20 @@ class ShopViewController extends Controller
             ->when($request['brand_id'] != '', function($query) use($request, $id){
                 $query->where(['user_id'=>$id,'brand_id'=>$request->brand_id]);
             });
-
         if ($request['ratings'] != null)
         {
             $products->with('rating')->whereHas('rating', function($query) use($request){
                 return $query;
             });
-
             $products = $products->get();
             $products = $products->map(function($product) use($request){
                 $product->rating = $product->rating->pluck('average')[0];
                 return $product;
             });
-
             $products = $products->where('rating','>=',$request['ratings'])
                 ->where('rating','<',$request['ratings']+1)->paginate(10);
         }
-
         $products = $products->paginate(15);
-
         $data = [
             'id' => $request['id'],
             'name' => $request['name'],
@@ -540,27 +484,23 @@ class ShopViewController extends Controller
             'min_price' => $request['min_price'],
             'max_price' => $request['max_price'],
         ];
-
         $current_date = date('Y-m-d');
         $seller_vacation_start_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_start_date)) : null;
         $seller_vacation_end_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_end_date)) : null;
         $seller_temporary_close = $id != 0 ? $shop->temporary_close : false;
         $seller_vacation_status = $id != 0 ? $shop->vacation_status : false;
-
         $temporary_close = Helpers::get_business_settings('temporary_close');
         $inhouse_vacation = Helpers::get_business_settings('vacation_add');
         $inhouse_vacation_start_date = $id == 0 ? $inhouse_vacation['vacation_start_date'] : null;
         $inhouse_vacation_end_date = $id == 0 ? $inhouse_vacation['vacation_end_date'] : null;
         $inHouseVacationStatus = $id == 0 ? $inhouse_vacation['status'] : false;
         $inhouse_temporary_close = $id == 0 ? $temporary_close['status'] : false;
-
         if ($request->ajax()) {
             return response()->json([
                 'total_product'=>$products->total(),
                 'view' => view(VIEW_FILE_NAMES['products__ajax_partials'], compact('products'))->render(),
             ], 200);
         }
-
         return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','current_date','seller_vacation_start_date','seller_vacation_status',
             'seller_vacation_end_date','seller_temporary_close','inhouse_vacation_start_date','inhouse_vacation_end_date','inHouseVacationStatus','inhouse_temporary_close',
             'products_for_review','featured_products','followers','follow_status','brands','data','ratings','rattingStatusArray'))
@@ -569,15 +509,12 @@ class ShopViewController extends Controller
             ->with('avg_rating', $averageRating)
             ->with('total_order', $totalOrder);
     }
-
     public function theme_fashion($request, $id){
         $business_mode = getWebConfig(name: 'business_mode');
-
         if($id!=0 && $business_mode == 'single') {
             Toastr::error(translate('access_denied!!'));
             return back();
         }
-
         if ($id != 0) {
             $shop = Shop::where('id', $id)->first();
             if (!$shop) {
@@ -591,10 +528,7 @@ class ShopViewController extends Controller
                 }
             }
         }
-
         $id = $id != 0 ? Shop::where('id', $id)->first()->seller_id : $id;
-
-
         $product_ids = Product::active()
             ->when($id == 0, function ($query) {
                 return $query->where(['added_by' => 'admin']);
@@ -607,7 +541,6 @@ class ShopViewController extends Controller
         $reviewData = Review::active()->whereIn('product_id', $product_ids);
         $averageRating = $reviewData->avg('rating');
         $totalReviews = $reviewData->count();
-
         // color & seller wise review start
         $rattingStatusPositive = 0;
         $rattingStatusGood = 0;
@@ -626,14 +559,12 @@ class ShopViewController extends Controller
             'neutral' => $totalReviews != 0 ?($rattingStatusNeutral*100)/ $totalReviews:0,
             'negative' => $totalReviews != 0 ?($rattingStatusNegative*100)/ $totalReviews:0,
         ];
-
         $reviews = $reviewData->take(4)->get();
         $colors_collection = Product::active()->withCount('reviews')->whereIn('id', $product_ids)
             ->where('colors', '!=', '[]')
             ->pluck('colors')
             ->unique()
             ->toArray();
-
         $colors_in_shop_merge = [];
         foreach ($colors_collection as $color_json) {
             $color_array = json_decode($color_json, true);
@@ -641,7 +572,6 @@ class ShopViewController extends Controller
         }
         $colors_in_shop = array_unique($colors_in_shop_merge);
         // color & seller wise review end
-
         if($id == 0){
             $total_order = Order::where('seller_is','admin')->where('order_type','default_type')->count();
             $products_for_review = Product::active()->where('added_by', 'admin')->withCount('reviews')->count();
@@ -658,14 +588,12 @@ class ShopViewController extends Controller
                                         return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
                                     }])->withCount('reviews')->get();
         }
-
         // Followers
         $followers = ShopFollower::where('shop_id',$id)->count();
         $follow_status = 0;
         if(auth('customer')->check()){
             $follow_status = ShopFollower::where(['shop_id'=>$id,'user_id'=>auth('customer')->id()])->count();
         }
-
         //finding category ids
         $products = Product::active()
             ->when($id == 0, function ($query) {
@@ -683,12 +611,10 @@ class ShopViewController extends Controller
             })
             ->withCount('reviews')
             ->get();
-
             $category_info_for_fashion = [];
             foreach ($products as $product) {
                 array_push($category_info_for_fashion, $product['category_id']);
             }
-
         $categories = [];
         foreach ($category_info_for_fashion as $category_id) {
             $category = Category::withCount(['product'=>function($qc1) use($id){
@@ -704,48 +630,40 @@ class ShopViewController extends Controller
             }, 'childes.childes'])
                 ->where('position', 0)
                 ->find($category_id);
-
             if ($category != null) {
                 array_push($categories, $category);
             }
         }
         $categories = array_unique($categories);
-
         //brand start
         $brand_info = [];
         foreach ($products as $product) {
             array_push($brand_info, $product['brand_id']);
         }
-
         $brands = Brand::active()->whereIn('id', $brand_info)->withCount('brandProducts')->latest()->get();
         foreach($brands as $brand)
         {
             $count = $products->where('brand_id', $brand->id)->count();
             $brand->count = $count;
         }
-
         if ($id == 0) {
             $shop = ['id' => 0, 'name' => Helpers::get_business_settings('company_name')];
         } else {
             $shop = Shop::where('seller_id', $id)->first();
         }
-
         $paginate_count = ceil($products->count() / 20);
         $products = $products->paginate(20);
-
         $current_date = date('Y-m-d');
         $seller_vacation_start_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_start_date)) : null;
         $seller_vacation_end_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_end_date)) : null;
         $seller_temporary_close = $id != 0 ? $shop->temporary_close : false;
         $seller_vacation_status = $id != 0 ? $shop->vacation_status : false;
-
         $temporary_close = Helpers::get_business_settings('temporary_close');
         $inhouse_vacation = Helpers::get_business_settings('vacation_add');
         $inhouse_vacation_start_date = $id == 0 ? $inhouse_vacation['vacation_start_date'] : null;
         $inhouse_vacation_end_date = $id == 0 ? $inhouse_vacation['vacation_end_date'] : null;
         $inHouseVacationStatus = $id == 0 ? $inhouse_vacation['status'] : false;
         $inhouse_temporary_close = $id == 0 ? $temporary_close['status'] : false;
-
         return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','current_date','seller_vacation_start_date','seller_vacation_status',
             'seller_vacation_end_date','seller_temporary_close','inhouse_vacation_start_date','inhouse_vacation_end_date','inHouseVacationStatus','inhouse_temporary_close',
             'products_for_review','featured_products','followers','follow_status','brands','rattingStatusArray','reviews','colors_in_shop','paginate_count'))
@@ -754,13 +672,11 @@ class ShopViewController extends Controller
             ->with('avg_rating', $averageRating)
             ->with('total_order', $total_order);
     }
-
     /**
      * For Theme fashion, ALl purpose
      */
     public function ajax_filter_products(Request $request)
     {
-
         $categories = $request->category ?? [];
         $category = [];
         if($request->category)
@@ -777,14 +693,12 @@ class ShopViewController extends Controller
                 ->select('id', 'name')
                 ->get();
         }
-
         $brands = [];
         if($request->brand)
         {
             $brands = Brand::whereIn('id', $request->brand)->select('id','name')->get();
         }
         $rating = $request->rating ?? [];
-
         // products search
         $products = Product::active()->withCount('reviews')->withSum('orderDetails', 'qty', function ($query) {
                 $query->where('delivery_status', 'delivered');
@@ -901,7 +815,6 @@ class ShopViewController extends Controller
                     return $query;
                 });
             });
-
         if ($request->has('rating')) {
             $products = $products->get()->each(function($item){
                 if(isset($item->rating) && count($item->rating) != 0)
@@ -913,39 +826,31 @@ class ShopViewController extends Controller
             });
             $products = $products->whereIn('rating_avg',$request->rating);
         }
-
         $products_count = $products->count();
         $paginate_limit = 20;
         $paginate_count = ceil($products_count / $paginate_limit);
-
         $products = $products->skip(($request->page - 1) * $paginate_limit)
             ->take($paginate_limit)
             ->paginate($paginate_limit);
-
         return response()->json([
             'html_products'=>view('theme-views.product._ajax-products',['products'=>$products,'paginate_count'=>$paginate_count,'page'=>($request->page??1), 'request_data'=>$request->all()])->render(),
             'html_tags'=>view('theme-views.product._selected_filter_tags',['tags_category'=>$category,'tags_brands'=>$brands,'rating'=>$rating, 'sort_by'=>$request['sort_by']])->render(),
             'products_count'=>$products_count,
         ]);
     }
-
     public function filterProducts(Request $request)
     {
         $categories = $request->input('categories', []); // Ensure it's an array
     $sellerId = $request->input('shop_id');
-
     // Validate the input
     if (empty($categories) || empty($sellerId)) {
         return response()->json(['data' => 'No categories or seller ID provided'], 400);
     }
-
     // Retrieve filtered products with pagination
     $products = Product::whereIn('category_id', $categories)
                 ->where('shop_id', $sellerId) // Filter by seller ID
                 ->get();
-
     $decimal_point_settings = getWebConfig(name: 'decimal_point_settings'); // Retrieve decimal point settings
-
     // Check each product's added_by field and retrieve vacation settings
     foreach ($products as $product) {
         if (isset($product['added_by'])) {
@@ -960,22 +865,17 @@ class ShopViewController extends Controller
             }
         }
     }
-
     // Return the rendered view for AJAX
     return response()->json([
         'data' => view('web-views.products._ajax-products', compact('products', 'decimal_point_settings', 'sellerVacationStartDate', 'sellerVacationEndDate', 'sellerTemporaryClose'))->render()
     ]);
     }
-
     public function theme_all_purpose($request, $id){
-
         $business_mode = getWebConfig(name: 'business_mode');
-
         if($id!=0 && $business_mode == 'single') {
             Toastr::error(translate('access_denied!!'));
             return back();
         }
-
         if ($id != 0) {
             $shop = Shop::where('id', $id)->first();
             if (!$shop) {
@@ -989,10 +889,7 @@ class ShopViewController extends Controller
                 }
             }
         }
-
         $id = $id != 0 ? Shop::where('id', $id)->first()->seller_id : $id;
-
-
         $product_ids = Product::active()->when($id == 0, function ($query) {
             return $query->where(['added_by' => 'admin']);
         })
@@ -1001,11 +898,9 @@ class ShopViewController extends Controller
                     ->where('user_id', $id);
             })
             ->pluck('id')->toArray();
-
         $review_data = Review::active()->whereIn('product_id', $product_ids)->where('status',1);
         $avg_rating = $review_data->avg('rating');
         $total_review = $review_data->count();
-
         // color & seller wise review start
         $ratting_status_positive = 0;
         $ratting_status_good = 0;
@@ -1030,7 +925,6 @@ class ShopViewController extends Controller
             ->pluck('colors')
             ->unique()
             ->toArray();
-
         $colors_in_shop_merge = [];
         foreach ($colors_collection as $color_json) {
             $color_array = json_decode($color_json, true);
@@ -1038,7 +932,6 @@ class ShopViewController extends Controller
         }
         $colors_in_shop = array_unique($colors_in_shop_merge);
         // color & seller wise review end
-
         if($id == 0){
             $total_order = Order::where('seller_is','admin')->where('order_type','default_type')->count();
             $products_for_review = Product::active()->where('added_by', 'admin')->withCount('reviews')->count();
@@ -1049,7 +942,6 @@ class ShopViewController extends Controller
             $products_for_review = Product::active()->where('added_by', 'seller')->where('user_id', $seller->id)->withCount('reviews')->count();
             $featured_products = Product::active()->withCount('reviews')->where(['added_by'=>'seller','user_id'=>$seller->id,'featured'=>'1'])->get();
         }
-
         // Followers
         $followers = ShopFollower::where('shop_id',$id)->count();
         $follow_status = 0;
@@ -1101,7 +993,6 @@ class ShopViewController extends Controller
                     $brand->count = $count;
                 }
         }
-
         if ($id == 0) {
             $shop = ['id' => 0, 'name' => Helpers::get_business_settings('company_name')];
         } else {
@@ -1112,14 +1003,12 @@ class ShopViewController extends Controller
         $seller_vacation_end_date = $id != 0 ? date('Y-m-d', strtotime($shop->vacation_end_date)) : null;
         $seller_temporary_close = $id != 0 ? $shop->temporary_close : false;
         $seller_vacation_status = $id != 0 ? $shop->vacation_status : false;
-
         $temporary_close = Helpers::get_business_settings('temporary_close');
         $inhouse_vacation = Helpers::get_business_settings('vacation_add');
         $inhouse_vacation_start_date = $id == 0 ? $inhouse_vacation['vacation_start_date'] : null;
         $inhouse_vacation_end_date = $id == 0 ? $inhouse_vacation['vacation_end_date'] : null;
         $inHouseVacationStatus = $id == 0 ? $inhouse_vacation['status'] : false;
         $inhouse_temporary_close = $id == 0 ? $temporary_close['status'] : false;
-
         $top_rated = [];
         $new_arrival = [];
         $coupons = [];
@@ -1174,7 +1063,6 @@ class ShopViewController extends Controller
                         ->whereDate('expire_date', '>=', date('Y-m-d'))
                         ->get();
         }
-
         return view(VIEW_FILE_NAMES['shop_view_page'], compact('products', 'shop', 'categories','current_date','seller_vacation_start_date','seller_vacation_status',
             'seller_vacation_end_date','seller_temporary_close','inhouse_vacation_start_date','inhouse_vacation_end_date','inHouseVacationStatus','inhouse_temporary_close',
             'products_for_review','featured_products','followers','follow_status','brands','ratting_status','reviews','colors_in_shop','coupons','id','new_arrival','top_rated'))
@@ -1189,7 +1077,6 @@ class ShopViewController extends Controller
         $vacation_end_date = $current_date;
         $temporary_close = null;
         $vacation_status = null;
-
         if($request->added_by == "seller"){
             $shop = Shop::where('seller_id',$request->user_id)->first();
             $vacation_start_date = $shop->vacation_start_date ? date('Y-m-d', strtotime($shop->vacation_start_date)):null;
@@ -1204,15 +1091,12 @@ class ShopViewController extends Controller
             $vacation_status = $inhouse_vacation['status'] ;
             $temporary_close =  $temporary_close['status'];
         }
-
         if($temporary_close  || ($vacation_status  && $current_date >= $vacation_start_date && $current_date <= $vacation_end_date)){
             return response()->json(['status'=>'inactive']);
         }else{
             $product_data = Product::find($request->id);
-
             unset($request['added_by']);
             $request['quantity'] =  $product_data->minimum_order_qty;
-
             $cart = \App\Utils\CartManager::add_to_cart($request);
             session()->forget('coupon_code');
             session()->forget('coupon_type');

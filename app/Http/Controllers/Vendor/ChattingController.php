@@ -9,7 +9,7 @@ use App\Contracts\Repositories\ShopRepositoryInterface;
 use App\Contracts\Repositories\VendorRepositoryInterface;
 use App\Enums\ViewPaths\Vendor\Chatting;
 use App\Events\ChattingEvent;
-use App\Http\Models\Category;
+use App\Models\Category;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Vendor\ChattingRequest;
 use App\Services\ChattingService;
