@@ -1,7 +1,5 @@
 @extends('layouts.front-end.app')
-
 @section('title', translate('All_vendor_Page'))
-
 @push('css_or_js')
     <meta property="og:image" content="{{dynamicStorage(path: 'storage/app/public/company')}}/{{$web_config['web_logo']->value}}"/>
     <meta property="og:title" content="Brands of {{$web_config['name']->value}} "/>
@@ -12,9 +10,7 @@
     <meta property="twitter:url" content="{{env('APP_URL')}}">
     <meta property="twitter:description" content="{{ substr(strip_tags(str_replace('&nbsp;', ' ', $web_config['about']->value)),0,160) }}">
 @endpush
-
 @section('content')
-
     <div class="container-fluid mb-md-4 {{Session::get('direction') === "rtl" ? 'rtl' : ''}} __inline-65">
         <div class="bg-primary-light rounded-10 my-4 p-3 p-sm-4" data-bg-img="{{ theme_asset(path: 'public/assets/front-end/img/media/bg.png') }}">
             <div class="row g-2 align-items-center">
@@ -36,7 +32,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <section class="col-lg-12">
                 @if(count($sellers) > 0)
@@ -45,9 +40,8 @@
                             @php($current_date = date('Y-m-d'))
                             @php($start_date = date('Y-m-d', strtotime($seller['vacation_start_date'])))
                             @php($end_date = date('Y-m-d', strtotime($seller['vacation_end_date'])))
-
                             <div class="col-lg-3 col-md-6 col-sm-12 px-2 pb-4 text-center">
-                                <a href="{{route('shopView',['id'=>$seller['id']])}}" class="others-store-card text-capitalize">
+                                <a href="{{route('shopView',['id'=>$seller['seller_id']])}}" class="others-store-card text-capitalize">
                                     <div class="overflow-hidden other-store-banner">
                                         @if($seller['id'] != 0)
                                             <img class="w-100 h-100 object-cover" alt="" src="{{ getValidImage(path: 'storage/app/public/shop/banner/'.$seller['banner'], type: 'shop-banner') }}">
@@ -66,7 +60,6 @@
                                                      src="{{ getValidImage(path: 'storage/app/public/company/'.$seller['image'], type: 'shop') }}">
                                                 @endif
                                             </div>
-
                                             @if($seller['temporary_close'] || ($seller['vacation_status'] && ($current_date >= $seller['vacation_start_date']) && ($current_date <= $seller['vacation_end_date'])))
                                                 <span class="temporary-closed position-absolute text-center rounded-full p-2">
                                                     <span>{{translate('closed_now')}}</span>
@@ -96,7 +89,6 @@
                             </div>
                         @endforeach
                     </div>
-
                     <div class="row mx-n2">
                         <div class="col-md-12">
                             <div class="text-center">

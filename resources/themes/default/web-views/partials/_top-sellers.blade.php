@@ -29,7 +29,7 @@
                             @endphp
 
                             <article class="others-store-card text-capitalize">
-                                <a class="w-100" href="{{ route('shopView', ['id' => $shop->id]) }}">
+                                <a class="w-100" href="{{ route('shopView', ['id' => $seller->id]) }}">
                                     <div class="overflow-hidden other-store-banner">
                                         <img class="w-100 h-100 object-cover" loading="lazy"
                                             src="{{ getValidImage(path: 'storage/app/public/shop/banner/' . $shop->banner, type: 'shop-banner') }}"
