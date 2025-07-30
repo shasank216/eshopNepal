@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="d-flex flex-column flex-sm-row gap-3">
-                <form>
+                <form method="GET" action="{{ url()->current() }}">
                     <div class="sorting-item">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                             <path d="M11.6667 7.80078L14.1667 5.30078L16.6667 7.80078" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -60,19 +60,16 @@
                             <path d="M7.91675 11.9688H4.58341C4.3533 11.9688 4.16675 12.1553 4.16675 12.3854V15.7188C4.16675 15.9489 4.3533 16.1354 4.58341 16.1354H7.91675C8.14687 16.1354 8.33341 15.9489 8.33341 15.7188V12.3854C8.33341 12.1553 8.14687 11.9688 7.91675 11.9688Z" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M14.1667 5.30078V15.3008" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <label class="for-sorting" for="sorting">
-                            <span class="text-nowrap">{{translate('sort_by')}}</span>
+                         <label class="for-sorting" for="sort_by">
+                            <span class="text-nowrap">{{ translate('sort_by') }}</span>
                         </label>
-                        <select class="action-sort-shop-products-by-data">
-                            <option value="latest">{{translate('latest')}}</option>
-                            <option
-                                value="low-high">{{translate('low_to_High_Price')}} </option>
-                            <option
-                                value="high-low">{{translate('high_to_Low_Price')}}</option>
-                            <option
-                                value="a-z">{{translate('A_to_Z_Order')}}</option>
-                            <option
-                                value="z-a">{{translate('Z_to_A_Order')}}</option>
+                        
+                        <select name="sort_by" id="sort_by" class="action-sort-shop-products-by-data">
+                            <option value="latest" {{ request('sort_by') == 'latest' ? 'selected' : '' }}>{{ translate('latest') }}</option>
+                            <option value="low-high" {{ request('sort_by') == 'low-high' ? 'selected' : '' }}>{{ translate('low_to_High_Price') }}</option>
+                            <option value="high-low" {{ request('sort_by') == 'high-low' ? 'selected' : '' }}>{{ translate('high_to_Low_Price') }}</option>
+                            <option value="a-z" {{ request('sort_by') == 'a-z' ? 'selected' : '' }}>{{ translate('A_to_Z_Order') }}</option>
+                            <option value="z-a" {{ request('sort_by') == 'z-a' ? 'selected' : '' }}>{{ translate('Z_to_A_Order') }}</option>
                         </select>
                     </div>
                 </form>
@@ -98,59 +95,44 @@
                                 <i class="tio-clear"></i>
                             </button>
                         </div>
-                        <div class="accordion __cate-side-arrordion">
+                        <div class="accordion __cate-side-arrordion" id="categoryAccordion">
                             @foreach($categories_product as $category)
                                 <div class="menu--caret-accordion">
-                                     <!--Parent Category -->
-                                    <div class="card-header flex-between">
-                                        <div>
-                                            <label class="for-hover-label cursor-pointer"
-                                                data-link="{{route('shopView',['id'=> $seller_id,'category_id'=>$category['id']])}}">
-                                                <input type="checkbox" class="mr-2 category-checkbox d-none" name="categories[]"
-                                                    value="{{ $category['id'] }}" {{ in_array($category['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                {{$category['name']}}
-                                            </label>
-                                        </div>
-                                        <div class="px-2 cursor-pointer menu--caret">
-                                            <strong class="pull-right for-brand-hover">
-                                                @if($category->childes->count() > 0)
-                                                    <i class="tio-next-ui fs-13"></i>
-                                                @endif
-                                            </strong>
-                                        </div>
+                                    <!-- Parent Category -->
+                                    <div class="card-header d-flex justify-content-between align-items-center category-toggle cursor-pointer" data-target="#collapse-{{ $category['id'] }}">
+                                        <a href="{{ route('shopView', ['id'=> $seller_id, 'category_id' => $category['id']]) }}"
+                                        class="text-dark text-decoration-none flex-grow-1">
+                                            {{ $category['name'] }}
+                                        </a>
+                                        @if($category->childes->count() > 0)
+                                            <i class="tio-chevron-down fs-13 rotate-icon"></i>
+                                        @endif
                                     </div>
-                                     <!--Display child categories of the parent category -->
+
+                                    <!-- Child Categories -->
                                     @if($category->childes->count() > 0)
-                                        <div class="card-body p-0 ms-2 d--none" id="collapse-{{$category['id']}}">
+                                        <div class="card-body ps-3 d-none" id="collapse-{{ $category['id'] }}">
                                             @foreach($category->childes as $child)
                                                 <div class="menu--caret-accordion">
-                                                    <div class="for-hover-label card-header flex-between">
-                                                        <div>
-                                                            <label class="cursor-pointer get-view-by-onclick" data-link="{{ route('shopView',['id'=> $seller_id,'sub_category_id'=>$child['id']]) }}">
-                                                                <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
-                                                                    value="{{ $child['id'] }}" {{ in_array($child['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                                <!--{{$child['name']}}-->
-                                                            </label>
-                                                        </div>
-                                                        <div class="px-2 cursor-pointer menu--caret">
-                                                            <strong class="pull-right">
-                                                                @if($child->childes->count() > 0)
-                                                                    <i class="tio-next-ui fs-13"></i>
-                                                                @endif
-                                                            </strong>
-                                                        </div>
+                                                    <div class="card-header d-flex justify-content-between align-items-center category-toggle cursor-pointer" data-target="#collapse-{{ $child['id'] }}">
+                                                        <a href="{{ route('shopView', ['id'=> $seller_id, 'sub_category_id' => $child['id']]) }}"
+                                                        class="text-dark text-decoration-none flex-grow-1 ms-2">
+                                                            {{ $child['name'] }}
+                                                        </a>
+                                                        @if($child->childes->count() > 0)
+                                                            <i class="tio-chevron-down fs-13 rotate-icon"></i>
+                                                        @endif
                                                     </div>
-                                                     <!--Display sub-subcategories of the child category -->
+
+                                                    <!-- Sub-sub Categories -->
                                                     @if($child->childes->count() > 0)
-                                                        <div class="card-body p-0 ms-2 d--none" id="collapse-{{$child['id']}}">
+                                                        <div class="card-body ps-4 d-none" id="collapse-{{ $child['id'] }}">
                                                             @foreach($child->childes as $ch)
                                                                 <div class="card-header">
-                                                                    <label class="for-hover-label d-block cursor-pointer text-left get-view-by-onclick"
-                                                                        data-link="{{ route('shopView',['id'=> $seller_id,'sub_sub_category_id'=>$ch['id']])}}">
-                                                                        <input type="checkbox" class="mr-2 category-checkbox" name="categories[]"
-                                                                            value="{{ $ch['id'] }}" {{ in_array($ch['id'], request('categories', [])) ? 'checked' : '' }}>
-                                                                        <!--{{$ch['name']}}-->
-                                                                    </label>
+                                                                    <a href="{{ route('shopView', ['id'=> $seller_id, 'sub_sub_category_id' => $ch['id']]) }}"
+                                                                    class="text-dark text-decoration-none ms-3 d-block">
+                                                                        {{ $ch['name'] }}
+                                                                    </a>
                                                                 </div>
                                                             @endforeach
                                                         </div>
@@ -259,4 +241,40 @@ $('.category-checkbox').on('change', function() {
 });
 });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.category-toggle').forEach(function (toggle) {
+            toggle.addEventListener('click', function (e) {
+                // Only toggle if NOT clicking on the <a> tag itself
+                if (e.target.tagName.toLowerCase() !== 'a') {
+                    const targetId = this.getAttribute('data-target');
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.classList.toggle('d-none');
+
+                        // Rotate the arrow icon if present
+                        const icon = this.querySelector('.rotate-icon');
+                        if (icon) {
+                            icon.classList.toggle('rotated');
+                        }
+                    }
+
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const select = document.querySelector('.action-sort-shop-products-by-data');
+        if (select) {
+            select.addEventListener('change', function () {
+                this.form.submit();
+            });
+        }
+    });
+</script>
+
+
 @endpush
