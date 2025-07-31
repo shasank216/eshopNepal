@@ -149,7 +149,7 @@ class WebController extends Controller
         $inHouseVacationEndDate = null;
         $inHouseVacationStatus = false;
         $inHouseTemporaryClose = false;
-        $sellerTemporaryClose = false; 
+        $sellerTemporaryClose = false;
 
         foreach ($products as $product) {
             if ($product->added_by == 'admin') {
@@ -158,7 +158,7 @@ class WebController extends Controller
                 $inHouseVacationStatus = $inHouseVacation['status'];
                 $inHouseTemporaryClose = $temporaryClose['status'];
             } elseif ($product->added_by == 'seller') {
-                $sellerTemporaryClose = $product->seller->shop->temporary_close_status ?? false; 
+                $sellerTemporaryClose = $product->seller->shop->temporary_close_status ?? false;
             }
         }
 
@@ -721,7 +721,7 @@ class WebController extends Controller
     {
         $categories = Category::all();
         if (
-            (auth('customer')->check() && Cart::where(['customer_id' => auth('customer')->id()])->count() > 0)
+            (auth('customer')->check() && Cart::where(['customer_id' => auth('customer')->id()])->count() >= 0)
             || (getWebConfig(name: 'guest_checkout') && session()->has('guest_id') && session('guest_id'))
         ) {
             $topRatedShops = [];

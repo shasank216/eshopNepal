@@ -91,8 +91,8 @@
         }
 
         /*.checkbox-wrapper-48 input[type=checkbox] {
-                                                                                                                                    border-radius: 0.25em;
-                                                                                                                                }*/
+                                                                                                                                                    border-radius: 0.25em;
+                                                                                                                                                }*/
         .checkbox-wrapper-48 input:checked {
             border-color: transparent;
             background: var(--gradient) border-box;
@@ -319,9 +319,9 @@
                 </span>
             </div>
             <!-- <div>
-                                                                                <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
-                                                                                <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
-                                                                            </div> -->
+                                                                                                <h5 class="font-semibold mb-1">{{ translate(str_replace('_', ' ', $data['data_from'])) }} {{ translate('products') }} {{ isset($data['brand_name']) ? '(' . $data['brand_name'] . ')' : '' }}</h5>
+                                                                                                <div><span class="view-page-item-count">{{ $products->total() }}</span> {{ translate('items_found') }}</div>
+                                                                                            </div> -->
             <div class="d-flex align-items-center gap-3">
                 <form id="search-form" class="d-none d-lg-block" action="{{ route('products') }}" method="GET">
                     <input hidden name="data_from" value="{{ $data['data_from'] }}">
@@ -1333,12 +1333,12 @@
             function updateCartUI(cartData) {
                 $('#cart-count').text(cartData.total_quantity);
                 $('#cart-total').text(
-                    'Rs. ' + Number(response.cart.total_cost).toLocaleString(
+                    'Rs. ' + Number(cartData.total_cost).toLocaleString(
                         'en-IN', {
                             maximumFractionDigits: 2
                         })
                 );
-                $('#cart_items').html(response.cart.html);
+                $('#cart_items').html(cartData.html);
 
             }
         }

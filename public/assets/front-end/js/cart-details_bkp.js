@@ -20,11 +20,10 @@ function updateCartCommon(minimum_order_qty, key, incr, e, quantity_id) {
     }
     if (exQuantity.val() == exQuantity.data('min') && e == 'delete') {
         $.post($('#route-cart-remove').data('url'), {
-            _token: $('meta[name="_token"]').attr('content'),
-            key: key
-        },
+                _token: $('meta[name="_token"]').attr('content'),
+                key: key
+            },
             function (response) {
-                $('.cart-count').empty().html(response.cart_quantity);
                 updateNavCart();
                 toastr.info($('#message-item-has-been-removed-from-cart').data('text'), {
                     CloseButton: true,
@@ -87,7 +86,7 @@ function quantityListener() {
     $('.qty_input').each(function () {
         var qty = $(this);
         var minimumOrderQuantity = $(this).data('minimum-order') ?? 1;
-        if (qty.val() == 1 || qty.val() == minimumOrderQuantity) {
+        if (qty.val() == 1 || qty.val() == minimumOrderQuantity ) {
             qty.siblings('.qty_minus').html('<i class="tio-delete text-danger fs-12"></i>')
         } else {
             qty.siblings('.qty_minus').html('<i class="tio-remove"></i>')
@@ -111,26 +110,11 @@ function setShippingId(id, cartGroupId) {
         beforeSend: function () {
             $('#loading').show();
         },
-        success: function (response) {
-            if (response.status === 1) {
-                updateNavCart();
-                if (response.data && response.data.total_price) {
-                    $('.total_price').text(response.data.total_price);
-                }
-                if (response.data && response.data.shipping_cost) {
-                    $('.shipping_cost').text(response.data.shipping_cost);
-                }
-                if (response.data && response.data.cart_summary) {
-                    $('#cart-summary').empty().html(response.data.cart_summary);
-                    $('[data-toggle="tooltip"]').tooltip();
-                    actionCheckoutFunctionInit();
-                    couponCode();
-                }
-            }
+        success: function () {
+            location.reload();
         },
         complete: function () {
             $('#loading').hide();
         },
     });
 }
-
