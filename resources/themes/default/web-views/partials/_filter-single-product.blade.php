@@ -6,9 +6,11 @@
             flex-wrap: wrap;
             gap: 10px;
         }
+
         .btn-grp-container .btn {
             flex: 1;
         }
+
         .ribbon-sale {
             background-color:
                 color-mix(in srgb, #FF3B3B, #fff 20%);
@@ -21,6 +23,7 @@
             padding-left: 1rem;
             height: 20px;
         }
+
         .ribbon {
             position: absolute;
             padding: 5px 10px 5px 15px;
@@ -33,6 +36,7 @@
             clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
             box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
         }
+
         .ribbon-sale {
             background-color:
                 color-mix(in srgb, #FF3B3B, #fff 20%);
@@ -45,6 +49,7 @@
             padding-left: 1rem;
             height: 20px;
         }
+
         .ribbon {
             position: absolute;
             padding: 5px 10px 5px 15px;
@@ -57,6 +62,7 @@
             clip-path: polygon(100% 0, 85% 50%, 100% 100%, 10% 100%, 10% 0%);
             box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
         }
+
         .ribbon-sale {
             background-color:
                 color-mix(in srgb, #FF3B3B, #fff 20%);
@@ -69,6 +75,7 @@
             padding-left: 1rem;
             height: 20px;
         }
+
         .ribbon {
             position: absolute;
             padding: 5px 10px 5px 15px;
@@ -245,6 +252,7 @@
                                             <span class="string-limit">{{ translate('buy_now') }}</span>
                                         </button> --}}
                                         <button type="button" class="btn action-add-to-cart-form-re-init add-to-cart"
+                                            onclick="addToCart('add-to-cart-form-{{ $product->id }}', false)"
                                             data-product-id="{{ $product->id }}">
                                             <i class="navbar-tool-icon czi-cart me-2"></i>
                                             <span class="string-limit">{{ translate('add_to_cart') }}</span>
