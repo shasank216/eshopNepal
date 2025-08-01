@@ -124,10 +124,8 @@ class UserProfileController extends Controller
     // }
     public function user_password_update(Request $request)
     {
-
         // Toastr::error(translate('Test'));
         // dd($request->all());
-
         // Validate password with strong password requirements
         $request->validate([
             'password' => [
@@ -141,7 +139,6 @@ class UserProfileController extends Controller
                     ->symbols()    // Requires at least one special character
                     ->uncompromised(), // Ensure the password hasn't appeared in data leaks
 
-
             ],
         ], [
             'password.required' => translate('The_password_is_required'),
@@ -159,33 +156,12 @@ class UserProfileController extends Controller
             $userDetails = [
                 'password' => bcrypt($request['password']),
             ];
-
-
-
-            ],
-        ], [
-            'password.required' => translate('The_password_is_required'),
-            'password.confirmed' => translate('The_password_confirmation_does_not_match'),
-            'password.min' => translate('The_password_must_be_at_least_8_characters'),
-            'password.mixed' => translate('The_password_must_contain_at_least_one_uppercase_and_one_lowercase_letter'),
-            'password.letters' => translate('The_password_must_contain_at_least_one_letter'),
-            'password.numbers' => translate('The_password_must_contain_at_least_one_number'),
-            'password.symbols' => translate('The_password_must_contain_at_least_one_special_character'),
-            'password.uncompromised' => translate('The_password_has_appeared_in_a_data_breach_and_should_not_be_used'),
-        ]);
-
-        // Only update the password if the user is authenticated
-        if (auth('customer')->check()) {
-            $userDetails = [
-                'password' => bcrypt($request['password']),
-            ];
-
 
             // Update the user's password
             User::where('id', auth('customer')->id())->update($userDetails);
 
             // Show success message
-            Toastr::info(translate('Password updated successfully'));
+            // Toastr::info(translate('Password updated successfully'));
             return redirect()->back()->with('success', translate('Password updated successfully'));
         } else {
             return redirect()->back()->withErrors(['error' => 'User not authenticated']);
@@ -241,7 +217,7 @@ class UserProfileController extends Controller
 
         if (auth('customer')->check()) {
             User::where(['id' => auth('customer')->id()])->update($userDetails);
-            Toastr::info(translate('updated_successfully'));
+            // Toastr::info(translate('updated_successfully'));
             return redirect()->back();
         } else {
             return redirect()->back();

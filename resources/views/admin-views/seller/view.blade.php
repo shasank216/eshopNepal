@@ -69,7 +69,7 @@
                                 </div>
                             @endif
                             <div class="d-block">
-                                <h2 class="mb-2 pb-1 textWhite">
+                                <h2 class="mb-2 pb-1 text-black">
                                     {{ $seller->shop ? $seller->shop->name : translate('shop_Name') . ' : ' . translate('update_Please') }}
                                 </h2>
                                 <div class="d-flex gap-3 flex-wrap mb-3 lh-1">
@@ -131,15 +131,15 @@
                                         </div>
                                     </div>
                                     <span class="border-left"></span>
-                                    <a href="javascript:" class="textWhite">{{ $seller->total_rating }}
+                                    <a href="javascript:" class="text-black">{{ $seller->total_rating }}
                                         {{ translate('ratings') }}</a>
                                     <span class="border-left"></span>
                                     <a href="{{ $seller['status'] != 'pending' ? route('admin.sellers.view', ['id' => $seller['id'], 'tab' => 'review']) : 'javascript:' }}"
-                                        class="textWhite">{{ $seller->rating_count }} {{ translate('reviews') }}</a>
+                                        class="text-black">{{ $seller->rating_count }} {{ translate('reviews') }}</a>
                                 </div>
                                 @if ($seller['status'] != 'pending' && $seller['status'] != 'suspended' && $seller['status'] != 'rejected')
                                     <a href="{{ route('shopView', ['id' => $seller->shop->id]) }}"
-                                        class="btn btn-outline--primary px-4 textWhite" target="_blank"><i
+                                        class="btn btn-outline--primary px-4 text-black" target="_blank"><i
                                             class="tio-globe"></i> {{ translate('view_live') }}
                                 @endif
                                 </a>
@@ -200,12 +200,12 @@
                     <div class="border p-3 w-170">
                         <div class="d-flex flex-column mb-1">
                             <h6 class="font-weight-normal">{{ translate('total_products') }} :</h6>
-                            <h3 class="textWhite fs-18">{{ $seller->product_count }}</h3>
+                            <h3 class="text-black fs-18">{{ $seller->product_count }}</h3>
                         </div>
 
                         <div class="d-flex flex-column">
                             <h6 class="font-weight-normal">{{ translate('total_orders') }} :</h6>
-                            <h3 class="textWhite fs-18">{{ $seller->orders_count }}</h3>
+                            <h3 class="text-black fs-18">{{ $seller->orders_count }}</h3>
                         </div>
                     </div>
                     <div class="row gy-3 flex-grow-1 w-100">

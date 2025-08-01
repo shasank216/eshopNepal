@@ -270,7 +270,7 @@
                                 {{translate('add_to_cart')}}
                             </button>
                         @else
-                            <button class="btn btn-secondary action-buy-now-this-product" type="button">
+                            <button class="btn btn-secondary action-buy-now-this-product" type="button" onclick="addToCart('add-to-cart-form', true)">
                                 {{translate('buy_now')}}
                             </button>
                             <button class="btn btn--primary string-limit action-add-to-cart-form" type="button" data-update-text="{{ translate('update_cart') }}" data-add-text="{{ translate('add_to_cart') }}">

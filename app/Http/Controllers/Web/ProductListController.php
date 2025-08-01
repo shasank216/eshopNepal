@@ -203,10 +203,7 @@ class ProductListController extends Controller
 
         $products = $fetched->paginate(20)->appends($data);
 
-
-
-
-        if ($request->ajax()) {
+        if ($request->ajax() && $request->wantsJson()) {
 
             $sellerVacationStartDate = ($products ['added_by'] == 'seller' && isset($products->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_start_date)) : null;
             $sellerVacationEndDate = ($products['added_by'] == 'seller' && isset($products->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($products->seller->shop->vacation_end_date)) : null;

@@ -63,12 +63,14 @@
                                 <div class="js-form-message form-group">
                                     <label class="input-label"
                                         for="signingVendorEmail">{{ translate('your_email') }}</label>
-                                        <input type="text" class="form-control form-control-lg" name="identity" id="signingVendorEmail"
-                                        tabindex="1" placeholder="email@address.com or 1234567890" aria-label="email@address.com or 1234567890" required
+                                    <input type="text" class="form-control form-control-lg" name="identity"
+                                        id="signingVendorEmail" tabindex="1"
+                                        placeholder="email@address.com or 1234567890"
+                                        aria-label="email@address.com or 1234567890" required
                                         data-msg="{{ translate('please_enter_a_valid_email_or_phone') }}">
-                                        @if ($errors->has('identity'))
-                                            <span class="text-danger">{{ $errors->first('identity') }}</span>
-                                        @endif
+                                    @if ($errors->has('identity'))
+                                        <span class="text-danger">{{ $errors->first('identity') }}</span>
+                                    @endif
                                 </div>
                                 <div class="js-form-message form-group">
                                     <label class="input-label" for="signingVendorPassword" tabindex="0">
@@ -199,6 +201,21 @@
         </script>
         <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     @endif
+    <script>
+        "use strict";
+        @if (session('account_status') === 'suspended')
+            document.querySelector('.vendor-suspend.suspended-message').classList.remove('d-none');
+        @elseif (session('account_status') === 'pending')
+            document.querySelector('.vendor-suspend.pending-message').classList.remove('d-none');
+        @endif
+
+        document.querySelectorAll('.clear-alter-message').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                this.closest('.vendor-suspend').classList.add('d-none');
+            });
+        });
+    </script>
+
 </body>
 
 </html>
