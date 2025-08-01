@@ -31,6 +31,7 @@
         </div>
     </div>
 @endif
+<script src="{{ theme_asset(path: 'public/assets/front-end/vendor/jquery/dist/jquery-2.2.4.min.js') }}"></script>
 <script>
     $(document).ready(function () {
         // Initial load with current URL parameters

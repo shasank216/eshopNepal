@@ -1164,10 +1164,10 @@ function removeFromCart(key) {
         $('.cart-count').empty().html(response.cart_quantity);
 
         couponCode()
-        toastr.info($('#message-item-has-been-removed-from-cart').data('text'), {
-            CloseButton: true,
-            ProgressBar: true
-        });
+        // toastr.info($('#message-item-has-been-removed-from-cart').data('text'), {
+        //     CloseButton: true,
+        //     ProgressBar: true
+        // });
         // Always reload after removal
         setTimeout(function () {
             window.location.reload();
@@ -2066,17 +2066,20 @@ $(document).ready(function () {
         saveSelectedProducts(selectedProducts);
         renderSelectedProducts();
     }
+    //WARNING: DONT TOUCH THIS BLOCK OF CODE
     // Event handler for clicking the compare button
-    $('body').on('click', '.action-product-compare', function () {
-        const productId = $(this).data('product-id');
-        const productCategoryId = $(this).data('category-id');
-        ('Clicked Product ID:', productId, 'Category ID:', productCategoryId); // Check if IDs are correct
-        if (!productId || !productCategoryId) {
-            console.error('Product ID or Category ID is missing!');
-            return;
-        }
-        handleCompareClick(productId, productCategoryId);
-    });
+   $('.action-product-compare').on('click', function () {
+    
+    const productId = $(this).data('product-id');
+    const productCategoryId = $(this).data('category-id');
+    if (!productId || !productCategoryId) {
+        console.error('Product ID or Category ID is missing!');
+        return;
+    }
+
+    handleCompareClick(productId, productCategoryId);
+});
+
     // Event handler for clearing all compared items
     $('body').on('click', '#clear-compare-items', function () {
         selectedProducts = [];

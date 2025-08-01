@@ -1,13 +1,10 @@
 @extends('layouts.front-end.app')
-
 @section('title',translate('refund_request'))
-
 @push('css_or_js')
     <link href="{{theme_asset(path: 'public/assets/back-end/css/tags-input.min.css')}}" rel="stylesheet">
     <link href="{{ theme_asset(path: 'public/assets/select2/css/select2.min.css')}}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
-
 @section('content')
     <div class="container-fluid rtl text-align-direction">
         <div class="row">
@@ -19,12 +16,9 @@
             </div>
         </div>
     </div>
-
     <div class="container-fluid pb-5 mb-2 mb-md-4 mt-3 rtl text-align-direction">
         <div class="row g-3">
-
             @include('web-views.partials._profile-aside')
-
             @php($product = App\Models\Product::find($order_details->product_id))
             @php($order = App\Models\Order::find($order_details->order_id))
             <section class="col-lg-9 col-md-8">
@@ -59,12 +53,9 @@
                             }
                             $refund_amount = 0;
                             $subtotal = ($order_details->price * $order_details->qty) - $order_details->discount + $order_details->tax;
-
                             $coupon_discount = ($order->discount_amount * $subtotal) / $total_product_price;
-
                             $refund_amount = $subtotal - $coupon_discount;
                         ?>
-
                         <div class="card mt-2">
                             <div class="card-body">
                                 <div class="row text-center">
@@ -95,10 +86,8 @@
                                                 <label for="exampleInputEmail1">{{translate('attachment')}}</label>
                                                 <div class="row coba"></div>
                                             </div>
-
                                         </div>
                                         <button type="submit" class="btn btn--primary">{{translate('submit')}}</button>
-
                                     </form>
                                 </div>
                             </div>
@@ -109,12 +98,10 @@
         </div>
     </div>
 @endsection
-
 @push('script')
     <script src="{{theme_asset(path: 'public/assets/front-end/js/spartan-multi-image-picker.js')}}"></script>
     <script type="text/javascript">
         "use strict";
-
         $(function () {
             $(".coba").spartanMultiImagePicker({
                 fieldName: 'images[]',

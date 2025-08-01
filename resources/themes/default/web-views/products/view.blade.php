@@ -998,6 +998,9 @@
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/product-view.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
     <script>
+        window.addEventListener('popstate', function () {
+    location.reload(); // Ensures full page reload on back/forward
+});
         $(document).ready(function() {
             // Toggle icons for the first collapsible section
             $('#checkboxCollapse').on('show.bs.collapse', function() {
@@ -1128,43 +1131,43 @@
     </script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script>
-        $(document).ready(function() {
-            function filterProducts() {
-                let selectedCategories = [];
-                $('.category-checkbox:checked').each(function() {
-                    selectedCategories.push($(this).val());
-                });
-                let searchTerm = $('#search-input').val();
-                // Make AJAX request to filter products
-                $.ajax({
-                    url: "{{ route('products.filter') }}", // Ensure this route is correct
-                    type: 'GET',
-                    data: {
-                        categories: selectedCategories,
-                        search: searchTerm, // Include the search term in the request
-                    },
-                    success: function(response) {
-                        // Replace the content of the items-container with the response HTML
-                        $('#ajax-products').html(response.data);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error filtering products:', xhr.responseText);
-                        // Display a user-friendly error message
-                        // alert('An error occurred while filtering products. Please try again.');
-                    },
-                });
-            }
-            // Trigger the AJAX function on page load
-            filterProducts();
-            // Trigger the AJAX function when any category checkbox is changed
-            $('.category-checkbox').on('change', function() {
-                filterProducts();
-            });
-            // Trigger the AJAX function when the search input is changed
-            $('#search-input').on('input', function() {
-                filterProducts();
-            });
-        });
+        // $(document).ready(function() {
+        //     function filterProducts() {
+        //         let selectedCategories = [];
+        //         $('.category-checkbox:checked').each(function() {
+        //             selectedCategories.push($(this).val());
+        //         });
+        //         let searchTerm = $('#search-input').val();
+        //         // Make AJAX request to filter products
+        //         $.ajax({
+        //             url: "{{ route('products.filter') }}", // Ensure this route is correct
+        //             type: 'GET',
+        //             data: {
+        //                 categories: selectedCategories,
+        //                 search: searchTerm, // Include the search term in the request
+        //             },
+        //             success: function(response) {
+        //                 // Replace the content of the items-container with the response HTML
+        //                 $('#ajax-products').html(response.data);
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 console.error('Error filtering products:', xhr.responseText);
+        //                 // Display a user-friendly error message
+        //                 // alert('An error occurred while filtering products. Please try again.');
+        //             },
+        //         });
+        //     }
+        //     // Trigger the AJAX function on page load
+        //     filterProducts();
+        //     // Trigger the AJAX function when any category checkbox is changed
+        //     $('.category-checkbox').on('change', function() {
+        //         filterProducts();
+        //     });
+        //     // Trigger the AJAX function when the search input is changed
+        //     $('#search-input').on('input', function() {
+        //         filterProducts();
+        //     });
+        // });
 
         //AJAX Pagination (products)
         $(document).on('click', '#ajax-products .pagination a', function(e) {
