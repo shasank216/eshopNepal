@@ -138,7 +138,7 @@
                                         class="text-black">{{ $seller->rating_count }} {{ translate('reviews') }}</a>
                                 </div>
                                 @if ($seller['status'] != 'pending' && $seller['status'] != 'suspended' && $seller['status'] != 'rejected')
-                                    <a href="{{ route('shopView', ['id' => $seller->shop->id]) }}"
+                                    <a href="{{ route('shopView', ['id' => $seller->id]) }}"
                                         class="btn btn-outline--primary px-4 text-black" target="_blank"><i
                                             class="tio-globe"></i> {{ translate('view_live') }}
                                 @endif
