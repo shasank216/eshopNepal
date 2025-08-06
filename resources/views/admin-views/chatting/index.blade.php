@@ -29,12 +29,12 @@
                                     {{translate("customer")}}
                                 </a>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            {{-- <li class="nav-item" role="presentation">
                                 <a class="nav-link bg-transparent p-2 {{ request('type') == 'delivery-man' ? 'active' : '' }}"
                                    href="{{ route('admin.messages.index', ['type' => 'delivery-man']) }}">
                                     {{translate('delivery_Man')}}
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
 
                         <div class="tab-content">
