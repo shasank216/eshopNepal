@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Vendor;
 
+use App\Models\User;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Events\ChattingEvent;
+use App\Services\ChattingService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\View\View;
+use App\Traits\PushNotificationTrait;
+use Illuminate\Http\RedirectResponse;
+use App\Enums\ViewPaths\Vendor\Chatting;
+use App\Http\Controllers\BaseController;
+use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\Vendor\ChattingRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Contracts\Repositories\ShopRepositoryInterface;
+use App\Contracts\Repositories\VendorRepositoryInterface;
 use App\Contracts\Repositories\ChattingRepositoryInterface;
 use App\Contracts\Repositories\CustomerRepositoryInterface;
 use App\Contracts\Repositories\DeliveryManRepositoryInterface;
-use App\Contracts\Repositories\ShopRepositoryInterface;
-use App\Contracts\Repositories\VendorRepositoryInterface;
-use App\Enums\ViewPaths\Vendor\Chatting;
-use App\Events\ChattingEvent;
-use App\Models\Category;
-use App\Http\Controllers\BaseController;
-use App\Http\Requests\Vendor\ChattingRequest;
-use App\Services\ChattingService;
-use App\Traits\PushNotificationTrait;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class ChattingController extends BaseController
 {
@@ -132,6 +133,76 @@ class ChattingController extends BaseController
         return view(Chatting::INDEX[VIEW], compact('shop'));
     }
 
+    public function fetchChatUpdates(Request $request): JsonResponse
+    {
+        $type = $request->input('type', 'customer');
+        $vendorId = auth('seller')->id();
+
+        // Determine chat configuration
+        $config = match ($type) {
+            'delivery-man' => [
+                'filters' => ['seller_id' => $vendorId],
+                'whereNotNull' => ['delivery_man_id', 'seller_id'],
+                'relations' => ['deliveryMan'],
+                'idKey' => 'delivery_man_id',
+                'relationKey' => 'deliveryMan',
+            ],
+            default => [
+                'filters' => ['seller_id' => $vendorId],
+                'whereNotNull' => ['user_id', 'seller_id'],
+                'relations' => ['customer'],
+                'idKey' => 'user_id',
+                'relationKey' => 'customer',
+            ]
+        };
+
+        // Fetch all users chatting with this seller
+        $allChattingUsers = $this->chattingRepo->getListWhereNotNull(
+            orderBy: ['created_at' => 'DESC'],
+            filters: $config['filters'],
+            whereNotNull: $config['whereNotNull'],
+            relations: $config['relations'],
+            dataLimit: 'all'
+        )->unique($config['idKey']);
+
+        if ($allChattingUsers->isEmpty()) {
+            return response()->json([
+                'chatUsersView' => '',
+                'chatMessagesView' => ''
+            ]);
+        }
+
+        // Get the last user chatted and update seen status
+        $lastChatUser = $allChattingUsers[0]->{$config['relationKey']};
+        $this->chattingRepo->updateAllWhere(
+            params: array_merge(['seller_id' => $vendorId], [$config['idKey'] => $lastChatUser->id]),
+            data: ['seen_by_seller' => 1]
+        );
+
+        // Get chat messages with this user
+        $chattingMessages = $this->chattingRepo->getListWhereNotNull(
+            orderBy: ['created_at' => 'DESC'],
+            filters: array_merge(['seller_id' => $vendorId], [$config['idKey'] => $lastChatUser->id]),
+            whereNotNull: $config['whereNotNull'],
+            relations: $config['relations'],
+            dataLimit: 'all'
+        );
+
+        // Return rendered partial views
+        return response()->json([
+            'chatUsersView' => view('vendor-views.chatting.chat_users', [
+                'allChattingUsers' => $allChattingUsers,
+                'userType' => $type,
+            ])->render(),
+            'chatMessagesView' => view('vendor-views.chatting.list_user_message', [
+                'lastChatUser' => $lastChatUser,
+                'chattingMessages' => $chattingMessages,
+                'userType' => $type,
+            ])->render(),
+        ]);
+    }
+
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -180,8 +251,9 @@ class ChattingController extends BaseController
         $vendor = $this->vendorRepo->getFirstWhere(params: ['id' => auth('seller')->id()]);
         $shop = $this->shopRepo->getFirstWhere(params: ['seller_id' => auth('seller')->id()]);
         $attachment = $this->chattingService->getAttachment($request);
+        $firebaseService = app(\App\Services\FirebaseService::class);
         if ($request->has(key: 'delivery_man_id')) {
-            $this->chattingRepo->add(
+            $chatting = $this->chattingRepo->add(
                 data: $this->chattingService->getDeliveryManChattingData(
                     request: $request,
                     shopId: $shop['id'],
@@ -198,8 +270,9 @@ class ChattingController extends BaseController
                 dataLimit: 'all'
             );
             $data = self::getRenderMessagesView(user: $deliveryMan, message: $chattingMessages, type: 'delivery_man');
+
         } elseif ($request->has(key: 'user_id')) {
-            $this->chattingRepo->add(
+            $chatting = $this->chattingRepo->add(
                 data: $this->chattingService->getCustomerChattingData(
                     request: $request,
                     shopId: $shop['id'],
@@ -214,6 +287,35 @@ class ChattingController extends BaseController
                 whereNotNull: ['user_id', 'seller_id'],
                 dataLimit: 'all'
             );
+
+            \Log::info('chatting response :' . json_encode($chatting) );
+
+            $customer = User::find($request->user_id);
+
+            $userFcmToken = $customer?->cm_firebase_token;
+            if($userFcmToken){
+                $data = [
+                    'title' => 'New Message from ' . $vendor->f_name . ' '. $vendor->l_name,
+                    'description' => $chatting->message,
+                    'data' => [
+                        'id' => $chatting->id,
+                        'type' => 'customer',
+                        'shop_id' => $chatting->shop_id,
+                        'admin_id' => $chatting->admin_id,
+                        'seller_id' => $chatting->seller_id,
+                        'seen_by_seller' => $chatting->seen_by_seller
+                    ],
+                ];
+
+                try{
+
+                    $firebaseService->sendToDevice($userFcmToken, $data['title'], $data['description'], $data['data']);
+
+                }catch(\Exception $e){
+                    \Log::info('Chat to customer message push error: ' . $e->getMessage());
+                }
+            }
+
             $data = self::getRenderMessagesView(user: $customer, message: $chattingMessages, type: 'customer');
         }
         return response()->json($data);

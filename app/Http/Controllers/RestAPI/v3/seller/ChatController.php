@@ -217,7 +217,7 @@ class ChatController extends Controller
             $delivenryManFcmToken = $delivery_man?->fcm_token;
             if($delivenryManFcmToken){
                 $data = [
-                    'title' => 'New Message',
+                    'title' => 'New Message from ' . $message_form->f_name . ' '. $message_form->l_name,
                     'description' => $chatting->message,
                     'data' => [
                         'id' => $chatting->id,
@@ -247,7 +247,7 @@ class ChatController extends Controller
             $userFcmToken = $customer?->cm_firebase_token;
             if($userFcmToken){
                 $data = [
-                    'title' => 'New Message',
+                    'title' => 'New Message from ' . $message_form->f_name . ' '. $message_form->l_name,
                     'description' => $chatting->message,
                     'data' => [
                         'id' => $chatting->id,

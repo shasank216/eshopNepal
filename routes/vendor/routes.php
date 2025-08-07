@@ -84,6 +84,8 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
             Route::controller(RegisterController::class)->group(function () {
                 Route::get(Auth::VENDOR_REGISTRATION[URI],'index')->name('index');
                 Route::post(Auth::VENDOR_REGISTRATION[URI],'add');
+
+                Route::post('fcm-token','saveFcmToken')->name('save.fcm.token');
                 // Route::get(Auth::VENDOR_VERIFY[URI],'verifyVendorOtp')->name('verifyVendorOtp');
                 // Route::get(Auth::VENDOR_VERIFY[URI],'getOTPVerificationView')->name('verifyVendor-Otp');
                 // Route::get('/verifyVendorOtp', 'RegisterController@getOTPVerificationView')->name('verifyVendor-Otp');
@@ -221,6 +223,7 @@ Route::group(['prefix' => 'vendor', 'as' => 'vendor.'], function () {
                 Route::get(Chatting::INDEX[URI] . '/{type}', 'index')->name('index');
                 Route::get(Chatting::MESSAGE[URI], 'getMessageByUser')->name('message');
                 Route::post(Chatting::MESSAGE[URI], 'addVendorMessage');
+                Route::get('fetch-chat-updates','fetchChatUpdates')->name('fetch-chat-updates');
             });
         });
         Route::group(['prefix' => 'notification', 'as' => 'notification.'], function () {

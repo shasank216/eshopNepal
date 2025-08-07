@@ -281,4 +281,14 @@ class RegisterController extends BaseController
         Toastr::error(translate('invalid_otp'));
         return redirect()->back();
     }
+
+    public function saveFcmToken(Request $request){
+        if(auth('seller')->check()){
+            $seller = Seller::where('id',auth('seller')->user()->id)->first();
+            $seller->web_firebase_token = $request->token;
+            $seller->save();
+            return response()->json(['message'=> 'Token saved successfully'],200);
+        }
+        return response()->json(['message'=>'No User found'],422);
+    }
 }

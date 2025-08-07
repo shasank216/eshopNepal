@@ -230,10 +230,11 @@ class ChatController extends Controller
 
 
             $sellerFcmToken = $seller?->cm_firebase_token;
+            $sellerWebToken = $seller?->web_firebase_token;
             \Log::info('seller data: ' . $seller);
             if($sellerFcmToken){
                 $data = [
-                    'title' => 'New Message',
+                    'title' => 'New Message from '. $message_form->name,
                     'description' => $chatting->message,
                     'data' => [
                         'id' => $chatting->id,
@@ -247,6 +248,27 @@ class ChatController extends Controller
 
                 try{
                     $firebaseService->sendToDevice($sellerFcmToken, $data['title'], $data['description'], $data['data']);
+                }catch(\Exception $e){
+                    \Log::info('Chat to seller message push error: ' . $e->getMessage());
+                }
+            }
+            
+            if($sellerWebToken){
+                $data = [
+                    'title' => 'New Message from '. $message_form->name,
+                    'description' => $chatting->message,
+                    'data' => [
+                        'id' => $chatting->id,
+                        'type' => 'seller',
+                        'shop_id' => $chatting->shop_id,
+                        'admin_id' => $chatting->admin_id,
+                        'user_id' => $chatting->user_id,
+                        'seen_by_customer' => $chatting->seen_by_customer,
+                    ],
+                ];
+
+                try{
+                    $firebaseService->sendToDevice($sellerWebToken, $data['title'], $data['description'], $data['data']);
                 }catch(\Exception $e){
                     \Log::info('Chat to seller message push error: ' . $e->getMessage());
                 }
@@ -266,7 +288,7 @@ class ChatController extends Controller
             \Log::info('delivenryManFcmToken: ' . $delivenryManFcmToken);
             if($delivenryManFcmToken){
                 $data = [
-                    'title' => 'New Message',
+                    'title' => 'New Message from ' . $message_form->name,
                     'description' => $chatting->message,
                     'data' => [
                         'id' => $chatting->id,
