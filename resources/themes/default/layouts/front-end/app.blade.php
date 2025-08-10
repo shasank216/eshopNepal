@@ -253,6 +253,7 @@
     <script src="{{ theme_asset(path: 'public/assets/front-end/js/customs.js') }}"></script>
 
     {!! Toastr::message() !!}
+    
 
     <script>
         "use strict";

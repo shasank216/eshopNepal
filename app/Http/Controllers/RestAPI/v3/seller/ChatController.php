@@ -245,6 +245,7 @@ class ChatController extends Controller
             $customer = User::find($request->id);
 
             $userFcmToken = $customer?->cm_firebase_token;
+            $userWebToken = $customer?->web_firebase_token;
             if($userFcmToken){
                 $data = [
                     'title' => 'New Message from ' . $message_form->f_name . ' '. $message_form->l_name,
@@ -261,6 +262,27 @@ class ChatController extends Controller
 
                 try{
                     $firebaseService->sendToDevice($userFcmToken, $data['title'], $data['description'], $data['data']);
+
+                }catch(\Exception $e){
+                    \Log::info('Chat to customer message push error: ' . $e->getMessage());
+                }
+            }
+            if($userWebToken){
+                $data = [
+                    'title' => 'New Message from ' . $message_form->f_name . ' '. $message_form->l_name,
+                    'description' => $chatting->message,
+                    'data' => [
+                        'id' => $chatting->id,
+                        'type' => 'customer',
+                        'shop_id' => $chatting->shop_id,
+                        'admin_id' => $chatting->admin_id,
+                        'seller_id' => $chatting->seller_id,
+                        'seen_by_seller' => $chatting->seen_by_seller
+                    ],
+                ];
+
+                try{
+                    $firebaseService->sendToDevice($userWebToken, $data['title'], $data['description'], $data['data']);
 
                 }catch(\Exception $e){
                     \Log::info('Chat to customer message push error: ' . $e->getMessage());

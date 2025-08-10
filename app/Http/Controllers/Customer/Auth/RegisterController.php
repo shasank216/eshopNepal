@@ -432,4 +432,14 @@ class RegisterController extends Controller
             ]);
         }
     }
+
+    public function saveFcmToken(Request $request){
+        if(auth()->check()){
+            $seller = User::where('id',auth()->user()->id)->first();
+            $seller->web_firebase_token = $request->token;
+            $seller->save();
+            return response()->json(['message'=> 'Token saved successfully'],200);
+        }
+        return response()->json(['message'=>'No User found'],422);
+    }
 }
