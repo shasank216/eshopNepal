@@ -183,6 +183,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('user-coupons', 'UserProfileController@user_coupons')->name('user-coupons')->middleware('customer');
     // Chatting start
     Route::get('chat/{type}', 'ChattingController@chat_list')->name('chat')->middleware('customer');
+    Route::get('chat-list-render','ChattingController@chatListRender')->name('chat-list-render')->middleware('customer');
     Route::get('messages', 'ChattingController@messages')->name('messages');
     Route::post('messages-store', 'ChattingController@messages_store')->name('messages_store');
     Route::post('customer-fcm-store','ChattingController@saveFcmToken')->name('customer-fcm-store');

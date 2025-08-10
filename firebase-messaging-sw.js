@@ -14,40 +14,49 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
+messaging.onBackgroundMessage(function (payload) {
     console.log('[firebase-messaging-sw.js] Background message received:', payload);
 
     const notificationTitle = payload.notification?.title || 'New Notification';
     const notificationOptions = {
         body: payload.notification?.body || '',
         icon: payload.notification?.icon || '/default-icon.png',
-        requireInteraction: true, // keep it visible until clicked
+        requireInteraction: true,
         data: {
-            url: buildRedirectUrl(payload) // store final URL in data for click handler
+            url: buildRedirectUrl(payload) // URL for click handler
         }
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
-// Helper to build the redirect URL with GET params from payload.data
+// Build redirect URL based on payload.data.type
 function buildRedirectUrl(payload) {
+    const type = payload.data?.type;
+
+    if (type === 'customer' && payload.data?.shop_id) {
+        // User panel push → open chat with shop_id
+        return `https://enepalshop.com/chat/seller?id=${payload.data.shop_id}`;
+    }
+
+    // Seller panel push → preserve old logic
     const baseUrl = "https://enepalshop.com/vendor/messages/index/customer";
     if (payload.data && Object.keys(payload.data).length > 0) {
         const queryString = new URLSearchParams(payload.data).toString();
         return `${baseUrl}?${queryString}`;
     }
+
     return baseUrl;
 }
 
 // Handle click on the notification
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationclick', function (event) {
     event.notification.close();
     const targetUrl = event.notification.data?.url || "https://enepalshop.com";
-    
+
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
-            // If the page is already open, focus it
+            // If the target page is already open, focus it
             for (let client of windowClients) {
                 if (client.url.includes(targetUrl) && 'focus' in client) {
                     return client.focus();
