@@ -185,6 +185,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     Route::get('chat/{type}', 'ChattingController@chat_list')->name('chat')->middleware('customer');
     Route::get('messages', 'ChattingController@messages')->name('messages');
     Route::post('messages-store', 'ChattingController@messages_store')->name('messages_store');
+    Route::post('customer-fcm-store','ChattingController@saveFcmToken')->name('customer-fcm-store');
     // chatting end
 
     //Support Ticket
@@ -272,6 +273,7 @@ Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'as' => 'custom
 
         Route::get('sign-up', 'RegisterController@register')->name('sign-up');
         Route::post('sign-up', 'RegisterController@submit');
+        Route::post('registration/fcm-token','RegisterController@saveFcmToken');
 
         Route::get('check/{id}', 'RegisterController@check')->name('check');
 

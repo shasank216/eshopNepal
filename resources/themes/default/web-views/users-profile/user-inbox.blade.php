@@ -327,6 +327,163 @@
 @endsection
 
 @push('script')
+ <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-compat.js"></script>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAExY995mKyNywHSY6QyJil2hHP0-cmXoQ",
+            authDomain: "enepalshop-e4dfe.firebaseapp.com",
+            projectId: "enepalshop-e4dfe",
+            storageBucket: "enepalshop-e4dfe.firebasestorage.app",
+            messagingSenderId: "293350781632",
+            appId: "1:293350781632:web:27adb086f566dead1c7325",
+            measurementId: "G-XG435EJYQ1"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+
+        // Ask user for permission and get token
+        function initFirebaseMessagingRegistration() {
+            if (Notification.permission === "granted") {
+                getFcmToken();
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(function(permission) {
+                    if (permission === "granted") {
+                        console.log("Notification permission granted");
+                        getFcmToken();
+                    } else {
+                        console.warn("Notification permission not granted");
+                    }
+                });
+            } else {
+                console.warn("Notification permission previously denied");
+            }
+        }
+
+        function getFcmToken() {
+            console.log('get fcm token called');
+            messaging.getToken({
+                vapidKey: "BPmDxlZdN0DqFX2xMIKXBi1DjoA_fyvv9ECmJFr-CVuOcSjEN0L_Siz1PM-Wpczw7vYNS2L5aSYD2wBUQGfZWvo"
+            }).then(function(token) {
+                if (token) {
+                    console.log("FCM Token:", token);
+                    // Send token to server
+                    $.ajax({
+                        url: "/customer-fcm-store",
+                        method: "POST",
+                        data: {
+                            _token : "{{ csrf_token() }}", 
+                            token: token 
+                        },
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function() {
+                            console.log("Token stored on server");
+                        },
+                        error: function(err) {
+                            console.error("Token storage failed:", err);
+                        }
+                    });
+                } else {
+                    console.warn("No token received");
+                }
+            }).catch(function(err) {
+                console.error("Error retrieving token:", err);
+            });
+        }
+
+        // Foreground message listener
+        messaging.onMessage(function(payload) {
+            console.log("[Foreground] Message received:", payload);
+
+            const userId = payload?.data?.user_id;
+
+            if (userId) {
+                // Trigger your chat UI refresh
+                $('.get-ajax-message-view[data-user-id="' + userId + '"]').trigger('click');
+            }
+
+            // Optional: Show browser notification
+            const { title, body, icon } = payload.notification || {};
+            if (title && body) {
+                new Notification(title, {
+                    body: body,
+                    icon: icon || '/default-icon.png'
+                });
+            }
+        });
+
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                .then(function(registration) {
+                    console.log("Service Worker registered:", registration.scope);
+                    // Attach service worker to Firebase
+                })
+                .catch(function(err) {
+                    console.error("Service Worker registration failed:", err);
+                });
+        }
+
+        // Initialize when document is ready
+        $(document).ready(function () {
+            initFirebaseMessagingRegistration();
+        });
+    </script>
+
+
+    <script>
+        'use strict'
+        setInterval(function() {
+            $.get({
+                url: '{{ route('vendor.get-order-data') }}',
+                dataType: 'json',
+                success: function(response) {
+                    let data = response.data;
+                    if (data.new_order > 0) {
+                        playAudio();
+                        $('#popup-modal').appendTo("body").modal('show');
+                    }
+                },
+            });
+        }, 10000);
+    </script>
+
+    <script>
+        $('.notification-data-view').on('click',function (){
+            let id= $(this).data('id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.post({
+                url: "{{route('vendor.notification.index')}}",
+                data: {
+                    _token: '{{csrf_token()}}',
+                    id: id,
+                },
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    $('.notification_data_new_badge'+id).fadeOut();
+                    $('#NotificationModalContent').empty().html(data.view);
+                    $('#NotificationModal').modal('show');
+                    let notificationDataCount = $('.notification_data_new_count');
+                    let notificationCount = parseInt(data.notification_count);
+                    notificationCount === 0 ? notificationDataCount.fadeOut() : notificationDataCount.html(notificationCount);
+                },
+                complete: function () {
+                },
+            });
+        })
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write(
+            '<script src="{{ dynamicAsset(path: 'public/assets/back-end') }}/vendor/babel-polyfill/polyfill.min.js"><\/script>');
+    </script>
     <script>
         "use strict";
 

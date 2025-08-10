@@ -26,7 +26,16 @@ class ChattingController extends Controller
 
     )
     {
+    }
 
+    public function saveFcmToken(Request $request){
+        if(auth('customer')->check()){
+            $seller = User::where('id',auth('customer')->user()->id)->first();
+            $seller->web_firebase_token = $request->token;
+            $seller->save();
+            return response()->json(['message'=> 'Token saved successfully'],200);
+        }
+        return response()->json(['message'=>'No User found'],422);
     }
 
     public function chat_list(Request $request, $type)
@@ -175,6 +184,8 @@ class ChattingController extends Controller
             }
         }
 
+        
+
         return view(VIEW_FILE_NAMES['user_inbox'],[
             'categories' => $categories
         ]);
@@ -249,10 +260,58 @@ class ChattingController extends Controller
             ];
 
             $chatting += $request['shop_id'] == 0 ? ['admin_id' => 0] : ['seller_id' => $request->get('seller_id')];
-            Chatting::create($chatting);
+            $chatMessage = Chatting::create($chatting);
 
             if ($request['shop_id'] != 0) {
                 $seller = Seller::find($request->seller_id);
+
+            $firebaseService = app(\App\Services\FirebaseService::class);
+            $sellerFcmToken = $seller?->cm_firebase_token;
+            $sellerWebToken = $seller?->web_firebase_token;
+            \Log::info('seller data: ' . $seller);
+
+            if($sellerFcmToken){
+                $data = [
+                    'title' => 'New Message from '. $message_form->name,
+                    'description' => $chatMessage->message,
+                    'data' => [
+                        'id' => $chatMessage->id,
+                        'type' => 'seller',
+                        'shop_id' => $chatMessage->shop_id,
+                        'admin_id' => $chatMessage->admin_id,
+                        'user_id' => $chatMessage->user_id,
+                        'seen_by_customer' => $chatMessage->seen_by_customer,
+                    ],
+                ];
+
+                try{
+                    $firebaseService->sendToDevice($sellerFcmToken, $data['title'], $data['description'], $data['data']);
+                }catch(\Exception $e){
+                    \Log::info('Chat to seller message push error: ' . $e->getMessage());
+                }
+            }
+            
+            if($sellerWebToken){
+                $data = [
+                    'title' => 'New Message from '. $message_form->name,
+                    'description' => $chatMessage->message,
+                    'data' => [
+                        'id' => $chatMessage->id,
+                        'type' => 'seller',
+                        'shop_id' => $chatMessage->shop_id,
+                        'admin_id' => $chatMessage->admin_id,
+                        'user_id' => $chatMessage->user_id,
+                        'seen_by_customer' => $chatMessage->seen_by_customer,
+                    ],
+                ];
+
+                try{
+                    $firebaseService->sendToDevice($sellerWebToken, $data['title'], $data['description'], $data['data']);
+                }catch(\Exception $e){
+                    \Log::info('Chat to seller message push error: ' . $e->getMessage());
+                }
+            }
+
                 ChattingEvent::dispatch('message_from_customer', 'seller', $seller, $message_form);
             }
         }
