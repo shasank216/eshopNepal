@@ -223,27 +223,72 @@ class HomeController extends Controller
         $product=$this->product->active()->inRandomOrder()->first();
         $footer_banner = $this->banner->where('banner_type','Footer Banner')->where('theme', theme_root_path())->where('published',1)->orderBy('id','desc')->get();
 
-        $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
-        $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
-        $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
+        // $sellerVacationStartDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_start_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+        // $sellerVacationEndDate = ($product['added_by'] == 'seller' && isset($product->seller->shop->vacation_end_date)) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+        // $sellerTemporaryClose = ($product['added_by'] == 'seller' && isset($product->seller->shop->temporary_close)) ? $product->seller->shop->temporary_close : false;
 
-        $temporaryClose = getWebConfig('temporary_close');
-        $inHouseVacation = getWebConfig('vacation_add');
-        $inHouseVacationStartDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_start_date'] : null;
-        $inHouseVacationEndDate = $product['added_by'] == 'admin' ? $inHouseVacation['vacation_end_date'] : null;
-        $inHouseVacationStatus = $product['added_by'] == 'admin' ? $inHouseVacation['status'] : false;
-        $inHouseTemporaryClose = $product['added_by'] == 'admin' ? $temporaryClose['status'] : false;
+        $sellerVacationStartDate = (
+            isset($product->added_by) 
+            && $product->added_by === 'seller' 
+            && optional(optional($product->seller)->shop)->vacation_start_date
+        ) ? date('Y-m-d', strtotime($product->seller->shop->vacation_start_date)) : null;
+
+        $sellerVacationEndDate = (
+            isset($product->added_by) 
+            && $product->added_by === 'seller' 
+            && optional(optional($product->seller)->shop)->vacation_end_date
+        ) ? date('Y-m-d', strtotime($product->seller->shop->vacation_end_date)) : null;
+
+        $sellerTemporaryClose = (
+            isset($product->added_by) 
+            && $product->added_by === 'seller' 
+            && optional(optional($product->seller)->shop)->temporary_close
+        ) ? $product->seller->shop->temporary_close : false;
+
+
+        $temporaryClose = getWebConfig('temporary_close') ?? [];
+        $inHouseVacation = getWebConfig('vacation_add') ?? [];
+        $inHouseVacationStartDate = (
+            isset($product) && isset($product->added_by) && $product->added_by === 'admin'
+        ) ? ($inHouseVacation['vacation_start_date'] ?? null) : null;
+                $inHouseVacationEndDate = (
+            isset($product) && isset($product->added_by) && $product->added_by === 'admin'
+        ) ? ($inHouseVacation['vacation_end_date'] ?? null) : null;
+
+        $inHouseVacationStatus = (
+            isset($product) && isset($product->added_by) && $product->added_by === 'admin'
+        ) ? ($inHouseVacation['status'] ?? false) : false;
+
+        $inHouseTemporaryClose = (
+            isset($product) && isset($product->added_by) && $product->added_by === 'admin'
+        ) ? ($temporaryClose['status'] ?? false) : false;
+
+
+        // $inHouseVacationStartDate = $product['added_by'] == 'admin' ? ($inHouseVacation['vacation_start_date'] ?? null) : null;
+        // $inHouseVacationEndDate   = $product['added_by'] == 'admin' ? ($inHouseVacation['vacation_end_date'] ?? null) : null;
+        // $inHouseVacationStatus    = $product['added_by'] == 'admin' ? ($inHouseVacation['status'] ?? false) : false;
+        // $inHouseTemporaryClose    = $product['added_by'] == 'admin' ? ($temporaryClose['status'] ?? false) : false;
 
         $product_tags = Product::all();
-
-        // dd($product_tags);
          // Retrieves a collection of tags associated with this product
 
-
-
          $blogs = Poster::latest()->take(4)->get();
-         $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
-         $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+        //  $wishlistStatus = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id'], 'customer_id' => auth('customer')->id()]);
+
+        $wishlistStatus = null;
+
+        if (!empty($product) && isset($product->id)) {
+            $wishlistStatus = $this->wishlistRepo->getListWhereCount(
+                filters: [
+                    'product_id' => $product->id,
+                    'customer_id' => auth('customer')->id()
+                ]
+            );
+        }
+        //  $countWishlist = $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product['id']]);
+        $countWishlist = $product?->id
+            ? $this->wishlistRepo->getListWhereCount(filters: ['product_id' => $product->id])
+            : 0;
         // dd($categories);
         return view(VIEW_FILE_NAMES['home'],
             compact(
