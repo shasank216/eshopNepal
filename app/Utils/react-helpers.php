@@ -27,7 +27,7 @@ if (!function_exists('reactActivationCheck')) {
     {
         $scheme = str_contains($reactDomain, 'localhost')?'http://':'https://';
         $url = empty(parse_url($reactDomain)['scheme']) ? $scheme . ltrim($reactDomain, '/') : $reactDomain;
-        $response = Http::post('https://store.6amtech.com/api/v1/customer/license-check', [
+        $response = Http::post('https://store.enepalshop.com/api/v1/customer/license-check', [
             'domain_name' => str_ireplace('www.', '', parse_url($url, PHP_URL_HOST)),
             'license_code' => $reactLicenseCode
         ]);
@@ -41,7 +41,7 @@ if (!function_exists('activationSubmit')) {
         $post = [
             'purchase_key' => $purchaseKey
         ];
-        $live = 'https://check.6amtech.com';
+        $live = 'https://check.enepalshop.com';
         $result = curl_init($live . '/api/v1/software-check');
         curl_setopt($result, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($result, CURLOPT_POSTFIELDS, $post);

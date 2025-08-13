@@ -1,8 +1,8 @@
 /*---------------------------------------------
-	Template name:  6valley Grocery
+	Template name:  enepalshop Grocery
 	Version:        1.0
-	Author:         6amtech
-	Author url:     https://6amtech.com/
+	Author:         enepalshop
+	Author url:     https://enepalshop.com/
 
 NOTE:
 ------

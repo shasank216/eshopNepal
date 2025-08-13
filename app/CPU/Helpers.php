@@ -597,7 +597,7 @@ class Helpers
         return $result;
     }
 
-    public static function send_push_notif_to_topic($data, $topic = 'sixvalley')
+    public static function send_push_notif_to_topic($data, $topic = 'enepalshop')
     {
         $key = BusinessSetting::where(['type' => 'push_notification_key'])->first()->value;
 
@@ -654,7 +654,7 @@ class Helpers
     }
 
 
-    public static function send_push_notif_to_topicold($data, $topic = 'sixvalley')
+    public static function send_push_notif_to_topicold($data, $topic = 'enepalshop')
     {
         $key = BusinessSetting::where(['type' => 'push_notification_key'])->first()->value;
 

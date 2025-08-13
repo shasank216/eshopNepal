@@ -315,16 +315,16 @@
             </div>
         </div>
         $(document).on('click', '#cookie-accept', function() {
-            document.cookie = '6valley_cookie_consent=accepted; max-age=' + 60 * 60 * 24 * 30;
+            document.cookie = 'enepalshop_cookie_consent=accepted; max-age=' + 60 * 60 * 24 * 30;
             $('#cookie-section').hide();
         });
         $(document).on('click', '#cookie-reject', function() {
-            document.cookie = '6valley_cookie_consent=reject; max-age=' + 60 * 60 * 24;
+            document.cookie = 'enepalshop_cookie_consent=reject; max-age=' + 60 * 60 * 24;
             $('#cookie-section').hide();
         });
 
         $(document).ready(function() {
-            if (document.cookie.indexOf("6valley_cookie_consent=accepted") !== -1) {
+            if (document.cookie.indexOf("enepalshop_cookie_consent=accepted") !== -1) {
                 $('#cookie-section').hide();
             } else {
                 $('#cookie-section').html(cookie_content).show();

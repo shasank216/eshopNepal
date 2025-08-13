@@ -64,14 +64,14 @@
                                         <img width="76" class="mb-4" src="{{dynamicAsset(path: 'public/assets/back-end/img/logo.png')}}" alt="">
                                         <h3 class="mb-3">New Store Registration Request</h3>
                                         <p>Hi Admin,</p>
-                                        <p><b>Morning Mart</b> has requested to open their store in 6amMart. </p>
+                                        <p><b>Morning Mart</b> has requested to open their store in enepalshop. </p>
                                         <p>Review their request from admin panel.</p>
                                         <img src="{{dynamicAsset(path: 'public/assets/back-end/img/new-store.png')}}" alt="" class="mt-4 mb-3 w-100">
                                         <p>Click on the button below to review the request</p>
                                         <button class="btn btn--primary rounded-0 px-5">See Registration Request</button>
                                         <hr>
                                         <p>Please contact us for any queries, we’re always happy to help. </p>
-                                        <p>Thanks & Regards, <br> 6amMart</p>
+                                        <p>Thanks & Regards, <br> enepalshop</p>
                                         <div class="d-flex justify-content-center gap-2">
                                             <ul class="list-inline gap-3">
                                                 <li><a href="#" class="text-dark">Privacy Policy</a></li>
@@ -85,7 +85,7 @@
                                             <a href="https://linkedin.com/" target="_blank"><i class="tio-linkedin-square"></i></a>
                                             <a href="https://twitter.com/" target="_blank"><i class="tio-twitter"></i></a>
                                         </div>
-                                        <p class="text-center">Copyright 2023 6Valley. All right reserved</p>
+                                        <p class="text-center">Copyright 2023 enepalshop. All right reserved</p>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                         <label for="editor" class="title-color">Mail Body</label>
                                         <textarea class="form-control" id="editor" name="value">
                                             Hi Admin, <br>
-                                            Morning Mart has requested to open their store in 6amMart. <br>
+                                            Morning Mart has requested to open their store in enepalshop. <br>
                                             Review their request from admin panel.
                                         </textarea>
                                     </div>
@@ -321,10 +321,10 @@
                             </div>
                             <p><b>Hi Sabrina,</b></p>
                             <p>Please click <a href="#">Here</a>  or click the link below to change your password</p>
-                            <p>Click here <br> <a href="https://6ammart/changepasswordi357092349-38505320">https://6ammart/changepasswordi357092349-38505320</a></p>
+                            <p>Click here <br> <a href="https://enepalshop/changepasswordi357092349-38505320">https://enepalshop/changepasswordi357092349-38505320</a></p>
                             <hr>
                             <p>Please contact us for any queries, we’re always happy to help. </p>
-                            <p>Thanks & Regards, <br> 6amMart</p>
+                            <p>Thanks & Regards, <br> enepalshop</p>
 
                             <div class="d-flex justify-content-center mb-3">
                                 <img width="76" src="{{dynamicAsset(path: 'public/assets/back-end/img/logo.png')}}" alt="">
@@ -342,7 +342,7 @@
                                 <a href="https://linkedin.com/" target="_blank"><i class="tio-linkedin-square"></i></a>
                                 <a href="https://twitter.com/" target="_blank"><i class="tio-twitter"></i></a>
                             </div>
-                            <p class="text-center">Copyright 2023 6Valley. All right reserved</p>
+                            <p class="text-center">Copyright 2023 enepalshop. All right reserved</p>
                         </div>
                     </div>
                 </div>
@@ -353,14 +353,14 @@
                             <img width="76" class="mb-4" src="{{dynamicAsset(path: 'public/assets/back-end/img/logo.png')}}" alt="">
                             <h3 class="mb-3">New Store Registration Request</h3>
                             <p>Hi Admin,</p>
-                            <p><b>Morning Mart</b> has requested to open their store in 6amMart. </p>
+                            <p><b>Morning Mart</b> has requested to open their store in enepalshop. </p>
                             <p>Review their request from admin panel.</p>
                             <img src="{{dynamicAsset(path: 'public/assets/back-end/img/new-store.png')}}" alt="" class="mt-4 mb-3 w-100">
                             <p>Click on the button below to review the request</p>
                             <button class="btn btn--primary rounded-0 px-5">See Registration Request</button>
                             <hr>
                             <p>Please contact us for any queries, we’re always happy to help. </p>
-                            <p>Thanks & Regards, <br> 6amMart</p>
+                            <p>Thanks & Regards, <br> enepalshop</p>
                             <div class="d-flex justify-content-center gap-2">
                                 <ul class="list-inline gap-3">
                                     <li><a href="#" class="text-dark">Privacy Policy</a></li>
@@ -374,7 +374,7 @@
                                 <a href="https://linkedin.com/" target="_blank"><i class="tio-linkedin-square"></i></a>
                                 <a href="https://twitter.com/" target="_blank"><i class="tio-twitter"></i></a>
                             </div>
-                            <p class="text-center">Copyright 2023 6Valley. All right reserved</p>
+                            <p class="text-center">Copyright 2023 enepalshop. All right reserved</p>
                         </div>
                     </div>
                 </div>
@@ -385,14 +385,14 @@
                             <img width="76" class="mb-4" src="{{dynamicAsset(path: 'public/assets/back-end/img/logo.png')}}" alt="">
                             <h3 class="mb-3">New Delivery Man Registration Request</h3>
                             <p>Hi Admin,</p>
-                            <p><b>Jhon Doe</b> has requested to open their store in 6amMart. </p>
+                            <p><b>Jhon Doe</b> has requested to open their store in enepalshop. </p>
                             <p>Review their request from admin panel.</p>
                             <img src="{{dynamicAsset(path: 'public/assets/back-end/img/new-store.png')}}" alt="" class="mt-4 mb-3 w-100">
                             <p>Click on the button below to review the request</p>
                             <button class="btn btn--primary rounded-0 px-5">See Registration Request</button>
                             <hr>
                             <p>Please contact us for any queries, we’re always happy to help. </p>
-                            <p>Thanks & Regards, <br> 6amMart</p>
+                            <p>Thanks & Regards, <br> enepalshop</p>
                             <div class="d-flex justify-content-center gap-2">
                                 <ul class="list-inline gap-3">
                                     <li><a href="#" class="text-dark">Privacy Policy</a></li>
@@ -406,7 +406,7 @@
                                 <a href="https://linkedin.com/" target="_blank"><i class="tio-linkedin-square"></i></a>
                                 <a href="https://twitter.com/" target="_blank"><i class="tio-twitter"></i></a>
                             </div>
-                            <p class="text-center">Copyright 2023 6Valley. All right reserved</p>
+                            <p class="text-center">Copyright 2023 enepalshop. All right reserved</p>
                         </div>
                     </div>
                 </div>
@@ -423,11 +423,11 @@
                             </div>
                             <p><b>Hi Sabrina,</b></p>
                             <p>Please click <a href="#">Here</a>  or click the link below to change your password</p>
-                            <p>Click here <br> <a href="https://6ammart/changepasswordi357092349-38505320">https://6ammart/changepasswordi357092349-38505320</a></p>
+                            <p>Click here <br> <a href="https://enepalshop/changepasswordi357092349-38505320">https://enepalshop/changepasswordi357092349-38505320</a></p>
 
                             <hr>
                             <p>Please contact us for any queries, we’re always happy to help. </p>
-                            <p>Thanks & Regards, <br> 6amMart</p>
+                            <p>Thanks & Regards, <br> enepalshop</p>
 
                             <div class="d-flex justify-content-center mb-3">
                                 <img width="76" src="{{dynamicAsset(path: 'public/assets/back-end/img/logo.png')}}" alt="">
@@ -445,7 +445,7 @@
                                 <a href="https://linkedin.com/" target="_blank"><i class="tio-linkedin-square"></i></a>
                                 <a href="https://twitter.com/" target="_blank"><i class="tio-twitter"></i></a>
                             </div>
-                            <p class="text-center">Copyright 2023 6Valley. All right reserved</p>
+                            <p class="text-center">Copyright 2023 enepalshop. All right reserved</p>
                         </div>
                     </div>
                 </div>

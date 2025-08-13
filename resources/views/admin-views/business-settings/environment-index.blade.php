@@ -121,7 +121,7 @@
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label class="title-color d-flex">{{translate('buyer_username')}}</label>
-                            <input type="text" value="{{ env('BUYER_USERNAME') }}" class="form-control" placeholder="{{translate('6valley-admin-demo-jhisdfhisufjifjfijqw5467')}}" disabled>
+                            <input type="text" value="{{ env('BUYER_USERNAME') }}" class="form-control" placeholder="{{translate('enepalshop-admin-demo-jhisdfhisufjifjfijqw5467')}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 col-12">

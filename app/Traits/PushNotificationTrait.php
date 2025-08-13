@@ -318,7 +318,7 @@ trait PushNotificationTrait
      * @param string $topic
      * @return bool|string
      */
-    protected function sendPushNotificationToTopic(array|object $data, string $topic = 'sixvalley'): bool|string
+    protected function sendPushNotificationToTopic(array|object $data, string $topic = 'enepalshop'): bool|string
     {
         $key = getWebConfig(name: 'push_notification_key');
 

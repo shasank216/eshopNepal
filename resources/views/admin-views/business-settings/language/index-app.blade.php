@@ -24,7 +24,7 @@
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     <strong>{{translate('warning')}}
                         !</strong> {{translate('follow_the_documentation_to_setup_from_app_end')}}, <a
-                            href="https://documentation.6amtech.com/sixvalley-ecommerce/docs/1.0/app-setup#section3"
+                            href="https://documentation.enepalshop.com/enepalshop-ecommerce/docs/1.0/app-setup#section3"
                             target="_blank">{{translate('click_here')}}</a>.
                 </div>
                 <div class="card">

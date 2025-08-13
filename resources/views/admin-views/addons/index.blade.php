@@ -58,10 +58,10 @@
                                                          loading="lazy"
                                                          alt="" class="dark-support rounded mb-4">
                                                     <p>
-                                                        {{ translate('now_you’ll_be_successfully_able_to_use_the_addons_for_your_6Valley_website') }}
+                                                        {{ translate('now_you’ll_be_successfully_able_to_use_the_addons_for_your_enepalshop_website') }}
                                                     </p>
                                                     <p>
-                                                        {{ translate('N:B you_can_upload_only_6Valley’s_theme_templates').'.' }}
+                                                        {{ translate('N:B you_can_upload_only_enepalshop’s_theme_templates').'.' }}
                                                     </p>
                                                     <button class="btn btn-primary px-10 mt-3 text-capitalize"
                                                             data-dismiss="modal">{{ translate('got_it') }}</button>

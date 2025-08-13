@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="text-center text-white mb-4">
-        <h2>{{ "6valley Software Installation" }}</h2>
+        <h2>{{ "enepalshop Software Installation" }}</h2>
         <h6 class="fw-normal">
             {{ "Please proceed step by step with proper data according to instructions" }}
         </h6>
     </div>
 
     <div class="pb-2 px-2 px-sm-5 mx-xl-4">
-        <div class="progress cursor-pointer" role="progressbar" aria-label="6valley Software Installation"
+        <div class="progress cursor-pointer" role="progressbar" aria-label="enepalshop Software Installation"
              aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-bs-toggle="tooltip"
              data-bs-placement="top" data-bs-custom-class="custom-progress-tooltip" data-bs-title="Intro Step!"
              data-bs-delay='{"hide":1000}'>
@@ -29,7 +29,7 @@
                     <h6 class="fw-bold text-uppercase fs m-0 letter-spacing --fs-14px">
                         {{ "Required Database Information" }}
                     </h6>
-                    <a href="https://docs.6amtech.com/docs-six-valley/admin-panel/install-on-server"
+                    <a href="https://docs.enepalshop.com/docs-enepalshop/admin-panel/install-on-server"
                        target="_blank">{{ "Where to get this information ?" }}</a>
                 </div>
 
