@@ -433,6 +433,28 @@
         $(document).ready(function () {
             initFirebaseMessagingRegistration();
         });
+
+        function pollChatList() {
+            $.ajax({
+                url: "{{ url('chat-list-render') }}",
+                method: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.html) {
+                        $('.inbox_chat').html(response.html);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Chat list polling error:", status, error);
+                },
+                complete: function() {
+                    // Schedule the next poll
+                    setTimeout(pollChatList, 5000); // 5 seconds
+                }
+            });
+        }
+
+        pollChatList();
     </script>
 
 
@@ -677,6 +699,11 @@
                         toastr.warning(error.responseJSON)
                     }
                 });
+            });
+
+            $(document).on('click','.chat_list', function (){
+                let url = $(this).data('link');
+                window.location.href = url;
             });
         });
     </script>
