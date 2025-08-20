@@ -1058,6 +1058,14 @@ function commonFunctionalityForProductView() {
         addWishlist(id);
     })
 }
+
+$(document).on('click','.product-new-action-add-wishlist', function(e){
+    e.preventDefault();
+    let id = $(this).data('product-id');
+    addWishlist(id);
+});
+
+
 commonFunctionalityForProductView()
 function checkoutFromCartList() {
     let orderNote = $('#order_note').val();
