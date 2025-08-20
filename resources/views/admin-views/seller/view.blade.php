@@ -46,7 +46,7 @@
             <div class="card-body">
                 <div class="d-flex flex-wrap gap-3 justify-content-between">
                     <div class="media flex-column flex-sm-row gap-3">
-                        <img class="avatar rounded-0" style="width: 170px"
+                        <img class="avatar rounded-0" style="width: 170px; height: auto; object-fit: cover;"
                             src="{{ getValidImage(path: 'storage/app/public/shop/' . $seller?->shop->image, type: 'backend-basic') }}"
                             alt="{{ translate('image') }}">
                         <div class="media-body">
@@ -318,13 +318,12 @@
                                         <div>
                                             <span class="key text-nowrap">{{ translate('Vat / Pan ') }}</span>
                                             <span class="px-2">:</span>
-                                            <a href="{{ asset('storage/app/public/vat_pan_img/' . $seller?->vat_pan_img) }}"
-                                                download>
-                                                <img class="avatar rounded-0" style="width: 170px"
-                                                    src="{{ getValidImage(path: 'storage/app/public/vat_pan_img/' . $seller?->vat_pan_img, type: 'backend-basic') }}"
+                                            <a href="{{ asset('storage/app/public/seller/' . $seller?->vat_pan_img) }}" download>
+                                                <img class="avatar rounded-0" style="width: 170px; height: auto; object-fit: cover;"
+                                                    src="{{ asset('storage/app/public/seller/' . $seller?->vat_pan_img) }}"
                                                     alt="{{ translate('image') }}">
-
                                             </a>
+
                                         </div>
 
                                         {{-- <div>
@@ -342,10 +341,10 @@
                                         <div>
                                             <span class="key text-nowrap">{{ translate('company cheque book') }}</span>
                                             <span class="px-2">:</span>
-                                            <a href="{{ asset('storage/app/public/company_cheque_book/' . $seller?->company_cheque_book) }}"
+                                            <a href="{{ asset('storage/app/public/seller/' . $seller?->company_cheque_book) }}"
                                                 download>
                                                 <img class="avatar rounded-0" style="width: 170px"
-                                                    src="{{ getValidImage(path: 'storage/app/public/company_cheque_book/' . $seller?->company_cheque_book, type: 'backend-basic') }}"
+                                                    src="{{ getValidImage(path: 'storage/app/public/seller/' . $seller?->company_cheque_book, type: 'backend-basic') }}"
                                                     alt="{{ translate('image') }}">
                                             </a>
                                         </div>
