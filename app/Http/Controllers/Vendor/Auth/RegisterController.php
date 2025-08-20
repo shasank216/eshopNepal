@@ -153,6 +153,8 @@ class RegisterController extends BaseController
             $seller->email = $request->email;
             $seller->image = ImageManager::upload('seller/', 'webp', $request->file('image'));
             $seller->password = bcrypt($request->password);
+            $seller->vat_pan_img = ImageManager::upload('seller/', 'webp', $request->file('vat_pan_img'));
+            $seller->company_cheque_book = ImageManager::upload('seller/', 'webp', $request->file('company_cheque_book'));
             $seller->status = 'pending';
             $seller->save();
 

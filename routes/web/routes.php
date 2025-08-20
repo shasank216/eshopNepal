@@ -37,6 +37,10 @@ use Illuminate\Support\Facades\Artisan;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('storage-link', function(){
+    Artisan::call('storage:link');
+});
+
 Route::get('maintenance-mode', 'Web\WebController@maintenance_mode')->name('maintenance-mode');
 Route::get('recover-password', 'ForgotPasswordController@reset_password')->name('reset-password');
 Route::get('verify-phone', 'Customer\Auth\ForgotPasswordController@showVerifyPhone')->name('verify.phone.show');

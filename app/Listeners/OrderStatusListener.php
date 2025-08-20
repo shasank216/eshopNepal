@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Models\User;
+use App\Models\Order;
 use App\Events\OrderStatusEvent;
 use App\Mail\OrderStatusChanged;
 use Illuminate\Support\Facades\Mail;
@@ -39,7 +40,12 @@ class OrderStatusListener
 
     private function sendMail(OrderStatusEvent $event): void
     {
-        $order = $event->order;
+        $order = Order::whereId($event->order->id)->first();
+
+        if(!$order){
+            \Log::info("message: Order not found");
+            return;
+        }
 
         $customer = User::whereId($order->customer_id)->first();
 
