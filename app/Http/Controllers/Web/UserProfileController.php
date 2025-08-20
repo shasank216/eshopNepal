@@ -394,6 +394,8 @@ class UserProfileController extends Controller
             return back();
         }
 
+        $shippingAddress = ShippingAddress::where('id', $request->id)->first();
+
         $updateAddress = [
             'contact_person_name' => $request->name,
             'address_type' => $request->addressAs,
@@ -401,7 +403,7 @@ class UserProfileController extends Controller
             'city' => $request->city,
             'zip' => $request->zip,
             'country' => $request->country,
-            'phone' => $request->phone,
+            'phone' => $request->phone ?? $shippingAddress->phone,
             'is_billing' => $request->is_billing,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,

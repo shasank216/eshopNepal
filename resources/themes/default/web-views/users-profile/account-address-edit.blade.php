@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="own_phone">{{translate('phone')}}</label>
-                                <input class="form-control phone-input-with-country-picker" type="text" id="own_phone" value="+{{$shippingAddress->phone}}" required="required">
+                                <input class="form-control phone-input-with-country-picker" type="text" id="own_phone" value="{{$shippingAddress->phone}}" required="required">
                                 <input type="hidden" class="country-picker-phone-number w-50" name="phone" value="{{ $shippingAddress->phone }}" readonly>
                             </div>
                         </div>
@@ -243,6 +243,8 @@
 
     $(document).on('ready', function () {
         initAutocomplete();
+
+        $('#own_phone').trigger('change');
 
     });
 

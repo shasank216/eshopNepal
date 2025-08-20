@@ -128,7 +128,7 @@ class SocialAuthController extends Controller
                     'f_name' => $fast_name,
                     'l_name' => $last_name,
                     'email' => $email,
-                    'phone' => '',
+                    'phone' => 'temp_' . Str::uuid(),
                     'password' => bcrypt($data['id']),
                     'is_active' => 1,
                     'login_medium' => $request['medium'],

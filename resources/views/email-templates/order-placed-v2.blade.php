@@ -155,7 +155,7 @@ $order = Order::find($id);
 
 if ($order->seller_is == 'seller') {
     $seller = Seller::find($order->seller_id);
-    $shop = Shop::find($seller->id);
+    $shop = Shop::where('seller_id',$seller->id)->first();
 }
 
 if ($order->is_guest) {
@@ -192,8 +192,10 @@ if ($order->is_guest) {
                         <br>
                         @if ($order->seller_is == 'seller')
                             <div class="d-flex align-items-center mt-1">
+                                @if($shop?->image)
                                 <img src="{{dynamicStorage(path: 'storage/app/public/shop/'.$shop->image) }}" 
                                      class="shop-logo" alt="{{ $shop->name }}"/>
+                                @endif
                                 <span class="ps-1">{{$shop->name}}</span>
                             </div>
                         @else

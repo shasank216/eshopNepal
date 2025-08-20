@@ -258,13 +258,6 @@
     <script>
         "use strict";
 
-        @if (Request::is('/') && \Illuminate\Support\Facades\Cookie::has('popup_banner') == false)
-            $(document).ready(function() {
-                $('#popup-modal').modal('show');
-            });
-            @php(\Illuminate\Support\Facades\Cookie::queue('popup_banner', 'off', 1))
-        @endif
-
         @if ($errors->any())
             @foreach ($errors->all() as $error)
                 toastr.error('{{ $error }}', Error, {
@@ -299,22 +292,6 @@
             })
         }
 
-        @php($cookie = $web_config['cookie_setting'] ? json_decode($web_config['cookie_setting']['value'], true) : null)
-        let cookie_content = `
-        <div class="cookie-section">
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-between column-gap-4 row-gap-3">
-                    <div class="text-wrapper">
-                        <h5 class="title">{{ translate('Your_Privacy_Matter') }}</h5>
-                        <div>{{ $cookie ? $cookie['cookie_text'] : '' }}</div>
-                    </div>
-                    <div class="btn-wrapper">
-                        <button class="btn bg-dark text-white cursor-pointer" id="cookie-reject">{{ translate('no_thanks') }}</button>
-                        <button class="btn btn-success cookie-accept" id="cookie-accept">{{ translate('i_Accept') }}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         $(document).on('click', '#cookie-accept', function() {
             document.cookie = '6valley_cookie_consent=accepted; max-age=' + 60 * 60 * 24 * 30;
             $('#cookie-section').hide();
@@ -323,15 +300,6 @@
             document.cookie = '6valley_cookie_consent=reject; max-age=' + 60 * 60 * 24;
             $('#cookie-section').hide();
         });
-
-        $(document).ready(function() {
-            if (document.cookie.indexOf("6valley_cookie_consent=accepted") !== -1) {
-                $('#cookie-section').hide();
-            } else {
-                $('#cookie-section').html(cookie_content).show();
-            }
-        });
-
 
         $(document).ready(function() {
             $('#navbarCollapse').collapse({
