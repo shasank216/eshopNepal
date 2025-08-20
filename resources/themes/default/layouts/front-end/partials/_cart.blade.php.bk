@@ -133,6 +133,7 @@
                                     @if (isset($product->status) && $product->status == 1)
                                         <div class="__quantity">
                                             <div class="quantity__minus cart-qty-btn action-update-cart-quantity"
+                                                onclick="updateCartQuantity('{{ $cartItem['id'] }}','{{ $cartItem['product_id'] }}', '-1', 'minus')"
                                                 data-cart-id="{{ $cartItem['id'] }}"
                                                 data-product-id="{{ $cartItem['product_id'] }}" data-action="-1"
                                                 data-event="minus">
@@ -152,6 +153,7 @@
                                             <div class="quantity__plus cart-qty-btn action-update-cart-quantity"
                                                 data-cart-id="{{ $cartItem['id'] }}"
                                                 data-product-id="{{ $cartItem['product_id'] }}" data-action="1"
+                                                onclick="updateCartQuantity('{{ $cartItem['id'] }}','{{ $cartItem['product_id'] }}', '1')"
                                                 data-event="">
                                                 <i class="tio-add"></i>
                                             </div>
@@ -161,6 +163,7 @@
                                             <div class="quantity__minus cart-qty-btn form-control action-update-cart-quantity"
                                                 data-cart-id="{{ $cartItem['id'] }}"
                                                 data-product-id="{{ $cartItem['product_id'] }}" data-action="-1"
+                                                onclick="updateCartQuantity('{{ $cartItem['id'] }}','{{ $cartItem['product_id'] }}', '-1', 'minus')"
                                                 data-event="minus">
                                                 <i class="tio-delete-outlined text-danger fs-10"></i>
                                             </div>
