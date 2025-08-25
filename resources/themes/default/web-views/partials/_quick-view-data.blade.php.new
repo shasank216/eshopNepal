@@ -278,7 +278,7 @@
                             </button>
                         @endif
 
-                        <button type="button" data-product-id="{{$product['id']}}" class="btn __text-18px border product-new-action-add-wishlist">
+                        <button type="button" data-product-id="{{$product['id']}}" class="btn __text-18px border product-action-add-wishlist">
                             <i class="fa {{($wishlist_status == 1?'fa-heart':'fa-heart-o')}} wishlist_icon_{{$product['id']}} web-text-primary"
                             id="wishlist_icon_{{$product['id']}}" aria-hidden="true"></i>
                             <span class="fs-14 text-muted align-bottom countWishlist-{{$product['id']}}">
@@ -317,4 +317,3 @@
 
 <script type="text/javascript" async="async"
         src="https://platform-api.sharethis.com/js/sharethis.js#property=5f55f75bde227f0012147049&product=sticky-share-buttons"></script>
-
