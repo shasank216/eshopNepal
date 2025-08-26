@@ -40,6 +40,9 @@ class AlphaSmsService
             'responsetype' => 'json',
         ];
 
+        //  $response= Http::get($this->baseUrl, $queryParams);
+        // \Log::info("SMS Response: " . json_encode($response));
+        // return $response;
         // Send GET request to Alpha SMS API
         return Http::get($this->baseUrl, $queryParams);
     }

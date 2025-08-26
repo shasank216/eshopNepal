@@ -40,6 +40,11 @@ class PassportAuthController extends Controller
         if ($request->referral_code) {
             $refer_user = User::where(['referral_code' => $request->referral_code])->first();
         }
+        
+        $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
+        if($user){
+            return response()->json(['message' => translate('user_already_exist')]);
+        }
 
         $temporary_token = Str::random(40);
         $user = User::create([
