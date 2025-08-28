@@ -21,6 +21,50 @@ class SocialAuthController extends Controller
         return Socialite::driver($service)->redirect();
     }
 
+    // public function handleProviderCallback($service)
+    // {
+    //     $user_data = Socialite::driver($service)->stateless()->user();
+
+    //     $user = User::where('email', $user_data->getEmail())->first();
+
+    //     $name = explode(' ', $user_data['name']);
+    //     if (count($name) > 1) {
+    //         $fast_name = implode(" ", array_slice($name, 0, -1));
+    //         $last_name = end($name);
+    //     } else {
+    //         $fast_name = implode(" ", $name);
+    //         $last_name = '';
+    //     }
+
+    //     if (isset($user) == false) {
+    //         $user = User::create([
+    //             'f_name' => $fast_name,
+    //             'l_name' => $last_name,
+    //             'email' => $user_data->getEmail(),
+    //             'phone' => null,
+    //             'password' => bcrypt($user_data->id),
+    //             'is_active' => 1,
+    //             'login_medium' => $service,
+    //             'social_id' => $user_data->id,
+    //             'is_phone_verified' => 0,
+    //             'is_email_verified' => 1,
+    //             'referral_code' => Helpers::generate_referer_code(),
+    //             'temporary_token' => Str::random(40)
+    //         ]);
+    //     } else {
+    //         $user->temporary_token = Str::random(40);
+    //         $user->save();
+    //     }
+
+    //     /*if ($user->phone == '') {
+    //         return redirect()->route('customer.auth.update-phone', $user->id);
+    //     }*/
+    //     //redirect if website user
+    //     $message = self::login_process($user, $user_data->getEmail(), $user_data->id);
+    //     Toastr::info($message);
+    //     return redirect()->route('home');
+    // }
+
     public function handleProviderCallback($service)
     {
         $user_data = Socialite::driver($service)->stateless()->user();
@@ -35,6 +79,8 @@ class SocialAuthController extends Controller
             $fast_name = implode(" ", $name);
             $last_name = '';
         }
+
+        $wasRecentlyCreated = false;
 
         if (isset($user) == false) {
             $user = User::create([
@@ -51,17 +97,33 @@ class SocialAuthController extends Controller
                 'referral_code' => Helpers::generate_referer_code(),
                 'temporary_token' => Str::random(40)
             ]);
+
+            $wasRecentlyCreated = true;
         } else {
             $user->temporary_token = Str::random(40);
             $user->save();
         }
 
-        /*if ($user->phone == '') {
-            return redirect()->route('customer.auth.update-phone', $user->id);
-        }*/
-        //redirect if website user
-        $message = self::login_process($user, $user_data->getEmail(), $user_data->id);
+        if ($wasRecentlyCreated) {
+            // Newly created user - login using attempt with password as Google user id
+            $message = self::login_process($user, $user_data->getEmail(), $user_data->id);
+        } else {
+            // Existing user - login directly without password check
+            auth('customer')->login($user, true);
+
+            $company_name = BusinessSetting::where('type', 'company_name')->first();
+            $wish_list = Wishlist::whereHas('wishlistProduct', function($q) {
+                return $q;
+            })->where('customer_id', $user->id)->pluck('product_id')->toArray();
+
+            session()->put('wish_list', $wish_list);
+            CartManager::cart_to_db();
+
+            $message = translate('welcome_back') . ' ' . $user->f_name . '!';
+        }
+
         Toastr::info($message);
+
         return redirect()->route('home');
     }
 
