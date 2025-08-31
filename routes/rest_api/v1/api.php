@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\PaymentController;
 use App\Http\Controllers\AdminProductData;
+use App\Http\Controllers\RestAPI\v1\auth\PassportAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\AdminProductData;
 Route::group(['namespace' => 'RestAPI\v1', 'prefix' => 'v1', 'middleware' => ['api_lang']], function () {
 
     Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
+
+        Route::post('sign-up',[PassportAuthController::class, 'register']);
+
         Route::put('register', 'PassportAuthController@register');
         Route::post('login', 'PassportAuthController@login');
         Route::get('logout', 'PassportAuthController@logout')->middleware('auth:api');

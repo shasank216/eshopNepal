@@ -2,9 +2,11 @@
 
 namespace App\Traits;
 
-use App\Models\NotificationMessage;
 use App\Models\Order;
+use App\Services\FirebaseService;
 use phpDocumentor\Reflection\Type;
+use App\Models\NotificationMessage;
+use Illuminate\Support\Facades\Log;
 
 trait PushNotificationTrait
 {
@@ -260,56 +262,88 @@ trait PushNotificationTrait
      * @return bool|string
      */
 
-    protected function sendPushNotificationToDevice(string $fcmToken, array $data): bool|string
+     protected function sendPushNotificationToDevice(string $fcmToken, array $data): bool|string
     {
-        $key = getWebConfig(name: 'push_notification_key');
-        $url = "https://fcm.googleapis.com/fcm/send";
-        $header = array("authorization: key=" . $key . "",
-            "content-type: application/json"
-        );
+        // Resolve the Messaging instance via Laravel container if not available
+        $messaging = $this->messaging ?? app(\Kreait\Firebase\Contract\Messaging::class);
 
-        if (isset($data['order_id']) == false) {
-            $data['order_id'] = null;
+        // Create FirebaseService instance
+        $firebaseService = new \App\Services\FirebaseService($messaging);
+
+        try {
+            // Extract title and body from data array
+            $title = $data['title'] ?? 'Notification';
+            $body  = $data['body'] ?? '';
+
+            // Remove title/body from data to avoid duplication
+            $extraData = $data;
+            unset($extraData['title'], $extraData['body']);
+
+            // Send notification
+            $result = $firebaseService->sendToDevice($fcmToken, $title, $body, $extraData);
+
+            return isset($result['name']) ? $result['name'] : true;
+        } catch (\Throwable $e) {
+            // Log or handle exception
+            Log::error("Firebase push error: ".$e->getMessage());
+            return false;
         }
+    }
 
-        $postData = '{
-            "to" : "' . $fcmToken . '",
-            "data" : {
-                "title" :"' . $data['title'] . '",
-                "body" : "' . $data['description'] . '",
-                "image" : "' . $data['image'] . '",
-                "order_id":"' . $data['order_id'] . '",
-                "type":"' . $data['type'] . '",
-                "is_read": 0
-              },
-              "notification" : {
-                "title" :"' . $data['title'] . '",
-                "body" : "' . $data['description'] . '",
-                "image" : "' . $data['image'] . '",
-                "order_id":"' . $data['order_id'] . '",
-                "title_loc_key":"' . $data['order_id'] . '",
-                "type":"' . $data['type'] . '",
-                "is_read": 0,
-                "icon" : "new",
-                "sound" : "default"
-              }
-        }';
 
-        $ch = curl_init();
-        $timeout = 120;
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    protected function sendPushNotificationToDeviceOld(string $fcmToken, array $data): bool|string
+    {
+        $firebaseService = new FirebaseService($this->messaging);
 
-        // Get URL content
-        $result = curl_exec($ch);
-        // close handle to release resources
-        curl_close($ch);
 
-        return $result;
+        // $key = getWebConfig(name: 'push_notification_key');
+        // $url = "https://fcm.googleapis.com/fcm/send";
+        // $header = array("authorization: key=" . $key . "",
+        //     "content-type: application/json"
+        // );
+
+        // if (isset($data['order_id']) == false) {
+        //     $data['order_id'] = null;
+        // }
+
+        // $postData = '{
+        //     "to" : "' . $fcmToken . '",
+        //     "data" : {
+        //         "title" :"' . $data['title'] . '",
+        //         "body" : "' . $data['description'] . '",
+        //         "image" : "' . $data['image'] . '",
+        //         "order_id":"' . $data['order_id'] . '",
+        //         "type":"' . $data['type'] . '",
+        //         "is_read": 0
+        //       },
+        //       "notification" : {
+        //         "title" :"' . $data['title'] . '",
+        //         "body" : "' . $data['description'] . '",
+        //         "image" : "' . $data['image'] . '",
+        //         "order_id":"' . $data['order_id'] . '",
+        //         "title_loc_key":"' . $data['order_id'] . '",
+        //         "type":"' . $data['type'] . '",
+        //         "is_read": 0,
+        //         "icon" : "new",
+        //         "sound" : "default"
+        //       }
+        // }';
+
+        // $ch = curl_init();
+        // $timeout = 120;
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+
+        // // Get URL content
+        // $result = curl_exec($ch);
+        // // close handle to release resources
+        // curl_close($ch);
+
+        // return $result;
     }
 
     /**

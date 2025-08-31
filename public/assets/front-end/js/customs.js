@@ -938,7 +938,7 @@ function productQuickViewFunctionalityInitialize() {
 // }
 
 function addToCart(form_id = 'add-to-cart-form', redirect_to_checkout = false) {
-    if (checkAddToCartValidity()) {
+    // if (checkAddToCartValidity()) {
         // Get the product ID from either the button or form
         const productId = $('.action-add-to-cart-form').data('product-id') ||
             $('#' + form_id).find('input[name="id"]').val() ||
@@ -1036,13 +1036,13 @@ function addToCart(form_id = 'add-to-cart-form', redirect_to_checkout = false) {
                 $('#loading').hide();
             }
         });
-    } else {
-        Swal.fire({
-            type: 'info',
-            title: 'Cart',
-            text: $('#message-please-choose-all-options').data('text')
-        });
-    }
+    // } else {
+    //     Swal.fire({
+    //         type: 'info',
+    //         title: 'Cart',
+    //         text: $('#message-please-choose-all-options').data('text')
+    //     });
+    // }
 }
 
 function commonFunctionalityForProductView() {
