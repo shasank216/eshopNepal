@@ -41,6 +41,11 @@ class PassportAuthController extends Controller
             $refer_user = User::where(['referral_code' => $request->referral_code])->first();
         }
 
+        $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
+        if($user){
+            return response()->json(['message' => translate('user_already_exist')]);
+        }
+
         $temporary_token = Str::random(40);
         $user = User::create([
             // 'f_name' => $request->f_name,
@@ -230,8 +235,6 @@ class PassportAuthController extends Controller
             ], 401);
         }
     }
-
-
 
     public function logout(Request $request)
     {
