@@ -10,7 +10,7 @@ class BrandController extends Controller
     public function getBrands()
     {
         try {
-            $brands = Brand::all();
+            $brands = Brand::active()->get();
         } catch (\Exception $e) {
         }
 

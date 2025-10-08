@@ -126,8 +126,9 @@
                         </a>
                         <a class="btn-circle stopPropagation action-product-compare" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}" data-category-id="{{ $product->category_id }}">
+                            <i class="czi-compare align-middle web-text-primary"></i>
                             <!-- Ensure the category ID is included here -->
-                            <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" />
+                            {{-- <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}" alt="Compare" /> --}}
                         </a>
                         <a class="btn-circle stopPropagation product-action-add-wishlist" href="javascript:void(0)"
                             data-product-id="{{ $product->id }}">

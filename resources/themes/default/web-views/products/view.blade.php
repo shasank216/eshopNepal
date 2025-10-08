@@ -991,7 +991,6 @@
         <a href="{{ url('compare/product') }}">
             Compare <span id="compare-product-count">0</span>
         </a>
-
     </div>
 @endsection
 @push('script')

@@ -53,6 +53,8 @@ class RegisterController extends Controller
             $seller->image = ImageManager::upload('seller/', 'webp', $request->file('image'));
             $seller->password = bcrypt($request->password);
             $seller->status =  $request->status == 'approved' ? 'approved' : "pending";
+            $seller->vat_pan_img = ImageManager::upload('seller/', 'webp', $request->file('vat_pan_img'));
+            $seller->company_cheque_book = ImageManager::upload('seller/', 'webp', $request->file('company_cheque_book'));
             $seller->save();
 
             $shop = new Shop();
