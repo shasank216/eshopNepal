@@ -190,8 +190,10 @@
 
 
 
-                        <button type="button" data-product-id="{{ $product['id'] }}"
-                            class="action-btn __text-18px product-action-add-wishlist">
+                        <button type="button" data-product-id="{{ $product['id'] }}" data-category-id="{{ $product['category_id'] }}"
+                            class="action-btn __text-18px product-action-add-wishlist"
+                            data-category-id="{{ $product['category_id'] }}"
+                            >
 
                             <i class="fa {{ $wishlistStatus == 1 ? 'fa-heart' : 'fa-heart-o' }} wishlist_icon_{{ $product['id'] }} web-text-primary"
                                 aria-hidden="true"></i>
@@ -221,7 +223,7 @@
                             </a> --}}
 
                             <a class="action-btn stopPropagation action-product-compare" href="javascript:"
-                                data-product-id="{{ $product->id }}">
+                                data-product-id="{{ $product->id }}" data-category-id="{{ $product->category_id }}">
 
                                 <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}"
                                     alt="Compare" />
@@ -233,7 +235,8 @@
                             <div class="compare-checkbox mt-2 d-none" style="margin-left: 15px;">
 
                                 <input type="checkbox" id="compare-{{ $product->id }}" class="compare-checkbox-input"
-                                    value="{{ $product->id }}" data-product-id="{{ $product->id }}">
+                                    value="{{ $product->id }}" data-product-id="{{ $product->id }}" data-category-id="{{ $product->category_id }}"
+                                    >
 
                                 <label for="compare-{{ $product->id }}">{{ translate('Add to Compare') }}</label>
 

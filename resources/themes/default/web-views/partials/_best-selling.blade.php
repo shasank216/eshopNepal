@@ -142,7 +142,9 @@
 
                                                                 <a class="action-btn stopPropagation action-product-compare"
                                                                     href="javascript:"
-                                                                    data-product-id="{{ $bestSell->product->id }}">
+                                                                    data-product-id="{{ $bestSell->product->id }}"
+                                                                    data-category-id="{{ $bestSell->product->category_id }}"
+                                                                >
                                                                     <img src="{{ asset('public/assets/front-end/img/icons/compare.png') }}"
                                                                         alt="Compare" />
                                                                 </a>

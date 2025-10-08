@@ -744,9 +744,6 @@
                 z-index: 1;
             }
 
-            .action-product-compare {
-                display: none !important;
-            }
         </style>
     @endpush
 
@@ -845,6 +842,7 @@
             </div>
         @endif
 
+        {{-- Latest Products --}}
         @include('web-views.partials._deal-of-the-day', [
             'decimal_point_settings' => $decimalPointSettings,
         ])
@@ -1120,13 +1118,14 @@
                         <div class="items-container home-category-section" id="ajax-products" style="display: grid;">
                             @if (count($products) > 0)
 
-                                @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
-                                @foreach ($products as $product)
-                                    @if (!empty($product['product_id']))
-                                        @php($product = $product->product)
-                                    @endif
-                                    <div class="p-2">
-                                        @if (!empty($product))
+                            
+                            @php($decimal_point_settings = getWebConfig(name: 'decimal_point_settings'))
+                            @foreach ($products as $product)
+                            @if (!empty($product['product_id']))
+                            @php($product = $product->product)
+                            @endif
+                            <div class="p-2">
+                                @if (!empty($product))
                                             @include('web-views.partials._filter-single-product', [
                                                 'product' => $product,
                                                 'decimal_point_settings' => $decimal_point_settings,
@@ -1276,6 +1275,12 @@
     </div>
 
     <span id="direction-from-session" data-value="{{ session()->get('direction') }}"></span>
+
+    <div class="compare-count" style="display:none;">
+        <a href="{{ url('compare/product') }}">
+            Compare <span id="compare-product-count">0</span>
+        </a>
+    </div>
 @endsection
 
 @push('script')

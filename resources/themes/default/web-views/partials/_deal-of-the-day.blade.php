@@ -80,7 +80,7 @@
                                         </div>
                                         <button
                                             class="btn btn--primary font-bold px-4 rounded-10 text-uppercase w-100 action-buy-now-this-product"
-                                            data-product-id="{{ $product->id }}">
+                                            data-product-id="{{ $product->id }}" data-category-id="{{ $product->category_id }}">
                                             {{ translate('buy_now') }}
                                         </button>
                                     </div>
