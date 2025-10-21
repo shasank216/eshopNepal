@@ -323,8 +323,6 @@ class OrderController extends BaseController
         $this->orderRepo->updateStockOnOrderStatusChange($request['id'], $request['order_status']);
         $this->orderRepo->update(id: $request['id'], data: ['order_status' => $request['order_status']]);
 
-        event(new OrderStatusEvent(key: $request['order_status'], type: 'customer', order: $order));
-
         if ($request['order_status'] == 'canceled') {
             event(new OrderStatusEvent(key: 'canceled', type: 'delivery_man', order: $order));
         }
@@ -395,6 +393,8 @@ class OrderController extends BaseController
 
             $this->orderDetailRepo->updateWhere(params: ['order_id' => $order['id']], data: ['delivery_status' => 'delivered']);
         }
+
+        event(new OrderStatusEvent(key: $request['order_status'], type: 'customer', order: $order));
 
         return response()->json($request['order_status']);
     }

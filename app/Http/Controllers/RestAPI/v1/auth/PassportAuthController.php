@@ -23,12 +23,81 @@ class PassportAuthController extends Controller
         $this->smsService = $smsService;
         // $this->middleware('guest:customer', ['except' => ['logout']]);
     }
+    // public function register(Request $request)
+    // {
+
+    //     // return response()->json(['message' => 'Registration completed successfully.'], 200);
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required',
+    //         // 'l_name' => 'required',
+    //         // 'email' => 'required|unique:users',
+    //         'phone' => 'required|unique:users',
+    //         'password' => 'required|min:8',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+    //     }
+
+    //     if ($request->referral_code) {
+    //         $refer_user = User::where(['referral_code' => $request->referral_code])->first();
+    //     }
+
+    //     $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
+    //     if ($user) {
+    //         return response()->json(['message' => translate('user_already_exist')]);
+    //     }
+
+    //     $temporary_token = Str::random(40);
+    //     $user = User::create([
+    //         // 'f_name' => $request->f_name,
+    //         // 'l_name' => $request->l_name,
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'phone' => $request->phone,
+    //         'gender' => $request->gender,
+    //         'date_of_birth' => $request->date_of_birth,
+    //         'is_active' => 1,
+    //         'password' => bcrypt($request->password),
+    //         'temporary_token' => $temporary_token,
+    //         'referral_code' => Helpers::generate_referer_code(),
+    //         'referred_by' => (isset($refer_user) && $refer_user) ? $refer_user->id : null,
+    //     ]);
+
+    //     // $phone_verification = Helpers::get_business_settings('phone_verification');
+    //     // $email_verification = Helpers::get_business_settings('email_verification');
+    //     // if ($phone_verification && !$user->is_phone_verified) {
+    //     //     return response()->json(['temporary_token' => $temporary_token], 200);
+    //     // }
+    //     // if ($email_verification && !$user->is_email_verified) {
+    //     //     return response()->json(['temporary_token' => $temporary_token], 200);
+    //     // }
+
+    //     // $token = $user->createToken('LaravelAuthApp')->accessToken;
+    //     // return response()->json(['token' => $token], 200);
+
+    //     // Generate and save OTP
+    //     $otp = new Otp();
+    //     $otp->code = rand(100000, 999999);
+    //     $otp->expiry = Carbon::now()->addMinutes(15);
+    //     $otp->phone = $user->phone;
+    //     $otp->save();
+
+    //     // Send OTP via SMS
+    //     $this->smsService->sendSms($user->phone, 'Your verification code is ' . $otp->code);
+
+    //     return response()->json([
+    //         'status' => 'pending_verification',
+    //         'message' => 'OTP sent to your phone.',
+    //         'temporary_token' => $user->temporary_token,
+    //     ], 200);
+    // }
+
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            // 'l_name' => 'required',
-            // 'email' => 'required|unique:users',
             'phone' => 'required|unique:users',
             'password' => 'required|min:8',
         ]);
@@ -37,51 +106,41 @@ class PassportAuthController extends Controller
             return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
 
+        // Referral check
+        $refer_user = null;
         if ($request->referral_code) {
-            $refer_user = User::where(['referral_code' => $request->referral_code])->first();
+            $refer_user = User::where('referral_code', $request->referral_code)->first();
         }
 
-        $user = User::where('email', $request->email)->orWhere('phone', $request->phone)->first();
-        if($user){
-            return response()->json(['message' => translate('user_already_exist')]);
+        // Prevent duplicates
+        $existing = User::where('phone', $request->phone)->first();
+        if ($existing) {
+            return response()->json(['message' => translate('user_already_exist')], 409);
         }
 
         $temporary_token = Str::random(40);
         $user = User::create([
-            // 'f_name' => $request->f_name,
-            // 'l_name' => $request->l_name,
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'gender' => $request->gender,
             'date_of_birth' => $request->date_of_birth,
-            'is_active' => 1,
+            'is_active' => 0, 
+            'is_phone_verified' => 0,
             'password' => bcrypt($request->password),
             'temporary_token' => $temporary_token,
             'referral_code' => Helpers::generate_referer_code(),
-            'referred_by' => (isset($refer_user) && $refer_user) ? $refer_user->id : null,
+            'referred_by' => $refer_user ? $refer_user->id : null,
         ]);
 
-        // $phone_verification = Helpers::get_business_settings('phone_verification');
-        // $email_verification = Helpers::get_business_settings('email_verification');
-        // if ($phone_verification && !$user->is_phone_verified) {
-        //     return response()->json(['temporary_token' => $temporary_token], 200);
-        // }
-        // if ($email_verification && !$user->is_email_verified) {
-        //     return response()->json(['temporary_token' => $temporary_token], 200);
-        // }
-
-        // $token = $user->createToken('LaravelAuthApp')->accessToken;
-        // return response()->json(['token' => $token], 200);
-
-        // Generate and save OTP
+        // Generate OTP
         $otp = new Otp();
         $otp->code = rand(100000, 999999);
         $otp->expiry = Carbon::now()->addMinutes(15);
         $otp->phone = $user->phone;
         $otp->save();
 
-        // Send OTP via SMS
+        // Send SMS
         $this->smsService->sendSms($user->phone, 'Your verification code is ' . $otp->code);
 
         return response()->json([

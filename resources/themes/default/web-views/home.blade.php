@@ -842,7 +842,7 @@
             </div>
         @endif
 
-        {{-- Latest Products --}}
+            {{-- Latest Products --}}
         @include('web-views.partials._deal-of-the-day', [
             'decimal_point_settings' => $decimalPointSettings,
         ])

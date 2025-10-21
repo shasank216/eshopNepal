@@ -294,8 +294,6 @@ class ChattingController extends BaseController
 
             $userFcmToken = $customer?->cm_firebase_token;
             $userWebToken = $customer?->web_firebase_token;
-            \Log::info('userFcmToken: ' . $userFcmToken);
-            \Log::info('userWebToken: ' . $userWebToken);
             if($userFcmToken){
                 $data = [
                     'title' => 'New Message from ' . $vendor->f_name . ' '. $vendor->l_name,

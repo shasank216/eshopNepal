@@ -157,7 +157,7 @@
                                     @endif
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item position-relative"
+                                {{-- <a class="dropdown-item position-relative"
                                    href="{{route('vendor.messages.index', ['type' => 'delivery-man'])}}">
                                     <span class="text-truncate pr-2"
                                           title="Settings">{{translate('delivery_man')}}</span>
@@ -165,7 +165,7 @@
                                     @if($messageDeliveryMan > 0)
                                         <span class="btn-status btn-sm-status-custom btn-status-danger">{{ $messageDeliveryMan }}</span>
                                     @endif
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     </li>

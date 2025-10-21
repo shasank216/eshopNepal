@@ -679,7 +679,7 @@ class OrderManager
                 event(new OrderPlacedEvent(notification: $notification));
             }
         }
-        // \Log::info('order_info => '. json_encode($order));
+        \Log::info('order_info => '. json_encode($order));
         if($user !='offline') {
             if ($order['payment_method'] != 'cash_on_delivery' && $order['payment_method'] != 'offline_payment') {
                 $notification = (object)[
