@@ -69,4 +69,8 @@ enum DeliveryMan
         VIEW => 'admin-views.delivery-man.earning-statement._order-status-history'
     ];
 
+    const PAY = [
+        URI => 'pay-driver',
+        VIEW => 'admin-views.delivery-man.pay'
+    ];
 }

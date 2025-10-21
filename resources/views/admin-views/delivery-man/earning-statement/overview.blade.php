@@ -44,6 +44,7 @@
                                         <div class="d-flex flex-column align-items-start">
                                             <h3 class="mb-1 fz-24">{{ $deliveryMan->wallet ? setCurrencySymbol(amount: usdToDefaultCurrency(amount: $deliveryMan->wallet->current_balance), currencyCode: getCurrencyCode()) : setCurrencySymbol(amount: 0, currencyCode: getCurrencyCode())}}</h3>
                                             <div class="text-capitalize mb-0">{{translate('current_balance')}}</div>
+                            <a href="{{ route('admin.delivery-man.pay-delivery-man', ['id' => $deliveryMan->id]) }}" class="btn btn--primary mt-4">{{translate('pay_driver')}}</a>
                                         </div>
                                         <div>
                                             <img width="40" src="{{dynamicAsset(path: 'public/assets/back-end/img/withdraw-icon.png')}}" alt="">
@@ -64,7 +65,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                                 <div class="card card-body h-100 justify-content-center py-5">
                                     <div class="d-flex gap-2 justify-content-between align-items-center">
                                         <div class="d-flex flex-column align-items-start">
@@ -76,7 +77,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="card card-body h-100 justify-content-center py-5">
                                     <div class="d-flex gap-2 justify-content-between align-items-center">

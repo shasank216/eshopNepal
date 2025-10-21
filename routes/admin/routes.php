@@ -643,6 +643,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin']],
             Route::get(DeliveryMan::ORDER_HISTORY_LOG_EXPORT[URI].'/{id}', 'getOrderHistoryListExport')->name('order-history-log-export');
             Route::get(DeliveryMan::RATING[URI].'/{id}', 'getRatingView')->name('rating');
             Route::get(DeliveryMan::ORDER_HISTORY[URI].'/{order}', 'getOrderStatusHistory')->name('ajax-order-status-history');
+            Route::get(DeliveryMan::PAY[URI].'/{id}', 'payDeliveryMan')->name('pay-delivery-man');
+            Route::post(DeliveryMan::PAY[URI].'/{id}', 'cashPayDeliveryMan')->name('cash-pay');
         });
 
         Route::controller(DeliveryManCashCollectController::class)->group(function (){

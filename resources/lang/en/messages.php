@@ -6439,6 +6439,7 @@
   'deliveryman_Wallet' => 'Deliveryman Wallet',
   'cash_in_hand' => 'Cash in hand',
   'collect_Cash' => 'Collect Cash',
+  'pay_driver' => 'Pay Driver',
   'current_balance' => 'Current balance',
   'total_withdrawn' => 'Total withdrawn',
   'delivery_Man_Account' => 'Delivery Man Account',
@@ -8174,4 +8175,5 @@
   12335 => '12335',
   'amount_must_be_greater_than_zero' => 'Amount must be greater than zero',
   'no_Country_Found' => 'No Country Found',
+  'pay' => 'Pay',
 );
