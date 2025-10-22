@@ -8176,4 +8176,5 @@
   'amount_must_be_greater_than_zero' => 'Amount must be greater than zero',
   'no_Country_Found' => 'No Country Found',
   'pay' => 'Pay',
+  'No Data Found' => 'No Data Found',
 );

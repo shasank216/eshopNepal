@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Deliveryman;
 
 use App\Contracts\Repositories\DeliveryManRepositoryInterface;
+use App\Contracts\Repositories\DeliveryManTransactionRepositoryInterface;
 use App\Contracts\Repositories\OrderRepositoryInterface;
 use App\Contracts\Repositories\OrderStatusHistoryRepositoryInterface;
 use App\Contracts\Repositories\ReviewRepositoryInterface;
@@ -275,8 +276,11 @@ class DeliveryManController extends Controller
         ]);
     }
 
-    public function payDeliveryMan(Request $request, $id): Redirector|RedirectResponse|View|Factory
-    {
+    public function payDeliveryMan(
+        Request $request,
+        $id,
+        DeliveryManTransactionRepositoryInterface $deliveryManTransactionRepo,
+    ): Redirector|RedirectResponse|View|Factory {
         $deliveryMan = $this->deliveryManRepo->getFirstWhere(params: ['id' => $id, 'seller_id' => 0], relations: ['review']);
         if (! $deliveryMan) {
             Toastr::warning(translate('invaild_review'));
@@ -284,11 +288,21 @@ class DeliveryManController extends Controller
             return redirect(route('admin.delivery-man.list'));
         }
 
-        return view(DeliveryMan::PAY[VIEW], compact('deliveryMan'));
+        $transactions = $deliveryManTransactionRepo->getListWhere(
+            orderBy: ['id' => 'desc'],
+            filters: ['delivery_man_id' => $request['id'], 'transaction_type', 'current_balance'],
+            dataLimit: getWebConfig(name: WebConfigKey::PAGINATION_LIMIT),
+        );
+
+        return view(DeliveryMan::PAY[VIEW], compact('deliveryMan', 'transactions'));
     }
 
-    public function cashPayDeliveryMan(Request $request, $id, DeliveryManWalletRepository $deliveryManWalletRepo)
-    {
+    public function cashPayDeliveryMan(
+        Request $request,
+        $id,
+        DeliveryManWalletRepository $deliveryManWalletRepo,
+        DeliveryManTransactionRepositoryInterface $deliveryManTransactionRepo,
+    ) {
         $request->validate([
             'amount' => 'required|numeric|gt:0',
         ]);
@@ -302,7 +316,15 @@ class DeliveryManController extends Controller
             return redirect(route('admin.delivery-man.list'));
         }
 
-        $amount = $wallet->current_balance - $request->amount ;
+        $deliveryManTransactionRepo->add([
+            'delivery_man_id' => $deliveryMan['id'],
+            'user_id' => 0,
+            'user_type' => 'admin',
+            'debit' => usdToDefaultCurrency(amount: $request->amount),
+            'transaction_type' => 'current_balance',
+        ]);
+
+        $amount = $wallet->current_balance - $request->amount;
 
         $deliveryManWalletRepo->update(id: $wallet['id'], data: ['current_balance' => $amount]);
 

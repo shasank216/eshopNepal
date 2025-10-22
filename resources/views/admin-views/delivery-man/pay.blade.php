@@ -47,6 +47,54 @@
             </div>
         </div>
 
+                    <div class="table-responsive datatable-custom">
+                        <table
+                            class="table table-hover table-borderless table-thead-bordered table-align-middle card-table {{ Session::get('direction') === 'rtl' ? 'text-right' : 'text-left' }}">
+                            <thead class="thead-light thead-50 text-capitalize table-nowrap">
+                            <tr>
+                                <th>{{translate('SL')}}</th>
+                                <th>{{translate('delivery_man_name')}}</th>
+                                <th>{{translate('amount')}}</th>
+                                <th>{{translate('transaction_date')}}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="set-rows">
+                            @forelse($transactions->where('transaction_type', 'current_balance') as $transaction)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        {{ $deliveryMan['f_name']. ' ' .$deliveryMan['l_name']  }}
+                                    </td>
+                                    <td>
+                                        {{ setCurrencySymbol(amount: usdToDefaultCurrency(amount: $transaction['debit']), currencyCode: getCurrencyCode(type: 'default')) }}
+                                    </td>
+                                    <td>
+                                        {{ date_format( $transaction['created_at'], 'd-M-Y, h:i:s A') }}
+                                    </td>
+
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="text-center p-4">
+                                            <img class="mb-3 w-160"
+                                                 src="{{dynamicAsset(path: 'public/assets/back-end/svg/illustrations/sorry.svg')}}"
+                                                 alt="Image Description">
+                                            <p class="mb-0">{{translate('No Data Found')}}</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive mt-4">
+                        <div class="px-4 d-flex justify-content-lg-end">
+                            {!! $transactions->links() !!}
+                        </div>
+                    </div>
 
     </div>
 @endsection
